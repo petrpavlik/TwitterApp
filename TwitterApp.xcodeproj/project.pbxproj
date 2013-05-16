@@ -23,6 +23,15 @@
 		4B7428B11742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B7428B91742D9CE00AEB85C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428B71742D9CE00AEB85C /* InfoPlist.strings */; };
 		4B7428BC1742D9CE00AEB85C /* TwitterAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428BB1742D9CE00AEB85C /* TwitterAppTests.m */; };
+		4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428C81742DB4800AEB85C /* AbstractSkin.m */; };
+		4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CB1742DBFF00AEB85C /* LightSkin.m */; };
+		4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */; };
+		4B7428D41742DED500AEB85C /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D31742DED500AEB85C /* TweetCell.m */; };
+		4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
+		4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428DB1742E4E900AEB85C /* UserEntity.m */; };
+		4B81BA3D174538D900005607 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
+		4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
+		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +67,22 @@
 		4B7428B81742D9CE00AEB85C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4B7428BA1742D9CE00AEB85C /* TwitterAppTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwitterAppTests.h; sourceTree = "<group>"; };
 		4B7428BB1742D9CE00AEB85C /* TwitterAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterAppTests.m; sourceTree = "<group>"; };
+		4B7428C71742DB4800AEB85C /* AbstractSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractSkin.h; path = View/Skin/AbstractSkin.h; sourceTree = "<group>"; };
+		4B7428C81742DB4800AEB85C /* AbstractSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractSkin.m; path = View/Skin/AbstractSkin.m; sourceTree = "<group>"; };
+		4B7428CA1742DBFF00AEB85C /* LightSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightSkin.h; path = View/Skin/LightSkin.h; sourceTree = "<group>"; };
+		4B7428CB1742DBFF00AEB85C /* LightSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LightSkin.m; path = View/Skin/LightSkin.m; sourceTree = "<group>"; };
+		4B7428CE1742DD0900AEB85C /* UIImage+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+TwitterApp.h"; path = "Category/UIImage+TwitterApp.h"; sourceTree = "<group>"; };
+		4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+TwitterApp.m"; path = "Category/UIImage+TwitterApp.m"; sourceTree = "<group>"; };
+		4B7428D21742DED500AEB85C /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetCell.h; path = View/Cell/TweetCell.h; sourceTree = "<group>"; };
+		4B7428D31742DED500AEB85C /* TweetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetCell.m; path = View/Cell/TweetCell.m; sourceTree = "<group>"; };
+		4B7428D71742DFF200AEB85C /* TweetEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetEntity.h; path = Model/Entity/TweetEntity.h; sourceTree = "<group>"; };
+		4B7428D81742DFF200AEB85C /* TweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetEntity.m; path = Model/Entity/TweetEntity.m; sourceTree = "<group>"; };
+		4B7428DA1742E4E900AEB85C /* UserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserEntity.h; path = Model/Entity/UserEntity.h; sourceTree = "<group>"; };
+		4B7428DB1742E4E900AEB85C /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEntity.m; path = Model/Entity/UserEntity.m; sourceTree = "<group>"; };
+		4B81BA3C174538D900005607 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		4B81BA3E174538DC00005607 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		4B93FE381743E5CA0053FCD7 /* BaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseEntity.h; path = Model/Entity/BaseEntity.h; sourceTree = "<group>"; };
+		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +112,8 @@
 		4B74287E1742D9CE00AEB85C = {
 			isa = PBXGroup;
 			children = (
+				4B81BA3E174538DC00005607 /* Icon@2x.png */,
+				4B81BA3C174538D900005607 /* Icon.png */,
 				4B7428901742D9CE00AEB85C /* TwitterApp */,
 				4B7428B41742D9CE00AEB85C /* TwitterAppTests */,
 				4B7428891742D9CE00AEB85C /* Frameworks */,
@@ -117,6 +144,9 @@
 		4B7428901742D9CE00AEB85C /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B7428D51742DFB400AEB85C /* Model */,
+				4B7428CD1742DCC300AEB85C /* Category */,
+				4B7428C51742DA3500AEB85C /* View */,
 				4B7428991742D9CE00AEB85C /* AppDelegate.h */,
 				4B74289A1742D9CE00AEB85C /* AppDelegate.m */,
 				4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */,
@@ -158,6 +188,65 @@
 				4B7428B71742D9CE00AEB85C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4B7428C51742DA3500AEB85C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4B7428D11742DEB500AEB85C /* Cell */,
+				4B7428C61742DA5200AEB85C /* Skin */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		4B7428C61742DA5200AEB85C /* Skin */ = {
+			isa = PBXGroup;
+			children = (
+				4B7428C71742DB4800AEB85C /* AbstractSkin.h */,
+				4B7428C81742DB4800AEB85C /* AbstractSkin.m */,
+				4B7428CA1742DBFF00AEB85C /* LightSkin.h */,
+				4B7428CB1742DBFF00AEB85C /* LightSkin.m */,
+			);
+			name = Skin;
+			sourceTree = "<group>";
+		};
+		4B7428CD1742DCC300AEB85C /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				4B7428CE1742DD0900AEB85C /* UIImage+TwitterApp.h */,
+				4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
+		4B7428D11742DEB500AEB85C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				4B7428D21742DED500AEB85C /* TweetCell.h */,
+				4B7428D31742DED500AEB85C /* TweetCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		4B7428D51742DFB400AEB85C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4B7428D61742DFBB00AEB85C /* Entity */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4B7428D61742DFBB00AEB85C /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				4B93FE381743E5CA0053FCD7 /* BaseEntity.h */,
+				4B93FE391743E5CA0053FCD7 /* BaseEntity.m */,
+				4B7428D71742DFF200AEB85C /* TweetEntity.h */,
+				4B7428D81742DFF200AEB85C /* TweetEntity.m */,
+				4B7428DA1742E4E900AEB85C /* UserEntity.h */,
+				4B7428DB1742E4E900AEB85C /* UserEntity.m */,
+			);
+			name = Entity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -236,6 +325,8 @@
 				4B74289F1742D9CE00AEB85C /* Default@2x.png in Resources */,
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
+				4B81BA3D174538D900005607 /* Icon.png in Resources */,
+				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -273,6 +364,13 @@
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4B7428A71742D9CE00AEB85C /* ViewController.m in Sources */,
+				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
+				4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */,
+				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,
+				4B7428D41742DED500AEB85C /* TweetCell.m in Sources */,
+				4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */,
+				4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */,
+				4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +551,7 @@
 				4B7428C11742D9CE00AEB85C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4B7428C21742D9CE00AEB85C /* Build configuration list for PBXNativeTarget "TwitterAppTests" */ = {
 			isa = XCConfigurationList;
@@ -461,6 +560,7 @@
 				4B7428C41742D9CE00AEB85C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
