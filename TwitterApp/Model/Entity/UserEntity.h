@@ -24,5 +24,15 @@
 @property(nonatomic, strong) NSNumber* isTranslator;
 @property(nonatomic, strong) NSString* lang;
 @property(nonatomic, strong) NSNumber* listedCount;
+@property(nonatomic, strong) NSString* location;
+@property(nonatomic, strong) NSString* name;
+@property(nonatomic, strong) NSNumber* protectedTweets;
+@property(nonatomic, strong) NSString* screenName;
+@property(nonatomic, strong) NSNumber* showAllInlineMedia;
+@property(nonatomic, strong) NSNumber* statusesCount;
+@property(nonatomic, strong) NSString* timeZone;
+@property(nonatomic, strong) NSString* url;
+@property(nonatomic, strong) NSNumber* utcOffset;
+@property(nonatomic, strong) NSNumber* verified;
 
 @end

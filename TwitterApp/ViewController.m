@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import <Social/Social.h>
+#import <Accounts/Accounts.h>
 
 @interface ViewController ()
 
@@ -24,6 +26,31 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)loginButtonPressed:(id)sender {
+    
+    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+        
+        if (granted) {
+            
+            NSArray *accounts = [accountStore accountsWithAccountType:accountType];
+            
+            // Check if the users has setup at least one Twitter account
+            if (accounts.count > 0) {
+                
+                ACAccount *twitterAccount = [accounts objectAtIndex:0];
+                
+                NSLog(@"%@", twitterAccount);
+            }
+        } else {
+            
+            NSLog(@"No access granted %@", error);
+        }
+    }];
 }
 
 @end
