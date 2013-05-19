@@ -26,7 +26,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.view.translatesAutoresizingMaskIntoConstraints = NO;
+    self.title = @"Timeline";
     
     self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
@@ -136,7 +136,7 @@
                 [AFTwitterClient sharedClient].account = twitterAccount;
                 
                 [TweetEntity requestHomeTimelineWithCompletionBlock:^(NSArray *tweets, NSError *error) {
-                    NSLog(@"%@", tweets);
+                    //NSLog(@"%@", tweets);
                     self.tweets = tweets;
                     [self.tableView reloadData];
                 }];

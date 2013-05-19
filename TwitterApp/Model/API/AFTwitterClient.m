@@ -61,7 +61,8 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     [afRequest setValue:signedRequest.allHTTPHeaderFields[@"Authorization"] forHTTPHeaderField:@"Authorization"];
     
-    return afRequest;
+    //return afRequest;
+    return signedRequest;
 }
 
 

@@ -17,7 +17,6 @@
 		4B74289F1742D9CE00AEB85C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B74289E1742D9CE00AEB85C /* Default@2x.png */; };
 		4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A01742D9CE00AEB85C /* Default-568h@2x.png */; };
 		4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */; };
-		4B7428A71742D9CE00AEB85C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428A61742D9CE00AEB85C /* ViewController.m */; };
 		4B7428AF1742D9CE00AEB85C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B7428AE1742D9CE00AEB85C /* SenTestingKit.framework */; };
 		4B7428B01742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B7428B11742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
@@ -67,8 +66,6 @@
 		4B74289E1742D9CE00AEB85C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		4B7428A01742D9CE00AEB85C /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		4B7428A31742D9CE00AEB85C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		4B7428A51742D9CE00AEB85C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		4B7428A61742D9CE00AEB85C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		4B7428AD1742D9CE00AEB85C /* TwitterAppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TwitterAppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B7428AE1742D9CE00AEB85C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		4B7428B61742D9CE00AEB85C /* TwitterAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TwitterAppTests-Info.plist"; sourceTree = "<group>"; };
@@ -188,8 +185,6 @@
 				4B7428991742D9CE00AEB85C /* AppDelegate.h */,
 				4B74289A1742D9CE00AEB85C /* AppDelegate.m */,
 				4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */,
-				4B7428A51742D9CE00AEB85C /* ViewController.h */,
-				4B7428A61742D9CE00AEB85C /* ViewController.m */,
 				4B7428911742D9CE00AEB85C /* Supporting Files */,
 			);
 			path = TwitterApp;
@@ -451,7 +446,6 @@
 			files = (
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
-				4B7428A71742D9CE00AEB85C /* ViewController.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
 				4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */,
 				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,

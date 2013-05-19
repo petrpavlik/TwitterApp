@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "BaseEntity.h"
+#import "LightSkin.h"
 
 @implementation AppDelegate
 
@@ -32,6 +33,9 @@
         
         return outMutableString;
     }];
+    
+    AbstractSkin* skin = [LightSkin new];
+    [skin applyGlobalAppearance];
     
     return YES;
 }

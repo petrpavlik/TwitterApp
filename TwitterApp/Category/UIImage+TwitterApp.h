@@ -10,6 +10,6 @@
 
 @interface UIImage (TwitterApp)
 
-+ (UIImage*)imageWithColor:(UIColor*)color size:(CGSize)size;
++ (UIImage*)imageWithColor:(UIColor*)color;
 
 @end
