@@ -11,6 +11,19 @@
 
 @implementation TweetEntity
 
+- (void)setValue:(id)value forKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"User"]) {
+    
+        self.user = [[UserEntity alloc] initWithDictionary:value];
+    }
+    else {
+        [super setValue:value forKey:key];
+    }
+}
+
+#pragma mark -
+
 + (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];

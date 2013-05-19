@@ -7,15 +7,35 @@
 //
 
 #import "AppDelegate.h"
+#import "BaseEntity.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {
+        //converts keys such as created_at to CreatedAt
+        
+        if ([key rangeOfString:@"-"].location == NSNotFound && [key rangeOfString:@"_"].location == NSNotFound) {
+            return [key stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:[[key substringToIndex:1] capitalizedString]];;
+        }
+        
+        NSArray* components = [key componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"-_"]];
+        
+        NSMutableString* outMutableString = [[NSMutableString alloc] init];
+        
+        for (NSString* component in components) {
+            [outMutableString appendString:[component capitalizedString]];
+        }
+        
+        return outMutableString;
+    }];
+    
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

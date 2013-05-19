@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "BaseEntity.h"
 #import <Foundation/Foundation.h>
 
-@interface UserEntity : NSObject
+@interface UserEntity : BaseEntity
 
 @property(nonatomic, strong) NSNumber* contributorsEnabled;
 @property(nonatomic, strong) NSDate* createdAt;
@@ -26,6 +27,7 @@
 @property(nonatomic, strong) NSNumber* listedCount;
 @property(nonatomic, strong) NSString* location;
 @property(nonatomic, strong) NSString* name;
+@property(nonatomic, strong) NSString* profileImageUrl;
 @property(nonatomic, strong) NSNumber* protectedTweets;
 @property(nonatomic, strong) NSString* screenName;
 @property(nonatomic, strong) NSNumber* showAllInlineMedia;

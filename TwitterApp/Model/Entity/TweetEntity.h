@@ -8,11 +8,13 @@
 
 #import "BaseEntity.h"
 #import <Foundation/Foundation.h>
+#import "UserEntity.h"
 
 @interface TweetEntity : BaseEntity
 
 @property(nonatomic, strong) NSDate* createdAt;
 @property(nonatomic, strong) NSNumber* favoriteCount;
+@property(nonatomic, strong) NSDictionary* entities;
 @property(nonatomic, strong) NSNumber* favorited;
 @property(nonatomic, strong) NSNumber* filterLevel;
 @property(nonatomic, strong) NSString* tweetId;
@@ -27,6 +29,7 @@
 @property(nonatomic, strong) NSString* source;
 @property(nonatomic, strong) NSString* text;
 @property(nonatomic, strong) NSNumber* truncated;
+@property(nonatomic, strong) UserEntity* user;
 
 + (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 

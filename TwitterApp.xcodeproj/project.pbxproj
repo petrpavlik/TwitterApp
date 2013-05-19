@@ -35,6 +35,7 @@
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
 		4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
+		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247C6CFBE31346CFAFA5B8FE /* libPods.a */; };
@@ -94,6 +95,8 @@
 		4B9348A417457A3F00AAE017 /* AFTwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterClient.m; path = Model/API/AFTwitterClient.m; sourceTree = "<group>"; };
 		4B93FE381743E5CA0053FCD7 /* BaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseEntity.h; path = Model/Entity/BaseEntity.h; sourceTree = "<group>"; };
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
+		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
+		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
 		4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterJSONRequestOperation.h; path = Model/API/AFTwitterJSONRequestOperation.h; sourceTree = "<group>"; };
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
@@ -228,6 +231,7 @@
 		4B7428C51742DA3500AEB85C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4BBDA6EB174912EE00E849FD /* Image */,
 				4B7428D11742DEB500AEB85C /* Cell */,
 				4B7428C61742DA5200AEB85C /* Skin */,
 			);
@@ -283,6 +287,15 @@
 				4B7428DB1742E4E900AEB85C /* UserEntity.m */,
 			);
 			name = Entity;
+			sourceTree = "<group>";
+		};
+		4BBDA6EB174912EE00E849FD /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				4BBDA6EC1749130B00E849FD /* NetImageView.h */,
+				4BBDA6ED1749130B00E849FD /* NetImageView.m */,
+			);
+			name = Image;
 			sourceTree = "<group>";
 		};
 		4BDB0F371748CD8F004980EB /* Controller */ = {
@@ -449,6 +462,7 @@
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
+				4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

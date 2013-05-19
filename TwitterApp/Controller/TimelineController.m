@@ -64,11 +64,53 @@
     static NSString *CellIdentifier = @"TweetCell";
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    cell.tweetTextLabel.text = tweet.text;
+    cell.nameLabel.text = tweet.user.name;
+    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:tweet.user.profileImageUrl] placeholderImage:nil];
+    
+    NSArray* urls = tweet.entities[@"urls"];
+    for (NSDictionary* url in urls) {
+        
+        NSNumber* beginningAt = url[@"indices"][0];
+        NSNumber* endgingAt = url[@"indices"][1];
+        NSRange range = NSMakeRange(beginningAt.integerValue, endgingAt.integerValue - beginningAt.integerValue);
+        
+        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];
+    }
+    
+    cell.mediaImageView.hidden = YES;
+    
+    NSArray* media = tweet.entities[@"media"];
+    for (NSDictionary* url in media) {
+        
+        NSNumber* beginningAt = url[@"indices"][0];
+        NSNumber* endgingAt = url[@"indices"][1];
+        NSRange range = NSMakeRange(beginningAt.integerValue, endgingAt.integerValue - beginningAt.integerValue);
+        
+        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];
+        
+        [cell.mediaImageView setImageWithURL:[NSURL URLWithString:url[@"media_url"]] placeholderImage:nil];
+        cell.mediaImageView.hidden = NO;
+    }
+    
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    NSArray* media = tweet.entities[@"media"];
+    CGFloat mediaHeight = 0;
+    
+    if (media.count) {
+        mediaHeight = 310;
+    }
+    
+    return [TweetCell requiredHeightForTweetText:tweet.text] + mediaHeight;
 }
 
 #pragma mark -
