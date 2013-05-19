@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AFTwitterClient.h"
 #import "ViewController.h"
 #import <Social/Social.h>
 #import <Accounts/Accounts.h>
+#import "TweetEntity.h"
 
 @interface ViewController ()
 
@@ -20,6 +22,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -45,6 +48,13 @@
                 ACAccount *twitterAccount = [accounts objectAtIndex:0];
                 
                 NSLog(@"%@", twitterAccount);
+                
+                [AFTwitterClient sharedClient].account = twitterAccount;
+                
+                [TweetEntity requestHomeTimelineWithCompletionBlock:^(NSArray *tweets, NSError *error) {
+                    NSLog(@"%@", tweets);
+                }];
+
             }
         } else {
             

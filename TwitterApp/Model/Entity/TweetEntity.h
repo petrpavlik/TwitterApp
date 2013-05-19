@@ -6,9 +6,10 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "BaseEntity.h"
 #import <Foundation/Foundation.h>
 
-@interface TweetEntity : NSObject
+@interface TweetEntity : BaseEntity
 
 @property(nonatomic, strong) NSDate* createdAt;
 @property(nonatomic, strong) NSNumber* favoriteCount;
@@ -26,5 +27,7 @@
 @property(nonatomic, strong) NSString* source;
 @property(nonatomic, strong) NSString* text;
 @property(nonatomic, strong) NSNumber* truncated;
+
++ (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
 @end
