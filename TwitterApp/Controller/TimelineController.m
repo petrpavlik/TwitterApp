@@ -68,11 +68,13 @@
     NSArray* urls = tweet.entities[@"urls"];
     for (NSDictionary* url in urls) {
         
-        NSNumber* beginningAt = url[@"indices"][0];
+        /*NSNumber* beginningAt = url[@"indices"][0];
         NSNumber* endgingAt = url[@"indices"][1];
         NSRange range = NSMakeRange(beginningAt.integerValue, endgingAt.integerValue - beginningAt.integerValue);
         
-        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];
+        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];*/
+        
+        cell.tweetTextLabel.text = [cell.tweetTextLabel.text stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
     }
     
     cell.mediaImageView.hidden = YES;
@@ -80,15 +82,25 @@
     NSArray* media = tweet.entities[@"media"];
     for (NSDictionary* url in media) {
         
-        NSNumber* beginningAt = url[@"indices"][0];
+        /*NSNumber* beginningAt = url[@"indices"][0];
         NSNumber* endgingAt = url[@"indices"][1];
         NSRange range = NSMakeRange(beginningAt.integerValue, endgingAt.integerValue - beginningAt.integerValue);
         
-        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];
+        [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];*/
+        
+        cell.tweetTextLabel.text = [cell.tweetTextLabel.text stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
         
         [cell.mediaImageView setImageWithURL:[NSURL URLWithString:url[@"media_url"]] placeholderImage:nil];
         cell.mediaImageView.hidden = NO;
     }
+    
+    NSError *error = NULL;
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+    
+    [detector enumerateMatchesInString:cell.tweetTextLabel.text options:0 range:NSMakeRange(0, [cell.tweetTextLabel.text length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+        
+        [cell addURL:[match URL] atRange:match.range];
+    }];
     
     return cell;
 }
@@ -97,14 +109,27 @@
     
     TweetEntity* tweet = self.tweets[indexPath.row];
     
+    NSString* tweetText = tweet.text;
+    
+    NSArray* urls = tweet.entities[@"urls"];
+    for (NSDictionary* url in urls) {
+        
+        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
     NSArray* media = tweet.entities[@"media"];
+    for (NSDictionary* url in media) {
+        
+        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
     CGFloat mediaHeight = 0;
     
     if (media.count) {
         mediaHeight = 310;
     }
     
-    return [TweetCell requiredHeightForTweetText:tweet.text] + mediaHeight;
+    return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight;
 }
 
 #pragma mark -
