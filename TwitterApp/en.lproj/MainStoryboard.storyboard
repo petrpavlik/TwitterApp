@@ -12,7 +12,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="a1r-kr-zDP" kind="relationship" relationship="rootViewController" id="mzs-Rf-qNV"/>
+                        <segue destination="VlJ-xk-FE5" kind="relationship" relationship="rootViewController" id="uGP-6b-foz"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y5V-bd-Aqg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -20,26 +20,25 @@
             <point key="canvasLocation" x="-217" y="-152"/>
         </scene>
         <!--Timeline Controller-->
-        <scene sceneID="Ryc-9c-6kP">
+        <scene sceneID="0Vr-ij-uak">
             <objects>
-                <viewController id="a1r-kr-zDP" customClass="TimelineController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dS4-cO-TWu">
+                <tableViewController id="VlJ-xk-FE5" customClass="TimelineController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WHX-zP-BiN">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="YUI-bG-18z"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="SS5-Kl-tNs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="VlJ-xk-FE5" id="AKd-Ve-9NZ"/>
+                            <outlet property="delegate" destination="VlJ-xk-FE5" id="Ilj-6Z-ESI"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="qZz-aR-cTp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8hx-0C-Xny" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="274" y="-152"/>
+            <point key="canvasLocation" x="239" y="-152"/>
         </scene>
     </scenes>
-    <classes>
-        <class className="TimelineController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TimelineController.h"/>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

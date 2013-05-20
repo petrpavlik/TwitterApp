@@ -12,9 +12,8 @@
 #import "TweetCell.h"
 #import "TweetEntity.h"
 
-@interface TimelineController () <UITableViewDataSource, UITableViewDelegate>
+@interface TimelineController ()
 
-@property(nonatomic, strong) UITableView* tableView;
 @property(nonatomic, strong) NSArray* tweets;
 
 @end
@@ -28,19 +27,11 @@
     
     self.title = @"Timeline";
     
-    self.tableView = [[UITableView alloc] init];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.translatesAutoresizingMaskIntoConstraints = NO;
-    [self.view addSubview:self.tableView];
-    
-    NSMutableArray* superviewConstraints = [NSMutableArray new];
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tableView)]];
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_tableView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tableView)]];
-    
-    [self.view addConstraints:superviewConstraints];
-    
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:@"TweetCell"];
+    
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(requestData) forControlEvents:UIControlEventValueChanged];
+    self.refreshControl = refreshControl;
     
     [self requestData];
 }
@@ -117,6 +108,8 @@
 
 - (void)requestData {
     
+    [self.refreshControl beginRefreshing];
+    
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
@@ -138,6 +131,7 @@
                 [TweetEntity requestHomeTimelineWithCompletionBlock:^(NSArray *tweets, NSError *error) {
                     //NSLog(@"%@", tweets);
                     self.tweets = tweets;
+                    [self.refreshControl endRefreshing];
                     [self.tableView reloadData];
                 }];
                 

@@ -14,7 +14,7 @@
     
     [super connectionDidFinishLoading:connection];
     
-    /*NSString* requestBodyString = [[NSString alloc] initWithData:self.request.HTTPBody encoding:NSUTF8StringEncoding];
+    NSString* requestBodyString = [[NSString alloc] initWithData:self.request.HTTPBody encoding:NSUTF8StringEncoding];
     
     NSLog(@"----------REQUEST-----------");
     NSLog(@"%@", [NSString stringWithFormat:@"%@ %@", self.request.HTTPMethod, self.request.URL]);
@@ -27,7 +27,7 @@
     else {
         NSLog(@"%@", self.responseString);
     }
-    NSLog(@"---------------------");*/
+    NSLog(@"---------------------");
 }
 
 - (void)connection:(NSURLConnection __unused *)connection

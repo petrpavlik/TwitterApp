@@ -54,15 +54,15 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     NSMutableURLRequest* afRequest = [self requestWithMethod:method path:path parameters:parameters];
     
-    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:afRequest.URL parameters:parameters];
+    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:afRequest.URL parameters:nil];
     slRequest.account = self.account;
     
     NSURLRequest* signedRequest = slRequest.preparedURLRequest;
     
     [afRequest setValue:signedRequest.allHTTPHeaderFields[@"Authorization"] forHTTPHeaderField:@"Authorization"];
     
-    //return afRequest;
-    return signedRequest;
+    return afRequest;
+    //return signedRequest;
 }
 
 

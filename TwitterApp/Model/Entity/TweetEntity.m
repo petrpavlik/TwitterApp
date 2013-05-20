@@ -28,7 +28,7 @@
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/home_timeline.json?count=50" parameters:nil];
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/home_timeline.json" parameters:@{@"count": @"50"}];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         
