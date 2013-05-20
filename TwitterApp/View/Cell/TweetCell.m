@@ -6,9 +6,27 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "PPLabel.h"
 #import "TweetCell.h"
 
+@interface TweetCell () <PPLabelDelegate>
+
+@property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
+
+@end
+
 @implementation TweetCell
+
+- (NSMutableDictionary*)urlsDictonary {
+    
+    if (!_urlsDictonary) {
+        _urlsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _urlsDictonary;
+}
+
+#pragma mark -
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -49,13 +67,16 @@
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
     
-    _tweetTextLabel = [[UILabel alloc] init];
+    _tweetTextLabel = [[PPLabel alloc] init];
     _tweetTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetTextLabel.numberOfLines = 0;
     _tweetTextLabel.preferredMaxLayoutWidth = 240;
     _tweetTextLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
     _tweetTextLabel.text = @"blah blah";
     [contentView addSubview:_tweetTextLabel];
+    
+    PPLabel* tweetTextLabel = (PPLabel*)_tweetTextLabel;
+    tweetTextLabel.delegate = self;
     
     _mediaImageView = [[NetImageView alloc] init];
     _mediaImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -77,6 +98,14 @@
     
     [contentView addConstraints:superviewConstraints];
     
+}
+
+#pragma mark -
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    [self.urlsDictonary removeAllObjects];
 }
 
 #pragma mark -
@@ -104,6 +133,36 @@
      [NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
     
     self.tweetTextLabel.attributedText = attributedString;
+    
+    self.urlsDictonary[[NSValue valueWithRange:range]] = url;
+}
+
+#pragma mark -
+
+- (void)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+}
+
+- (void)label:(PPLabel *)label didMoveTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+}
+
+- (void)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+    for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            [self.delegate tweetCell:self didSelectURL:self.urlsDictonary[rangeValue]];
+            break;
+        }
+    }
+}
+
+- (void)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
+    
 }
 
 @end

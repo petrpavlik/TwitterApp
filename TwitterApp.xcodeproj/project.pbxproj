@@ -37,6 +37,9 @@
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
+		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
+		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
+		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
 		84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247C6CFBE31346CFAFA5B8FE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -98,6 +101,11 @@
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
 		4BDB0F391748CE15004980EB /* TimelineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineController.m; path = Controller/TimelineController.m; sourceTree = "<group>"; };
+		4BF9B6B4174A878D00DA3318 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebController.h; path = Controller/WebController.h; sourceTree = "<group>"; };
+		4BF9B6B5174A878D00DA3318 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebController.m; path = Controller/WebController.m; sourceTree = "<group>"; };
+		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
+		4BF9B6B9174A89A200DA3318 /* PPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPLabel.m; path = View/Label/PPLabel.m; sourceTree = "<group>"; };
+		4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		D3EA10E129D14083A848A9C2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -106,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */,
 				4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */,
 				4B81BA4117453CD800005607 /* Social.framework in Frameworks */,
 				4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */,
@@ -164,6 +173,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */,
 				4B81BA4217453D4900005607 /* Accounts.framework */,
 				4B81BA4017453CD800005607 /* Social.framework */,
 				4B74288A1742D9CE00AEB85C /* UIKit.framework */,
@@ -226,6 +236,7 @@
 		4B7428C51742DA3500AEB85C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4BF9B6B7174A898700DA3318 /* Label */,
 				4BBDA6EB174912EE00E849FD /* Image */,
 				4B7428D11742DEB500AEB85C /* Cell */,
 				4B7428C61742DA5200AEB85C /* Skin */,
@@ -298,8 +309,19 @@
 			children = (
 				4BDB0F381748CE15004980EB /* TimelineController.h */,
 				4BDB0F391748CE15004980EB /* TimelineController.m */,
+				4BF9B6B4174A878D00DA3318 /* WebController.h */,
+				4BF9B6B5174A878D00DA3318 /* WebController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		4BF9B6B7174A898700DA3318 /* Label */ = {
+			isa = PBXGroup;
+			children = (
+				4BF9B6B8174A89A200DA3318 /* PPLabel.h */,
+				4BF9B6B9174A89A200DA3318 /* PPLabel.m */,
+			);
+			name = Label;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -457,6 +479,8 @@
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
 				4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */,
+				4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */,
+				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

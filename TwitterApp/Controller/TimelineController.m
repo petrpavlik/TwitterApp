@@ -11,8 +11,9 @@
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
+#import "WebController.h"
 
-@interface TimelineController ()
+@interface TimelineController () <TweetCellDelegate>
 
 @property(nonatomic, strong) NSArray* tweets;
 
@@ -54,6 +55,8 @@
 {
     static NSString *CellIdentifier = @"TweetCell";
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    cell.delegate = self;
     
     TweetEntity* tweet = self.tweets[indexPath.row];
     
@@ -141,6 +144,13 @@
             NSLog(@"No access granted %@", error);
         }
     }];
+}
+
+#pragma mark -
+
+- (void)tweetCell:(TweetCell *)cell didSelectURL:(NSURL *)url {
+    
+    [WebController presentWithUrl:url viewController:self];
 }
 
 @end
