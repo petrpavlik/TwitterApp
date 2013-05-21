@@ -84,12 +84,12 @@
     cell.tweetTextLabel.text = expandedTweet;
     
     for (NSDictionary* url in urls) {
-        [cell addURL:[NSURL URLWithString:url[@"display_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+        [cell addURL:[NSURL URLWithString:url[@"expanded_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
     }
     
     for (NSDictionary* url in media) {
         
-        [cell addURL:[NSURL URLWithString:url[@"display_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+        [cell addURL:[NSURL URLWithString:url[@"media_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
         
         [cell.mediaImageView setImageWithURL:[NSURL URLWithString:url[@"media_url"]] placeholderImage:nil];
         cell.mediaImageView.hidden = NO;
