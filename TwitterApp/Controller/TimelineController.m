@@ -90,8 +90,11 @@
     for (NSDictionary* url in media) {
         
         [cell addURL:[NSURL URLWithString:url[@"media_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+    }
+    
+    if (media.count) {
         
-        [cell.mediaImageView setImageWithURL:[NSURL URLWithString:url[@"media_url"]] placeholderImage:nil];
+        [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil];
         cell.mediaImageView.hidden = NO;
     }
     
@@ -131,7 +134,9 @@
     CGFloat mediaHeight = 0;
     
     if (media.count) {
-        mediaHeight = 310;
+        
+        
+        mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
     }
     
     return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight;
