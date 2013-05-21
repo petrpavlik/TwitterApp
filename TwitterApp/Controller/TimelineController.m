@@ -94,13 +94,26 @@
         cell.mediaImageView.hidden = NO;
     }
     
-    NSError *error = NULL;
-    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
-    
-    [detector enumerateMatchesInString:cell.tweetTextLabel.text options:0 range:NSMakeRange(0, [cell.tweetTextLabel.text length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop){
+    NSError *error = nil;
+   
+    NSRegularExpression *linkRegex = [NSRegularExpression regularExpressionWithPattern:@"(\b(https?)://[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])" options:0 error:&error];
+    [linkRegex enumerateMatchesInString:cell.tweetTextLabel.text options:0 range:NSMakeRange(0, [cell.tweetTextLabel.text length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
         
-        [cell addURL:[match URL] atRange:match.range];
+        [cell addURL:[NSURL URLWithString:@""] atRange:result.range];
     }];
+    
+    NSRegularExpression *hashtagRegex = [NSRegularExpression regularExpressionWithPattern:@"#([^\\s#@]*)" options:0 error:&error];
+    [hashtagRegex enumerateMatchesInString:cell.tweetTextLabel.text options:0 range:NSMakeRange(0, [cell.tweetTextLabel.text length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+       
+        [cell addURL:[NSURL URLWithString:@""] atRange:result.range];
+    }];
+    
+    NSRegularExpression *usernameRegex = [NSRegularExpression regularExpressionWithPattern:@"@([1-9a-zA-Z_]+)" options:0 error:&error];
+    [usernameRegex enumerateMatchesInString:cell.tweetTextLabel.text options:0 range:NSMakeRange(0, [cell.tweetTextLabel.text length]) usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+        
+        [cell addURL:[NSURL URLWithString:@""] atRange:result.range];
+    }];
+
     
     return cell;
 }
@@ -177,5 +190,28 @@
     
     [WebController presentWithUrl:url viewController:self];
 }
+
+#pragma mark -
+
+/*- (void)processTweet:(TweetEntity*)tweet {
+    
+    NSArray* urls = tweet.entities[@"urls"];
+    NSArray* media = tweet.entities[@"media"];
+    
+    NSMutableArray* modifiedUrls = [urls mutableCopy];
+    NSMutableArray* modifiedMedia = [media mutableCopy];
+    
+    for (NSDictionary* url in urls) {
+        
+        NSNumber* beginningAt = url[@"indices"][0];
+         NSNumber* endgingAt = url[@"indices"][1];
+         NSRange range = NSMakeRange(beginningAt.integerValue, endgingAt.integerValue - beginningAt.integerValue);
+         
+         [cell addURL:[NSURL URLWithString:url[@"url"]] atRange:range];
+        
+        cell.tweetTextLabel.text = [cell.tweetTextLabel.text stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+
+}*/
 
 @end
