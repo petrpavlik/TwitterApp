@@ -181,9 +181,9 @@
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
     
-    [self.delegate label:self didBeginTouch:touch onCharacterAtIndex:index];
-    
-    [super touchesBegan:touches withEvent:event];
+    if (![self.delegate label:self didBeginTouch:touch onCharacterAtIndex:index]) {
+        [super touchesBegan:touches withEvent:event];
+    }
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -191,9 +191,9 @@
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
     
-    [self.delegate label:self didMoveTouch:touch onCharacterAtIndex:index];
-    
-    [super touchesMoved:touches withEvent:event];
+    if (![self.delegate label:self didMoveTouch:touch onCharacterAtIndex:index]) {
+        [super touchesMoved:touches withEvent:event];
+    }
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -201,18 +201,18 @@
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
     
-    [self.delegate label:self didEndTouch:touch onCharacterAtIndex:index];
-    
-    [super touchesEnded:touches withEvent:event];
+    if (![self.delegate label:self didEndTouch:touch onCharacterAtIndex:index]) {
+        [super touchesEnded:touches withEvent:event];
+    }
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     
     UITouch *touch = [touches anyObject];
     
-    [self.delegate label:self didCancelTouch:touch];
-    
-    [super touchesCancelled:touches withEvent:event];
+    if (![self.delegate label:self didCancelTouch:touch]) {
+        [super touchesCancelled:touches withEvent:event];
+    }
 }
 
 @end

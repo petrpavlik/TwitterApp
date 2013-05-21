@@ -139,15 +139,26 @@
 
 #pragma mark -
 
-- (void)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+- (BOOL)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
     
+    for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
-- (void)label:(PPLabel *)label didMoveTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
-    
+- (BOOL)label:(PPLabel *)label didMoveTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    return NO;
 }
 
-- (void)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+- (BOOL)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
     
     for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
         
@@ -156,13 +167,15 @@
         if (charIndex >= range.location && charIndex <= range.location+range.length) {
             
             [self.delegate tweetCell:self didSelectURL:self.urlsDictonary[rangeValue]];
-            break;
+            return YES;
         }
     }
+    
+    return NO;
 }
 
-- (void)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
-    
+- (BOOL)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
+    return NO;
 }
 
 @end
