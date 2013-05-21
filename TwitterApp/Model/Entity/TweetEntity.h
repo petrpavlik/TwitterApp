@@ -26,6 +26,7 @@
 @property(nonatomic, strong) NSDictionary* scopes;
 @property(nonatomic, strong) NSNumber* retweetCount;
 @property(nonatomic, strong) NSNumber* retweeted;
+@property(nonatomic, strong) TweetEntity* retweetedStatus;
 @property(nonatomic, strong) NSString* source;
 @property(nonatomic, strong) NSString* text;
 @property(nonatomic, strong) NSNumber* truncated;

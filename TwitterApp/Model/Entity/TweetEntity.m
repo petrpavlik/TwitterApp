@@ -17,6 +17,10 @@
     
         self.user = [[UserEntity alloc] initWithDictionary:value];
     }
+    else if ([key isEqualToString:@"RetweetedStatus"]) {
+        
+        self.retweetedStatus = [[TweetEntity alloc] initWithDictionary:value];
+    }
     else {
         [super setValue:value forKey:key];
     }

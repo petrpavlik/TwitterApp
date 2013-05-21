@@ -60,6 +60,10 @@
     
     TweetEntity* tweet = self.tweets[indexPath.row];
     
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
     cell.nameLabel.text = tweet.user.name;
     cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
     [cell.avatarImageView setImageWithURL:[NSURL URLWithString:tweet.user.profileImageUrl] placeholderImage:nil];
@@ -116,6 +120,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
     
     NSString* tweetText = tweet.text;
     

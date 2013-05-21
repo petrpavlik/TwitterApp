@@ -6,9 +6,11 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AFTwitterClient.h"
 #import "AppDelegate.h"
 #import "BaseEntity.h"
 #import "LightSkin.h"
+#import "NetImageView.h"
 
 @implementation AppDelegate
 
@@ -33,6 +35,8 @@
         
         return outMutableString;
     }];
+    
+    [NetImageView setSharedOperationQueue:[AFTwitterClient sharedClient].operationQueue];
     
     AbstractSkin* skin = [LightSkin new];
     [skin applyGlobalAppearance];
