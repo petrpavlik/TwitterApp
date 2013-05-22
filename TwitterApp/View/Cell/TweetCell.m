@@ -40,6 +40,10 @@
 
 - (void)commonSetup {
     
+    UIView *bgColorView = [[UIView alloc] init];
+    [bgColorView setBackgroundColor:[UIColor colorWithWhite:200/255.0 alpha:1.0]];
+    [self setSelectedBackgroundView:bgColorView];
+    
     UIView* contentView = self.contentView;
     
     _avatarImageView = [[NetImageView alloc] init];

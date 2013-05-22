@@ -26,6 +26,17 @@
     }
 }
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"IdStr"]) {
+        
+        self.tweetId = value;
+    }
+    else {
+        [super setValue:value forUndefinedKey:key];
+    }
+}
+
 #pragma mark -
 
 + (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block {
