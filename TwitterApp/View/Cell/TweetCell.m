@@ -64,6 +64,11 @@
     _usernameLabel.text = @"username";
     [contentView addSubview:_usernameLabel];
     
+    _retweetedLabel = [[UILabel alloc] init];
+    _retweetedLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
+    _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:_retweetedLabel];
+    
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
@@ -99,7 +104,10 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_mediaImageView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel]-[_mediaImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel][_retweetedLabel]-[_mediaImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel, _retweetedLabel)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
+
     
     [contentView addConstraints:superviewConstraints];
     
@@ -111,6 +119,7 @@
     [super prepareForReuse];
     
     [self.urlsDictonary removeAllObjects];
+    _retweetedLabel.text = nil;
 }
 
 #pragma mark -

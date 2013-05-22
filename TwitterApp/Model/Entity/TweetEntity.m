@@ -21,6 +21,12 @@
         
         self.retweetedStatus = [[TweetEntity alloc] initWithDictionary:value];
     }
+    else if ([key isEqualToString:@"CreatedAt"]) {
+        
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+        self.createdAt = [df dateFromString:value];
+    }
     else {
         [super setValue:value forKey:key];
     }

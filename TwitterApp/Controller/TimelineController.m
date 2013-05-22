@@ -8,6 +8,7 @@
 
 #import <Accounts/Accounts.h>
 #import "AFTwitterClient.h"
+#import "NSString+TwitterApp.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
@@ -59,18 +60,25 @@
     cell.delegate = self;
     
     TweetEntity* tweet = self.tweets[indexPath.row];
+    TweetEntity* retweet = nil;
     
     if (tweet.retweetedStatus) {
+        retweet = tweet;
         tweet = tweet.retweetedStatus;
     }
     
     cell.nameLabel.text = tweet.user.name;
     cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
     [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil];
+    cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
+    
+    if (retweet) {
+        cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by %@", retweet.user.name];
+    }
     
     cell.mediaImageView.hidden = YES;
     
-    NSString* expandedTweet = tweet.text;
+    NSString* expandedTweet = [tweet.text stringByStrippingHTMLTags];
     
     NSArray* urls = tweet.entities[@"urls"];
     NSArray* media = tweet.entities[@"media"];
@@ -120,12 +128,15 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     TweetEntity* tweet = self.tweets[indexPath.row];
+    TweetEntity* retweet = nil;
     
     if (tweet.retweetedStatus) {
+        
+        retweet = tweet;
         tweet = tweet.retweetedStatus;
     }
     
-    NSString* tweetText = tweet.text;
+    NSString* tweetText = [tweet.text stringByStrippingHTMLTags];
     
     NSArray* urls = tweet.entities[@"urls"];
     for (NSDictionary* url in urls) {
@@ -143,11 +154,15 @@
     
     if (media.count) {
         
-        
         mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
     }
     
-    return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight;
+    CGFloat retweetInformationHeight = 0;
+    if (retweet) {
+        retweetInformationHeight = 15;
+    }
+    
+    return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight + retweetInformationHeight;
 }
 
 #pragma mark -
@@ -194,6 +209,31 @@
 - (void)tweetCell:(TweetCell *)cell didSelectURL:(NSURL *)url {
     
     [WebController presentWithUrl:url viewController:self];
+}
+
+- (NSString*)ageAsStringForDate:(NSDate*)date {
+ 
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *difference = [calendar components:NSSecondCalendarUnit|NSMinuteCalendarUnit|NSHourCalendarUnit|NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date toDate:[NSDate date] options:0];
+    
+    if (difference.year) {
+        return [NSString stringWithFormat:@"%dy", difference.year];
+    }
+    else if (difference.month) {
+        return [NSString stringWithFormat:@"%dm", difference.month];
+    }
+    else if (difference.day) {
+        return [NSString stringWithFormat:@"%dd", difference.day];
+    }
+    else if (difference.hour) {
+        return [NSString stringWithFormat:@"%dh", difference.hour];
+    }
+    else if (difference.minute) {
+        return [NSString stringWithFormat:@"%dm", difference.minute];
+    }
+    else {
+        return [NSString stringWithFormat:@"%ds", difference.second];
+    }
 }
 
 @end
