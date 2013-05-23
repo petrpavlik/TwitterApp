@@ -25,6 +25,7 @@
         
         NSDateFormatter *df = [[NSDateFormatter alloc] init];
         [df setDateFormat:@"eee MMM dd HH:mm:ss ZZZZ yyyy"];
+        [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
         self.createdAt = [df dateFromString:value];
     }
     else {
@@ -45,11 +46,21 @@
 
 #pragma mark -
 
-+ (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block {
++ (NSOperation*)requestHomeTimelineWithMaxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block  {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/home_timeline.json" parameters:@{@"count": @"50"}];
+    NSMutableDictionary* mutableParams = [@{@"count": @"50"} mutableCopy];
+    
+    if (maxId) {
+        mutableParams[@"max_id"] = maxId;
+    }
+    
+    if (sinceId) {
+        mutableParams[@"since_id"] = sinceId;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/home_timeline.json" parameters:mutableParams];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         

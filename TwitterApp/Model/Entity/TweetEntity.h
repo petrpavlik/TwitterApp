@@ -32,6 +32,6 @@
 @property(nonatomic, strong) NSNumber* truncated;
 @property(nonatomic, strong) UserEntity* user;
 
-+ (NSOperation*)requestHomeTimelineWithCompletionBlock:(void (^)(NSArray* tweets, NSError* error))block;
++ (NSOperation*)requestHomeTimelineWithMaxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
 @end

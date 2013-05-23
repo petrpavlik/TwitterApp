@@ -36,6 +36,7 @@
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
+		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
@@ -100,6 +101,8 @@
 		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
 		4BCB2287174D1078006602AA /* NSString+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+TwitterApp.m"; path = "Category/NSString+TwitterApp.m"; sourceTree = "<group>"; };
+		4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = View/Cell/LoadingCell.h; sourceTree = "<group>"; };
+		4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = View/Cell/LoadingCell.m; sourceTree = "<group>"; };
 		4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterJSONRequestOperation.h; path = Model/API/AFTwitterJSONRequestOperation.h; sourceTree = "<group>"; };
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 			children = (
 				4B7428D21742DED500AEB85C /* TweetCell.h */,
 				4B7428D31742DED500AEB85C /* TweetCell.m */,
+				4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */,
+				4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -487,6 +492,7 @@
 				4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
+				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
