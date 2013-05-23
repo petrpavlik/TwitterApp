@@ -19,6 +19,7 @@
 @interface TimelineController () <TweetCellDelegate>
 
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
+@property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, strong) NSArray* tweets;
 
 @end
@@ -36,7 +37,7 @@
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"LoadingCell"];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
-    [refreshControl addTarget:self action:@selector(requestData) forControlEvents:UIControlEventValueChanged];
+    [refreshControl addTarget:self action:@selector(requestNewTweets) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     
     [self requestData];
@@ -244,6 +245,44 @@
     }];
 }
 
+- (void)requestNewTweets {
+    
+    TweetEntity* mostRecentTweet = self.tweets[0];
+    [self requestTweetsSinceId:mostRecentTweet.tweetId];
+}
+
+- (void)requestTweetsSinceId:(NSString*)sinceId {
+    
+    NSParameterAssert(sinceId);
+    
+    if (self.runningNewTweetsOperation) {
+        return;
+    }
+    
+    self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:^(NSArray *tweets, NSError *error) {
+        
+        [self.refreshControl endRefreshing];
+        
+        self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
+  
+        [self.tableView beginUpdates];
+        
+        NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
+        for (NSInteger i=0; i<tweets.count; i++) {
+            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
+        
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self.tableView endUpdates];
+        
+        MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
+        [hud hide:YES afterDelay:3];
+    }];
+}
+
 - (void)requestTweetsWithMaxId:(NSString*)maxId {
     
     NSParameterAssert(maxId);
@@ -255,7 +294,7 @@
     self.runningOlderTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:maxId sinceId:nil completionBlock:^(NSArray *tweets, NSError *error) {
         
         self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
-  
+        
         [self.tableView beginUpdates];
         
         NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
