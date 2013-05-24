@@ -12,6 +12,7 @@
 @interface TweetCell () <PPLabelDelegate>
 
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
+@property(nonatomic, strong) UIView* slidingContentView;
 
 @end
 
@@ -44,7 +45,15 @@
     [bgColorView setBackgroundColor:[UIColor colorWithWhite:200/255.0 alpha:1.0]];
     [self setSelectedBackgroundView:bgColorView];
     
-    UIView* contentView = self.contentView;
+    _slidingContentView = [[UIView alloc] init];
+    [self.contentView addSubview:_slidingContentView];
+    
+    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureMoveAround:)];
+    [panGesture setMaximumNumberOfTouches:1];
+    [panGesture setDelegate:self];
+    [_slidingContentView addGestureRecognizer:panGesture];
+    
+    UIView* contentView = _slidingContentView;
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -110,7 +119,6 @@
 
     
     [contentView addConstraints:superviewConstraints];
-    
 }
 
 #pragma mark -
@@ -120,6 +128,17 @@
     
     [self.urlsDictonary removeAllObjects];
     _retweetedLabel.text = nil;
+    
+    CGRect contentViewFrame = self.contentView.frame;
+    contentViewFrame.origin.x = -50;
+    self.contentView.frame = contentViewFrame;
+
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    _slidingContentView.frame = self.contentView.bounds;
 }
 
 #pragma mark -
@@ -204,6 +223,39 @@
     self.tweetTextLabel.attributedText = attributedString;
     
     return NO;
+}
+
+#pragma mark -
+
+-(void)panGestureMoveAround:(UIPanGestureRecognizer *)gesture;
+{
+    UIView *piece = [gesture view];
+    //[self adjustAnchorPointForGestureRecognizer:gesture];
+    
+    if ([gesture state] == UIGestureRecognizerStateBegan || [gesture state] == UIGestureRecognizerStateChanged) {
+        
+        CGPoint translation = [gesture translationInView:[piece superview]];
+        CGPoint velocity = [gesture velocityInView:[piece superview]];
+        
+        piece.center = CGPointMake(piece.center.x + velocity.x/60, piece.center.y);
+    }
+    else if ([gesture state] == UIGestureRecognizerStateEnded || [gesture state] == UIGestureRecognizerStateCancelled) {
+        
+        [UIView animateWithDuration:1 animations:^{
+            piece.center = CGPointMake(self.contentView.center.x, piece.center.y);
+        }];
+    }
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        
+        CGPoint translation = [(UIPanGestureRecognizer*)gestureRecognizer translationInView:[[gestureRecognizer view] superview] ];
+        return (fabs(translation.x) / fabs(translation.y) > 1) ? YES : NO;
+    }
+
+    return [super gestureRecognizerShouldBegin:gestureRecognizer];
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -57,6 +58,8 @@
 
 /* Begin PBXFileReference section */
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
+		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -268,6 +271,8 @@
 				4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */,
 				4BCB2286174D1078006602AA /* NSString+TwitterApp.h */,
 				4BCB2287174D1078006602AA /* NSString+TwitterApp.m */,
+				4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */,
+				4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -493,6 +498,7 @@
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
+				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
