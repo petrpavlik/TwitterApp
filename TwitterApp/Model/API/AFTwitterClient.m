@@ -54,12 +54,30 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     NSMutableURLRequest* afRequest = [self requestWithMethod:method path:path parameters:parameters];
     
-    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:afRequest.URL parameters:nil];
+    SLRequestMethod requestMethod = SLRequestMethodGET;
+    
+    if ([method isEqualToString:@"GET"]) {
+        requestMethod = SLRequestMethodGET;
+    }
+    else if ([method isEqualToString:@"POST"]) {
+        requestMethod = SLRequestMethodPOST;
+    }
+    else if ([method isEqualToString:@"DELETE"]) {
+        requestMethod = SLRequestMethodDELETE;
+    }
+    else {
+        
+        [NSException raise:@"Unknown request method" format:nil];
+        return nil;
+    }
+    
+    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:requestMethod URL:afRequest.URL parameters:nil];
     slRequest.account = self.account;
     
     NSURLRequest* signedRequest = slRequest.preparedURLRequest;
     
     [afRequest setValue:signedRequest.allHTTPHeaderFields[@"Authorization"] forHTTPHeaderField:@"Authorization"];
+    afRequest.HTTPBody = signedRequest.HTTPBody;
     
     return afRequest;
     //return signedRequest;

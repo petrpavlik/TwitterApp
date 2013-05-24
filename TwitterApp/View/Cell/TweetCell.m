@@ -13,6 +13,7 @@
 
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
 @property(nonatomic, strong) UIView* slidingContentView;
+@property(nonatomic, strong) UIImageView* rightActionImageView;
 
 @end
 
@@ -57,7 +58,7 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _avatarImageView.backgroundColor = [UIColor grayColor];
+    //_avatarImageView.backgroundColor = [UIColor grayColor];
     [contentView addSubview:_avatarImageView];
     
     _nameLabel = [[UILabel alloc] init];
@@ -99,10 +100,15 @@
     
     _mediaImageView = [[NetImageView alloc] init];
     _mediaImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    //_mediaImageView.backgroundColor = [UIColor grayColor];
     _mediaImageView.contentMode = UIViewContentModeScaleAspectFit;
     _mediaImageView.clipsToBounds = YES;
     [contentView addSubview:_mediaImageView];
+    
+    _rightActionImageView = [[UIImageView alloc] init];
+    _rightActionImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _rightActionImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
+    [contentView addSubview:_rightActionImageView];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -116,6 +122,16 @@
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel][_retweetedLabel]-[_mediaImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel, _retweetedLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetAgeLabel]-20-[_rightActionImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_rightActionImageView, _tweetAgeLabel)]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_rightActionImageView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1.0
+                                                                  constant:0]];
 
     
     [contentView addConstraints:superviewConstraints];
@@ -229,20 +245,45 @@
 
 -(void)panGestureMoveAround:(UIPanGestureRecognizer *)gesture;
 {
-    UIView *piece = [gesture view];
+    UIView *contentView = [gesture view];
     //[self adjustAnchorPointForGestureRecognizer:gesture];
     
     if ([gesture state] == UIGestureRecognizerStateBegan || [gesture state] == UIGestureRecognizerStateChanged) {
         
-        CGPoint translation = [gesture translationInView:[piece superview]];
-        CGPoint velocity = [gesture velocityInView:[piece superview]];
+        [self setSelected:NO animated:YES];
         
-        piece.center = CGPointMake(piece.center.x + velocity.x/60, piece.center.y);
+        //CGPoint translation = [gesture translationInView:[piece superview]];
+        CGPoint velocity = [gesture velocityInView:[contentView superview]];
+        
+        CGFloat frictionCoefficient = abs(contentView.frame.origin.x)*0.05;
+        if (frictionCoefficient < 1) {
+            frictionCoefficient = 1;
+        }
+        
+        contentView.center = CGPointMake(contentView.center.x + velocity.x/(60*frictionCoefficient), contentView.center.y);
+        
+        if (abs(contentView.frame.origin.x) > 40) {
+            
+            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Highlighted"];
+        }
+        else {
+            
+            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
+        }
     }
     else if ([gesture state] == UIGestureRecognizerStateEnded || [gesture state] == UIGestureRecognizerStateCancelled) {
         
-        [UIView animateWithDuration:1 animations:^{
-            piece.center = CGPointMake(self.contentView.center.x, piece.center.y);
+        if (abs(contentView.frame.origin.x) > 40) {
+            
+            //...
+            NSLog(@"right action triggered");
+            [self.delegate tweetCellDidRequestRightAction:self];
+        }
+        
+        CGFloat animationSpeed = abs(contentView.frame.origin.x)*0.002;
+        
+        [UIView animateWithDuration:animationSpeed animations:^{
+            contentView.center = CGPointMake(self.contentView.center.x, contentView.center.y);
         }];
     }
 }

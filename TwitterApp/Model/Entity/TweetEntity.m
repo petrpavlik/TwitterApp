@@ -83,4 +83,26 @@
     return (NSOperation*)operation;
 }
 
+- (NSOperation*)requestRetweetWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block {
+    
+    NSParameterAssert(self.tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:[NSString stringWithFormat: @"statuses/retweet/%@.json", self.tweetId] parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+       TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:JSON];
+        block(tweet, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

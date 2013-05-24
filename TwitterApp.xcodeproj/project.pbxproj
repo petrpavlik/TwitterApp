@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
+		4B712350174FEDF90075ECA5 /* Icon-Retweet-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B712348174FEC2C0075ECA5 /* Icon-Retweet-Highlighted.png */; };
+		4B712351174FEDF90075ECA5 /* Icon-Retweet-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B712349174FEC2C0075ECA5 /* Icon-Retweet-Highlighted@2x.png */; };
+		4B712352174FEDF90075ECA5 /* Icon-Retweet-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B71234A174FEC2C0075ECA5 /* Icon-Retweet-Normal.png */; };
+		4B712353174FEDF90075ECA5 /* Icon-Retweet-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B71234B174FEC2C0075ECA5 /* Icon-Retweet-Normal@2x.png */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -60,6 +64,10 @@
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
+		4B712348174FEC2C0075ECA5 /* Icon-Retweet-Highlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Retweet-Highlighted.png"; path = "TwitterApp/Image/Icon-Retweet-Highlighted.png"; sourceTree = SOURCE_ROOT; };
+		4B712349174FEC2C0075ECA5 /* Icon-Retweet-Highlighted@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Retweet-Highlighted@2x.png"; path = "TwitterApp/Image/Icon-Retweet-Highlighted@2x.png"; sourceTree = SOURCE_ROOT; };
+		4B71234A174FEC2C0075ECA5 /* Icon-Retweet-Normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Retweet-Normal.png"; path = "TwitterApp/Image/Icon-Retweet-Normal.png"; sourceTree = SOURCE_ROOT; };
+		4B71234B174FEC2C0075ECA5 /* Icon-Retweet-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Retweet-Normal@2x.png"; path = "TwitterApp/Image/Icon-Retweet-Normal@2x.png"; sourceTree = SOURCE_ROOT; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -157,6 +165,17 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		4B712347174FEC1C0075ECA5 /* Image */ = {
+			isa = PBXGroup;
+			children = (
+				4B712348174FEC2C0075ECA5 /* Icon-Retweet-Highlighted.png */,
+				4B712349174FEC2C0075ECA5 /* Icon-Retweet-Highlighted@2x.png */,
+				4B71234A174FEC2C0075ECA5 /* Icon-Retweet-Normal.png */,
+				4B71234B174FEC2C0075ECA5 /* Icon-Retweet-Normal@2x.png */,
+			);
+			name = Image;
+			sourceTree = "<group>";
+		};
 		4B74287E1742D9CE00AEB85C = {
 			isa = PBXGroup;
 			children = (
@@ -236,6 +255,7 @@
 		4B7428B51742D9CE00AEB85C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4B712347174FEC1C0075ECA5 /* Image */,
 				4B7428B61742D9CE00AEB85C /* TwitterAppTests-Info.plist */,
 				4B7428B71742D9CE00AEB85C /* InfoPlist.strings */,
 			);
@@ -419,6 +439,10 @@
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
 				4B81BA3D174538D900005607 /* Icon.png in Resources */,
 				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
+				4B712350174FEDF90075ECA5 /* Icon-Retweet-Highlighted.png in Resources */,
+				4B712351174FEDF90075ECA5 /* Icon-Retweet-Highlighted@2x.png in Resources */,
+				4B712352174FEDF90075ECA5 /* Icon-Retweet-Normal.png in Resources */,
+				4B712353174FEDF90075ECA5 /* Icon-Retweet-Normal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

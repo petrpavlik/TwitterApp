@@ -21,6 +21,8 @@
     NSLog(@"%@", self.request.allHTTPHeaderFields.description);
     NSLog(@"%@", requestBodyString);
     NSLog(@"----------RESPONSE-----------");
+    NSLog(@"%@", self.response.allHeaderFields);
+    NSLog(@"status code: %d", self.response.statusCode);
     if (self.responseJSON) {
         NSLog(@"%@", self.responseJSON);
     }
@@ -42,6 +44,8 @@
     NSLog(@"%@", self.request.allHTTPHeaderFields.description);
     NSLog(@"%@", requestBodyString);
     NSLog(@"----------RESPONSE-----------");
+    NSLog(@"%@", self.response.allHeaderFields);
+    NSLog(@"status code: %d", self.response.statusCode);
     NSLog(@"%@", error);
     NSLog(@"---------------------");
 }

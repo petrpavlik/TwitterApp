@@ -320,6 +320,36 @@
     [WebController presentWithUrl:url viewController:self];
 }
 
+- (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
+    
+    NSLog(@"about to retweet");
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+       
+        //NSLog(@"%@", updatedTweet);
+        if ([self.tweets isKindOfClass:[NSMutableArray class]]) {
+            
+            NSMutableArray *mutableTweets = (NSMutableArray*)self.tweets;
+            mutableTweets[indexPath.row] = updatedTweet;
+        }
+        else {
+            
+            NSMutableArray *mutableTweets = [self.tweets mutableCopy];
+            mutableTweets[indexPath.row] = updatedTweet;
+            self.tweets = mutableTweets;
+        }
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    }];
+}
+
+#pragma mark -
+
 - (NSString*)ageAsStringForDate:(NSDate*)date {
     
     NSParameterAssert(date);
