@@ -16,6 +16,7 @@
 - (void)tweetCell:(TweetCell*)cell didSelectURL:(NSURL*)url;
 - (void)tweetCellDidRequestLeftAction:(TweetCell*)cell;
 - (void)tweetCellDidRequestRightAction:(TweetCell*)cell;
+- (void)tweetCellDidSelectAvatarImage:(TweetCell*)cell;
 
 @end
 

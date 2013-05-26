@@ -62,6 +62,10 @@
     //_avatarImageView.backgroundColor = [UIColor grayColor];
     [contentView addSubview:_avatarImageView];
     
+    UITapGestureRecognizer* avatarTapGestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarSelected)];
+    [_avatarImageView addGestureRecognizer:avatarTapGestureRecongnizer];
+    _avatarImageView.userInteractionEnabled = YES;
+    
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
@@ -327,6 +331,12 @@
     }
 
     return [super gestureRecognizerShouldBegin:gestureRecognizer];
+}
+
+#pragma mark -
+
+- (void)avatarSelected {
+    [self.delegate tweetCellDidSelectAvatarImage:self];
 }
 
 @end
