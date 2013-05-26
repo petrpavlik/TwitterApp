@@ -71,7 +71,11 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
         return nil;
     }
     
-    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:requestMethod URL:afRequest.URL parameters:nil];
+    if (requestMethod == SLRequestMethodGET) {
+        parameters = nil; //already contained in URL
+    }
+    
+    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:requestMethod URL:afRequest.URL parameters:parameters];
     slRequest.account = self.account;
     
     NSURLRequest* signedRequest = slRequest.preparedURLRequest;

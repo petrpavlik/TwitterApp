@@ -36,4 +36,6 @@
 
 - (NSOperation*)requestRetweetWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block;
 
++ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
+
 @end

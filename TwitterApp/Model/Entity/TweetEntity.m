@@ -105,4 +105,31 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableDictionary* params = [NSMutableDictionary new];
+    params[@"status"] = text;
+    
+    if (tweetId) {
+        params[@"in_reply_to_status_id"] = tweetId;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"statuses/update.json" parameters:params];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:JSON];
+        block(tweet, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

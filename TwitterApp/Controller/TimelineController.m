@@ -14,6 +14,7 @@
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
+#import "TweetController.h"
 #import "WebController.h"
 
 @interface TimelineController () <TweetCellDelegate>
@@ -39,6 +40,8 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(requestNewTweets) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
     
     [self requestData];
 }
@@ -375,6 +378,13 @@
     else {
         return [NSString stringWithFormat:@"%ds", difference.second];
     }
+}
+
+#pragma mark -
+
+- (void)composeTweet {
+    
+    [TweetController presentInViewController:self];
 }
 
 @end
