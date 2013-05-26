@@ -14,6 +14,7 @@
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
 @property(nonatomic, strong) UIView* slidingContentView;
 @property(nonatomic, strong) UIImageView* rightActionImageView;
+@property(nonatomic, strong) UIImageView* leftActionImageView;
 
 @end
 
@@ -110,6 +111,12 @@
     _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
     [contentView addSubview:_rightActionImageView];
     
+    _leftActionImageView = [[UIImageView alloc] init];
+    _leftActionImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _leftActionImageView.contentMode = UIViewContentModeScaleAspectFit;
+    _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
+    [contentView addSubview:_leftActionImageView];
+    
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[_nameLabel]-[_usernameLabel]-[_tweetAgeLabel]-10-|" options:NSLayoutFormatAlignAllTop metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _nameLabel, _usernameLabel, _tweetAgeLabel)]];
@@ -125,7 +132,17 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetAgeLabel]-20-[_rightActionImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_rightActionImageView, _tweetAgeLabel)]];
     
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_leftActionImageView]-20-[_avatarImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_leftActionImageView, _avatarImageView)]];
+    
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_rightActionImageView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_leftActionImageView
                                                                  attribute:NSLayoutAttributeCenterY
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:contentView
@@ -176,6 +193,8 @@
 #pragma mark -
 
 - (void)addURL:(NSURL*)url atRange:(NSRange)range {
+    
+    NSParameterAssert(url);
     
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
     [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
@@ -262,22 +281,33 @@
         
         contentView.center = CGPointMake(contentView.center.x + velocity.x/(60*frictionCoefficient), contentView.center.y);
         
-        if (abs(contentView.frame.origin.x) > 40) {
+        if (contentView.frame.origin.x < -50) {
             
+            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
             _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Highlighted"];
+        }
+        else if (contentView.frame.origin.x > 50) {
+            
+            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Highlighted"];
+            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
         }
         else {
             
+            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
             _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
         }
     }
     else if ([gesture state] == UIGestureRecognizerStateEnded || [gesture state] == UIGestureRecognizerStateCancelled) {
         
-        if (abs(contentView.frame.origin.x) > 40) {
+        if (contentView.frame.origin.x < -50) {
             
-            //...
             NSLog(@"right action triggered");
             [self.delegate tweetCellDidRequestRightAction:self];
+        }
+        else if (contentView.frame.origin.x > 50) {
+            
+            NSLog(@"left action triggered");
+            [self.delegate tweetCellDidRequestLeftAction:self];
         }
         
         CGFloat animationSpeed = abs(contentView.frame.origin.x)*0.002;

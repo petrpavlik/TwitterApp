@@ -117,7 +117,15 @@
         cell.tweetTextLabel.text = expandedTweet;
         
         for (NSDictionary* url in urls) {
-            [cell addURL:[NSURL URLWithString:url[@"expanded_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+            
+            NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+            if (expandedUrl) {
+                [cell addURL:expandedUrl atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+            }
+            else {
+                //TODO: should not happen, log an error
+                NSLog(@"could not convert '%@' to NSURL", url[@"expanded_url"]);
+            }
         }
         
         for (NSDictionary* url in media) {
@@ -326,6 +334,7 @@
 - (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
     
     NSLog(@"about to retweet");
+    return; //!!!!!
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = self.tweets[indexPath.row];
@@ -349,6 +358,14 @@
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
     }];
+}
+
+- (void)tweetCellDidRequestLeftAction:(TweetCell *)cell {
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    [TweetController presentAsReplyToTweet:tweet inViewController:self];
 }
 
 #pragma mark -

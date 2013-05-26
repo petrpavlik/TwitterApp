@@ -20,6 +20,31 @@
     [navigationBar setBackgroundImage:[UIImage imageWithColor:navigationBarColor] forBarMetrics:UIBarMetricsDefault];
     [navigationBar setBackgroundImage:[UIImage imageWithColor:navigationBarColor] forBarMetrics:UIBarMetricsLandscapePhone];
     
+    UIBarButtonItem* barButtonItem = [UIBarButtonItem appearance];
+    
+    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Normal"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Highlighted"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Disabled"] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
+    
+    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                          [UIColor whiteColor], UITextAttributeTextColor,
+                                          [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                          [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
+                                           nil] forState:UIControlStateNormal];
+    
+    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                           [UIColor colorWithWhite:155/255.0 alpha:1], UITextAttributeTextColor,
+                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                           [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
+                                           nil] forState:UIControlStateDisabled];
+    
+    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                           [UIColor colorWithWhite:212/255.0 alpha:1], UITextAttributeTextColor,
+                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                           [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
+                                           nil] forState:UIControlStateHighlighted];
+    
+    
     [navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor], UITextAttributeTextColor,

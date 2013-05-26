@@ -11,6 +11,7 @@
 
 @interface TweetController () <UITextViewDelegate>
 
+@property(nonatomic, strong) TweetEntity* tweetToReplyTo;
 @property(nonatomic, strong) UITextView* tweetTextView;
 
 @end
@@ -18,8 +19,16 @@
 @implementation TweetController
 
 + (TweetController*)presentInViewController:(UIViewController*)viewController {
-    
+    return [TweetController presentAsReplyToTweet:nil inViewController:viewController];
+}
+
++ (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController {
+
     TweetController* tweetController = [[TweetController alloc] init];
+    
+    if (tweet) {
+        tweetController.tweetToReplyTo = tweet;
+    }
     
     UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:tweetController];
     
@@ -47,13 +56,17 @@
     self.title = @"140";
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
+    
+    if (self.tweetToReplyTo) {
+        _tweetTextView.text = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
+    }
 }
 
 #pragma mark -
 
 - (void)done {
     
-    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:nil completionBlock:^(TweetEntity *tweet, NSError *error) {
+    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId completionBlock:^(TweetEntity *tweet, NSError *error) {
         
     }];
     

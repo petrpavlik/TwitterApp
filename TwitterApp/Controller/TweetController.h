@@ -6,10 +6,12 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "TweetEntity.h"
 #import <UIKit/UIKit.h>
 
 @interface TweetController : UIViewController
 
++ (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController;
 + (TweetController*)presentInViewController:(UIViewController*)viewController;
 
 @end
