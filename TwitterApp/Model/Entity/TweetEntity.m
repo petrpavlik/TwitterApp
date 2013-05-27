@@ -132,4 +132,20 @@
     return (NSOperation*)operation;
 }
 
++ (void)testStream {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"https://stream.twitter.com/1.1/statuses/filter.json" parameters:@{@"follow": @"14461738,145816941"}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSLog(@"%@", JSON);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+}
+
 @end

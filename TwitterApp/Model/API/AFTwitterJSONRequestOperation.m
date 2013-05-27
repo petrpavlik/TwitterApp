@@ -10,6 +10,13 @@
 
 @implementation AFTwitterJSONRequestOperation
 
+/*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+
+    NSString* dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", dataString);
+
+}*/
+
 - (void)connectionDidFinishLoading:(NSURLConnection __unused *)connection {
     
     [super connectionDidFinishLoading:connection];

@@ -22,6 +22,7 @@
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, strong) NSArray* tweets;
+@property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
 
 @end
 
@@ -43,7 +44,22 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
     
+    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+    
     [self requestData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self updateTweetAge];
+    [self.updateTweetAgeTimer fire];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self.updateTweetAgeTimer invalidate];
 }
 
 #pragma mark -
@@ -232,9 +248,11 @@
                 
                 ACAccount *twitterAccount = [accounts objectAtIndex:0];
                 
-                NSLog(@"%@", twitterAccount);
+                //NSLog(@"%@", twitterAccount);
                 
                 [AFTwitterClient sharedClient].account = twitterAccount;
+                
+                //[TweetEntity testStream];
                 
                 [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:^(NSArray *tweets, NSError *error) {
                     //NSLog(@"%@", tweets);
@@ -402,6 +420,21 @@
 - (void)composeTweet {
     
     [TweetController presentInViewController:self];
+}
+
+- (void)updateTweetAge {
+    
+    for (UITableViewCell* cell in [self.tableView visibleCells]) {
+        
+        if ([cell isKindOfClass:[TweetCell class]]) {
+            
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+            TweetEntity* tweet = self.tweets[indexPath.row];
+            
+            TweetCell* tweetCell = (TweetCell*)cell;
+            tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
+        }
+    }
 }
 
 @end

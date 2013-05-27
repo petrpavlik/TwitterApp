@@ -38,4 +38,6 @@
 
 + (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
 
++ (void)testStream;
+
 @end
