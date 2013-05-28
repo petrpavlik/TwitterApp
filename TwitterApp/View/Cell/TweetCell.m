@@ -208,6 +208,18 @@
     self.urlsDictonary[[NSValue valueWithRange:range]] = url;
 }
 
+- (void)addHashtag:(NSString*)hashtag atRange:(NSRange)range {
+    
+    NSParameterAssert(hashtag);
+    
+    NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
+    
+    self.tweetTextLabel.attributedText = attributedString;
+    
+    //[self.hashtagsArray addObject:hashtag];
+}
+
 #pragma mark -
 
 - (BOOL)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {

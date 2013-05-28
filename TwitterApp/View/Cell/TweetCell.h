@@ -32,6 +32,8 @@
 @property(nonatomic, strong) UILabel* tweetTextLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
 
+- (void)addHashtag:(NSString*)hashtag atRange:(NSRange)range;
+- (void)addMention:(NSString*)mention atRange:(NSRange)range;
 - (void)addURL:(NSURL*)url atRange:(NSRange)range;
 + (CGFloat)requiredHeightForTweetText:(NSString*)text;
 

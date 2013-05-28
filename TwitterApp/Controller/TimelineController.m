@@ -290,25 +290,36 @@
     
     self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:^(NSArray *tweets, NSError *error) {
         
+        self.tableView.userInteractionEnabled = NO;
+        
         [self.refreshControl endRefreshing];
         
-        self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
-  
-        [self.tableView beginUpdates];
-        
-        NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
-        for (NSInteger i=0; i<tweets.count; i++) {
-            [indexPaths addObject:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
-        
-        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-        
-        [self.tableView endUpdates];
-        
-        MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.mode = MBProgressHUDModeText;
-        hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
-        [hud hide:YES afterDelay:3];
+        //wait for the refresh control to hide
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
+            
+            CGFloat contentOffsetY = self.tableView.contentOffset.y;
+            
+            [self.tableView reloadData];
+            
+            for (TweetEntity* tweet in tweets) {
+                
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:[self.tweets indexOfObject:tweet] inSection:0];
+                contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+            }
+            
+            self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+            
+            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
+            [hud hide:YES afterDelay:3];
+            
+            self.tableView.userInteractionEnabled = YES;
+        });
     }];
 }
 
