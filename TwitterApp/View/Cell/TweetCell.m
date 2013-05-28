@@ -12,6 +12,7 @@
 @interface TweetCell () <PPLabelDelegate>
 
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
+@property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
 @property(nonatomic, strong) UIView* slidingContentView;
 @property(nonatomic, strong) UIImageView* rightActionImageView;
 @property(nonatomic, strong) UIImageView* leftActionImageView;
@@ -27,6 +28,15 @@
     }
     
     return _urlsDictonary;
+}
+
+- (NSMutableDictionary*)hashtagsDictonary {
+    
+    if (!_hashtagsDictonary) {
+        _hashtagsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _hashtagsDictonary;
 }
 
 #pragma mark -
@@ -217,7 +227,8 @@
     
     self.tweetTextLabel.attributedText = attributedString;
     
-    //[self.hashtagsArray addObject:hashtag];
+    self.hashtagsDictonary[[NSValue valueWithRange:range]] = hashtag;
+
 }
 
 #pragma mark -
@@ -234,6 +245,20 @@
             [attributedString addAttribute:NSUnderlineStyleAttributeName value:
              [NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
             
+            self.tweetTextLabel.attributedText = attributedString;
+            
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.hashtagsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
             self.tweetTextLabel.attributedText = attributedString;
             
             return YES;
@@ -260,6 +285,21 @@
             self.tweetTextLabel.attributedText = attributedString;
             
             [self.delegate tweetCell:self didSelectURL:self.urlsDictonary[rangeValue]];
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.hashtagsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.tweetTextLabel.attributedText = attributedString;
+            
+            [self.delegate tweetCell:self didSelectHashtag:self.hashtagsDictonary[rangeValue]];
             return YES;
         }
     }

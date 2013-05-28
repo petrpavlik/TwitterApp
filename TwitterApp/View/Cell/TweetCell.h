@@ -14,6 +14,7 @@
 @protocol TweetCellDelegate <NSObject>
 
 - (void)tweetCell:(TweetCell*)cell didSelectURL:(NSURL*)url;
+- (void)tweetCell:(TweetCell*)cell didSelectHashtag:(NSString*)hashstag;
 - (void)tweetCellDidRequestLeftAction:(TweetCell*)cell;
 - (void)tweetCellDidRequestRightAction:(TweetCell*)cell;
 - (void)tweetCellDidSelectAvatarImage:(TweetCell*)cell;

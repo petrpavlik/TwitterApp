@@ -8,6 +8,8 @@
 
 #import "AFTwitterJSONRequestOperation.h"
 
+//#define LOG_API 1
+
 @implementation AFTwitterJSONRequestOperation
 
 /*- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -21,6 +23,7 @@
     
     [super connectionDidFinishLoading:connection];
     
+#ifdef LOG_API
     NSString* requestBodyString = [[NSString alloc] initWithData:self.request.HTTPBody encoding:NSUTF8StringEncoding];
     
     NSLog(@"----------REQUEST-----------");
@@ -37,13 +40,15 @@
         NSLog(@"%@", self.responseString);
     }
     NSLog(@"---------------------");
+#endif
 }
 
 - (void)connection:(NSURLConnection __unused *)connection
   didFailWithError:(NSError *)error
 {
     [super connection:connection didFailWithError:error];
-    
+   
+#ifdef LOG_API
     NSString* requestBodyString = [[NSString alloc] initWithData:self.request.HTTPBody encoding:NSUTF8StringEncoding];
     
     NSLog(@"----------REQUEST-----------");
@@ -55,6 +60,7 @@
     NSLog(@"status code: %d", self.response.statusCode);
     NSLog(@"%@", error);
     NSLog(@"---------------------");
+#endif
 }
 
 @end

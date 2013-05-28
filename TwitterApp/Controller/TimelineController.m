@@ -158,7 +158,7 @@
         for (NSDictionary* item in hashtags) {
             
             NSString* hashtag = [NSString stringWithFormat:@"#%@", item[@"text"]];
-            [cell addURL:[NSURL URLWithString:@""] atRange:[expandedTweet rangeOfString:hashtag]];
+            [cell addHashtag:hashtag atRange:[expandedTweet rangeOfString:hashtag]];
         }
         
         for (NSDictionary* item in mentions) {
@@ -360,10 +360,14 @@
     [WebController presentWithUrl:url viewController:self];
 }
 
+- (void)tweetCell:(TweetCell *)cell didSelectHashtag:(NSString *)hashstag {
+    NSLog(@"selected hashtag %@", hashstag);
+}
+
 - (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
     
     NSLog(@"about to retweet");
-    return; //!!!!!
+    //return; //!!!!!
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = self.tweets[indexPath.row];
@@ -395,6 +399,10 @@
     TweetEntity* tweet = self.tweets[indexPath.row];
     
     [TweetController presentAsReplyToTweet:tweet inViewController:self];
+}
+
+- (void)tweetCellDidSelectAvatarImage:(TweetCell *)cell {
+    
 }
 
 #pragma mark -

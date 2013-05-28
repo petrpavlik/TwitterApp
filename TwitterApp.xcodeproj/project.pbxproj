@@ -59,6 +59,8 @@
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
+		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
+		4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB691754DF2800075F7D /* UserListController.m */; };
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
 		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
 		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
@@ -149,6 +151,10 @@
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
 		4BDB0F391748CE15004980EB /* TimelineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineController.m; path = Controller/TimelineController.m; sourceTree = "<group>"; };
+		4BDFDB651754DEC400075F7D /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserCell.h; path = View/Cell/UserCell.h; sourceTree = "<group>"; };
+		4BDFDB661754DEC400075F7D /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserCell.m; path = View/Cell/UserCell.m; sourceTree = "<group>"; };
+		4BDFDB681754DF2800075F7D /* UserListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListController.h; path = Controller/UserListController.h; sourceTree = "<group>"; };
+		4BDFDB691754DF2800075F7D /* UserListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListController.m; path = Controller/UserListController.m; sourceTree = "<group>"; };
 		4BF9B6B4174A878D00DA3318 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebController.h; path = Controller/WebController.h; sourceTree = "<group>"; };
 		4BF9B6B5174A878D00DA3318 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebController.m; path = Controller/WebController.m; sourceTree = "<group>"; };
 		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
@@ -324,6 +330,8 @@
 				4B7428D31742DED500AEB85C /* TweetCell.m */,
 				4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */,
 				4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */,
+				4BDFDB651754DEC400075F7D /* UserCell.h */,
+				4BDFDB661754DEC400075F7D /* UserCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -393,6 +401,8 @@
 				4BF9B6B5174A878D00DA3318 /* WebController.m */,
 				4BAEB3D21752280E0027A0D1 /* TweetController.h */,
 				4BAEB3D31752280E0027A0D1 /* TweetController.m */,
+				4BDFDB681754DF2800075F7D /* UserListController.h */,
+				4BDFDB691754DF2800075F7D /* UserListController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -585,6 +595,8 @@
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
 				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
 				4BAEB3D41752280E0027A0D1 /* TweetController.m in Sources */,
+				4BDFDB671754DEC500075F7D /* UserCell.m in Sources */,
+				4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

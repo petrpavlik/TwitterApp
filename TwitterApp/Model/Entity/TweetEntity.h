@@ -38,6 +38,10 @@
 
 + (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
 
++ (NSOperation*)requestRetweetsOfTweet:(NSString*)tweetId completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
+
++ (NSOperation*)requestHomeTimelineWithQuery:(NSString*)query maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
+
 + (void)testStream;
 
 @end

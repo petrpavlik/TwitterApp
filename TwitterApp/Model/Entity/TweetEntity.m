@@ -132,6 +132,75 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestRetweetsOfTweet:(NSString*)tweetId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:[NSString stringWithFormat:@"statuses/retweets/%@.json", tweetId] parameters:@{@"count": @"100"}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            [tweets addObject:tweet];
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+
+}
+
++ (NSOperation*)requestHomeTimelineWithQuery:(NSString*)query maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    NSParameterAssert(query);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableDictionary* mutableParams = [@{@"q": query, @"count": @"50"} mutableCopy];
+    
+    if (maxId) {
+        mutableParams[@"max_id"] = maxId;
+    }
+    
+    if (sinceId) {
+        mutableParams[@"since_id"] = sinceId;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"search/tweets.json" parameters:mutableParams];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            [tweets addObject:tweet];
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
+#pragma mark -
+
 + (void)testStream {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
