@@ -11,5 +11,6 @@
 @interface TimelineController : UITableViewController
 
 @property(nonatomic, strong) NSString* searchQuery;
+@property(nonatomic, strong) NSString* screenName;
 
 @end

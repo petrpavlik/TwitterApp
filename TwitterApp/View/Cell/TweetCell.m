@@ -13,6 +13,7 @@
 
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
 @property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
+@property(nonatomic, strong) NSMutableDictionary* mentionsDictonary;
 @property(nonatomic, strong) UIView* slidingContentView;
 @property(nonatomic, strong) UIImageView* rightActionImageView;
 @property(nonatomic, strong) UIImageView* leftActionImageView;
@@ -37,6 +38,15 @@
     }
     
     return _hashtagsDictonary;
+}
+
+- (NSMutableDictionary*)mentionsDictonary {
+    
+    if (!_mentionsDictonary) {
+        _mentionsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _mentionsDictonary;
 }
 
 #pragma mark -
@@ -231,6 +241,19 @@
 
 }
 
+- (void)addMention:(NSString*)mention atRange:(NSRange)range {
+    
+    NSParameterAssert(mention);
+    
+    NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
+    
+    self.tweetTextLabel.attributedText = attributedString;
+    
+    self.mentionsDictonary[[NSValue valueWithRange:range]] = mention;
+    
+}
+
 #pragma mark -
 
 - (BOOL)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
@@ -252,6 +275,20 @@
     }
     
     for (NSValue* rangeValue in self.hashtagsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.tweetTextLabel.attributedText = attributedString;
+            
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.mentionsDictonary.allKeys) {
         
         NSRange range = [rangeValue rangeValue];
         
@@ -300,6 +337,21 @@
             self.tweetTextLabel.attributedText = attributedString;
             
             [self.delegate tweetCell:self didSelectHashtag:self.hashtagsDictonary[rangeValue]];
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.mentionsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.tweetTextLabel.attributedText = attributedString;
+            
+            [self.delegate tweetCell:self didSelectMention:self.mentionsDictonary[rangeValue]];
             return YES;
         }
     }

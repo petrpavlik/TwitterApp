@@ -28,6 +28,13 @@
         [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"]];
         self.createdAt = [df dateFromString:value];
     }
+    else if ([key isEqualToString:@"InReplyToStatusIdStr"]) {
+        
+        self.inReplyToStatusId = value;
+    }
+    else if ([key isEqualToString:@"InReplyToStatusId"]) {
+        //do nothing
+    }
     else {
         [super setValue:value forKey:key];
     }
@@ -188,6 +195,82 @@
             
             TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
             [tweets addObject:tweet];
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
++ (NSOperation*)requestUserTimelineWithScreenName:(NSString*)screenName maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    NSParameterAssert(screenName);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableDictionary* mutableParams = [@{@"screen_name": screenName, @"count": @"50"} mutableCopy];
+    
+    if (maxId) {
+        mutableParams[@"max_id"] = maxId;
+    }
+    
+    if (sinceId) {
+        mutableParams[@"since_id"] = sinceId;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/user_timeline.json" parameters:mutableParams];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            [tweets addObject:tweet];
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
++ (NSOperation*)requestSearchRepliesWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    NSParameterAssert(tweetId);
+    NSParameterAssert(screenName);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSDictionary* parameters = @{@"q": [NSString stringWithFormat:@"to:%@", screenName], @"count": @"100", @"result_type": @"recent", @"since_id": tweetId};
+    
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"search/tweets.json" parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        JSON = JSON[@"statuses"];
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* reply = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            if ([reply.inReplyToStatusId isEqualToString:tweetId]) {
+                [tweets addObject:reply];
+            }
         }
         
         block(tweets, nil);

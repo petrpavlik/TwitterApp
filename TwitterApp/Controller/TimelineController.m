@@ -37,6 +37,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    NSAssert(!(self.searchQuery && self.screenName), @"cannot set both searchQuery and screenName");
+    
     self.title = @"Timeline";
     
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:@"TweetCell"];
@@ -47,6 +49,13 @@
     self.refreshControl = refreshControl;
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
+    
+    if (self.searchQuery.length) {
+        self.title = self.searchQuery;
+    }
+    else if (self.screenName.length) {
+        self.title = [NSString stringWithFormat:@"@%@", self.screenName];
+    }
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
     
@@ -168,7 +177,7 @@
         for (NSDictionary* item in mentions) {
             
             NSString* mention = [NSString stringWithFormat:@"@%@", item[@"screen_name"]];
-            [cell addURL:[NSURL URLWithString:@""] atRange:[expandedTweet rangeOfString:mention]];
+            [cell addMention:mention atRange:[expandedTweet rangeOfString:mention]];
         }
         
         return cell;
@@ -232,6 +241,21 @@
     }
 }
 
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    [TweetEntity requestSearchRepliesWithTweetId:tweet.tweetId screenName:tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
+       
+        for (TweetEntity* reply in tweets) {
+            NSLog(@"%@", reply.text);
+        }
+    }];
+}
+
+
 #pragma mark -
 
 - (void)requestData {
@@ -271,6 +295,9 @@
                 
                 if (self.searchQuery.length) {
                     [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:nil completionBlock:completionBlock];
+                }
+                else if (self.screenName.length) {
+                    [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:nil completionBlock:completionBlock];
                 }
                 else {
                     [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:completionBlock];
@@ -335,6 +362,9 @@
     if (self.searchQuery.length) {
         [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:sinceId completionBlock:completionBlock];
     }
+    else if (self.screenName.length) {
+        [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:sinceId completionBlock:completionBlock];
+    }
     else {
         self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:completionBlock];
     }
@@ -372,6 +402,9 @@
     if (self.searchQuery.length) {
         [TweetEntity requestSearchWithQuery:self.searchQuery maxId:maxId sinceId:nil completionBlock:completionBlock];
     }
+    else if (self.screenName.length) {
+        [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:maxId sinceId:nil completionBlock:completionBlock];
+    }
     else {
         self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:maxId sinceId:nil completionBlock:completionBlock];
     }    
@@ -393,6 +426,17 @@
     
     [self.navigationController pushViewController:timelineController animated:YES];
 }
+
+- (void)tweetCell:(TweetCell *)cell didSelectMention:(NSString *)mention {
+    
+    NSLog(@"selected mention %@", mention);
+    
+    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+    timelineController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    
+    [self.navigationController pushViewController:timelineController animated:YES];
+}
+
 
 - (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
     
@@ -433,6 +477,19 @@
 
 - (void)tweetCellDidSelectAvatarImage:(TweetCell *)cell {
     
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = self.tweets[indexPath.row];
+    
+    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+    
+    if (tweet.retweetedStatus) {
+        timelineController.screenName = tweet.retweetedStatus.user.screenName;
+    }
+    else {
+        timelineController.screenName = tweet.user.screenName;
+    }
+    
+    [self.navigationController pushViewController:timelineController animated:YES];
 }
 
 #pragma mark -
