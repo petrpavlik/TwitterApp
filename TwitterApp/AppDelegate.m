@@ -11,8 +11,20 @@
 #import "BaseEntity.h"
 #import "LightSkin.h"
 #import "NetImageView.h"
+#import "TwitterAppWindow.h"
 
 @implementation AppDelegate
+
+- (UIWindow*)window {
+    
+    if (!_window) {
+        _window = [[TwitterAppWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    }
+    
+    return _window;
+}
+
+#pragma mark -
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

@@ -10,6 +10,13 @@
 
 @interface UIImage (TwitterApp)
 
-+ (UIImage*)imageWithColor:(UIColor*)color;
+- (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius;
+- (UIImage *)imageWithRoundTopCornersWithRadius:(CGFloat)radius;
+- (UIImage *)imageCroppedToRect:(CGRect)rect;
+- (UIImage *)imageScaledToSize:(CGSize)newSize;
+- (UIImage *)imageByScalingProportionallyToSize:(CGSize)targetSize;
+- (UIImage *)imageByInsertingImage:(UIImage*)overImage retina:(BOOL)retina;
+
++ (UIImage*)imageWithColor:(UIColor*)color size:(CGSize)size;
 
 @end

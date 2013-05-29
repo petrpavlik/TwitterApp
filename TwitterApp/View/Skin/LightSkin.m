@@ -17,8 +17,12 @@
     
     UIColor* navigationBarColor = [UIColor colorWithRed:0.000 green:0.698 blue:0.925 alpha:1];
     
-    [navigationBar setBackgroundImage:[UIImage imageWithColor:navigationBarColor] forBarMetrics:UIBarMetricsDefault];
-    [navigationBar setBackgroundImage:[UIImage imageWithColor:navigationBarColor] forBarMetrics:UIBarMetricsLandscapePhone];
+    UIImage* navigationBarBackground = [UIImage imageWithColor:navigationBarColor size:CGSizeMake(21, 11)];
+    navigationBarBackground = [navigationBarBackground imageWithRoundTopCornersWithRadius:10];
+    navigationBarBackground = [navigationBarBackground resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 0, 10)];
+    
+    [navigationBar setBackgroundImage:navigationBarBackground forBarMetrics:UIBarMetricsDefault];
+    [navigationBar setBackgroundImage:navigationBarBackground forBarMetrics:UIBarMetricsLandscapePhone];
     
     UIBarButtonItem* barButtonItem = [UIBarButtonItem appearance];
     

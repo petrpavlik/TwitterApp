@@ -45,5 +45,6 @@
 + (NSOperation*)requestSearchRepliesWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
 + (void)testStream;
++ (void)testDirectMessages;
 
 @end

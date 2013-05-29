@@ -280,6 +280,8 @@
                 
                 [AFTwitterClient sharedClient].account = twitterAccount;
                 
+                //[TweetEntity testDirectMessages];
+                
                 void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
                     
                     //NSLog(@"%@", tweets);

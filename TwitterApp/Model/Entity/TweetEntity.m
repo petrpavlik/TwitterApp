@@ -302,4 +302,20 @@
     [apiClient enqueueHTTPRequestOperation:operation];
 }
 
++ (void)testDirectMessages {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"https://api.twitter.com/1.1/direct_messages.json" parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSLog(@"%@", JSON);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@", error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+}
+
 @end
