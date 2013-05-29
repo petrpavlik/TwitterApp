@@ -160,7 +160,7 @@
 
 }
 
-+ (NSOperation*)requestHomeTimelineWithQuery:(NSString*)query maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
++ (NSOperation*)requestSearchWithQuery:(NSString*)query maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
     
     NSParameterAssert(query);
     
@@ -179,6 +179,8 @@
     NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"search/tweets.json" parameters:mutableParams];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        JSON = JSON[@"statuses"];
         
         NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
         

@@ -22,7 +22,7 @@
         <!--Timeline Controller-->
         <scene sceneID="0Vr-ij-uak">
             <objects>
-                <tableViewController id="VlJ-xk-FE5" customClass="TimelineController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TimelineController" id="VlJ-xk-FE5" customClass="TimelineController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="WHX-zP-BiN">
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

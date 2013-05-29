@@ -28,6 +28,10 @@
 
 @implementation TimelineController
 
+- (void)dealloc {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -252,9 +256,8 @@
                 
                 [AFTwitterClient sharedClient].account = twitterAccount;
                 
-                //[TweetEntity testStream];
-                
-                [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:^(NSArray *tweets, NSError *error) {
+                void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
+                    
                     //NSLog(@"%@", tweets);
                     self.tweets = tweets;
                     [self.refreshControl endRefreshing];
@@ -264,9 +267,16 @@
                     hud.mode = MBProgressHUDModeText;
                     hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
                     [hud hide:YES afterDelay:3];
-                }];
+                };
                 
+                if (self.searchQuery.length) {
+                    [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:nil completionBlock:completionBlock];
+                }
+                else {
+                    [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:completionBlock];
+                }
             }
+            
         } else {
             
             NSLog(@"No access granted %@", error);
@@ -288,7 +298,7 @@
         return;
     }
     
-    self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:^(NSArray *tweets, NSError *error) {
+    void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
         self.tableView.userInteractionEnabled = NO;
         
@@ -320,7 +330,14 @@
             
             self.tableView.userInteractionEnabled = YES;
         });
-    }];
+    };
+    
+    if (self.searchQuery.length) {
+        [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:sinceId completionBlock:completionBlock];
+    }
+    else {
+        self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:completionBlock];
+    }
 }
 
 - (void)requestTweetsWithMaxId:(NSString*)maxId {
@@ -331,7 +348,7 @@
         return;
     }
     
-    self.runningOlderTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:maxId sinceId:nil completionBlock:^(NSArray *tweets, NSError *error) {
+    void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
         self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
         
@@ -350,7 +367,14 @@
         hud.mode = MBProgressHUDModeText;
         hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
         [hud hide:YES afterDelay:3];
-    }];
+    };
+    
+    if (self.searchQuery.length) {
+        [TweetEntity requestSearchWithQuery:self.searchQuery maxId:maxId sinceId:nil completionBlock:completionBlock];
+    }
+    else {
+        self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:maxId sinceId:nil completionBlock:completionBlock];
+    }    
 }
 
 #pragma mark -
@@ -361,7 +385,13 @@
 }
 
 - (void)tweetCell:(TweetCell *)cell didSelectHashtag:(NSString *)hashstag {
+    
     NSLog(@"selected hashtag %@", hashstag);
+    
+    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+    timelineController.searchQuery = hashstag;
+    
+    [self.navigationController pushViewController:timelineController animated:YES];
 }
 
 - (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
