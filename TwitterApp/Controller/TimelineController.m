@@ -15,6 +15,7 @@
 #import "TweetCell.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
+#import "UserTitleView.h"
 #import "WebController.h"
 
 @interface TimelineController () <TweetCellDelegate>
@@ -55,6 +56,19 @@
     }
     else if (self.screenName.length) {
         self.title = [NSString stringWithFormat:@"@%@", self.screenName];
+    }
+    else {
+        
+        UserTitleView* userTitleView = [[UserTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+        
+        NSDictionary* attributes = self.navigationController.navigationBar.titleTextAttributes;
+        attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[UIFont fontWithName:@"Helvetica" size:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+        
+        NSAttributedString* nameAttrString = [[NSAttributedString alloc] initWithString:@"@ptrpavlik" attributes:attributes];
+        userTitleView.nameLabel.attributedText = nameAttrString;
+        
+        [userTitleView.avatarImageView setImageWithURL:[NSURL URLWithString:@"https://si0.twimg.com/profile_images/3126864086/30bb0202747f2a78d08dc147468b170b_normal.jpeg"] placeholderImage:nil];
+        self.navigationItem.titleView = userTitleView;
     }
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];

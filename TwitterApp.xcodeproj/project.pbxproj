@@ -30,6 +30,7 @@
 		4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
 		4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428DB1742E4E900AEB85C /* UserEntity.m */; };
 		4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */; };
+		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
 		4B81BA3D174538D900005607 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
 		4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
@@ -116,6 +117,8 @@
 		4B7428DB1742E4E900AEB85C /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEntity.m; path = Model/Entity/UserEntity.m; sourceTree = "<group>"; };
 		4B7C2880175685FD003FDCBB /* TwitterAppWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterAppWindow.h; path = View/TwitterAppWindow.h; sourceTree = "<group>"; };
 		4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterAppWindow.m; path = View/TwitterAppWindow.m; sourceTree = "<group>"; };
+		4B7C288B1756ADDC003FDCBB /* UserTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTitleView.h; path = View/UserTitleView.h; sourceTree = "<group>"; };
+		4B7C288C1756ADDC003FDCBB /* UserTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTitleView.m; path = View/UserTitleView.m; sourceTree = "<group>"; };
 		4B81BA3C174538D900005607 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		4B81BA3E174538DC00005607 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		4B81BA4017453CD800005607 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
@@ -300,6 +303,8 @@
 				4B7428C61742DA5200AEB85C /* Skin */,
 				4B7C2880175685FD003FDCBB /* TwitterAppWindow.h */,
 				4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */,
+				4B7C288B1756ADDC003FDCBB /* UserTitleView.h */,
+				4B7C288C1756ADDC003FDCBB /* UserTitleView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -603,6 +608,7 @@
 				4BDFDB671754DEC500075F7D /* UserCell.m in Sources */,
 				4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */,
 				4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */,
+				4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

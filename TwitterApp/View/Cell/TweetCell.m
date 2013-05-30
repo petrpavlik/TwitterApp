@@ -7,6 +7,7 @@
 //
 
 #import "PPLabel.h"
+#import <QuartzCore/QuartzCore.h>
 #import "TweetCell.h"
 
 @interface TweetCell () <PPLabelDelegate>
@@ -79,7 +80,9 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    //_avatarImageView.backgroundColor = [UIColor grayColor];
+    _avatarImageView.clipsToBounds = YES;
+    _avatarImageView.layer.cornerRadius = 5;
+    
     [contentView addSubview:_avatarImageView];
     
     UITapGestureRecognizer* avatarTapGestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarSelected)];
@@ -107,7 +110,7 @@
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
-    _tweetTextLabel.font = [UIFont fontWithName:@"Helvetica" size:14];
+    _tweetTextLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:14];
     _tweetAgeLabel.textColor = [UIColor colorWithRed:0.624 green:0.624 blue:0.624 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
@@ -151,6 +154,8 @@
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_mediaImageView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel][_retweetedLabel]-[_mediaImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel, _retweetedLabel)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel(240)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
     
