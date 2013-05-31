@@ -9,8 +9,11 @@
 #import "AFTwitterClient.h"
 #import "AppDelegate.h"
 #import "BaseEntity.h"
+#import <ECSlidingViewController.h>
 #import "LightSkin.h"
+#import "NavigationController.h"
 #import "NetImageView.h"
+#import "TimelineController.h"
 #import "TwitterAppWindow.h"
 
 @implementation AppDelegate
@@ -29,6 +32,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    ECSlidingViewController* rootController = (ECSlidingViewController*)self.window.rootViewController;
+    rootController.view.backgroundColor = [UIColor blackColor];
+    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+    
+    rootController.topViewController = [[NavigationController alloc] initWithRootViewController:timelineController];
     
     [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {
         //converts keys such as created_at to CreatedAt

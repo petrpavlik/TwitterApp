@@ -59,6 +59,8 @@
 		4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C04175794F900311FF5 /* LoadMoreCell.m */; };
 		4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
+		4BC63C1F17590B9F00F7E0C3 /* BasementController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C1E17590B9F00F7E0C3 /* BasementController.m */; };
+		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
@@ -156,6 +158,10 @@
 		4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GapTweetEntity.m; path = Model/Entity/GapTweetEntity.m; sourceTree = "<group>"; };
 		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
 		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
+		4BC63C1D17590B9F00F7E0C3 /* BasementController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasementController.h; path = Controller/BasementController.h; sourceTree = "<group>"; };
+		4BC63C1E17590B9F00F7E0C3 /* BasementController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasementController.m; path = Controller/BasementController.m; sourceTree = "<group>"; };
+		4BC63C201759133200F7E0C3 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
+		4BC63C211759133200F7E0C3 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationController.m; path = Controller/NavigationController.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
 		4BCB2287174D1078006602AA /* NSString+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+TwitterApp.m"; path = "Category/NSString+TwitterApp.m"; sourceTree = "<group>"; };
 		4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = View/Cell/LoadingCell.h; sourceTree = "<group>"; };
@@ -428,6 +434,10 @@
 				4BAEB3D31752280E0027A0D1 /* TweetController.m */,
 				4BDFDB681754DF2800075F7D /* UserListController.h */,
 				4BDFDB691754DF2800075F7D /* UserListController.m */,
+				4BC63C1D17590B9F00F7E0C3 /* BasementController.h */,
+				4BC63C1E17590B9F00F7E0C3 /* BasementController.m */,
+				4BC63C201759133200F7E0C3 /* NavigationController.h */,
+				4BC63C211759133200F7E0C3 /* NavigationController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -627,6 +637,8 @@
 				4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */,
 				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
+				4BC63C1F17590B9F00F7E0C3 /* BasementController.m in Sources */,
+				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

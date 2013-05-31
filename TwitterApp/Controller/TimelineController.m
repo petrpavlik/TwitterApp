@@ -7,7 +7,9 @@
 //
 
 #import <Accounts/Accounts.h>
+#import "BasementController.h"
 #import "AFTwitterClient.h"
+#import <ECSlidingViewController.h>
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
@@ -54,7 +56,11 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
     
-    self.searchQuery = @"ass";
+    if (self.navigationController.viewControllers[0] == self) {
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(showBasement)];
+    }
+    
+    //self.searchQuery = @"ass";
     
     if (self.searchQuery.length) {
         self.title = self.searchQuery;
@@ -86,6 +92,10 @@
     
     [self updateTweetAge];
     [self.updateTweetAgeTimer fire];
+    
+    if (![self.slidingViewController.underLeftViewController isKindOfClass:[BasementController class]]) {
+        self.slidingViewController.underLeftViewController  = [[BasementController alloc] initWithStyle:UITableViewStylePlain];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -688,6 +698,11 @@
 - (void)composeTweet {
     
     [TweetController presentInViewController:self];
+}
+
+- (void)showBasement {
+    
+    [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 - (void)updateTweetAge {

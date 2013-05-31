@@ -16,8 +16,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.layer.cornerRadius = 10;
-        self.clipsToBounds = YES;
+        //self.layer.cornerRadius = 10;
+        //self.clipsToBounds = YES;
     }
     return self;
 }
