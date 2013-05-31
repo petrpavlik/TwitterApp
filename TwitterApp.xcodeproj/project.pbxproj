@@ -56,6 +56,8 @@
 		4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */; };
 		4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */; };
 		4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */; };
+		4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C04175794F900311FF5 /* LoadMoreCell.m */; };
+		4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
@@ -63,6 +65,7 @@
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
 		4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB691754DF2800075F7D /* UserListController.m */; };
+		4BE5557C1758F87400A214FC /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5557B1758F87400A214FC /* NotificationView.m */; };
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
 		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
 		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
@@ -147,6 +150,10 @@
 		4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Normal@2x.png"; path = "Image/Button-NavigationBar-Normal@2x.png"; sourceTree = "<group>"; };
 		4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled.png"; path = "Image/Button-NavigationBar-Disabled.png"; sourceTree = "<group>"; };
 		4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled@2x.png"; path = "Image/Button-NavigationBar-Disabled@2x.png"; sourceTree = "<group>"; };
+		4BB42C03175794F900311FF5 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadMoreCell.h; path = View/Cell/LoadMoreCell.h; sourceTree = "<group>"; };
+		4BB42C04175794F900311FF5 /* LoadMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadMoreCell.m; path = View/Cell/LoadMoreCell.m; sourceTree = "<group>"; };
+		4BB42C061757A1CC00311FF5 /* GapTweetEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GapTweetEntity.h; path = Model/Entity/GapTweetEntity.h; sourceTree = "<group>"; };
+		4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GapTweetEntity.m; path = Model/Entity/GapTweetEntity.m; sourceTree = "<group>"; };
 		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
 		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
@@ -161,6 +168,8 @@
 		4BDFDB661754DEC400075F7D /* UserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserCell.m; path = View/Cell/UserCell.m; sourceTree = "<group>"; };
 		4BDFDB681754DF2800075F7D /* UserListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserListController.h; path = Controller/UserListController.h; sourceTree = "<group>"; };
 		4BDFDB691754DF2800075F7D /* UserListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListController.m; path = Controller/UserListController.m; sourceTree = "<group>"; };
+		4BE5557A1758F87400A214FC /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationView.h; path = View/NotificationView.h; sourceTree = "<group>"; };
+		4BE5557B1758F87400A214FC /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationView.m; path = View/NotificationView.m; sourceTree = "<group>"; };
 		4BF9B6B4174A878D00DA3318 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebController.h; path = Controller/WebController.h; sourceTree = "<group>"; };
 		4BF9B6B5174A878D00DA3318 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebController.m; path = Controller/WebController.m; sourceTree = "<group>"; };
 		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
@@ -305,6 +314,8 @@
 				4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */,
 				4B7C288B1756ADDC003FDCBB /* UserTitleView.h */,
 				4B7C288C1756ADDC003FDCBB /* UserTitleView.m */,
+				4BE5557A1758F87400A214FC /* NotificationView.h */,
+				4BE5557B1758F87400A214FC /* NotificationView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -342,6 +353,8 @@
 				4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */,
 				4BDFDB651754DEC400075F7D /* UserCell.h */,
 				4BDFDB661754DEC400075F7D /* UserCell.m */,
+				4BB42C03175794F900311FF5 /* LoadMoreCell.h */,
+				4BB42C04175794F900311FF5 /* LoadMoreCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -364,6 +377,8 @@
 				4B7428D81742DFF200AEB85C /* TweetEntity.m */,
 				4B7428DA1742E4E900AEB85C /* UserEntity.h */,
 				4B7428DB1742E4E900AEB85C /* UserEntity.m */,
+				4BB42C061757A1CC00311FF5 /* GapTweetEntity.h */,
+				4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -609,6 +624,9 @@
 				4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */,
 				4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */,
 				4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */,
+				4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */,
+				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
+				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
