@@ -11,7 +11,7 @@
 typedef NSString* (^DictionaryToEntityKeyAdjusterBlock)(NSString* key);
 typedef NSString* (^EntityToDictionaryKeyAdjusterBlock)(NSString* key);
 
-@interface BaseEntity : NSObject
+@interface BaseEntity : NSObject <NSCoding>
 
 - (id)initWithDictionary:(NSDictionary*)dictionary;
 - (id)initWithJSONString:(NSString*)JSON;

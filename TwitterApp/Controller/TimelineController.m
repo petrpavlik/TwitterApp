@@ -16,18 +16,20 @@
 #import <MBProgressHUD.h>
 #import "NSString+TwitterApp.h"
 #import "TimelineController.h"
+#import "TimelineDocument.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
 #import "UserTitleView.h"
 #import "WebController.h"
 
-@interface TimelineController () <TweetCellDelegate>
+@interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate>
 
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, strong) NSArray* tweets;
 @property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
+@property(nonatomic, strong) TimelineDocument* timelineDocument;
 
 @end
 
@@ -84,7 +86,40 @@
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
     
-    [self requestData];
+    [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
+        
+        if (!self.searchQuery.length && !self.screenName.length) {
+            
+            /////////////
+            NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *docsDir = [dirPaths objectAtIndex:0];
+            NSString *dataFile = [docsDir stringByAppendingPathComponent:@"dummyTimeline"];
+            NSURL* documentUrl = [NSURL fileURLWithPath:dataFile];
+            
+            self.timelineDocument = [[TimelineDocument alloc] initWithFileURL:documentUrl];
+            self.timelineDocument.delegate = self;
+            
+            NSFileManager *filemgr = [NSFileManager defaultManager];
+            
+            if ([filemgr fileExistsAtPath: dataFile]) {
+                
+                [self.timelineDocument openWithCompletionHandler:^(BOOL success) {
+                    NSLog(@"document open %d", success);
+                }];
+                
+            } else {
+                
+                [self.timelineDocument saveToURL:documentUrl forSaveOperation: UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+                    NSLog(@"document created %d", success);
+                }];
+            }
+            
+            /////////////
+        }
+        else {
+            [self requestData];
+        }
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -332,55 +367,33 @@
     
     [self.refreshControl beginRefreshing];
     
-    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+    void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
-        if (granted) {
-            
-            NSArray *accounts = [accountStore accountsWithAccountType:accountType];
-            
-            // Check if the users has setup at least one Twitter account
-            if (accounts.count > 0) {
-                
-                ACAccount *twitterAccount = [accounts objectAtIndex:0];
-                
-                //NSLog(@"%@", twitterAccount);
-                
-                [AFTwitterClient sharedClient].account = twitterAccount;
-                
-                //[TweetEntity testDirectMessages];
-                
-                void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
-                    
-                    //NSLog(@"%@", tweets);
-                    self.tweets = tweets;
-                    [self.refreshControl endRefreshing];
-                    [self.tableView reloadData];
-                    
-                    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-                    hud.mode = MBProgressHUDModeText;
-                    hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
-                    [hud hide:YES afterDelay:3];
-                };
-                
-                if (self.searchQuery.length) {
-                    [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:nil completionBlock:completionBlock];
-                }
-                else if (self.screenName.length) {
-                    [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:nil completionBlock:completionBlock];
-                }
-                else {
-                    [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:completionBlock];
-                }
-            }
-            
-        } else {
-            
-            NSLog(@"No access granted %@", error);
+        //NSLog(@"%@", tweets);
+        self.tweets = tweets;
+        
+        if (self.timelineDocument) {
+            [self.timelineDocument persistTimeline:self.tweets];
         }
-    }];
+        
+        [self.refreshControl endRefreshing];
+        [self.tableView reloadData];
+        
+        MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.mode = MBProgressHUDModeText;
+        hud.labelText = [NSString stringWithFormat:@"%d new tweets", tweets.count];
+        [hud hide:YES afterDelay:3];
+    };
+    
+    if (self.searchQuery.length) {
+        [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:nil completionBlock:completionBlock];
+    }
+    else if (self.screenName.length) {
+        [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:nil completionBlock:completionBlock];
+    }
+    else {
+        [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:nil completionBlock:completionBlock];
+    }
 }
 
 - (void)requestNewTweets {
@@ -428,6 +441,10 @@
             }
             
             self.tweets = [mutableNewTweets arrayByAddingObjectsFromArray:self.tweets];
+            
+            if (self.timelineDocument) {
+                [self.timelineDocument persistTimeline:self.tweets];
+            }
             
             CGFloat contentOffsetY = self.tableView.contentOffset.y;
             
@@ -482,6 +499,10 @@
     void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
         self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
+        
+        if (self.timelineDocument) {
+            [self.timelineDocument persistTimeline:self.tweets];
+        }
         
         [self.tableView beginUpdates];
         
@@ -559,6 +580,10 @@
                 }
                 
                 self.tweets = mutableTweets;
+                
+                if (self.timelineDocument) {
+                    [self.timelineDocument persistTimeline:self.tweets];
+                }
             }
         }
         
@@ -666,6 +691,20 @@
 
 #pragma mark -
 
+- (void)timelineDocumentDidLoadPersistedTimeline:(NSArray *)tweets {
+    
+    if (tweets.count) {
+        
+        self.tweets = tweets;
+        [self.tableView reloadData];
+    }
+    else {
+        [self requestData];
+    }
+}
+
+#pragma mark -
+
 - (NSString*)ageAsStringForDate:(NSDate*)date {
     
     NSParameterAssert(date);
@@ -718,6 +757,42 @@
             tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
         }
     }
+}
+
+#pragma mark -
+
+- (void)validateTwitterAccountWithCompletionBlock:(void (^)(NSError* error))block {
+    
+    ACAccountStore *accountStore = [[ACAccountStore alloc] init];
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    
+    [accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
+        
+        if (granted) {
+            
+            NSArray *accounts = [accountStore accountsWithAccountType:accountType];
+            
+            // Check if the users has setup at least one Twitter account
+            if (accounts.count > 0) {
+                
+                ACAccount *twitterAccount = [accounts objectAtIndex:0];
+                
+                //iOS 6 bug fix
+                ACAccountType *accountTypeTwitter = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+                twitterAccount.accountType = accountTypeTwitter;
+                
+                [AFTwitterClient sharedClient].account = twitterAccount;
+                
+                block(nil);
+            }
+            
+        } else {
+            
+            NSLog(@"No access granted %@", error);
+            block(error);
+        }
+    }];
+
 }
 
 @end

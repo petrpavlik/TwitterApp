@@ -167,4 +167,20 @@ EntityToDictionaryKeyAdjusterBlock entityToDictionaryKeyAdjusterBlock;
     entityToDictionaryKeyAdjusterBlock = [block copy];
 }
 
+#pragma mark - NSCoding
+
+- (id)initWithCoder:(NSCoder *)decoder {
+    
+    NSDictionary* selfAsDictionary = [decoder decodeObject];
+    
+    return [self initWithDictionary:selfAsDictionary];
+}
+
+- (void)encodeWithCoder:(NSCoder *)encoder {
+    
+    NSDictionary* selfAsDictionary = [self dictionaryValue];
+    
+    [encoder encodeRootObject:selfAsDictionary];
+}
+
 @end
