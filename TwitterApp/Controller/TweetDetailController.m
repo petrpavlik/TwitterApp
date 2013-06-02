@@ -71,41 +71,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    TweetEntity* tweet = nil;
-    
-    if (indexPath.section == 0) {
-        tweet = self.replies[indexPath.row];
-    }
-    else if (indexPath.section == 1) {
-        tweet = self.tweet;
-    }
-    else if (indexPath.section == 2) {
-        tweet = self.olderRelatedTweets[indexPath.row];
-    }
-    else {
-        NSAssert(NO, @"unknown section index");
-    }
-    
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
     return [self cellForTweet:tweet atIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TweetEntity* tweet = nil;
-    
-    if (indexPath.section == 0) {
-        tweet = self.replies[indexPath.row];
-    }
-    else if (indexPath.section == 1) {
-        tweet = self.tweet;
-    }
-    else if (indexPath.section == 2) {
-        tweet = self.olderRelatedTweets[indexPath.row];
-    }
-    else {
-        NSAssert(NO, @"unknown section index");
-    }
-    
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
     return [self heightForTweet:tweet];
 }
 
