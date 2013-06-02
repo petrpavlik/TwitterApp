@@ -15,10 +15,18 @@
 
 @property(nonatomic, strong) NSArray* olderRelatedTweets;
 @property(nonatomic, strong) NSArray* replies;
+@property(nonatomic, weak) NSOperation* runningOlderRelatedTweetRequest;
+@property(nonatomic, weak) NSOperation* runningRepliesRequest;
 
 @end
 
 @implementation TweetDetailController
+
+- (void)dealloc {
+
+    [self.runningOlderRelatedTweetRequest cancel];
+    [self.runningRepliesRequest cancel];
+}
 
 - (void)viewDidLoad
 {
@@ -27,8 +35,6 @@
     NSParameterAssert(self.tweet);
     
     self.title = @"Tweet Detail";
-    
-    [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:@"TweetCell"];
     
     [self requestReplies];
     
@@ -80,82 +86,7 @@
         NSAssert(NO, @"unknown section index");
     }
     
-    static NSString *CellIdentifier = @"TweetCell";
-    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    cell.delegate = self;
-    
-    TweetEntity* retweet = nil;
-    
-    if (tweet.retweetedStatus) {
-        retweet = tweet;
-        tweet = tweet.retweetedStatus;
-    }
-    
-    cell.nameLabel.text = tweet.user.name;
-    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
-    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil];
-    cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
-    
-    if (retweet) {
-        cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by %@", retweet.user.name];
-    }
-    
-    cell.mediaImageView.hidden = YES;
-    
-    NSString* expandedTweet = [tweet.text stringByStrippingHTMLTags];
-    
-    NSArray* urls = tweet.entities[@"urls"];
-    NSArray* media = tweet.entities[@"media"];
-    NSArray* hashtags = tweet.entities[@"hashtags"];
-    NSArray* mentions = tweet.entities[@"user_mentions"];
-    
-    for (NSDictionary* url in urls) {
-        expandedTweet = [expandedTweet stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
-    }
-    
-    for (NSDictionary* url in media) {
-        expandedTweet = [expandedTweet stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
-    }
-    
-    cell.tweetTextLabel.text = expandedTweet;
-    
-    for (NSDictionary* url in urls) {
-        
-        NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-        if (expandedUrl) {
-            [cell addURL:expandedUrl atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
-        }
-        else {
-            //TODO: should not happen, log an error
-            NSLog(@"could not convert '%@' to NSURL", url[@"expanded_url"]);
-        }
-    }
-    
-    for (NSDictionary* url in media) {
-        
-        [cell addURL:[NSURL URLWithString:url[@"media_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
-    }
-    
-    if (media.count) {
-        
-        [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil];
-        cell.mediaImageView.hidden = NO;
-    }
-    
-    for (NSDictionary* item in hashtags) {
-        
-        NSString* hashtag = [NSString stringWithFormat:@"#%@", item[@"text"]];
-        [cell addHashtag:hashtag atRange:[expandedTweet rangeOfString:hashtag]];
-    }
-    
-    for (NSDictionary* item in mentions) {
-        
-        NSString* mention = [NSString stringWithFormat:@"@%@", item[@"screen_name"]];
-        [cell addMention:mention atRange:[expandedTweet rangeOfString:mention]];
-    }
-    
-    return cell;
+    return [self cellForTweet:tweet atIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -175,41 +106,7 @@
         NSAssert(NO, @"unknown section index");
     }
     
-    TweetEntity* retweet = nil;
-    
-    if (tweet.retweetedStatus) {
-        
-        retweet = tweet;
-        tweet = tweet.retweetedStatus;
-    }
-    
-    NSString* tweetText = [tweet.text stringByStrippingHTMLTags];
-    
-    NSArray* urls = tweet.entities[@"urls"];
-    for (NSDictionary* url in urls) {
-        
-        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
-    }
-    
-    NSArray* media = tweet.entities[@"media"];
-    for (NSDictionary* url in media) {
-        
-        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
-    }
-    
-    CGFloat mediaHeight = 0;
-    
-    if (media.count) {
-        
-        mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
-    }
-    
-    CGFloat retweetInformationHeight = 0;
-    if (retweet) {
-        retweetInformationHeight = 15;
-    }
-    
-    return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight + retweetInformationHeight;
+    return [self heightForTweet:tweet];
 }
 
 #pragma mark - Table view delegate
@@ -229,10 +126,12 @@
 
 - (void)requestReplies {
     
+    __weak typeof(self) weakSelf = self;
+    
     [TweetEntity requestSearchRepliesWithTweetId:self.tweet.tweetId screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
         
-        self.replies = tweets;
-        [self.tableView reloadData];
+        weakSelf.replies = tweets;
+        [weakSelf.tableView reloadData];
     }];
 }
 
@@ -240,21 +139,23 @@
     
     NSParameterAssert(tweetId);
     
-    [TweetEntity requestTweetWithId:tweetId completionBlock:^(TweetEntity *tweet, NSError *error) {
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningOlderRelatedTweetRequest = [TweetEntity requestTweetWithId:tweetId completionBlock:^(TweetEntity *tweet, NSError *error) {
        
         if (tweet) {
             
-            if (!self.olderRelatedTweets) {
-                self.olderRelatedTweets = @[tweet];
+            if (!weakSelf.olderRelatedTweets) {
+                weakSelf.olderRelatedTweets = @[tweet];
             }
             else {
-                self.olderRelatedTweets = [self.olderRelatedTweets arrayByAddingObject:tweet];
+                weakSelf.olderRelatedTweets = [weakSelf.olderRelatedTweets arrayByAddingObject:tweet];
             }
             
             [self.tableView reloadData];
             
             if (tweet.inReplyToStatusId) {
-                [self requestOlderRelatedTweetToTweetId:tweetId];
+                [weakSelf requestOlderRelatedTweetToTweetId:tweetId];
             }
         }
     }];
@@ -262,31 +163,22 @@
 
 #pragma mark -
 
-- (NSString*)ageAsStringForDate:(NSDate*)date {
+- (TweetEntity*)tweetForIndexPath:(NSIndexPath *)indexPath {
     
-    NSParameterAssert(date);
-    
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *difference = [calendar components:NSSecondCalendarUnit|NSMinuteCalendarUnit|NSHourCalendarUnit|NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date toDate:[NSDate date] options:0];
-    
-    if (difference.year) {
-        return [NSString stringWithFormat:@"%dy", difference.year];
+    if (indexPath.section == 0) {
+        return self.replies[indexPath.row];
     }
-    else if (difference.month) {
-        return [NSString stringWithFormat:@"%dm", difference.month];
+    else if (indexPath.section == 1) {
+        return self.tweet;
     }
-    else if (difference.day) {
-        return [NSString stringWithFormat:@"%dd", difference.day];
-    }
-    else if (difference.hour) {
-        return [NSString stringWithFormat:@"%dh", difference.hour];
-    }
-    else if (difference.minute) {
-        return [NSString stringWithFormat:@"%dm", difference.minute];
+    else if (indexPath.section == 2) {
+        return self.olderRelatedTweets[indexPath.row];
     }
     else {
-        return [NSString stringWithFormat:@"%ds", difference.second];
+        NSAssert(NO, @"unknown section index");
     }
+    
+    return nil;
 }
 
 @end

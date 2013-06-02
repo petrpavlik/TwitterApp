@@ -73,6 +73,7 @@
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
 		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
 		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
+		4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC4407175B91FB004199C3 /* BaseTweetsController.m */; };
 		84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247C6CFBE31346CFAFA5B8FE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -187,6 +188,8 @@
 		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
 		4BF9B6B9174A89A200DA3318 /* PPLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPLabel.m; path = View/Label/PPLabel.m; sourceTree = "<group>"; };
 		4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		4BFC4406175B91FB004199C3 /* BaseTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseTweetsController.h; path = Controller/BaseTweetsController.h; sourceTree = "<group>"; };
+		4BFC4407175B91FB004199C3 /* BaseTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseTweetsController.m; path = Controller/BaseTweetsController.m; sourceTree = "<group>"; };
 		D3EA10E129D14083A848A9C2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -456,6 +459,8 @@
 				4BC63C211759133200F7E0C3 /* NavigationController.m */,
 				4B1D0136175B6A5A00B04036 /* TweetDetailController.h */,
 				4B1D0137175B6A5A00B04036 /* TweetDetailController.m */,
+				4BFC4406175B91FB004199C3 /* BaseTweetsController.h */,
+				4BFC4407175B91FB004199C3 /* BaseTweetsController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -659,6 +664,7 @@
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
 				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,
+				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

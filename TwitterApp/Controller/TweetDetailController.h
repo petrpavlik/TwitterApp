@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseTweetsController.h"
 
 @class TweetEntity;
 
-@interface TweetDetailController : UITableViewController
+@interface TweetDetailController : BaseTweetsController
 
 @property(nonatomic, strong) TweetEntity* tweet;
 
