@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseTweetsController.h"
 
-@interface TimelineController : UITableViewController
+@interface TimelineController : BaseTweetsController
 
 @property(nonatomic, strong) NSString* searchQuery;
 @property(nonatomic, strong) NSString* screenName;
