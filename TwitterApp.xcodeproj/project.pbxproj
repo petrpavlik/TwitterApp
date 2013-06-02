@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
+		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -89,6 +90,8 @@
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
+		4B1D0136175B6A5A00B04036 /* TweetDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailController.h; path = Controller/TweetDetailController.h; sourceTree = "<group>"; };
+		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -451,6 +454,8 @@
 				4BC63C1E17590B9F00F7E0C3 /* BasementController.m */,
 				4BC63C201759133200F7E0C3 /* NavigationController.h */,
 				4BC63C211759133200F7E0C3 /* NavigationController.m */,
+				4B1D0136175B6A5A00B04036 /* TweetDetailController.h */,
+				4B1D0137175B6A5A00B04036 /* TweetDetailController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -653,6 +658,7 @@
 				4BC63C1F17590B9F00F7E0C3 /* BasementController.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
+				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

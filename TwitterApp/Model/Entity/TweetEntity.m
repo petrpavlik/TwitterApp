@@ -284,6 +284,32 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestTweetWithId:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
+    
+    NSParameterAssert(tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSDictionary* parameters = @{@"id": tweetId};
+    
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"statuses/show.json" parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:JSON];
+        
+        block(tweet, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 #pragma mark -
 
 + (void)testStream {

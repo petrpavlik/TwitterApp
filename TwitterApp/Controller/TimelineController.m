@@ -18,6 +18,7 @@
 #import "TimelineController.h"
 #import "TimelineDocument.h"
 #import "TweetCell.h"
+#import "TweetDetailController.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
 #import "UserTitleView.h"
@@ -88,7 +89,7 @@
     
     [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
         
-        if (!self.searchQuery.length && !self.screenName.length) {
+        if (NO && !self.searchQuery.length && !self.screenName.length) {
             
             /////////////
             NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -338,26 +339,10 @@
 {
     TweetEntity* tweet = self.tweets[indexPath.row];
     
-    if ([tweet isKindOfClass:[GapTweetEntity class]]) {
-        
-        GapTweetEntity* gapTweet = (GapTweetEntity*)tweet;
-        gapTweet.loading = @(YES);
-        
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-        
-        [self requestTweetsSinceId:[self.tweets[indexPath.row+1] tweetId] withMaxId:[self.tweets[indexPath.row-1] tweetId]];
-    }
-    else {
-        
-        [TweetEntity requestSearchRepliesWithTweetId:tweet.tweetId screenName:tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
-            
-            for (TweetEntity* reply in tweets) {
-                NSLog(@"%@", reply.text);
-            }
-        }];
-    }
+    TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
+    tweetDetailController.tweet = tweet;
+    
+    [self.navigationController pushViewController:tweetDetailController animated:YES];
 }
 
 

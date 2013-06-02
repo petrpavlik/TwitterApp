@@ -12,5 +12,7 @@
 
 @property(nonatomic, strong) NSString* searchQuery;
 @property(nonatomic, strong) NSString* screenName;
+@property(nonatomic) BOOL shouldAutoRefresh;
+@property(nonatomic) BOOL shouldPersistTimeline;
 
 @end
