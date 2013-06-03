@@ -81,7 +81,7 @@
     
     [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
         
-        if (NO && !self.searchQuery.length && !self.screenName.length) {
+        if (!self.searchQuery.length && !self.screenName.length) {
             
             /////////////
             NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -195,10 +195,24 @@
 {
     TweetEntity* tweet = self.tweets[indexPath.row];
     
-    TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
-    tweetDetailController.tweet = tweet;
-    
-    [self.navigationController pushViewController:tweetDetailController animated:YES];
+    if ([tweet isKindOfClass:[GapTweetEntity class]]) {
+        
+        GapTweetEntity* gapTweet = (GapTweetEntity*)tweet;
+        gapTweet.loading = @(YES);
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        [self requestTweetsSinceId:[self.tweets[indexPath.row+1] tweetId] withMaxId:[self.tweets[indexPath.row-1] tweetId]];
+    }
+    else {
+        
+        TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
+        tweetDetailController.tweet = tweet;
+        
+        [self.navigationController pushViewController:tweetDetailController animated:YES];
+    }
 }
 
 
@@ -209,6 +223,16 @@
     [self.refreshControl beginRefreshing];
     
     void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
+        
+        if (error) {
+            
+            [self.refreshControl endRefreshing];
+            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = error.localizedDescription;
+            [hud hide:YES afterDelay:3];
+            return;
+        }
         
         //NSLog(@"%@", tweets);
         self.tweets = tweets;
@@ -256,6 +280,15 @@
         self.tableView.userInteractionEnabled = NO;
         
         [self.refreshControl endRefreshing];
+        
+        if (error) {
+            
+            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = error.localizedDescription;
+            [hud hide:YES afterDelay:3];
+            return;
+        }
         
         //wait for the refresh control to hide
         double delayInSeconds = 1.0;
@@ -339,6 +372,15 @@
     
     void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
+        if (error) {
+            
+            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = error.localizedDescription;
+            [hud hide:YES afterDelay:3];
+            return;
+        }
+        
         self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
         
         if (self.timelineDocument) {
@@ -388,6 +430,18 @@
     
     void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
+        if (error) {
+            
+            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = error.localizedDescription;
+            [hud hide:YES afterDelay:3];
+            return;
+        }
+
+        
+        CGFloat contentOffsetY = self.tableView.contentOffset.y;
+        
         for (TweetEntity* potentialGapTweet in self.tweets) {
             
             if ([potentialGapTweet isKindOfClass:[GapTweetEntity class]]) {
@@ -395,6 +449,9 @@
                 NSMutableArray* mutableTweets = [self.tweets mutableCopy];
                 NSInteger index = [mutableTweets indexOfObject:potentialGapTweet];
                 
+                
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                contentOffsetY -= [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
                 [mutableTweets removeObjectAtIndex:index];
                 
                 for (TweetEntity* tweetToAdd in tweets) {
@@ -404,17 +461,23 @@
                         if ([tweetToAdd.tweetId isEqualToString:[mutableTweets[index] tweetId]]) {
                             
                             //no gap
+                            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                            contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
                             [mutableTweets insertObject:tweetToAdd atIndex:index];
                             index++;
                         }
                         else {
                             
+                            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                            contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
                             [mutableTweets insertObject:[GapTweetEntity new] atIndex:index];
                             index++;
                         }
                     }
                     else {
                         
+                        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                        contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
                         [mutableTweets insertObject:tweetToAdd atIndex:index];
                         index++;
                     }
@@ -426,9 +489,14 @@
                     [self.timelineDocument persistTimeline:self.tweets];
                 }
             }
+            
+            break;
         }
         
         [self.tableView reloadData];
+        
+        self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+        
         
         MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         hud.mode = MBProgressHUDModeText;
