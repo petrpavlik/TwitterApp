@@ -7,6 +7,7 @@
 //
 
 #import "NotificationView.h"
+#import <MBProgressHUD.h>
 
 @interface NotificationView ()
 
@@ -18,7 +19,9 @@
 
 + (NotificationView*)showInView:(UIView*)view message:(NSString*)message {
     
-    //NotificationView* notificationView = [NotificationView alloc] initWithFrame:CGRectMake(<#CGFloat x#>, <#CGFloat y#>, <#CGFloat width#>, 44)
+    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    hud.labelText = message;
+    [hud hide:YES afterDelay:2];
     
     return nil;
 }

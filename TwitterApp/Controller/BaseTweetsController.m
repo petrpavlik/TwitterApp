@@ -11,6 +11,7 @@
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
 #import <PocketAPI.h>
+#import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
@@ -229,15 +230,25 @@
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
     
+    __weak typeof(self) weakSelf;
+    
     [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+        
+        if (!weakSelf) {
+            
+            if (error) {
+                [[[UIAlertView alloc] initWithTitle:nil message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+            }
+            
+            return;
+        }
         
         if (error) {
             
-            // there was an issue connecting to Pocket
-            // present some UI to notify if necessary
+            [NotificationView showInView:weakSelf.view message:error.localizedDescription];
         } else {
             
-            // the URL was saved successfully
+            [NotificationView showInView:weakSelf.view message:@"Link saved to Pocket"];
         }
     }];
 }
