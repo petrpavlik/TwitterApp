@@ -25,6 +25,7 @@
 
 @property(nonatomic, weak) id <PPLabelDelegate> delegate;
 
+- (void)cancelCurrentTouch;
 - (CFIndex)characterIndexAtPoint:(CGPoint)point;
 
 @end

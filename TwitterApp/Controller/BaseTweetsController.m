@@ -10,6 +10,7 @@
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
+#import <PocketAPI.h>
 #import "NSString+TwitterApp.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
@@ -224,6 +225,21 @@
 - (void)tweetCell:(TweetCell *)cell didSelectURL:(NSURL *)url {
     
     [WebController presentWithUrl:url viewController:self];
+}
+
+- (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
+    
+    [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+        
+        if (error) {
+            
+            // there was an issue connecting to Pocket
+            // present some UI to notify if necessary
+        } else {
+            
+            // the URL was saved successfully
+        }
+    }];
 }
 
 - (void)tweetCell:(TweetCell *)cell didSelectHashtag:(NSString *)hashstag {

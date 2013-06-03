@@ -13,6 +13,7 @@
 #import "LightSkin.h"
 #import "NavigationController.h"
 #import "NetImageView.h"
+#import <PocketAPI.h>
 #import "TimelineController.h"
 #import "TwitterAppWindow.h"
 
@@ -62,6 +63,9 @@
     AbstractSkin* skin = [LightSkin new];
     [skin applyGlobalAppearance];
     
+    [[PocketAPI sharedAPI] setConsumerKey:@"15055-3b898b85423c8af7f67ec331"];
+
+    
     return YES;
 }
 
@@ -90,6 +94,17 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    
+    if ([[PocketAPI sharedAPI] handleOpenURL:url]) {
+        
+        return YES;
+    } else {
+        
+        return NO;
+    }
 }
 
 @end

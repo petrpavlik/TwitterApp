@@ -36,10 +36,6 @@
 
 @implementation TimelineController
 
-- (void)dealloc {
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -517,21 +513,6 @@
     [self.slidingViewController anchorTopViewTo:ECRight];
 }
 
-- (void)updateTweetAge {
-    
-    for (UITableViewCell* cell in [self.tableView visibleCells]) {
-        
-        if ([cell isKindOfClass:[TweetCell class]]) {
-            
-            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-            TweetEntity* tweet = self.tweets[indexPath.row];
-            
-            TweetCell* tweetCell = (TweetCell*)cell;
-            tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
-        }
-    }
-}
-
 #pragma mark -
 
 - (void)validateTwitterAccountWithCompletionBlock:(void (^)(NSError* error))block {
@@ -567,5 +548,27 @@
     }];
 
 }
+
+#pragma mark -
+
+- (TweetEntity*)tweetForIndexPath:(NSIndexPath *)indexPath {
+    return self.tweets[indexPath.row];
+}
+
+- (void)updateTweetAge {
+    
+    for (UITableViewCell* cell in [self.tableView visibleCells]) {
+        
+        if ([cell isKindOfClass:[TweetCell class]]) {
+            
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+            TweetEntity* tweet = self.tweets[indexPath.row];
+            
+            TweetCell* tweetCell = (TweetCell*)cell;
+            tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
+        }
+    }
+}
+
 
 @end

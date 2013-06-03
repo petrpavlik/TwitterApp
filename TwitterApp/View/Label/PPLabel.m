@@ -11,6 +11,8 @@
 
 @interface PPLabel ()
 
+@property(nonatomic) BOOL currentTouchCanceled;
+
 @end
 
 @implementation PPLabel
@@ -178,6 +180,8 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
+    self.currentTouchCanceled = NO;
+    
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
     
@@ -187,6 +191,10 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    if (self.currentTouchCanceled) {
+        return;
+    }
     
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
@@ -198,6 +206,12 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
+    if (self.currentTouchCanceled) {
+        
+        self.currentTouchCanceled = NO;
+        return;
+    }
+    
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
     
@@ -208,11 +222,21 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     
+    if (self.currentTouchCanceled) {
+        
+        self.currentTouchCanceled = NO;
+        return;
+    }
+    
     UITouch *touch = [touches anyObject];
     
     if (![self.delegate label:self didCancelTouch:touch]) {
         [super touchesCancelled:touches withEvent:event];
     }
+}
+
+- (void)cancelCurrentTouch {
+    self.currentTouchCanceled = YES;
 }
 
 @end

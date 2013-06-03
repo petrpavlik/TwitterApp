@@ -18,6 +18,7 @@
 @property(nonatomic, strong) UIView* slidingContentView;
 @property(nonatomic, strong) UIImageView* rightActionImageView;
 @property(nonatomic, strong) UIImageView* leftActionImageView;
+@property(nonatomic, strong) NSTimer* linkLongPressTimer;
 
 @end
 
@@ -275,6 +276,9 @@
             
             self.tweetTextLabel.attributedText = attributedString;
             
+            [self.linkLongPressTimer invalidate];
+            self.linkLongPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(linkLongPressTimerDidFire:) userInfo:@{@"URL": self.urlsDictonary[rangeValue]} repeats:NO];
+            
             return YES;
         }
     }
@@ -315,6 +319,8 @@
 }
 
 - (BOOL)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+    [self.linkLongPressTimer invalidate];
     
     for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
         
@@ -365,6 +371,8 @@
 }
 
 - (BOOL)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
+    
+    [self.linkLongPressTimer invalidate];
     
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
     [attributedString removeAttribute:NSUnderlineStyleAttributeName range:NSMakeRange(0, attributedString.length)];
@@ -446,6 +454,14 @@
 
 - (void)avatarSelected {
     [self.delegate tweetCellDidSelectAvatarImage:self];
+}
+
+- (void)linkLongPressTimerDidFire:(NSTimer*)timer {
+    
+    PPLabel* textLabel = (PPLabel*)self.tweetTextLabel;
+    [textLabel cancelCurrentTouch];
+    
+    [self.delegate tweetCell:self didLongPressURL:timer.userInfo[@"URL"]];
 }
 
 @end
