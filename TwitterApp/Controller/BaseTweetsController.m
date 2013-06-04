@@ -205,13 +205,13 @@
         for (NSDictionary* item in hashtags) {
             
             NSString* hashtag = [NSString stringWithFormat:@"#%@", item[@"text"]];
-            [cell addHashtag:hashtag atRange:[expandedTweet rangeOfString:hashtag]];
+            [cell addHashtag:hashtag atRange:[expandedTweet rangeOfString:hashtag options:NSCaseInsensitiveSearch]];
         }
         
         for (NSDictionary* item in mentions) {
             
             NSString* mention = [NSString stringWithFormat:@"@%@", item[@"screen_name"]];
-            [cell addMention:mention atRange:[expandedTweet rangeOfString:mention]];
+            [cell addMention:mention atRange:[expandedTweet rangeOfString:mention options:NSCaseInsensitiveSearch]];
         }
         
         return cell;
