@@ -45,6 +45,7 @@
 
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
+    _tweetTextView.font = [UIFont fontWithName:@"Helvetica" size:16];
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     [_tweetTextView becomeFirstResponder];
