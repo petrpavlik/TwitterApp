@@ -126,8 +126,8 @@
             
             [self.tableView reloadData];
             
-            if (tweet.inReplyToStatusId) {
-                [weakSelf requestOlderRelatedTweetToTweetId:tweetId];
+            if (tweet.inReplyToStatusId && ![tweet.inReplyToStatusId isEqualToString:tweet.tweetId]) { //second condition should never be YES, but I rather added it
+                [weakSelf requestOlderRelatedTweetToTweetId:tweet.inReplyToStatusId];
             }
         }
     }];

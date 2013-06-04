@@ -81,7 +81,7 @@
     
     [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
         
-        if (!self.searchQuery.length && !self.screenName.length) {
+        if (NO && !self.searchQuery.length && !self.screenName.length) {
             
             /////////////
             NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
