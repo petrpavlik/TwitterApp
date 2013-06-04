@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <AFNetworkActivityIndicatorManager.h>
 #import "AFTwitterClient.h"
 #import "AppDelegate.h"
 #import "BaseEntity.h"
@@ -62,6 +63,8 @@
     
     AbstractSkin* skin = [LightSkin new];
     [skin applyGlobalAppearance];
+    
+    [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
     [[PocketAPI sharedAPI] setConsumerKey:@"15055-3b898b85423c8af7f67ec331"];
 

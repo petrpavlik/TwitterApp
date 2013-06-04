@@ -26,7 +26,7 @@
 - (BOOL)loadFromContents:(id)contents ofType:(NSString*)typeName error:(NSError**)outError {
     
     NSLog(@"loading document");
-    NSLog(@"%@", [[NSString alloc] initWithData:contents encoding:NSUTF8StringEncoding]);
+    //NSLog(@"%@", [[NSString alloc] initWithData:contents encoding:NSUTF8StringEncoding]);
     
     if (![contents isKindOfClass:[NSData class]]) {
         
@@ -35,7 +35,7 @@
     }
     
     self.timeline = [NSKeyedUnarchiver unarchiveObjectWithData:contents];
-    NSLog(@"%@", self.timeline);
+    //NSLog(@"%@", self.timeline);
     
     [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
     

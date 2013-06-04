@@ -21,6 +21,7 @@
     
     MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
     hud.labelText = message;
+    hud.mode = MBProgressHUDModeText;
     [hud hide:YES afterDelay:2];
     
     return nil;

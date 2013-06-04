@@ -495,7 +495,7 @@
         
         [self.tableView reloadData];
         
-        self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+        //self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
         
         
         MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

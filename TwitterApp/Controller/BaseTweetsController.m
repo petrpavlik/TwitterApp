@@ -230,7 +230,7 @@
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
     
-    __weak typeof(self) weakSelf;
+    __weak typeof(self) weakSelf = self;
     
     [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
         
@@ -238,6 +238,8 @@
             
             if (error) {
                 [[[UIAlertView alloc] initWithTitle:nil message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+            } else {
+                [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
             }
             
             return;

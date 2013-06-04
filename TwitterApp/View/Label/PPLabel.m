@@ -11,7 +11,7 @@
 
 @interface PPLabel ()
 
-@property(nonatomic) BOOL currentTouchCanceled;
+@property(nonatomic, strong) NSSet* lastTouches;
 
 @end
 
@@ -180,7 +180,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    self.currentTouchCanceled = NO;
+    self.lastTouches = touches;
     
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
@@ -192,9 +192,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if (self.currentTouchCanceled) {
-        return;
-    }
+    self.lastTouches = touches;
     
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
@@ -206,11 +204,11 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if (self.currentTouchCanceled) {
-        
-        self.currentTouchCanceled = NO;
+    if (!self.lastTouches) {
         return;
     }
+    
+    self.lastTouches = nil;
     
     UITouch *touch = [touches anyObject];
     CFIndex index = [self characterIndexAtPoint:[touch locationInView:self]];
@@ -222,11 +220,11 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    if (self.currentTouchCanceled) {
-        
-        self.currentTouchCanceled = NO;
+    if (!self.lastTouches) {
         return;
     }
+    
+    self.lastTouches = nil;
     
     UITouch *touch = [touches anyObject];
     
@@ -236,7 +234,11 @@
 }
 
 - (void)cancelCurrentTouch {
-    self.currentTouchCanceled = YES;
+        
+    if (self.lastTouches) {
+        [self.delegate label:self didCancelTouch:[self.lastTouches anyObject]];
+        self.lastTouches = nil;
+    }
 }
 
 @end

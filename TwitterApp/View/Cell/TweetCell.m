@@ -458,6 +458,8 @@
 
 - (void)linkLongPressTimerDidFire:(NSTimer*)timer {
     
+    self.linkLongPressTimer = nil;
+    
     PPLabel* textLabel = (PPLabel*)self.tweetTextLabel;
     [textLabel cancelCurrentTouch];
     
