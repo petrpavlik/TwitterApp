@@ -7,11 +7,12 @@
 //
 
 #import "TweetEntity.h"
+#import "UserCell.h"
 #import "UserListController.h"
 
 @interface UserListController ()
 
-@property(nonatomic, strong) NSArray* tweets;
+@property(nonatomic, strong) NSArray* users;
 
 @end
 
@@ -29,6 +30,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
+    self.tableView.rowHeight = 56;
+    
+    self.title = @"User List";
 
     [self requestData];
 }
@@ -44,13 +50,14 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.tweets.count;
+    //return self.users.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"UserCell";
+    UserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     
@@ -61,13 +68,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    
 }
 
 #pragma mark -

@@ -14,6 +14,8 @@
 @interface BaseTweetsController : UITableViewController <TweetCellDelegate>
 
 - (NSString*)ageAsStringForDate:(NSDate*)date;
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification;
+- (void)applicationWillEnterForegroundNotification:(NSNotification*)notification;
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath;
 - (CGFloat)heightForTweet:(TweetEntity*)tweet;
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath*)indexPath;

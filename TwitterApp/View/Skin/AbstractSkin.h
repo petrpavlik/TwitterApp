@@ -12,4 +12,10 @@
 
 - (void)applyGlobalAppearance;
 
+- (UIFont*)fontOfSize:(CGFloat)size;
+- (UIFont*)boldFontOfSize:(CGFloat)size;
+- (UIFont*)lightFontOfSize:(CGFloat)size;
+
+- (UIColor*)linkColor;
+
 @end

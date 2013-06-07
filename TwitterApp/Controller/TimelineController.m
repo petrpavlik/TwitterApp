@@ -21,6 +21,7 @@
 #import "TweetDetailController.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
+#import "UserListController.h"
 #import "UserTitleView.h"
 #import "WebController.h"
 
@@ -29,7 +30,6 @@
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, strong) NSArray* tweets;
-@property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
 @property(nonatomic, strong) TimelineDocument* timelineDocument;
 
 @end
@@ -77,8 +77,6 @@
         self.navigationItem.titleView = userTitleView;
     }
     
-    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
-    
     [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
         
         if (!self.searchQuery.length && !self.screenName.length) {
@@ -117,19 +115,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self updateTweetAge];
-    [self.updateTweetAgeTimer fire];
-    
+        
     if (![self.slidingViewController.underLeftViewController isKindOfClass:[BasementController class]]) {
         self.slidingViewController.underLeftViewController  = [[BasementController alloc] initWithStyle:UITableViewStylePlain];
     }
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    
-    [self.updateTweetAgeTimer invalidate];
 }
 
 #pragma mark -
@@ -193,6 +182,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+    [self.navigationController pushViewController:userListController animated:YES];
+    
+    return;
+    
     TweetEntity* tweet = self.tweets[indexPath.row];
     
     if ([tweet isKindOfClass:[GapTweetEntity class]]) {
@@ -621,21 +616,6 @@
 
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath *)indexPath {
     return self.tweets[indexPath.row];
-}
-
-- (void)updateTweetAge {
-    
-    for (UITableViewCell* cell in [self.tableView visibleCells]) {
-        
-        if ([cell isKindOfClass:[TweetCell class]]) {
-            
-            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-            TweetEntity* tweet = self.tweets[indexPath.row];
-            
-            TweetCell* tweetCell = (TweetCell*)cell;
-            tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
-        }
-    }
 }
 
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
 #import "UserCell.h"
 
 @implementation UserCell
@@ -15,15 +16,68 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
+        [self commonSetup];
     }
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
+- (void)commonSetup {
+    
+    UIView* contentView = self.contentView;
+    
+    _avatarImageView = [[NetImageView alloc] init];
+    _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _avatarImageView.clipsToBounds = YES;
+    _avatarImageView.layer.cornerRadius = 5;
+    _avatarImageView.backgroundColor = [UIColor redColor];
+    [contentView addSubview:_avatarImageView];
+    
+    UIView* credentialsPlaceholder = [[UIView alloc] init];
+    credentialsPlaceholder.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:credentialsPlaceholder];
+    
+    _nameLabel = [[UILabel alloc] init];
+    _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    _nameLabel.text = @"name";
+    [credentialsPlaceholder addSubview:_nameLabel];
+    
+    _usernameLabel = [[UILabel alloc] init];
+    _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _usernameLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
+    _usernameLabel.text = @"username";
+    [credentialsPlaceholder addSubview:_usernameLabel];
+    
+    NSMutableArray* credentialsPlaceholderConstraints = [NSMutableArray new];
+    
+    [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_nameLabel][_usernameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel, _usernameLabel)]];
+    [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_nameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel)]];
+    [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_usernameLabel)]];
+    
+    [credentialsPlaceholder addConstraints:credentialsPlaceholderConstraints];
+    
+    NSMutableArray* superviewConstraints = [NSMutableArray new];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[credentialsPlaceholder]-10-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, credentialsPlaceholder)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView(48)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, credentialsPlaceholder)]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_avatarImageView
+                                                               attribute:NSLayoutAttributeCenterY
+                                                               relatedBy:NSLayoutRelationEqual
+                                                                  toItem:contentView
+                                                               attribute:NSLayoutAttributeCenterY
+                                                              multiplier:1.0
+                                                                constant:0]];
 
-    // Configure the view for the selected state
+    
+    [contentView addConstraints:superviewConstraints];
+    
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    self.avatarImageView.image = nil;
 }
 
 @end

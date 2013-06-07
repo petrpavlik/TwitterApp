@@ -20,6 +20,8 @@
 
 @implementation AppDelegate
 
+@synthesize skin = _skin;
+
 - (UIWindow*)window {
     
     if (!_window) {
@@ -27,6 +29,15 @@
     }
     
     return _window;
+}
+
+- (AbstractSkin*)skin {
+    
+    if (!_skin) {
+        _skin = [[LightSkin alloc] init];
+    }
+    
+    return _skin;
 }
 
 #pragma mark -
@@ -61,8 +72,7 @@
     
     [NetImageView setSharedOperationQueue:[AFTwitterClient sharedClient].operationQueue];
     
-    AbstractSkin* skin = [LightSkin new];
-    [skin applyGlobalAppearance];
+    [self.skin applyGlobalAppearance];
     
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     

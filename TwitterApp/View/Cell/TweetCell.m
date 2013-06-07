@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "PPLabel.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TweetCell.h"
@@ -65,6 +66,9 @@
 
 - (void)commonSetup {
     
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
     UIView *bgColorView = [[UIView alloc] init];
     [bgColorView setBackgroundColor:[UIColor colorWithWhite:200/255.0 alpha:1.0]];
     [self setSelectedBackgroundView:bgColorView];
@@ -92,26 +96,26 @@
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    _nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
     [contentView addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    _usernameLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
+    _usernameLabel.font = [skin lightFontOfSize:15];
     _usernameLabel.text = @"username";
     [contentView addSubview:_usernameLabel];
     
     _retweetedLabel = [[UILabel alloc] init];
-    _retweetedLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:15];
+    _retweetedLabel.font = [skin lightFontOfSize:15];
     _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_retweetedLabel];
     
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
-    _tweetTextLabel.font = [UIFont fontWithName:@"Helvetica-Light" size:14];
+    _tweetAgeLabel.font = [skin lightFontOfSize:15];
     _tweetAgeLabel.textColor = [UIColor colorWithRed:0.624 green:0.624 blue:0.624 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
@@ -120,7 +124,7 @@
     _tweetTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetTextLabel.numberOfLines = 0;
     _tweetTextLabel.preferredMaxLayoutWidth = 240;
-    _tweetTextLabel.font = [UIFont fontWithName:@"Helvetica" size:16];
+    _tweetTextLabel.font = [skin fontOfSize:16];
     _tweetTextLabel.text = @"blah blah";
     [contentView addSubview:_tweetTextLabel];
     
@@ -226,8 +230,11 @@
     
     NSParameterAssert(url);
     
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
     
     self.tweetTextLabel.attributedText = attributedString;
     
@@ -238,8 +245,11 @@
     
     NSParameterAssert(hashtag);
     
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
     
     self.tweetTextLabel.attributedText = attributedString;
     
@@ -251,8 +261,11 @@
     
     NSParameterAssert(mention);
     
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
-    [attributedString addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.220 green:0.522 blue:0.686 alpha:1] range:range];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
     
     self.tweetTextLabel.attributedText = attributedString;
     

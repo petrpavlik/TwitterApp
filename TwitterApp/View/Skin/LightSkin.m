@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <CoreText/CoreText.h>
 #import "LightSkin.h"
 #import "UIImage+TwitterApp.h"
+#import <UINavigationBar+FlatUI.h>
+#import <UIBarButtonItem+FlatUI.h>
+#import <UIFont+FlatUI.h>
 
 @implementation LightSkin
 
@@ -15,41 +19,35 @@
     
     UINavigationBar* navigationBar = [UINavigationBar appearance];
     
-    UIColor* navigationBarColor = [UIColor colorWithRed:0.000 green:0.698 blue:0.925 alpha:1];
+    UIColor* navigationBarColor = [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
+    //UIColor* navigationBarColor = [UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1];
+    [navigationBar configureFlatNavigationBarWithColor:navigationBarColor];
     
-    UIImage* navigationBarBackground = [UIImage imageWithColor:navigationBarColor size:CGSizeMake(21, 11)];
-    navigationBarBackground = [navigationBarBackground imageWithRoundTopCornersWithRadius:10];
-    navigationBarBackground = [navigationBarBackground resizableImageWithCapInsets:UIEdgeInsetsMake(10, 10, 0, 10)];
+    [UIBarButtonItem configureFlatButtonsWithColor:[UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1]
+                                  highlightedColor:[UIColor colorWithRed:0.129 green:0.400 blue:0.580 alpha:1]
+                                      cornerRadius:5
+                                   whenContainedIn:[UINavigationBar class]];
     
-    [navigationBar setBackgroundImage:navigationBarBackground forBarMetrics:UIBarMetricsDefault];
-    [navigationBar setBackgroundImage:navigationBarBackground forBarMetrics:UIBarMetricsLandscapePhone];
-    
-    UIBarButtonItem* barButtonItem = [UIBarButtonItem appearance];
-    
-    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Normal"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    /*[barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Normal"] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Highlighted"] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Disabled"] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundImage:[UIImage imageNamed:@"Button-NavigationBar-Disabled"] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];*/
+    
+    UIBarButtonItem* barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     
     [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                          [UIColor whiteColor], UITextAttributeTextColor,
                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                          [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
                                            nil] forState:UIControlStateNormal];
     
     [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                           [UIColor colorWithWhite:155/255.0 alpha:1], UITextAttributeTextColor,
                                            [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                           [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
-                                           nil] forState:UIControlStateDisabled];
-    
-    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                           [UIColor colorWithWhite:212/255.0 alpha:1], UITextAttributeTextColor,
-                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
-                                           [UIFont fontWithName:@"Helvetica-Bold" size:15], UITextAttributeFont,
                                            nil] forState:UIControlStateHighlighted];
     
+    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                           [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
+                                           nil] forState:UIControlStateDisabled];
     
-    [navigationBar setTitleTextAttributes:
+    
+    /*[navigationBar setTitleTextAttributes:
      [NSDictionary dictionaryWithObjectsAndKeys:
       [UIColor whiteColor], UITextAttributeTextColor,
       [UIColor whiteColor], UITextAttributeTextShadowColor,
@@ -58,8 +56,33 @@
       nil]];
     
     [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];*/
 
+}
+
+- (UIFont*)fontOfSize:(CGFloat)size {
+    return [UIFont flatFontOfSize:size];
+}
+
+- (UIFont*)boldFontOfSize:(CGFloat)size {
+    return [UIFont boldFlatFontOfSize:size];
+}
+
+//TODO: pull request to flat ui kit
+- (UIFont*)lightFontOfSize:(CGFloat)size {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSURL * url = [[NSBundle mainBundle] URLForResource:@"Lato-Light" withExtension:@"ttf"];
+		CFErrorRef error;
+        CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeNone, &error);
+        error = nil;
+    });
+    return [UIFont fontWithName:@"Lato-Light" size:size];
+}
+
+- (UIColor*)linkColor {
+    return [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
 }
 
 @end

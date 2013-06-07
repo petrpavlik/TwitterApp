@@ -20,12 +20,16 @@
 
 @interface BaseTweetsController ()
 
+@property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
+
 @end
 
 @implementation BaseTweetsController
 
 - (void)dealloc {
+    
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -35,6 +39,27 @@
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:@"TweetCell"];
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"LoadingCell"];
     [self.tableView registerClass:[LoadMoreCell class] forCellReuseIdentifier:@"LoadMoreCell"];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self updateTweetAge];
+    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+    [self.updateTweetAgeTimer fire];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    [self.updateTweetAgeTimer invalidate];
+    self.updateTweetAgeTimer = nil;
 }
 
 - (void)didReceiveMemoryWarning
@@ -309,5 +334,37 @@
     return nil;
 }
 
+- (void)updateTweetAge {
+    
+    for (UITableViewCell* cell in [self.tableView visibleCells]) {
+        
+        if ([cell isKindOfClass:[TweetCell class]]) {
+            
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+            TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+            NSParameterAssert(tweet);
+            
+            TweetCell* tweetCell = (TweetCell*)cell;
+            tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
+        }
+    }
+}
+
+#pragma mark -
+
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
+    
+    [self.updateTweetAgeTimer invalidate];
+    self.updateTweetAgeTimer = nil;
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
+    
+    [self updateTweetAge];
+    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+    [self.updateTweetAgeTimer fire];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
 
 @end
