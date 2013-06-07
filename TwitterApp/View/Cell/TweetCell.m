@@ -70,7 +70,7 @@
     AbstractSkin* skin = appDelegate.skin;
     
     UIView *bgColorView = [[UIView alloc] init];
-    [bgColorView setBackgroundColor:[UIColor colorWithWhite:200/255.0 alpha:1.0]];
+    [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
     [self setSelectedBackgroundView:bgColorView];
     
     _slidingContentView = [[UIView alloc] init];
@@ -116,7 +116,7 @@
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
     _tweetAgeLabel.font = [skin lightFontOfSize:15];
-    _tweetAgeLabel.textColor = [UIColor colorWithRed:0.624 green:0.624 blue:0.624 alpha:1];
+    _tweetAgeLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
     
@@ -212,7 +212,10 @@
 
 + (CGFloat)requiredHeightForTweetText:(NSString*)text {
     
-    CGFloat textHeight = [text sizeWithFont:[UIFont fontWithName:@"Helvetica" size:16] constrainedToSize:CGSizeMake(240, FLT_MAX)].height;
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    CGFloat textHeight = [text sizeWithFont:[skin fontOfSize:16] constrainedToSize:CGSizeMake(240, FLT_MAX)].height;
     
     CGFloat height = 10 + 16 + 1 + textHeight + 10 + 2;
     

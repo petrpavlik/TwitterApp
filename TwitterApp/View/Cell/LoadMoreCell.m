@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AppDelegate.h"
 #import "LoadMoreCell.h"
 
 @interface LoadMoreCell ()
@@ -47,6 +48,9 @@
 
 - (void)commonSetup {
     
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
     UIView* contentView = self.contentView;
@@ -57,7 +61,7 @@
     
     _loadMoreLabel = [UILabel new];
     _loadMoreLabel.text = @"Load more";
-    _loadMoreLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+    _loadMoreLabel.font = [skin fontOfSize:16];
     [contentView addSubview:_loadMoreLabel];
     
     [_loadMoreLabel centerInSuperview];

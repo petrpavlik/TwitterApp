@@ -7,6 +7,7 @@
 //
 
 #import <Accounts/Accounts.h>
+#import "AppDelegate.h"
 #import "BasementController.h"
 #import "AFTwitterClient.h"
 #import <ECSlidingViewController.h>
@@ -48,6 +49,7 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(requestNewTweets) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
+    self.refreshControl.tintColor = [UIColor blackColor];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
     
@@ -65,10 +67,13 @@
     }
     else {
         
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        AbstractSkin* skin = appDelegate.skin;
+        
         UserTitleView* userTitleView = [[UserTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
         
         NSDictionary* attributes = self.navigationController.navigationBar.titleTextAttributes;
-        attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[UIFont fontWithName:@"Helvetica" size:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+        attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[skin fontOfSize:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
         
         NSAttributedString* nameAttrString = [[NSAttributedString alloc] initWithString:@"@ptrpavlik" attributes:attributes];
         userTitleView.nameLabel.attributedText = nameAttrString;

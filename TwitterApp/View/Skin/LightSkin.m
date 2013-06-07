@@ -61,24 +61,28 @@
 }
 
 - (UIFont*)fontOfSize:(CGFloat)size {
-    return [UIFont flatFontOfSize:size];
+    //return [UIFont flatFontOfSize:size];
+    return [UIFont fontWithName:@"HelveticaNeue" size:size];
 }
 
 - (UIFont*)boldFontOfSize:(CGFloat)size {
-    return [UIFont boldFlatFontOfSize:size];
+    //return [UIFont boldFlatFontOfSize:size];
+    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:size];
 }
 
 //TODO: pull request to flat ui kit
 - (UIFont*)lightFontOfSize:(CGFloat)size {
     
-    static dispatch_once_t onceToken;
+    return [UIFont fontWithName:@"HelveticaNeue-Light" size:size];
+    
+    /*static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSURL * url = [[NSBundle mainBundle] URLForResource:@"Lato-Light" withExtension:@"ttf"];
 		CFErrorRef error;
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)url, kCTFontManagerScopeNone, &error);
         error = nil;
     });
-    return [UIFont fontWithName:@"Lato-Light" size:size];
+    return [UIFont fontWithName:@"Lato-Light" size:size];*/
 }
 
 - (UIColor*)linkColor {
