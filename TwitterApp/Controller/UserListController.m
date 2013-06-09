@@ -7,6 +7,7 @@
 //
 
 #import "TweetEntity.h"
+#import "UIImage+TwitterApp.h"
 #import "UserCell.h"
 #import "UserListController.h"
 
@@ -72,7 +73,10 @@
     
     cell.nameLabel.text = user.name;
     cell.usernameLabel.text = user.screenName;
-    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil];
+    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+        
+        return [image imageWithRoundCornersWithRadius:5 size:CGSizeMake(48, 48)];
+    }];
     
     return cell;
 }

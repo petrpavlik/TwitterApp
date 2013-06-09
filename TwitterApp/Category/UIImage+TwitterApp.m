@@ -75,10 +75,22 @@ static void addTopRoundedRectToPath(CGContextRef context,
     CGContextRestoreGState(context);
 }
 
-- (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius
+- (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius {
+    return [self imageWithRoundCornersWithRadius:radius size:CGSizeZero];
+}
+
+- (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius size:(CGSize)size
 {
     CGFloat w = self.size.width;
     CGFloat h = self.size.height;
+    
+    if (size.width > 0) {
+        w = size.width;
+    }
+    
+    if (size.height > 0) {
+        h = size.height;
+    }
     
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(w, h), NO, [UIScreen mainScreen].scale);
     CGContextRef contextRef = UIGraphicsGetCurrentContext();

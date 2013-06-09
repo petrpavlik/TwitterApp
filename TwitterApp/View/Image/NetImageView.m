@@ -40,7 +40,11 @@ static NSOperationQueue* operationQueue = nil;
 
 #pragma mark -
 
-- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder {
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder {
+    [self setImageWithURL:url placeholderImage:placeholder imageProcessingBlock:NULL];
+}
+
+- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock {
     
     [self.operation cancel];
     
@@ -65,7 +69,7 @@ static NSOperationQueue* operationQueue = nil;
     
     __weak NetImageView* weakSelf = self;
     
-    AFImageRequestOperation* operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:NULL success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    AFImageRequestOperation* operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:imageProcessingBlock success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
         if (image) {
             

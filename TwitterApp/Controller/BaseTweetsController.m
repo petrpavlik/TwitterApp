@@ -17,6 +17,7 @@
 #import "TweetCell.h"
 #import "TweetEntity.h"
 #import "UIActionSheet+TwitterApp.h"
+#import "UIImage+TwitterApp.h"
 #import "UserListController.h"
 #import "WebController.h"
 
@@ -182,7 +183,12 @@
         
         cell.nameLabel.text = tweet.user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil];
+        
+        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+            
+            return [image imageWithRoundCornersWithRadius:5 size:CGSizeMake(48, 48)];
+        }];
+        
         cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
         
         if (retweet) {
@@ -227,7 +233,15 @@
         
         if (media.count) {
             
-            [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil];
+            [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil imageProcessingBlock:^UIImage *(UIImage *image) {
+                
+                UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);
+                [image drawAtPoint:CGPointZero];
+                image = UIGraphicsGetImageFromCurrentImageContext();
+                UIGraphicsEndImageContext();
+                
+                return image;
+            }];
             cell.mediaImageView.hidden = NO;
         }
         

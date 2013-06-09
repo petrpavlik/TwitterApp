@@ -10,6 +10,7 @@
 
 @interface UIImage (TwitterApp)
 
+- (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius size:(CGSize)size;
 - (UIImage *)imageWithRoundCornersWithRadius:(CGFloat)radius;
 - (UIImage *)imageWithRoundTopCornersWithRadius:(CGFloat)radius;
 - (UIImage *)imageCroppedToRect:(CGRect)rect;

@@ -36,8 +36,8 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _avatarImageView.clipsToBounds = YES;
-    _avatarImageView.layer.cornerRadius = 5;
+    //_avatarImageView.clipsToBounds = YES;
+    //_avatarImageView.layer.cornerRadius = 5;
     [contentView addSubview:_avatarImageView];
     
     UIView* credentialsPlaceholder = [[UIView alloc] init];

@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface NetImageView : UIImageView
-
+//(UIImage *(^)(UIImage *))imageProcessingBlock
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder;
+- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock;
 + (void)setSharedOperationQueue:(NSOperationQueue*)queue;
 + (NSCache*)sharedImageCache;
 
