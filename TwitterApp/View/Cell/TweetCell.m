@@ -186,6 +186,9 @@
 
     
     [contentView addConstraints:superviewConstraints];
+    
+    UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
+    [contentView addGestureRecognizer:longPressRecognizer];
 }
 
 #pragma mark -
@@ -480,6 +483,15 @@
     [textLabel cancelCurrentTouch];
     
     [self.delegate tweetCell:self didLongPressURL:timer.userInfo[@"URL"]];
+}
+
+- (void)longPressGestureRecognized:(UILongPressGestureRecognizer*)gestureRecognizer {
+    
+    NSLog(@"%@", gestureRecognizer);
+    
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        [self.delegate tweetCellDidLongPress:self];
+    }
 }
 
 @end

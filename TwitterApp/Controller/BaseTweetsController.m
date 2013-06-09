@@ -16,9 +16,11 @@
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
+#import "UIActionSheet+TwitterApp.h"
+#import "UserListController.h"
 #import "WebController.h"
 
-@interface BaseTweetsController ()
+@interface BaseTweetsController () <UIActionSheetDelegate>
 
 @property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
 
@@ -43,6 +45,8 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
+    
+    self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
 }
@@ -328,6 +332,20 @@
     [self.navigationController pushViewController:timelineController animated:YES];
 }
 
+- (void)tweetCellDidLongPress:(TweetCell *)cell {
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Retweets", nil];
+    
+    actionSheet.userInfo = @{@"tweet": tweet};
+    [actionSheet showInView:self.view];
+}
+
 #pragma mark -
 
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath*)indexPath {
@@ -365,6 +383,21 @@
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
     [self.updateTweetAgeTimer fire];
     NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+#pragma mark -
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    
+    NSLog(@"%@", actionSheet.userInfo);
+    
+    UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+    TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
+    
+    NSParameterAssert(tweet);
+    userListController.tweetIdForRetweets = tweet.tweetId;
+    
+    [self.navigationController pushViewController:userListController animated:YES];
 }
 
 @end

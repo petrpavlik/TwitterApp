@@ -17,6 +17,7 @@
 - (void)tweetCell:(TweetCell*)cell didSelectHashtag:(NSString*)hashstag;
 - (void)tweetCell:(TweetCell*)cell didSelectMention:(NSString*)mention;
 - (void)tweetCell:(TweetCell*)cell didLongPressURL:(NSURL*)url;
+- (void)tweetCellDidLongPress:(TweetCell*)cell;
 - (void)tweetCellDidRequestLeftAction:(TweetCell*)cell;
 - (void)tweetCellDidRequestRightAction:(TweetCell*)cell;
 - (void)tweetCellDidSelectAvatarImage:(TweetCell*)cell;

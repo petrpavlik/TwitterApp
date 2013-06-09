@@ -11,6 +11,8 @@
 
 @interface BasementController ()
 
+@property(nonatomic, strong) NSArray* menuItems;
+
 @end
 
 @implementation BasementController
@@ -30,11 +32,18 @@
 
     self.view.backgroundColor = [UIColor blackColor];
     
-    [self.slidingViewController setAnchorRightRevealAmount:280.0f];
+    [self.slidingViewController setAnchorRightRevealAmount:120.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    self.menuItems = @[@"Timeline", @"Search"];
+    
+    /*CGFloat longestMenuItemTextLength = [self.menuItems[0] sizewithfo;
+    for (NSString* menuItemText in self.menuItems) {
+        if
+    }*/
 }
 
 #pragma mark - Table view data source

@@ -90,6 +90,13 @@ static NSOperationQueue* operationQueue = nil;
     self.operation = operation;
 }
 
+- (void)setImage:(UIImage *)image {
+    
+    [self.operation cancel];
+    
+    [super setImage:image];
+}
+
 #pragma mark -
 
 + (void)setSharedOperationQueue:(NSOperationQueue *)queue {

@@ -46,6 +46,8 @@
 
 + (NSOperation*)requestTweetWithId:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
 
++ (NSOperation*)requestRetweetsOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSArray* retweets, NSError* error))block;
+
 
 
 + (void)testStream;

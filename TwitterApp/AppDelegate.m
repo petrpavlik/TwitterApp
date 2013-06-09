@@ -77,7 +77,10 @@
     [AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
     
     [[PocketAPI sharedAPI] setConsumerKey:@"15055-3b898b85423c8af7f67ec331"];
-
+    
+#ifdef DEBUG
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
+#endif
     
     return YES;
 }
@@ -118,6 +121,13 @@
         
         return NO;
     }
+}
+
+#pragma mark -
+
+// Gets called only in debug state
+- (void)applicationDidReceiveNotification:(NSNotification*)notification {
+    //NSLog(@"%@", notification);
 }
 
 @end

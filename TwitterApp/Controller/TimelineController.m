@@ -42,7 +42,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    NSAssert(!(self.searchQuery && self.screenName), @"cannot set both searchQuery and screenName");
+    NSAssert(!(self.searchQuery.length && self.screenName.length), @"cannot set both searchQuery and screenName");
     
     self.title = @"Timeline";
     
@@ -187,12 +187,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
-    UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
-    [self.navigationController pushViewController:userListController animated:YES];
-    
-    return;
-    
     TweetEntity* tweet = self.tweets[indexPath.row];
     
     if ([tweet isKindOfClass:[GapTweetEntity class]]) {

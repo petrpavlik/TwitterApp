@@ -310,6 +310,35 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestRetweetsOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSArray* retweets, NSError* error))block {
+    
+    NSParameterAssert(tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:[NSString stringWithFormat:@"statuses/retweets/%@.json", tweetId] parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            [tweets addObject:tweet];
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 #pragma mark -
 
 + (void)testStream {

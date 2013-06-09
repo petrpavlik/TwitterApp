@@ -10,4 +10,7 @@
 
 @interface UserListController : UITableViewController
 
+@property(nonatomic, strong) NSString* tweetIdForRetweets;
+@property(nonatomic, strong) NSString* tweetIdForFavorites;
+
 @end
