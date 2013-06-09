@@ -72,6 +72,10 @@
 		4BE5557C1758F87400A214FC /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5557B1758F87400A214FC /* NotificationView.m */; };
 		4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */; };
 		4BF0DBFC17649598002578FF /* BasementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBFB17649598002578FF /* BasementCell.m */; };
+		4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */; };
+		4BF0DC071764F1A1002578FF /* Icon-Navbar-Compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC031764F1A1002578FF /* Icon-Navbar-Compose@2x.png */; };
+		4BF0DC081764F1A1002578FF /* Icon-Navbar-Hamburger.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC041764F1A1002578FF /* Icon-Navbar-Hamburger.png */; };
+		4BF0DC091764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC051764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png */; };
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
 		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
 		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
@@ -189,6 +193,10 @@
 		4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIActionSheet+TwitterApp.m"; path = "Category/UIActionSheet+TwitterApp.m"; sourceTree = "<group>"; };
 		4BF0DBFA17649598002578FF /* BasementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasementCell.h; path = View/Cell/BasementCell.h; sourceTree = "<group>"; };
 		4BF0DBFB17649598002578FF /* BasementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BasementCell.m; path = View/Cell/BasementCell.m; sourceTree = "<group>"; };
+		4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Navbar-Compose.png"; path = "Image/Icon-Navbar-Compose.png"; sourceTree = "<group>"; };
+		4BF0DC031764F1A1002578FF /* Icon-Navbar-Compose@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Navbar-Compose@2x.png"; path = "Image/Icon-Navbar-Compose@2x.png"; sourceTree = "<group>"; };
+		4BF0DC041764F1A1002578FF /* Icon-Navbar-Hamburger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Navbar-Hamburger.png"; path = "Image/Icon-Navbar-Hamburger.png"; sourceTree = "<group>"; };
+		4BF0DC051764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Navbar-Hamburger@2x.png"; path = "Image/Icon-Navbar-Hamburger@2x.png"; sourceTree = "<group>"; };
 		4BF9B6B4174A878D00DA3318 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebController.h; path = Controller/WebController.h; sourceTree = "<group>"; };
 		4BF9B6B5174A878D00DA3318 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebController.m; path = Controller/WebController.m; sourceTree = "<group>"; };
 		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
@@ -412,6 +420,10 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */,
+				4BF0DC031764F1A1002578FF /* Icon-Navbar-Compose@2x.png */,
+				4BF0DC041764F1A1002578FF /* Icon-Navbar-Hamburger.png */,
+				4BF0DC051764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png */,
 				4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */,
 				4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */,
 				4BAEB3E7175266C70027A0D1 /* Button-NavigationBar-Highlighted.png */,
@@ -582,6 +594,10 @@
 				4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */,
 				4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */,
 				4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */,
+				4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */,
+				4BF0DC071764F1A1002578FF /* Icon-Navbar-Compose@2x.png in Resources */,
+				4BF0DC081764F1A1002578FF /* Icon-Navbar-Hamburger.png in Resources */,
+				4BF0DC091764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

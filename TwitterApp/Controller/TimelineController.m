@@ -51,10 +51,13 @@
     self.refreshControl = refreshControl;
     self.refreshControl.tintColor = [UIColor blackColor];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(composeTweet)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Compose"] style:UIBarButtonItemStyleBordered target:self action:@selector(composeTweet)];
+    [self.navigationItem.rightBarButtonItem setImageInsets:UIEdgeInsetsMake(-1, 0, 0, -3)];
     
     if (self.navigationController.viewControllers[0] == self) {
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(showBasement)];
+ 
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Hamburger"] style:UIBarButtonItemStyleBordered target:self action:@selector(showBasement)];
+        [self.navigationItem.leftBarButtonItem setImageInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
     }
     
     //self.searchQuery = @"ass";
