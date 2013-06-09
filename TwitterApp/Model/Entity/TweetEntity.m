@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <AFHTTPRequestOperation.h>
 #import "AFTwitterClient.h"
 #import "TweetEntity.h"
 
@@ -57,7 +58,7 @@
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableDictionary* mutableParams = [@{@"count": @"50"} mutableCopy];
+    NSMutableDictionary* mutableParams = [@{@"count": @"200"} mutableCopy];
     
     if (maxId) {
         mutableParams[@"max_id"] = maxId;
@@ -79,12 +80,16 @@
             [tweets addObject:tweet];
         }
         
-        block(tweets, nil);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(tweets, nil);
+        });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         block(nil, error);
     }];
+    
+    [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
     
     [apiClient enqueueHTTPRequestOperation:operation];
     return (NSOperation*)operation;
