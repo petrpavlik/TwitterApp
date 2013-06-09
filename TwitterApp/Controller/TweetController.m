@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AppDelegate.h"
+#import "NavigationController.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
 
@@ -30,7 +32,7 @@
         tweetController.tweetToReplyTo = tweet;
     }
     
-    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:tweetController];
+     NavigationController* navigationController = [[NavigationController alloc] initWithRootViewController:tweetController];
     
     [viewController presentViewController:navigationController animated:YES completion:NULL];
     
@@ -42,10 +44,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
 
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
-    _tweetTextView.font = [UIFont fontWithName:@"Helvetica" size:16];
+    _tweetTextView.font = [skin fontOfSize:16];
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     [_tweetTextView becomeFirstResponder];

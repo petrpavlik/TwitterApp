@@ -458,24 +458,24 @@
                         if ([tweetToAdd.tweetId isEqualToString:[mutableTweets[index] tweetId]]) {
                             
                             //no gap
+                            /*[mutableTweets insertObject:tweetToAdd atIndex:index];
                             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                             contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-                            [mutableTweets insertObject:tweetToAdd atIndex:index];
-                            index++;
+                            index++;*/
                         }
                         else {
                             
+                            [mutableTweets insertObject:[GapTweetEntity new] atIndex:index];
                             NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                             contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-                            [mutableTweets insertObject:[GapTweetEntity new] atIndex:index];
                             index++;
                         }
                     }
                     else {
                         
+                        [mutableTweets insertObject:tweetToAdd atIndex:index];
                         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
                         contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-                        [mutableTweets insertObject:tweetToAdd atIndex:index];
                         index++;
                     }
                 }
@@ -485,14 +485,15 @@
                 if (self.timelineDocument) {
                     [self.timelineDocument persistTimeline:self.tweets];
                 }
+                
+                break;
             }
-            
-            break;
+        
         }
         
         [self.tableView reloadData];
         
-        //self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+        self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
         
         
         MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];

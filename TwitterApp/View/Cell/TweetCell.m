@@ -463,7 +463,7 @@
     if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         
         CGPoint translation = [(UIPanGestureRecognizer*)gestureRecognizer translationInView:[[gestureRecognizer view] superview] ];
-        return (fabs(translation.x) / fabs(translation.y) > 1) ? YES : NO;
+        return (fabs(translation.x) / fabs(translation.y) > 5) ? YES : NO;
     }
 
     return [super gestureRecognizerShouldBegin:gestureRecognizer];

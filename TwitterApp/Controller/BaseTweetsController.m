@@ -10,9 +10,10 @@
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
-#import <PocketAPI.h>
+#import "MHFacebookImageViewer.h"
 #import "NotificationView.h"
 #import "NSString+TwitterApp.h"
+#import <PocketAPI.h>
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetEntity.h"
@@ -48,6 +49,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
     self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
+    self.tableView.tableFooterView = [UIView new];
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
 }
@@ -243,6 +245,7 @@
                 return image;
             }];
             cell.mediaImageView.hidden = NO;
+            [cell.mediaImageView  setupImageViewer];
         }
         
         for (NSDictionary* item in hashtags) {
@@ -403,7 +406,9 @@
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
-    NSLog(@"%@", actionSheet.userInfo);
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
     
     UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
     TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
