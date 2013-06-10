@@ -260,8 +260,14 @@
 
 - (void)requestNewTweets {
     
-    TweetEntity* mostRecentTweet = self.tweets[0];
-    [self requestTweetsSinceId:mostRecentTweet.tweetId];
+    if (self.tweets.count) {
+        
+        TweetEntity* mostRecentTweet = self.tweets[0];
+        [self requestTweetsSinceId:mostRecentTweet.tweetId];
+    }
+    else {
+        [self requestData];
+    }
 }
 
 - (void)requestTweetsSinceId:(NSString*)sinceId {

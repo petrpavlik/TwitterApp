@@ -8,7 +8,7 @@
 
 #import "AFTwitterJSONRequestOperation.h"
 
-//#define LOG_API 1
+#define LOG_API 1
 
 @implementation AFTwitterJSONRequestOperation
 

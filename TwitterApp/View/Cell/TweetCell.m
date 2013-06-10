@@ -202,6 +202,10 @@
     CGRect contentViewFrame = self.contentView.frame;
     contentViewFrame.origin.x = -50;
     self.contentView.frame = contentViewFrame;
+    
+    [self.urlsDictonary removeAllObjects];
+    [self.hashtagsDictonary removeAllObjects];
+    [self.mentionsDictonary removeAllObjects];
 
 }
 
