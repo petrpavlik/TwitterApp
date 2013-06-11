@@ -11,6 +11,7 @@
 @interface TimelineDocument ()
 
 @property(nonatomic, strong) NSArray* timeline;
+@property(nonatomic, strong) NSData* data;
 
 @end
 
@@ -18,14 +19,13 @@
 
 - (id)contentsForType:(NSString*)typeName error:(NSError**)outError {
     
-    NSLog(@"saving document");
-    NSData* archivedTimeline = [NSKeyedArchiver archivedDataWithRootObject:self.timeline];
-    return archivedTimeline;
+    NSLog(@"saving document %@", [NSThread currentThread]);
+    return self.data;
 }
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString*)typeName error:(NSError**)outError {
     
-    NSLog(@"loading document");
+    NSLog(@"loading document %@", [NSThread currentThread]);
     //NSLog(@"%@", [[NSString alloc] initWithData:contents encoding:NSUTF8StringEncoding]);
     
     if (![contents isKindOfClass:[NSData class]]) {
@@ -34,10 +34,13 @@
         return NO;
     }
     
+    self.data = contents;
     self.timeline = [NSKeyedUnarchiver unarchiveObjectWithData:contents];
     //NSLog(@"%@", self.timeline);
     
-    [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
+    });
     
     return YES;
 }
@@ -46,13 +49,29 @@
 
 - (void)persistTimeline:(NSArray*)tweets {
     
+    NSParameterAssert([NSThread isMainThread]);
+    
+    tweets = [tweets copy];
     self.timeline = tweets;
-    [self updateChangeCount:UIDocumentChangeDone];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        NSData* archivedTimeline = [NSKeyedArchiver archivedDataWithRootObject:tweets];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.data = archivedTimeline;
+            [self updateChangeCount:UIDocumentChangeDone];
+        });
+    });
 }
 
 #pragma mark -
 
 - (NSArray*)persistedTimeline {
+    
+    NSParameterAssert([NSThread isMainThread]);
+    
     return _timeline;
 }
 

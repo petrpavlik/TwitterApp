@@ -616,15 +616,19 @@
                 ACAccountType *accountTypeTwitter = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
                 twitterAccount.accountType = accountTypeTwitter;
                 
-                [AFTwitterClient sharedClient].account = twitterAccount;
-                
-                block(nil);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [AFTwitterClient sharedClient].account = twitterAccount;
+                    block(nil);
+                });
             }
             
         } else {
             
             NSLog(@"No access granted %@", error);
-            block(error);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                block(nil);
+            });
         }
     }];
 

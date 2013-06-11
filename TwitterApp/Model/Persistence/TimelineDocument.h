@@ -23,6 +23,6 @@
 - (void)persistTimeline:(NSArray*)tweets;
 
 @property(nonatomic, weak) id<TimelineDocumentDelegate> delegate;
-@property(nonatomic, readonly) NSArray* persistedTimeline;
+//@property(nonatomic, readonly) NSArray* persistedTimeline;
 
 @end
