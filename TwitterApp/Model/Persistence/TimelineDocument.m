@@ -10,8 +10,8 @@
 
 @interface TimelineDocument ()
 
-@property(nonatomic, strong) NSArray* timeline;
-@property(nonatomic, strong) NSData* data;
+@property(atomic, strong) NSArray* timeline;
+@property(atomic, strong) NSData* data;
 
 @end
 
