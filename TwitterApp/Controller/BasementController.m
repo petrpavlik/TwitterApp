@@ -30,13 +30,17 @@
 {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor blackColor];
+    //self.view.backgroundColor = [UIColor blackColor];
     
     [self.slidingViewController setAnchorRightRevealAmount:120.0f];
     self.slidingViewController.underLeftWidthLayout = ECFullWidth;
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    UIView* tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 44)];
+    tableHeaderView.backgroundColor = [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
+    self.tableView.tableHeaderView = tableHeaderView;
     
     self.menuItems = @[@"Timeline", @"Search"];
     
@@ -66,7 +70,8 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    cell.textLabel.textColor = [UIColor whiteColor];
+    //cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Neue" size:18];
     
     if (indexPath.row==0) {
         cell.textLabel.text = @"Timeline";

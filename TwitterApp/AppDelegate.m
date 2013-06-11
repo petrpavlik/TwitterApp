@@ -12,6 +12,7 @@
 #import "BaseEntity.h"
 #import <ECSlidingViewController.h>
 #import "LightSkin.h"
+#import "ModernSkin.h"
 #import "NavigationController.h"
 #import "NetImageView.h"
 #import <PocketAPI.h>
@@ -34,7 +35,8 @@
 - (AbstractSkin*)skin {
     
     if (!_skin) {
-        _skin = [[LightSkin alloc] init];
+        //_skin = [[LightSkin alloc] init];
+        _skin = [[ModernSkin alloc] init];
     }
     
     return _skin;

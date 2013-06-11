@@ -335,10 +335,10 @@
             
             self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
             
-            MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            /*MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeText;
             hud.labelText = [NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count];
-            [hud hide:YES afterDelay:3];
+            [hud hide:YES afterDelay:3];*/
             
             self.tableView.userInteractionEnabled = YES;
         });
@@ -350,10 +350,10 @@
     sinceId = @(sinceIdLong).description;
     
     if (self.searchQuery.length) {
-        [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:sinceId completionBlock:completionBlock];
+        self.runningNewTweetsOperation = [TweetEntity requestSearchWithQuery:self.searchQuery maxId:nil sinceId:sinceId completionBlock:completionBlock];
     }
     else if (self.screenName.length) {
-        [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:sinceId completionBlock:completionBlock];
+        self.runningNewTweetsOperation = [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:nil sinceId:sinceId completionBlock:completionBlock];
     }
     else {
         self.runningNewTweetsOperation = [TweetEntity requestHomeTimelineWithMaxId:nil sinceId:sinceId completionBlock:completionBlock];
@@ -557,6 +557,15 @@
     TweetEntity* tweet = self.tweets[indexPath.row];
     
     [TweetController presentAsReplyToTweet:tweet inViewController:self];
+}
+
+#pragma mark -
+
+- (void)applicationWillEnterForegroundNotification:(NSNotification *)notification {
+    
+    if (!self.searchQuery && !self.screenName) {
+        [self requestNewTweets];
+    }
 }
 
 #pragma mark -

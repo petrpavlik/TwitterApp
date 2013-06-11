@@ -20,8 +20,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.view.layer.cornerRadius = 10;
-    self.view.clipsToBounds = YES;
+    //self.view.layer.cornerRadius = 10;
+    //self.view.clipsToBounds = YES;
 }
 
 @end
