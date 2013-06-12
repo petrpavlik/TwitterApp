@@ -85,6 +85,8 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _avatarImageView.backgroundColor = [UIColor whiteColor];
+    _avatarImageView.opaque = YES;
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
     
@@ -103,19 +105,21 @@
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    _usernameLabel.font = [skin lightFontOfSize:15];
+    _usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
+    _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [contentView addSubview:_usernameLabel];
     
     _retweetedLabel = [[UILabel alloc] init];
-    _retweetedLabel.font = [skin lightFontOfSize:15];
+    _retweetedLabel.font = [skin fontOfSize:15];
     _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _retweetedLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [contentView addSubview:_retweetedLabel];
     
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
-    _tweetAgeLabel.font = [skin lightFontOfSize:15];
+    _tweetAgeLabel.font = [skin fontOfSize:15];
     _tweetAgeLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];

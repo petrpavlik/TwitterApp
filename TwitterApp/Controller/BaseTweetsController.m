@@ -188,7 +188,7 @@
         
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
             
-            return [image imageWithRoundCornersWithRadius:5 size:CGSizeMake(48, 48)];
+            return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
         }];
         
         cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];

@@ -38,7 +38,7 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _avatarImageView.layer.cornerRadius = 5;
+    _avatarImageView.layer.cornerRadius = 12;
     _avatarImageView.clipsToBounds = YES;
     
     _nameLabel = [[UILabel alloc] init];
