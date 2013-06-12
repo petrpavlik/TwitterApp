@@ -13,6 +13,11 @@ static NSOperationQueue* operationQueue = nil;
 
 @interface NetImageView ()
 
+// to avoid a potential flick if the cache is erased
+@property(nonatomic, strong) UIImage* lastImageFromURL;
+@property(nonatomic, strong) NSURL* lastImageURL;
+
+// queue on which to launch image request for this imge view
 @property(nonatomic, weak) NSOperation* operation;
 
 @end
@@ -62,7 +67,12 @@ static NSOperationQueue* operationQueue = nil;
         return;
     }
     
-    self.image = placeholder;
+    if (self.lastImageURL && [url isEqual:self.lastImageURL]) {
+        self.image = self.lastImageFromURL; //avoid image flick
+    }
+    else {
+        self.image = placeholder;
+    }
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request addValue:@"image/*" forHTTPHeaderField:@"Accept"];
@@ -71,7 +81,7 @@ static NSOperationQueue* operationQueue = nil;
     
     AFImageRequestOperation* operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:imageProcessingBlock success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
         
-        if (image) {
+        if (image && weakSelf) {
             
             NSURL* url = request.URL;
             if (weakSelf.customCacheKey) {
@@ -80,6 +90,9 @@ static NSOperationQueue* operationQueue = nil;
             
             [[NetImageView sharedImageCache] setObject:image forKey:url];
             weakSelf.image = image;
+            
+            weakSelf.lastImageURL = url;
+            weakSelf.lastImageFromURL = image;
         }
         
     } failure:nil];
@@ -97,6 +110,8 @@ static NSOperationQueue* operationQueue = nil;
 - (void)setImage:(UIImage *)image {
     
     [self.operation cancel];
+    self.lastImageURL = nil;
+    self.lastImageFromURL = nil;
     
     [super setImage:image];
 }

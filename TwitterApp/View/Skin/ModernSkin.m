@@ -36,6 +36,10 @@
     [barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     [barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
     
+    [barButtonItem setBackButtonBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:CGSizeMake(20, 20)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[barButtonItem setBackButtonBackgroundImage:[UIImage new] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    //[barButtonItem setBackButtonBackgroundImage:[UIImage new] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
+    
     [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                            [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
                                            [UIColor whiteColor], UITextAttributeTextColor,
