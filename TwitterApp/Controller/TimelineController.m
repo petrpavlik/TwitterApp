@@ -280,8 +280,6 @@
     
     void (^completionBlock)(NSArray *tweets, NSError *error) = ^(NSArray *tweets, NSError *error) {
         
-        self.tableView.userInteractionEnabled = NO;
-        
         [self.refreshControl endRefreshing];
         
         if (error) {
@@ -340,7 +338,6 @@
             hud.labelText = [NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count];
             [hud hide:YES afterDelay:3];*/
             
-            self.tableView.userInteractionEnabled = YES;
         });
     };
     

@@ -10,6 +10,7 @@
 #import "PPLabel.h"
 #import <QuartzCore/QuartzCore.h>
 #import "TweetCell.h"
+#import "UIImage+TwitterApp.h"
 
 @interface TweetCell () <PPLabelDelegate>
 
@@ -153,6 +154,10 @@
     _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
     [contentView addSubview:_leftActionImageView];
     
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:separatorView];
+    
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[_nameLabel]-[_usernameLabel]-[_tweetAgeLabel]-10-|" options:NSLayoutFormatAlignAllTop metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _nameLabel, _usernameLabel, _tweetAgeLabel)]];
@@ -171,6 +176,7 @@
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetAgeLabel]-20-[_rightActionImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_rightActionImageView, _tweetAgeLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_leftActionImageView]-20-[_avatarImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_leftActionImageView, _avatarImageView)]];
+
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_rightActionImageView
                                                                  attribute:NSLayoutAttributeCenterY
@@ -185,6 +191,30 @@
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:contentView
                                                                  attribute:NSLayoutAttributeCenterY
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_tweetTextLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeBottom
                                                                 multiplier:1.0
                                                                   constant:0]];
 
