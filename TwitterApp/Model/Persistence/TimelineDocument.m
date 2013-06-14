@@ -20,7 +20,12 @@
 - (id)contentsForType:(NSString*)typeName error:(NSError**)outError {
     
     NSLog(@"saving document %@", [NSThread currentThread]);
-    return self.data;
+    if (self.data) {
+        return self.data;
+    }
+    else {
+        return [NSData new];
+    }
 }
 
 - (BOOL)loadFromContents:(id)contents ofType:(NSString*)typeName error:(NSError**)outError {

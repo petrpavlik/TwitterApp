@@ -10,4 +10,15 @@
 
 @implementation UserEntity
 
+- (void)setValue:(id)value forUndefinedKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"IdStr"]) {
+        
+        self.userId = value;
+    }
+    else {
+        [super setValue:value forUndefinedKey:key];
+    }
+}
+
 @end

@@ -291,6 +291,8 @@
             return;
         }
         
+        //self.refreshControl.enabled = NO;
+        
         //wait for the refresh control to hide
         double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -332,6 +334,8 @@
             }
             
             self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+            
+            //self.refreshControl.enabled = YES;
             
             /*MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
             hud.mode = MBProgressHUDModeText;

@@ -358,7 +358,12 @@
         tweet = tweet.retweetedStatus;
     }
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Retweets", nil];
+    NSString* destructiveButtonTitle = nil;
+    if ([tweet.user.userId isEqualToString:@"236800645"]) {
+        destructiveButtonTitle = @"Delete";
+    }
+    
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Retweets", @"Favorites", nil];
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
