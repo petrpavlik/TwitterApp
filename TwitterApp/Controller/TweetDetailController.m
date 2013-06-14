@@ -81,6 +81,29 @@
     return [self heightForTweet:tweet];
 }
 
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    
+    if (section==1) {
+        
+        CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+        
+        for (NSInteger i=0; i<self.olderRelatedTweets.count; i++) {
+            heightOfContent += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+        }
+        
+        CGFloat padding = MAX(0, self.tableView.bounds.size.height - heightOfContent);
+        
+        return padding;
+    }
+    else {
+        return 0;
+    }
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,6 +126,18 @@
     [TweetEntity requestSearchRepliesWithTweetId:self.tweet.tweetId screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
         
         weakSelf.replies = tweets;
+        
+        CGFloat heightOfContent = 0;
+        for (NSInteger i=0; i<tweets.count; i++) {
+            heightOfContent += [weakSelf tableView:weakSelf.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+        }
+        
+        CGFloat contentOffset = weakSelf.tableView.contentOffset.y;
+        contentOffset += heightOfContent;
+        
+        [weakSelf.tableView reloadData];
+        weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
+        
         [weakSelf.tableView reloadData];
     }];
 }
