@@ -75,7 +75,7 @@
     cell.usernameLabel.text = user.screenName;
     [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
         
-        return [image imageWithRoundCornersWithRadius:5 size:CGSizeMake(48, 48)];
+        return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
     }];
     
     return cell;

@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "PPLabel.h"
-#import <QuartzCore/QuartzCore.h>
 #import "TweetCell.h"
 #import "UIImage+TwitterApp.h"
 

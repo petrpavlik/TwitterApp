@@ -17,7 +17,9 @@
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification;
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification;
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath;
+- (UITableViewCell*)cellForTweetDetail:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath;
 - (CGFloat)heightForTweet:(TweetEntity*)tweet;
+- (CGFloat)heightForTweetDetail:(TweetEntity*)tweet;
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath*)indexPath;
 
 @end

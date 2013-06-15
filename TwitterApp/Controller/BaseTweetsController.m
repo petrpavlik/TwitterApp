@@ -16,6 +16,7 @@
 #import <PocketAPI.h>
 #import "TimelineController.h"
 #import "TweetCell.h"
+#import "TweetDetailCell.h"
 #import "TweetEntity.h"
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+TwitterApp.h"
@@ -41,6 +42,7 @@
     [super viewDidLoad];
 
     [self.tableView registerClass:[TweetCell class] forCellReuseIdentifier:@"TweetCell"];
+    [self.tableView registerClass:[TweetDetailCell class] forCellReuseIdentifier:@"TweetDetailCell"];
     [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"LoadingCell"];
     [self.tableView registerClass:[LoadMoreCell class] forCellReuseIdentifier:@"LoadMoreCell"];
     
@@ -148,6 +150,11 @@
         
         return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight + retweetInformationHeight;
     }
+}
+
+- (CGFloat)heightForTweetDetail:(TweetEntity*)tweet {
+    
+    return 100;
 }
 
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath {
@@ -263,6 +270,24 @@
         
         return cell;
     }
+}
+
+- (UITableViewCell*)cellForTweetDetail:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath {
+    
+    static NSString *CellIdentifier = @"TweetDetailCell";
+    TweetDetailCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+    // Configure the cell...
+    cell.nameLabel.text = tweet.user.name;
+    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
+    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+        
+        return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
+    }];
+    
+    cell.tweetTextLabel.text = tweet.text;
+    
+    return cell;
 }
 
 #pragma mark -

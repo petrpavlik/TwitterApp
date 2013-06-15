@@ -64,7 +64,8 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
     if (self.tweetToReplyTo) {
-        _tweetTextView.text = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
+        NSString* content = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
+        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
     }
 }
 

@@ -10,6 +10,7 @@
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
+		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -105,6 +106,8 @@
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
 		4B4B8F9D17677C3400E427DE /* ModernSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernSkin.m; path = View/Skin/ModernSkin.m; sourceTree = "<group>"; };
+		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
+		4B573FA5176B695200166461 /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailCell.m; path = View/Cell/TweetDetailCell.m; sourceTree = "<group>"; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -401,6 +404,8 @@
 				4BB42C04175794F900311FF5 /* LoadMoreCell.m */,
 				4BF0DBFA17649598002578FF /* BasementCell.h */,
 				4BF0DBFB17649598002578FF /* BasementCell.m */,
+				4B573FA4176B695200166461 /* TweetDetailCell.h */,
+				4B573FA5176B695200166461 /* TweetDetailCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -738,6 +743,7 @@
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
+				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

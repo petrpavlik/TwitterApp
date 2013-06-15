@@ -70,15 +70,26 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    return [self cellForTweet:tweet atIndexPath:indexPath];
+    
+    if (indexPath.section==1) {
+        return [self cellForTweetDetail:tweet atIndexPath:indexPath];
+    }
+    else {
+        return [self cellForTweet:tweet atIndexPath:indexPath];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    return [self heightForTweet:tweet];
+    
+    if (indexPath.section==1) {
+        return [self heightForTweetDetail:tweet];
+    }
+    else {
+        return [self heightForTweet:tweet];
+    }
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
