@@ -20,6 +20,7 @@
 @property(nonatomic, strong) NSString* tweetId;
 @property(nonatomic, strong) NSString* inReplyToStatusId;
 @property(nonatomic, strong) NSString* lang;
+@property(nonatomic, strong) NSDictionary* place;
 @property(nonatomic, strong) NSNumber* possiblySensitive;
 @property(nonatomic, strong) NSDictionary* scopes;
 @property(nonatomic, strong) NSNumber* retweetCount;

@@ -196,6 +196,10 @@
 {
     TweetEntity* tweet = self.tweets[indexPath.row];
     
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
     if ([tweet isKindOfClass:[GapTweetEntity class]]) {
         
         GapTweetEntity* gapTweet = (GapTweetEntity*)tweet;

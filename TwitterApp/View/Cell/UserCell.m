@@ -52,9 +52,14 @@
     
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [skin lightFontOfSize:15];
+    _usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
+    _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
+    
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:separatorView];
     
     NSMutableArray* credentialsPlaceholderConstraints = [NSMutableArray new];
     
@@ -75,7 +80,31 @@
                                                                   toItem:contentView
                                                                attribute:NSLayoutAttributeCenterY
                                                               multiplier:1.0
-                                                                constant:0]];
+                                                                constant:-1]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_usernameLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:0]];
 
     
     [contentView addConstraints:superviewConstraints];

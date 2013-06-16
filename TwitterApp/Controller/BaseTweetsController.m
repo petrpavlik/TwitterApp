@@ -155,7 +155,7 @@
 
 - (CGFloat)heightForTweetDetail:(TweetEntity*)tweet {
     
-    return 100;
+    return 300;
 }
 
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath {
@@ -286,7 +286,13 @@
         return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
     }];
     
+    cell.createdWithLabel.text = [NSString stringWithFormat:@"via %@", [tweet.source stringByStrippingHTMLTags]];
+    
     cell.tweetTextLabel.text = tweet.text;
+    
+    if (tweet.place[@"name"]) {
+        cell.locationLabel.text = [NSString stringWithFormat:@"from %@", tweet.place[@"name"]];
+    }
     
     return cell;
 }

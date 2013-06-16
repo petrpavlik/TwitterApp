@@ -72,21 +72,34 @@
     _tweetTextLabel.text = @"blah blah";
     [contentView addSubview:_tweetTextLabel];
     
-    UIButton* numRetweetsButton = [UIButton new];
-    numRetweetsButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [numRetweetsButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [numRetweetsButton setTitle:@"12" forState:UIControlStateNormal];
-    [contentView addSubview:numRetweetsButton];
-    
-    UIButton* numFavoritesButton = [UIButton new];
-    numFavoritesButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [numFavoritesButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [numFavoritesButton setTitle:@"12" forState:UIControlStateNormal];
-    [contentView addSubview:numFavoritesButton];
+    _tweetAgeLabel = [[UILabel alloc] init];
+    _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
+    _tweetAgeLabel.font = [skin fontOfSize:15];
+    _tweetAgeLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _tweetAgeLabel.text = @"1d";
+    [contentView addSubview:_tweetAgeLabel];
     
     UIView* controlsView = [self createControlsView];
     controlsView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:controlsView];
+    
+    _createdWithLabel = [[UILabel alloc] init];
+    _createdWithLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _createdWithLabel.textAlignment = NSTextAlignmentRight;
+    _createdWithLabel.font = [skin fontOfSize:15];
+    _createdWithLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    [contentView addSubview:_createdWithLabel];
+    
+    _locationLabel = [[UILabel alloc] init];
+    _locationLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _locationLabel.font = [skin fontOfSize:15];
+    _locationLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    [contentView addSubview:_locationLabel];
+    
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [contentView addSubview:separatorView];
     
     NSMutableArray* credentialsPlaceholderConstraints = [NSMutableArray new];
     
@@ -98,16 +111,40 @@
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[credentialsPlaceholder]-10-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, credentialsPlaceholder)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[credentialsPlaceholder]-[_tweetAgeLabel]-10-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, credentialsPlaceholder, _tweetAgeLabel)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_avatarImageView(48)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, credentialsPlaceholder)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-10-[_tweetTextLabel]-10-[numRetweetsButton]-[controlsView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, controlsView, numRetweetsButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[credentialsPlaceholder]-5-[_tweetTextLabel]-10-[controlsView]-[_locationLabel]" options:NSLayoutFormatAlignAllLeading metrics:nil views:NSDictionaryOfVariableBindings(credentialsPlaceholder, _tweetTextLabel, controlsView, _locationLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[_tweetTextLabel]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[numRetweetsButton]-[numFavoritesButton]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(numRetweetsButton, numFavoritesButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_locationLabel]-[_createdWithLabel]-10-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationLabel, _createdWithLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-10-[controlsView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controlsView)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[controlsView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(controlsView)]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:_tweetTextLabel
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:0]];
     
     [contentView addConstraints:superviewConstraints];
 }
@@ -119,25 +156,25 @@
     UIView* controlsView = [UIView new];
     
     UIButton* replyButton = [UIButton new];
-    [replyButton setImage:[UIImage imageNamed:@"Icon-Retweet-Normal"] forState:UIControlStateNormal];
+    [replyButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] forState:UIControlStateNormal];
     [replyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     replyButton.translatesAutoresizingMaskIntoConstraints = NO;
     [controlsView addSubview:replyButton];
     
     UIButton* retweetButton = [UIButton new];
-    [retweetButton setImage:[UIImage imageNamed:@"Icon-Retweet-Normal"] forState:UIControlStateNormal];
+    [retweetButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] forState:UIControlStateNormal];
     [retweetButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     retweetButton.translatesAutoresizingMaskIntoConstraints = NO;
     [controlsView addSubview:retweetButton];
     
     UIButton* favoriteButton = [UIButton new];
-    [favoriteButton setImage:[UIImage imageNamed:@"Icon-Retweet-Normal"] forState:UIControlStateNormal];
+    [favoriteButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] forState:UIControlStateNormal];
     [favoriteButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     favoriteButton.translatesAutoresizingMaskIntoConstraints = NO;
     [controlsView addSubview:favoriteButton];
     
     UIButton* otherButton = [UIButton new];
-    [otherButton setImage:[UIImage imageNamed:@"Icon-Retweet-Normal"] forState:UIControlStateNormal];
+    [otherButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] forState:UIControlStateNormal];
     [otherButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     otherButton.translatesAutoresizingMaskIntoConstraints = NO;
     [controlsView addSubview:otherButton];

@@ -36,7 +36,8 @@
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
     self.tableView.rowHeight = 68;
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
+    //self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     if (self.tweetIdForRetweets) {
         self.title = @"Retweets";
@@ -72,7 +73,7 @@
     UserEntity* user = self.users[indexPath.row];
     
     cell.nameLabel.text = user.name;
-    cell.usernameLabel.text = user.screenName;
+    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
     [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
         
         return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];

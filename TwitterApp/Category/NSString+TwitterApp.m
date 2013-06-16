@@ -12,7 +12,14 @@
 
 - (NSString*)stringByStrippingHTMLTags {
     
-    NSString* outString = [self stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
+    NSMutableString* mutableSelf = [self mutableCopy];
+    
+    NSRange range;
+    while ((range = [mutableSelf rangeOfString:@"<[^>]+>" options:NSRegularExpressionSearch]).location != NSNotFound) {
+        [mutableSelf deleteCharactersInRange:range];
+    }
+    
+    NSString* outString = [mutableSelf stringByReplacingOccurrencesOfString:@"&nbsp;" withString:@" "];
     outString = [outString stringByReplacingOccurrencesOfString:@"&lt;" withString:@"<"];
     outString = [outString stringByReplacingOccurrencesOfString:@"&gt;" withString:@">"];
     outString = [outString stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];

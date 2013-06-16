@@ -13,6 +13,8 @@
 
 @property(nonatomic, strong) UILabel* actionLabel;
 @property(nonatomic, strong) NetImageView* avatarImageView;
+@property(nonatomic, strong) UILabel* createdWithLabel;
+@property(nonatomic, strong) UILabel* locationLabel;
 @property(nonatomic, strong) NetImageView* mediaImageView;
 @property(nonatomic, strong) UILabel* nameLabel;
 @property(nonatomic, strong) UIButton* numFavoritesButton;
@@ -20,6 +22,5 @@
 @property(nonatomic, strong) UILabel* tweetAgeLabel;
 @property(nonatomic, strong) UILabel* tweetTextLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
-
 
 @end
