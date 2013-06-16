@@ -44,15 +44,9 @@
 
 #pragma mark -
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    
-    ECSlidingViewController* rootController = (ECSlidingViewController*)self.window.rootViewController;
-    rootController.view.backgroundColor = [UIColor blackColor];
-    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-    
-    rootController.topViewController = [[NavigationController alloc] initWithRootViewController:timelineController];
     
     [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {
         //converts keys such as created_at to CreatedAt
@@ -83,6 +77,21 @@
 #ifdef DEBUG
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
 #endif
+    
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    /*ECSlidingViewController* rootController = (ECSlidingViewController*)self.window.rootViewController;
+    rootController.view.backgroundColor = [UIColor blackColor];
+    
+    if (!rootController.topViewController) {
+        
+        NSLog(@"view controller hierarchy not restored");
+        TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+        rootController.topViewController = [[NavigationController alloc] initWithRootViewController:timelineController];
+    }*/
     
     return YES;
 }
@@ -123,6 +132,33 @@
         
         return NO;
     }
+}
+
+- (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder {
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    return YES;
+}
+
+- (UIViewController*)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+
+    NSLog(@"AppDelegate: %@", identifierComponents);
+    
+    /*if ([identifierComponents.lastObject isEqual:@"UINavigationController"]) {
+        return [[UINavigationController alloc] init];
+    }*/
+    
+    return nil;
+}
+
+- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 #pragma mark -

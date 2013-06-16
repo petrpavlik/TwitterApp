@@ -26,8 +26,9 @@
 #import "UserTitleView.h"
 #import "WebController.h"
 
-@interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate>
+@interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate, UIDataSourceModelAssociation>
 
+@property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, strong) NSArray* tweets;
@@ -45,6 +46,9 @@
     NSAssert(!(self.searchQuery.length && self.screenName.length), @"cannot set both searchQuery and screenName");
     
     self.title = @"Timeline";
+    //self.restorationIdentifier = @"Timeline";
+    
+    self.tableView.restorationIdentifier = @"TweetsTableView";
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(requestNewTweets) forControlEvents:UIControlEventValueChanged];
@@ -577,6 +581,19 @@
         
         self.tweets = tweets;
         [self.tableView reloadData];
+        
+        if (self.restoredIndexPathIdentifier) {
+            
+            NSInteger index = 0;
+            for (TweetEntity* tweet in self.tweets) {
+                
+                if ([tweet.tweetId isEqual:self.restoredIndexPathIdentifier]) {
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                }
+                
+                index++;
+            }
+        }
     }
     else {
         [self requestData];
@@ -640,6 +657,49 @@
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath *)indexPath {
     return self.tweets[indexPath.row];
 }
+
+#pragma mark - state restoration
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super decodeRestorableStateWithCoder:coder];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super encodeRestorableStateWithCoder:coder];
+    
+    [coder encodeBool:YES forKey:@"test"];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (NSString*)modelIdentifierForElementAtIndexPath:(NSIndexPath*)idx inView:(UIView*)view {
+    
+    TweetEntity* tweet = self.tweets[idx.row];
+    return tweet.tweetId;
+}
+
+- (NSIndexPath*)indexPathForElementWithModelIdentifier:(NSString*)identifier inView:(UIView*)view {
+    
+    if (!self.tweets) {
+        
+        //model has not been loaded yet
+        self.restoredIndexPathIdentifier = [identifier copy];
+        return nil;
+    }
+    
+    NSInteger index = 0;
+    for (TweetEntity* tweet in self.tweets) {
+        
+        if ([tweet.tweetId isEqual:identifier]) {
+            return [NSIndexPath indexPathForRow:index inSection:0];
+        }
+        
+        index++;
+    }
+    
+    return nil;
+}
+
 
 
 @end

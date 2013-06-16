@@ -11,7 +11,7 @@
 #import "TweetEntity.h"
 #import "TweetController.h"
 
-@interface TweetController () <UITextViewDelegate>
+@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration>
 
 @property(nonatomic, strong) TweetEntity* tweetToReplyTo;
 @property(nonatomic, strong) UITextView* tweetTextView;
@@ -32,7 +32,10 @@
         tweetController.tweetToReplyTo = tweet;
     }
     
-     NavigationController* navigationController = [[NavigationController alloc] initWithRootViewController:tweetController];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    
+    navigationController.viewControllers = @[tweetController];
     
     [viewController presentViewController:navigationController animated:YES completion:NULL];
     
@@ -45,11 +48,15 @@
 {
     [super viewDidLoad];
     
+    self.restorationIdentifier = [[self class] description];
+    self.restorationClass = [self class];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
 
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
+    _tweetTextView.restorationIdentifier = @"TweetTextTextView";
     _tweetTextView.font = [skin fontOfSize:16];
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
@@ -96,6 +103,27 @@
     else {
         self.navigationItem.rightBarButtonItem.enabled = NO;
     }
+}
+
+#pragma mark -
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super encodeRestorableStateWithCoder:coder];
+    
+    [coder encodeObject:self.tweetTextView.attributedText forKey:@"TweetTextViewAttributedText"];
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super decodeRestorableStateWithCoder:coder];
+    
+    NSAttributedString* content = [coder decodeObjectForKey:@"TweetTextViewAttributedText"];
+    self.tweetTextView.attributedText = content;
+}
+
++ (UIViewController *) viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    
+    return [[self alloc] init];
 }
 
 @end
