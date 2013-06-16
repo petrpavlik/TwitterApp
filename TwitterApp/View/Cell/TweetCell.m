@@ -13,6 +13,7 @@
 
 @interface TweetCell () <PPLabelDelegate>
 
+@property(nonatomic, strong) UIGestureRecognizer* cellLongPressGestureRecognizer;
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
 @property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
 @property(nonatomic, strong) NSMutableDictionary* mentionsDictonary;
@@ -222,6 +223,7 @@
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];
+    self.cellLongPressGestureRecognizer = longPressRecognizer;
 }
 
 #pragma mark -
@@ -335,6 +337,8 @@
             [self.linkLongPressTimer invalidate];
             self.linkLongPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(linkLongPressTimerDidFire:) userInfo:@{@"URL": self.urlsDictonary[rangeValue]} repeats:NO];
             
+            self.cellLongPressGestureRecognizer.enabled = NO;
+            
             return YES;
         }
     }
@@ -377,6 +381,7 @@
 - (BOOL)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
     
     [self.linkLongPressTimer invalidate];
+    self.linkLongPressTimer = nil;
     
     for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
         
@@ -429,6 +434,7 @@
 - (BOOL)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
     
     [self.linkLongPressTimer invalidate];
+    self.linkLongPressTimer = nil;
     
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
     [attributedString removeAttribute:NSUnderlineStyleAttributeName range:NSMakeRange(0, attributedString.length)];

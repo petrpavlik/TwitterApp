@@ -302,29 +302,10 @@
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
     
-    __weak typeof(self) weakSelf = self;
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", nil];
     
-    [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
-        
-        if (!weakSelf) {
-            
-            if (error) {
-                [[[UIAlertView alloc] initWithTitle:nil message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-            } else {
-                [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-            }
-            
-            return;
-        }
-        
-        if (error) {
-            
-            [NotificationView showInView:weakSelf.view message:error.localizedDescription];
-        } else {
-            
-            [NotificationView showInView:weakSelf.view message:@"Link saved to Pocket"];
-        }
-    }];
+    actionSheet.userInfo = @{@"url": url};
+    [actionSheet showInView:self.view];
 }
 
 - (void)tweetCell:(TweetCell *)cell didSelectHashtag:(NSString *)hashstag {
@@ -441,13 +422,49 @@
         return;
     }
     
-    UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
-    TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
-    
-    NSParameterAssert(tweet);
-    userListController.tweetIdForRetweets = tweet.tweetId;
-    
-    [self.navigationController pushViewController:userListController animated:YES];
+    if (actionSheet.userInfo[@"tweet"]) {
+     
+        UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+        TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
+        
+        NSParameterAssert(tweet);
+        userListController.tweetIdForRetweets = tweet.tweetId;
+        
+        [self.navigationController pushViewController:userListController animated:YES];
+    }
+    else if (actionSheet.userInfo[@"url"]) {
+        
+        if (buttonIndex==0) {
+            
+            __weak typeof(self) weakSelf = self;
+            
+            [[PocketAPI sharedAPI] saveURL:actionSheet.userInfo[@"url"] handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+                
+                if (!weakSelf) {
+                    
+                    if (error) {
+                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    }
+                    
+                    return;
+                }
+                
+                if (error) {
+                    
+                    [NotificationView showInView:weakSelf.view message:error.localizedDescription];
+                } else {
+                    
+                    [NotificationView showInView:weakSelf.view message:@"Link saved to Pocket"];
+                }
+            }];
+        }
+        else if (buttonIndex==1) {
+            
+            [[UIApplication sharedApplication] openURL:actionSheet.userInfo[@"url"]];
+        }
+    }
 }
 
 @end
