@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <AFNetworkActivityIndicatorManager.h>
 #import "BaseTweetsController.h"
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
@@ -438,7 +439,11 @@
             
             __weak typeof(self) weakSelf = self;
             
+            [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+            
             [[PocketAPI sharedAPI] saveURL:actionSheet.userInfo[@"url"] handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+            
+                [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                 
                 if (!weakSelf) {
                     
