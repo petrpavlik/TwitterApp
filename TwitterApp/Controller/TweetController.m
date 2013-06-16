@@ -111,6 +111,11 @@
     [super encodeRestorableStateWithCoder:coder];
     
     [coder encodeObject:self.tweetTextView.attributedText forKey:@"TweetTextViewAttributedText"];
+    
+    if (self.tweetToReplyTo) {
+        [coder encodeObject:self.tweetToReplyTo forKey:@"TweetToReplyTo"];
+    }
+    
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
@@ -123,7 +128,10 @@
 
 + (UIViewController *) viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
     
-    return [[self alloc] init];
+    TweetController* tweetController = [[TweetController alloc] init];
+    tweetController.tweetToReplyTo = [coder decodeObjectForKey:@"TweetToReplyTo"];
+    
+    return tweetController;
 }
 
 @end
