@@ -394,6 +394,7 @@
             self.tweetTextLabel.attributedText = attributedString;
             
             [self.delegate tweetCell:self didSelectURL:self.urlsDictonary[rangeValue]];
+            self.cellLongPressGestureRecognizer.enabled = YES;
             return YES;
         }
     }
@@ -439,6 +440,8 @@
     NSMutableAttributedString* attributedString = [self.tweetTextLabel.attributedText mutableCopy];
     [attributedString removeAttribute:NSUnderlineStyleAttributeName range:NSMakeRange(0, attributedString.length)];
     self.tweetTextLabel.attributedText = attributedString;
+    
+    self.cellLongPressGestureRecognizer.enabled = YES;
     
     return NO;
 }
