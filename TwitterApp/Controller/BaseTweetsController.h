@@ -22,4 +22,6 @@
 - (CGFloat)heightForTweetDetail:(TweetEntity*)tweet;
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath*)indexPath;
 
+- (void)saveImagesForVisibleCells;
+
 @end

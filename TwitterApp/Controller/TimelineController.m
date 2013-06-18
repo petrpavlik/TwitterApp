@@ -333,7 +333,9 @@
             
             CGFloat contentOffsetY = self.tableView.contentOffset.y;
             
+            [self saveImagesForVisibleCells];
             [self.tableView reloadData];
+            //[self discardSavedImagesForVisibleCells];
             
             for (TweetEntity* tweet in mutableNewTweets) {
                 

@@ -27,10 +27,20 @@
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
 @property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
+@property(nonatomic, strong) NSMutableDictionary* savedImagesForVisibleCells;
 
 @end
 
 @implementation BaseTweetsController
+
+- (NSMutableDictionary*)savedImagesForVisibleCells {
+    
+    if (!_savedImagesForVisibleCells) {
+        _savedImagesForVisibleCells = [NSMutableDictionary new];
+    }
+    
+    return _savedImagesForVisibleCells;
+}
 
 - (void)dealloc {
     
@@ -195,10 +205,17 @@
         cell.nameLabel.text = tweet.user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
         
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+        if (self.savedImagesForVisibleCells[tweet.tweetId]) {
             
-            return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
-        }];
+            cell.avatarImageView.image = self.savedImagesForVisibleCells[tweet.tweetId];
+            [self.savedImagesForVisibleCells removeObjectForKey:tweet.tweetId];
+        }
+        else {
+            
+            [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) { 
+                return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
+            }];
+        }
         
         cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
         
@@ -476,6 +493,35 @@
             [[UIApplication sharedApplication] openURL:actionSheet.userInfo[@"url"]];
         }
     }
+}
+
+#pragma mark -
+
+- (void)saveImagesForVisibleCells {
+    
+    NSMutableDictionary* savedImagesForVisibleRows = [NSMutableDictionary new];
+    
+    for (UITableViewCell* cell in [self.tableView visibleCells]) {
+        
+        if ([cell isKindOfClass:[TweetCell class]]) {
+            
+            TweetCell* tweetCell = (TweetCell*)cell;
+            NSIndexPath* indexPath = [self.tableView indexPathForCell:tweetCell];
+            
+            if (indexPath && tweetCell.avatarImageView.image) {
+                
+                TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+                
+                if (tweet.retweetedStatus) {
+                    tweet = tweet.retweetedStatus;
+                }
+                
+                savedImagesForVisibleRows[tweet.tweetId] = tweetCell.avatarImageView.image;
+            }
+        }
+    }
+    
+    self.savedImagesForVisibleCells = savedImagesForVisibleRows;
 }
 
 @end
