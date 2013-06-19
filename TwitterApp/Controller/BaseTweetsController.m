@@ -389,7 +389,9 @@
     }
     
     NSString* destructiveButtonTitle = nil;
-    if ([tweet.user.userId isEqualToString:@"236800645"]) {
+    UserEntity* currentUser = [UserEntity currentUser];
+    
+    if (currentUser && [tweet.user.userId isEqualToString:currentUser.userId]) {
         destructiveButtonTitle = @"Delete";
     }
     
@@ -447,14 +449,31 @@
     }
     
     if (actionSheet.userInfo[@"tweet"]) {
-     
-        UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+        
         TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
         
-        NSParameterAssert(tweet);
-        userListController.tweetIdForRetweets = tweet.tweetId;
-        
-        [self.navigationController pushViewController:userListController animated:YES];
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            
+            __weak typeof(self) weakSelf = self;
+            
+            [TweetEntity requestDeletionOfTweetWithId:tweet.tweetId completionBlock:^(NSError *error) {
+                
+                if (error) {
+                    [[[UIAlertView alloc] initWithTitle:Nil message:error.localizedRecoverySuggestion delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                }
+                
+                //TODO: post delete notification
+                
+            }];
+        }
+        else {
+         
+            UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+            
+            NSParameterAssert(tweet);
+            userListController.tweetIdForRetweets = tweet.tweetId;
+            [self.navigationController pushViewController:userListController animated:YES];
+        }
     }
     else if (actionSheet.userInfo[@"url"]) {
         

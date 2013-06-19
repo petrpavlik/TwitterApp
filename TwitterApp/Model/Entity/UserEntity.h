@@ -37,4 +37,10 @@
 @property(nonatomic, strong) NSNumber* utcOffset;
 @property(nonatomic, strong) NSNumber* verified;
 
++ (UserEntity*)currentUser;
++ (void)registerCurrentUser:(UserEntity*)user;
+
++ (NSOperation*)requestUserWithId:(NSString*)userId completionBlock:(void (^)(UserEntity* user, NSError* error))block;
++ (NSOperation*)requestUserWithScreenName:(NSString*)screenName completionBlock:(void (^)(UserEntity* user, NSError* error))block;
+
 @end

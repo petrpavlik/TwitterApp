@@ -49,7 +49,7 @@
 
 + (NSOperation*)requestRetweetsOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSArray* retweets, NSError* error))block;
 
-
++ (NSOperation*)requestDeletionOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSError* error))block;
 
 + (void)testStream;
 + (void)testDirectMessages;

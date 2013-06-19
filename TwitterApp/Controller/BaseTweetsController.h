@@ -23,5 +23,6 @@
 - (TweetEntity*)tweetForIndexPath:(NSIndexPath*)indexPath;
 
 - (void)saveImagesForVisibleCells;
+- (void)didDeleteTweet:(TweetEntity*)tweet;
 
 @end

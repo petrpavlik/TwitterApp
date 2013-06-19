@@ -344,6 +344,27 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestDeletionOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSError* error))block {
+    
+    NSParameterAssert(tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:[NSString stringWithFormat:@"statuses/destroy/%@.json", tweetId] parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        block(nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 #pragma mark -
 
 + (void)testStream {

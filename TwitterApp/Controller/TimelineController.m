@@ -47,8 +47,9 @@
     
     self.title = @"Timeline";
     //self.restorationIdentifier = @"Timeline";
-    
     self.tableView.restorationIdentifier = @"TweetsTableView";
+    
+    self.navigationItem.titleView = [UIView new];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(requestNewTweets) forControlEvents:UIControlEventValueChanged];
@@ -74,19 +75,6 @@
     }
     else {
         
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        AbstractSkin* skin = appDelegate.skin;
-        
-        UserTitleView* userTitleView = [[UserTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
-        
-        NSDictionary* attributes = self.navigationController.navigationBar.titleTextAttributes;
-        attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[skin fontOfSize:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
-        
-        NSAttributedString* nameAttrString = [[NSAttributedString alloc] initWithString:@"@ptrpavlik" attributes:attributes];
-        userTitleView.nameLabel.attributedText = nameAttrString;
-        
-        [userTitleView.avatarImageView setImageWithURL:[NSURL URLWithString:@"https://si0.twimg.com/profile_images/3126864086/30bb0202747f2a78d08dc147468b170b_normal.jpeg"] placeholderImage:nil];
-        self.navigationItem.titleView = userTitleView;
     }
     
     [self validateTwitterAccountWithCompletionBlock:^(NSError *error) {
@@ -643,6 +631,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     [AFTwitterClient sharedClient].account = twitterAccount;
+                    [self requestAuthenticatedUserDetailsWithScreenName:twitterAccount.username];
                     block(nil);
                 });
             }
@@ -656,6 +645,40 @@
         }
     }];
 
+}
+
+- (void)requestAuthenticatedUserDetailsWithScreenName:(NSString*)screenName {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [UserEntity requestUserWithScreenName:screenName completionBlock:^(UserEntity *user, NSError *error) {
+        
+        if (error) {
+            //report error
+            return;
+        }
+        
+        [UserEntity registerCurrentUser:user];
+        [weakSelf setupTitleViewWithUser:user];
+        
+    }];
+}
+
+- (void)setupTitleViewWithUser:(UserEntity*)user {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    UserTitleView* userTitleView = [[UserTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
+    
+    NSDictionary* attributes = self.navigationController.navigationBar.titleTextAttributes;
+    attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[skin fontOfSize:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    
+    NSAttributedString* nameAttrString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"@%@", user.screenName] attributes:attributes];
+    userTitleView.nameLabel.attributedText = nameAttrString;
+    
+    [userTitleView.avatarImageView setImageWithURL:[NSURL URLWithString:user.profileImageUrl] placeholderImage:nil];
+    self.navigationItem.titleView = userTitleView;
 }
 
 #pragma mark -
@@ -706,6 +729,14 @@
     return nil;
 }
 
-
+- (void)didDeleteTweet:(TweetEntity *)tweet {
+    
+    [self.runningNewTweetsOperation cancel];
+    [self.runningOlderTweetsOperation cancel];
+    
+    NSMutableArray* mutableTweets = [self.tweets mutableCopy];
+    [mutableTweets removeObject:tweet];
+    self.tweets = mutableTweets;
+}
 
 @end
