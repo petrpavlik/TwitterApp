@@ -17,6 +17,7 @@
 - (UIImage *)imageScaledToSize:(CGSize)newSize;
 - (UIImage *)imageByScalingProportionallyToSize:(CGSize)targetSize;
 - (UIImage *)imageByInsertingImage:(UIImage*)overImage retina:(BOOL)retina;
+- (UIImage *)imageWithTint:(UIColor *)tintColor alpha:(CGFloat)alpha;
 
 + (UIImage*)imageWithColor:(UIColor*)color size:(CGSize)size;
 

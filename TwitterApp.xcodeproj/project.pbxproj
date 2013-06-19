@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
+		4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
+		4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
@@ -110,6 +112,8 @@
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
+		4B165EE71771D874004A09BC /* Image-Separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator.png"; path = "Image/Image-Separator.png"; sourceTree = "<group>"; };
+		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
 		4B1D0136175B6A5A00B04036 /* TweetDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailController.h; path = Controller/TweetDetailController.h; sourceTree = "<group>"; };
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
@@ -454,6 +458,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4B165EE71771D874004A09BC /* Image-Separator.png */,
+				4B165EE81771D874004A09BC /* Image-Separator@2x.png */,
 				4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */,
 				4BA84590176E4D0C007A531D /* Btn-Tweet-Detail-Favorite@2x.png */,
 				4BA84591176E4D0C007A531D /* Btn-Tweet-Detail-Other.png */,
@@ -646,6 +652,7 @@
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
 				4B81BA3D174538D900005607 /* Icon.png in Resources */,
 				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
+				4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */,
 				4BAEB3DB17522B950027A0D1 /* Icon-Retweet-Highlighted.png in Resources */,
 				4BAEB3DC17522B950027A0D1 /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4BAEB3DD17522B950027A0D1 /* Icon-Retweet-Normal.png in Resources */,
@@ -661,6 +668,7 @@
 				4BAEB3F3175266C70027A0D1 /* Button-NavigationBar-Important-Normal.png in Resources */,
 				4BAEB3F4175266C70027A0D1 /* Button-NavigationBar-Important-Normal@2x.png in Resources */,
 				4BAEB3F5175266C70027A0D1 /* Button-NavigationBar-Normal.png in Resources */,
+				4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */,
 				4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */,
 				4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */,
 				4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */,

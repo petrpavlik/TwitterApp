@@ -224,4 +224,43 @@ static void addTopRoundedRectToPath(CGContextRef context,
     
 }
 
+- (UIImage *)imageWithTint:(UIColor *)tintColor alpha:(CGFloat)alpha {
+    
+    // Begin drawing
+    CGRect aRect = CGRectMake(0.f, 0.f, self.size.width, self.size.height);
+    UIGraphicsBeginImageContext(aRect.size);
+    //UIGraphicsBeginImageContextWithOptions(aRect.size, NO, [UIScreen mainScreen].scale);
+    
+    // Get the graphic context
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    
+    // Converting a UIImage to a CGImage flips the image,
+    // so apply a upside-down translation
+    CGContextTranslateCTM(c, 0, self.size.height);
+    CGContextScaleCTM(c, 1.0, -1.0);
+    
+    // Draw the image
+    [self drawInRect:aRect];
+    
+    // Set the fill color space
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextSetFillColorSpace(c, colorSpace);
+    
+    // Set the mask to only tint non-transparent pixels
+    CGContextClipToMask(c, aRect, self.CGImage);
+    
+    // Set the fill color
+    CGContextSetFillColorWithColor(c, [tintColor colorWithAlphaComponent:alpha].CGColor);
+    
+    UIRectFillUsingBlendMode(aRect, kCGBlendModeColor);
+    
+    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Release memory
+    CGColorSpaceRelease(colorSpace);
+    
+    return img;
+}
+
 @end
