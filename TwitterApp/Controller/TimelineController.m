@@ -15,6 +15,7 @@
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
 #import <MBProgressHUD.h>
+#import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import "TimelineController.h"
 #import "TimelineDocument.h"
@@ -28,6 +29,7 @@
 
 @interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate, UIDataSourceModelAssociation>
 
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
@@ -111,6 +113,11 @@
             [self requestData];
         }
     }];
+    
+    _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:_notificationViewPlaceholderView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -208,6 +215,10 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
+}
 
 #pragma mark -
 
@@ -335,10 +346,7 @@
             
             //self.refreshControl.enabled = YES;
             
-            /*MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            hud.mode = MBProgressHUDModeText;
-            hud.labelText = [NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count];
-            [hud hide:YES afterDelay:3];*/
+            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count]];
             
         });
     };

@@ -21,7 +21,7 @@
     
     UINavigationBar* navigationBar = [UINavigationBar appearance];
     
-    UIColor* navigationBarColor = [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
+    UIColor* navigationBarColor = self.navigationBarColor;
     //UIColor* navigationBarColor = [UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1];
     [navigationBar configureFlatNavigationBarWithColor:navigationBarColor];
     
@@ -81,6 +81,10 @@
 
 - (UIColor*)linkColor {
     return [UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1];
+}
+
+- (UIColor*)navigationBarColor {
+    return [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
 }
 
 @end

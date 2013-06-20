@@ -17,5 +17,6 @@
 - (UIFont*)lightFontOfSize:(CGFloat)size;
 
 - (UIColor*)linkColor;
+- (UIColor*)navigationBarColor;
 
 @end

@@ -8,6 +8,8 @@
 
 #import "NotificationView.h"
 #import <MBProgressHUD.h>
+#import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @interface NotificationView ()
 
@@ -19,10 +21,31 @@
 
 + (NotificationView*)showInView:(UIView*)view message:(NSString*)message {
     
-    MBProgressHUD* hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
-    hud.labelText = message;
-    hud.mode = MBProgressHUDModeText;
-    [hud hide:YES afterDelay:2];
+    CGFloat width = 260;
+    CGFloat leftMargin = (view.bounds.size.width-width)/2;
+    
+    NotificationView* notificationView = [[NotificationView alloc] initWithFrame:CGRectMake(leftMargin, 10, width, 44)];
+    notificationView.messageLabel.text = message;
+    notificationView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
+    [view addSubview:notificationView];
+    
+    notificationView.alpha = 0;
+    
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        notificationView.alpha = 1;
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.5 delay:3 options:0 animations:^{
+            
+            notificationView.alpha = 0;
+            
+        } completion:^(BOOL finished) {
+            
+            [notificationView removeFromSuperview];
+        }];
+    }];
     
     return nil;
 }
@@ -32,15 +55,22 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        [self commonInit];
     }
     return self;
 }
 
 - (void)commonInit {
     
-    self.backgroundColor = [UIColor greenColor];
+    AbstractSkin* skin = [(AppDelegate*)[UIApplication sharedApplication].delegate skin];
+    
+    self.backgroundColor = skin.navigationBarColor;
+    self.layer.cornerRadius = 22;
+    self.clipsToBounds = YES;
     
     _messageLabel = [[UILabel alloc] init];
+    _messageLabel.font = [skin boldFontOfSize:16];
+    _messageLabel.textColor = [UIColor whiteColor];
     _messageLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self addSubview:_messageLabel];
