@@ -735,8 +735,17 @@
     [self.runningOlderTweetsOperation cancel];
     
     NSMutableArray* mutableTweets = [self.tweets mutableCopy];
+    NSInteger indexOfDeletedTweet = [mutableTweets indexOfObject:tweet];
+    
     [mutableTweets removeObject:tweet];
+    
     self.tweets = mutableTweets;
+    
+    [self.tableView beginUpdates];
+    [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexOfDeletedTweet inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
+    
+    [self.timelineDocument persistTimeline:self.tweets];
 }
 
 @end

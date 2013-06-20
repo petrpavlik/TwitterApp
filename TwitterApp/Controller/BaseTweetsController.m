@@ -61,6 +61,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didDeleteTweetNotification:) name:kTweetDeletedNotification object:Nil];
+    
     //self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [UIView new];
@@ -205,7 +207,7 @@
         cell.nameLabel.text = tweet.user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
         
-        if (self.savedImagesForVisibleCells[tweet.tweetId]) {
+        if (NO && self.savedImagesForVisibleCells[tweet.tweetId]) {
             
             cell.avatarImageView.image = self.savedImagesForVisibleCells[tweet.tweetId];
             [self.savedImagesForVisibleCells removeObjectForKey:tweet.tweetId];
@@ -440,6 +442,14 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
+- (void)didDeleteTweetNotification:(NSNotification*)notification {
+    
+    TweetEntity* tweet = notification.userInfo[@"tweet"];
+    NSParameterAssert(tweet);
+    
+    [self didDeleteTweet:tweet];
+}
+
 #pragma mark -
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
@@ -454,16 +464,13 @@
         
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             
-            __weak typeof(self) weakSelf = self;
-            
             [TweetEntity requestDeletionOfTweetWithId:tweet.tweetId completionBlock:^(NSError *error) {
                 
                 if (error) {
                     [[[UIAlertView alloc] initWithTitle:Nil message:error.localizedRecoverySuggestion delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                 }
                 
-                //TODO: post delete notification
-                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
             }];
         }
         else {

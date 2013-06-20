@@ -15,3 +15,5 @@
     #import <MobileCoreServices/MobileCoreServices.h>
     #import "UIView+AutoLayout.h"
 #endif
+
+#define kTweetDeletedNotification @"kTweetDeletedNotification"
