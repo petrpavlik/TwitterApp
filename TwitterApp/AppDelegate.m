@@ -51,6 +51,10 @@
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
+    
+#ifdef DEBUG
+    [[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
+#endif
 
     
     [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {

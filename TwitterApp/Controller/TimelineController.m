@@ -531,6 +531,13 @@
     
     [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
        
+        if (error) {
+            
+            [[[UIAlertView alloc] initWithTitle:Nil message:error.description delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+            
+            return;
+        }
+        
         //NSLog(@"%@", updatedTweet);
         if ([self.tweets isKindOfClass:[NSMutableArray class]]) {
             
@@ -603,7 +610,9 @@
 
 - (void)showBasement {
     
-    [self.slidingViewController anchorTopViewTo:ECRight];
+    NSMutableArray* crash = [NSMutableArray new];
+    [crash addObject:nil];
+    //[self.slidingViewController anchorTopViewTo:ECRight];
 }
 
 #pragma mark -
