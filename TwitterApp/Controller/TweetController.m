@@ -76,6 +76,12 @@
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[LocalyticsSession shared] tagScreen:@"Compose Tweet"];
+}
+
 #pragma mark -
 
 - (void)done {

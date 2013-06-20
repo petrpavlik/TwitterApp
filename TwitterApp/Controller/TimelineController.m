@@ -659,6 +659,8 @@
         }
         
         [UserEntity registerCurrentUser:user];
+        [[LocalyticsSession shared] setCustomerId:user.screenName];
+        
         [weakSelf setupTitleViewWithUser:user];
         
     }];

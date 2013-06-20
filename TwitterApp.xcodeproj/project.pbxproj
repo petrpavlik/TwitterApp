@@ -34,6 +34,15 @@
 		4B7428D41742DED500AEB85C /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D31742DED500AEB85C /* TweetCell.m */; };
 		4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
 		4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428DB1742E4E900AEB85C /* UserEntity.m */; };
+		4B755D8917732E7A002A577D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8817732E7A002A577D /* AdSupport.framework */; };
+		4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8A17732E8D002A577D /* SystemConfiguration.framework */; };
+		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
+		4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
+		4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8517732E55002A577D /* libLocalyticsAMP.a */; };
+		4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D9217733833002A577D /* HockeySDK.framework */; };
+		4B755D9717733833002A577D /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9417733833002A577D /* HockeySDK.xcconfig */; };
+		4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9517733833002A577D /* HockeySDKResources.bundle */; };
+		4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D991773386A002A577D /* QuartzCore.framework */; };
 		4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */; };
 		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
 		4B81BA3D174538D900005607 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
@@ -152,6 +161,17 @@
 		4B7428D81742DFF200AEB85C /* TweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetEntity.m; path = Model/Entity/TweetEntity.m; sourceTree = "<group>"; };
 		4B7428DA1742E4E900AEB85C /* UserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserEntity.h; path = Model/Entity/UserEntity.h; sourceTree = "<group>"; };
 		4B7428DB1742E4E900AEB85C /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEntity.m; path = Model/Entity/UserEntity.m; sourceTree = "<group>"; };
+		4B755D8517732E55002A577D /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLocalyticsAMP.a; path = Vendor/Localytics.bin/libLocalyticsAMP.a; sourceTree = SOURCE_ROOT; };
+		4B755D8617732E55002A577D /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsAmpSession.h; path = Vendor/Localytics.bin/LocalyticsAmpSession.h; sourceTree = SOURCE_ROOT; };
+		4B755D8717732E55002A577D /* LocalyticsSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics.bin/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
+		4B755D8817732E7A002A577D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		4B755D8A17732E8D002A577D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4B755D8C17732E95002A577D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		4B755D8E17732EA6002A577D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		4B755D9217733833002A577D /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
+		4B755D9417733833002A577D /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
+		4B755D9517733833002A577D /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
+		4B755D991773386A002A577D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4B7C2880175685FD003FDCBB /* TwitterAppWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterAppWindow.h; path = View/TwitterAppWindow.h; sourceTree = "<group>"; };
 		4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterAppWindow.m; path = View/TwitterAppWindow.m; sourceTree = "<group>"; };
 		4B7C288B1756ADDC003FDCBB /* UserTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTitleView.h; path = View/UserTitleView.h; sourceTree = "<group>"; };
@@ -245,6 +265,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
+				4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */,
+				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
+				4B755D8D17732E95002A577D /* libz.dylib in Frameworks */,
+				4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */,
+				4B755D8917732E7A002A577D /* AdSupport.framework in Frameworks */,
 				4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */,
 				4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */,
 				4B81BA4117453CD800005607 /* Social.framework in Frameworks */,
@@ -252,6 +278,7 @@
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
+				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,6 +331,12 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B755D991773386A002A577D /* QuartzCore.framework */,
+				4B755D9117733833002A577D /* HockeySDK.embeddedframework */,
+				4B755D8E17732EA6002A577D /* libsqlite3.dylib */,
+				4B755D8C17732E95002A577D /* libz.dylib */,
+				4B755D8A17732E8D002A577D /* SystemConfiguration.framework */,
+				4B755D8817732E7A002A577D /* AdSupport.framework */,
 				4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */,
 				4B81BA4217453D4900005607 /* Accounts.framework */,
 				4B81BA4017453CD800005607 /* Social.framework */,
@@ -455,6 +488,35 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
+		4B755D8417732E44002A577D /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				4B755D8517732E55002A577D /* libLocalyticsAMP.a */,
+				4B755D8617732E55002A577D /* LocalyticsAmpSession.h */,
+				4B755D8717732E55002A577D /* LocalyticsSession.h */,
+			);
+			name = Localytics;
+			sourceTree = "<group>";
+		};
+		4B755D9117733833002A577D /* HockeySDK.embeddedframework */ = {
+			isa = PBXGroup;
+			children = (
+				4B755D9217733833002A577D /* HockeySDK.framework */,
+				4B755D9317733833002A577D /* Resources */,
+			);
+			name = HockeySDK.embeddedframework;
+			path = Vendor/HockeySDK.embeddedframework;
+			sourceTree = "<group>";
+		};
+		4B755D9317733833002A577D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4B755D9417733833002A577D /* HockeySDK.xcconfig */,
+				4B755D9517733833002A577D /* HockeySDKResources.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
@@ -538,6 +600,7 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4B755D8417732E44002A577D /* Localytics */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
 			);
 			name = Vendor;
@@ -651,6 +714,7 @@
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
 				4B81BA3D174538D900005607 /* Icon.png in Resources */,
+				4B755D9717733833002A577D /* HockeySDK.xcconfig in Resources */,
 				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
 				4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */,
 				4BAEB3DB17522B950027A0D1 /* Icon-Retweet-Highlighted.png in Resources */,
@@ -666,6 +730,7 @@
 				4BAEB3F1175266C70027A0D1 /* Button-NavigationBar-Important-Highlighted.png in Resources */,
 				4BAEB3F2175266C70027A0D1 /* Button-NavigationBar-Important-Highlighted@2x.png in Resources */,
 				4BAEB3F3175266C70027A0D1 /* Button-NavigationBar-Important-Normal.png in Resources */,
+				4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */,
 				4BAEB3F4175266C70027A0D1 /* Button-NavigationBar-Important-Normal@2x.png in Resources */,
 				4BAEB3F5175266C70027A0D1 /* Button-NavigationBar-Normal.png in Resources */,
 				4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */,
@@ -894,9 +959,17 @@
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
 				INFOPLIST_FILE = "TwitterApp/TwitterApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/Localytics.bin",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -908,9 +981,17 @@
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
 				INFOPLIST_FILE = "TwitterApp/TwitterApp-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Vendor/Localytics.bin",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;

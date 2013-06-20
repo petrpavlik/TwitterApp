@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "BaseEntity.h"
 #import <ECSlidingViewController.h>
+#import <HockeySDK/HockeySDK.h>
 #import "LightSkin.h"
 #import "ModernSkin.h"
 #import "NavigationController.h"
@@ -48,6 +49,10 @@
 {
     // Override point for customization after application launch.
     
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
+    [[BITHockeyManager sharedHockeyManager] startManager];
+
+    
     [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {
         //converts keys such as created_at to CreatedAt
         
@@ -83,15 +88,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    /*ECSlidingViewController* rootController = (ECSlidingViewController*)self.window.rootViewController;
-    rootController.view.backgroundColor = [UIColor blackColor];
+    [[LocalyticsSession shared] startSession:@"3048d2b4028b670f856d4fc-f57032a8-d91f-11e2-0f5b-004a77f8b47f"];
     
-    if (!rootController.topViewController) {
-        
-        NSLog(@"view controller hierarchy not restored");
-        TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-        rootController.topViewController = [[NavigationController alloc] initWithRootViewController:timelineController];
-    }*/
+#ifdef DEBUG
+    [[LocalyticsSession shared] setLoggingEnabled:YES];
+#endif
     
     return YES;
 }
@@ -100,6 +101,8 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    [[LocalyticsSession shared] close];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
@@ -111,16 +114,22 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    [[LocalyticsSession shared] resume];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    [[LocalyticsSession shared] resume];
+    [[LocalyticsSession shared] upload];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[LocalyticsSession shared] close];
+    [[LocalyticsSession shared] upload];
 }
 
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
