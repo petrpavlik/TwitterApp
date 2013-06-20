@@ -550,4 +550,11 @@
     self.savedImagesForVisibleCells = savedImagesForVisibleRows;
 }
 
+#pragma mark -
+
+- (void)didDeleteTweet:(TweetEntity *)tweet {
+    
+    @throw [NSException exceptionWithName:@"MethodMustBeOverloadedException" reason:[NSString stringWithFormat:@"%s must be overloaded", __PRETTY_FUNCTION__] userInfo:Nil];
+}
+
 @end

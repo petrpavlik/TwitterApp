@@ -734,6 +734,8 @@
     [self.runningNewTweetsOperation cancel];
     [self.runningOlderTweetsOperation cancel];
     
+    //TODO: handle UI changes and stuff if the timeline is currently loading new/old tweets
+    
     NSMutableArray* mutableTweets = [self.tweets mutableCopy];
     NSInteger indexOfDeletedTweet = [mutableTweets indexOfObject:tweet];
     
