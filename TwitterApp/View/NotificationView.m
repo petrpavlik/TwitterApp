@@ -68,10 +68,15 @@
     self.layer.cornerRadius = 22;
     self.clipsToBounds = YES;
     
+    self.layer.shouldRasterize = YES;
+    // Not setting rasterizationScale, will cause blurry images on retina displays:
+    self.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    
     _messageLabel = [[UILabel alloc] init];
     _messageLabel.font = [skin boldFontOfSize:16];
     _messageLabel.textColor = [UIColor whiteColor];
     _messageLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _messageLabel.backgroundColor = self.backgroundColor;
     
     [self addSubview:_messageLabel];
 
