@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+enum {
+    NotificationViewStyleInformation,
+    NotificationViewStyleError
+};
+typedef NSUInteger NotificationViewStyle;
+
 @interface NotificationView : UIView
 
 + (NotificationView*)showInView:(UIView*)view message:(NSString*)message;
++ (NotificationView*)showInView:(UIView*)view message:(NSString*)message style:(NotificationViewStyle)style;
 
 @end

@@ -14,6 +14,7 @@
 @interface NotificationView ()
 
 @property(nonatomic, strong) UILabel* messageLabel;
+@property(nonatomic) NotificationViewStyle style;
 
 @end
 
@@ -21,11 +22,17 @@
 
 + (NotificationView*)showInView:(UIView*)view message:(NSString*)message {
     
+    return [NotificationView showInView:view message:message style:NotificationViewStyleInformation];
+}
+
++ (NotificationView*)showInView:(UIView*)view message:(NSString*)message style:(NotificationViewStyle)style {
+    
     CGFloat width = 260;
     CGFloat leftMargin = (view.bounds.size.width-width)/2;
     
     NotificationView* notificationView = [[NotificationView alloc] initWithFrame:CGRectMake(leftMargin, 10, width, 44)];
     notificationView.messageLabel.text = message;
+    notificationView.style = style;
     notificationView.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin;
     [view addSubview:notificationView];
     
@@ -64,7 +71,7 @@
     
     AbstractSkin* skin = [(AppDelegate*)[UIApplication sharedApplication].delegate skin];
     
-    self.backgroundColor = skin.navigationBarColor;
+    self.backgroundColor = [skin.navigationBarColor colorWithAlphaComponent:0.95f];
     self.layer.cornerRadius = 22;
     self.clipsToBounds = YES;
     
@@ -81,6 +88,23 @@
     [self addSubview:_messageLabel];
 
     [_messageLabel centerInSuperview];
+}
+
+- (void)setStyle:(NotificationViewStyle)style {
+    
+    _style = style;
+    
+    AbstractSkin* skin = [(AppDelegate*)[UIApplication sharedApplication].delegate skin];
+    
+    if (_style == NotificationViewStyleInformation) {
+        self.backgroundColor = [skin.navigationBarColor colorWithAlphaComponent:0.95f];
+    }
+    else if (_style == NotificationViewStyleError) {
+        self.backgroundColor = [UIColor colorWithRed:192/255.0 green:57/255.0 blue:43/255.0 alpha:0.95];
+    }
+    else {
+        @throw [NSException exceptionWithName:@"UnkownStyleException" reason:[NSString stringWithFormat:@"%d is not a valid style", _style] userInfo:nil];
+    }
 }
 
 @end
