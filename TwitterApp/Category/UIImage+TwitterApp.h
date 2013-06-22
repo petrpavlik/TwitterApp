@@ -20,5 +20,6 @@
 - (UIImage *)imageWithTint:(UIColor *)tintColor alpha:(CGFloat)alpha;
 
 + (UIImage*)imageWithColor:(UIColor*)color size:(CGSize)size;
+- (UIImage*)imageResizedToSize:(CGSize)size;
 
 @end

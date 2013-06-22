@@ -7,21 +7,57 @@
 //
 
 #import "AppDelegate.h"
+#import <CoreLocation/CoreLocation.h>
 #import "NavigationController.h"
+#import "PlaceEntity.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
+#import "TweetInputAccessoryView.h"
 
-@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration>
+@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
 
+@property(nonatomic, strong) CLLocationManager* locationManager;
+@property(nonatomic, strong) NSMutableArray* mediaAttachments;
+@property(nonatomic, strong) NSArray* places;
+@property(nonatomic, weak) NSOperation* runningPlacesOperation;
+@property(nonatomic, strong) PlaceEntity* selectedPlace;
 @property(nonatomic, strong) TweetEntity* tweetToReplyTo;
+@property(nonatomic, strong) TweetInputAccessoryView* tweetInputAccessoryView;
 @property(nonatomic, strong) UITextView* tweetTextView;
 
 @end
 
 @implementation TweetController
 
+- (NSMutableArray*)mediaAttachments {
+    
+    if (!_mediaAttachments) {
+        _mediaAttachments = [NSMutableArray new];
+    }
+    
+    return _mediaAttachments;
+}
+
+- (CLLocationManager*)locationManager {
+    
+    if (!_locationManager) {
+        _locationManager = [[CLLocationManager alloc] init];
+        _locationManager.delegate = self;
+    }
+    
+    return _locationManager;
+}
+
 + (TweetController*)presentInViewController:(UIViewController*)viewController {
     return [TweetController presentAsReplyToTweet:nil inViewController:viewController];
+}
+
+- (void)dealloc {
+    
+    [self.runningPlacesOperation cancel];
+    
+    [self.locationManager stopUpdatingLocation];
+    self.locationManager.delegate = nil;
 }
 
 + (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController {
@@ -60,6 +96,12 @@
     _tweetTextView.font = [skin fontOfSize:16];
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
+    
+    _tweetInputAccessoryView = [[TweetInputAccessoryView alloc] initWithFrame:CGRectMake(0, 0, 300, 44)];
+    _tweetInputAccessoryView.delegate = self;
+    
+    _tweetTextView.inputAccessoryView = _tweetInputAccessoryView;
+    
     [_tweetTextView becomeFirstResponder];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
@@ -138,6 +180,113 @@
     tweetController.tweetToReplyTo = [coder decodeObjectForKey:@"TweetToReplyTo"];
     
     return tweetController;
+}
+
+#pragma mark -
+
+- (void)tweetInputAccessoryViewDidRequestMediaQuery:(TweetInputAccessoryView *)view {
+    
+    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
+    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
+    mediaUI.delegate = self;
+    
+    [self presentViewController:mediaUI animated:YES completion:NULL];
+}
+
+- (void)tweetInputAccessoryViewDidEnableLocation:(TweetInputAccessoryView *)view {
+    
+    CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
+    
+    if (authorizationStatus != kCLAuthorizationStatusAuthorized && authorizationStatus != kCLAuthorizationStatusNotDetermined) {
+        
+        [[[UIAlertView alloc] initWithTitle:nil message:@"Location services seem to be disabled." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+        
+        return;
+    }
+    
+    CLLocation* cachedLocation = self.locationManager.location;
+    
+    if (cachedLocation) {
+        
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+        NSDateComponents *components = [calendar components:NSMinuteCalendarUnit
+                                                   fromDate:cachedLocation.timestamp
+                                                     toDate:[NSDate date]
+                                                    options:0];
+        
+        if (components.minute <= 5) {
+            
+            NSLog(@"using cached location %@", cachedLocation);
+            [self requestPlacesWithLocation:cachedLocation];
+            return;
+        }
+    }
+    
+    [self.locationManager startUpdatingLocation];
+    
+}
+
+- (void)tweetInputAccessoryViewDidDisableLocation:(TweetInputAccessoryView *)view {
+    
+    [_locationManager stopUpdatingLocation];
+}
+
+#pragma mark -
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage* selectedImage = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
+    if (selectedImage) {
+        [self.mediaAttachments addObject:selectedImage];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not load selected image" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles: nil] show];
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark -
+
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
+    
+    [manager stopUpdatingLocation];
+    
+    CLLocation* location = locations.lastObject;
+    NSLog(@"using new location %@", location);
+    [self requestPlacesWithLocation:location];
+    
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    
+    [manager stopUpdatingLocation];
+    
+    NSLog(@"did fail to update location: %@", error);
+}
+
+#pragma mark -
+
+- (void)requestPlacesWithLocation:(CLLocation*)location {
+    
+    if (self.runningPlacesOperation) {
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningPlacesOperation = [PlaceEntity requestPlacesWithLocation:location completionBlock:^(NSArray *places, NSError *error) {
+        
+        NSLog(@"%@", places);
+        
+        [weakSelf.tweetInputAccessoryView displayLocationPlace:[places[0] name]];
+        
+    }];
 }
 
 @end

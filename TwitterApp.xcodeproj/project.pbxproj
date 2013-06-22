@@ -201,6 +201,22 @@
 		4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFC4407175B91FB004199C3 /* BaseTweetsController.m */; };
 		4BFDA44C1775A61B007EFBC4 /* RetweetersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */; };
 		4BFDA44E1775ABAC007EFBC4 /* RetweetersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */; };
+		4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA4541775C1DF007EFBC4 /* TweetInputAccessoryView.m */; };
+		4BFDA4561775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA4541775C1DF007EFBC4 /* TweetInputAccessoryView.m */; };
+		4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */; };
+		4BFDA4591775FC2F007EFBC4 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */; };
+		4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA45B1776024D007EFBC4 /* PlaceEntity.m */; };
+		4BFDA45D1776024D007EFBC4 /* PlaceEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BFDA45B1776024D007EFBC4 /* PlaceEntity.m */; };
+		4BFDA460177624A8007EFBC4 /* Btn-Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA45E177624A8007EFBC4 /* Btn-Location.png */; };
+		4BFDA461177624A8007EFBC4 /* Btn-Location.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA45E177624A8007EFBC4 /* Btn-Location.png */; };
+		4BFDA462177624A8007EFBC4 /* Btn-Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA45F177624A8007EFBC4 /* Btn-Location@2x.png */; };
+		4BFDA463177624A8007EFBC4 /* Btn-Location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA45F177624A8007EFBC4 /* Btn-Location@2x.png */; };
+		4BFDA46717762C7A007EFBC4 /* Btn-Add-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46417762C7A007EFBC4 /* Btn-Add-Image.png */; };
+		4BFDA46817762C7A007EFBC4 /* Btn-Add-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46417762C7A007EFBC4 /* Btn-Add-Image.png */; };
+		4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46517762C7A007EFBC4 /* Btn-Add-Image@2x.png */; };
+		4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46517762C7A007EFBC4 /* Btn-Add-Image@2x.png */; };
+		4BFDA46B17762C7A007EFBC4 /* Slice 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46617762C7A007EFBC4 /* Slice 1.png */; };
+		4BFDA46C17762C7A007EFBC4 /* Slice 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BFDA46617762C7A007EFBC4 /* Slice 1.png */; };
 		84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247C6CFBE31346CFAFA5B8FE /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -360,6 +376,16 @@
 		4BFC4407175B91FB004199C3 /* BaseTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseTweetsController.m; path = Controller/BaseTweetsController.m; sourceTree = "<group>"; };
 		4BFDA44A1775A61B007EFBC4 /* RetweetersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RetweetersController.h; path = Controller/RetweetersController.h; sourceTree = "<group>"; };
 		4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RetweetersController.m; path = Controller/RetweetersController.m; sourceTree = "<group>"; };
+		4BFDA4531775C1DF007EFBC4 /* TweetInputAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetInputAccessoryView.h; path = View/TweetInputAccessoryView.h; sourceTree = "<group>"; };
+		4BFDA4541775C1DF007EFBC4 /* TweetInputAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetInputAccessoryView.m; path = View/TweetInputAccessoryView.m; sourceTree = "<group>"; };
+		4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4BFDA45A1776024D007EFBC4 /* PlaceEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaceEntity.h; path = Model/Entity/PlaceEntity.h; sourceTree = "<group>"; };
+		4BFDA45B1776024D007EFBC4 /* PlaceEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaceEntity.m; path = Model/Entity/PlaceEntity.m; sourceTree = "<group>"; };
+		4BFDA45E177624A8007EFBC4 /* Btn-Location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Location.png"; path = "Image/Btn-Location.png"; sourceTree = "<group>"; };
+		4BFDA45F177624A8007EFBC4 /* Btn-Location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Location@2x.png"; path = "Image/Btn-Location@2x.png"; sourceTree = "<group>"; };
+		4BFDA46417762C7A007EFBC4 /* Btn-Add-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Add-Image.png"; path = "Image/Btn-Add-Image.png"; sourceTree = "<group>"; };
+		4BFDA46517762C7A007EFBC4 /* Btn-Add-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Add-Image@2x.png"; path = "Image/Btn-Add-Image@2x.png"; sourceTree = "<group>"; };
+		4BFDA46617762C7A007EFBC4 /* Slice 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Slice 1.png"; path = "Image/Slice 1.png"; sourceTree = "<group>"; };
 		D3EA10E129D14083A848A9C2 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -368,6 +394,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BFDA4591775FC2F007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B6629B3177387FA00FA146A /* QuartzCore.framework in Frameworks */,
 				4B6629B4177387FA00FA146A /* libLocalyticsAMP.a in Frameworks */,
 				4B6629B5177387FA00FA146A /* libsqlite3.dylib in Frameworks */,
@@ -389,6 +416,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
 				4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */,
 				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
@@ -465,6 +493,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */,
 				4B755D991773386A002A577D /* QuartzCore.framework */,
 				4B755D9117733833002A577D /* HockeySDK.embeddedframework */,
 				4B755D8E17732EA6002A577D /* libsqlite3.dylib */,
@@ -546,6 +575,8 @@
 				4B7C288C1756ADDC003FDCBB /* UserTitleView.m */,
 				4BE5557A1758F87400A214FC /* NotificationView.h */,
 				4BE5557B1758F87400A214FC /* NotificationView.m */,
+				4BFDA4531775C1DF007EFBC4 /* TweetInputAccessoryView.h */,
+				4BFDA4541775C1DF007EFBC4 /* TweetInputAccessoryView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -620,6 +651,8 @@
 				4B7428DB1742E4E900AEB85C /* UserEntity.m */,
 				4BB42C061757A1CC00311FF5 /* GapTweetEntity.h */,
 				4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */,
+				4BFDA45A1776024D007EFBC4 /* PlaceEntity.h */,
+				4BFDA45B1776024D007EFBC4 /* PlaceEntity.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -656,6 +689,11 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BFDA46417762C7A007EFBC4 /* Btn-Add-Image.png */,
+				4BFDA46517762C7A007EFBC4 /* Btn-Add-Image@2x.png */,
+				4BFDA46617762C7A007EFBC4 /* Slice 1.png */,
+				4BFDA45E177624A8007EFBC4 /* Btn-Location.png */,
+				4BFDA45F177624A8007EFBC4 /* Btn-Location@2x.png */,
 				4B165EE71771D874004A09BC /* Image-Separator.png */,
 				4B165EE81771D874004A09BC /* Image-Separator@2x.png */,
 				4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */,
@@ -878,7 +916,9 @@
 				4B6629CB177387FA00FA146A /* Icon-Retweet-Highlighted.png in Resources */,
 				4B6629CC177387FA00FA146A /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4B6629CD177387FA00FA146A /* Icon-Retweet-Normal.png in Resources */,
+				4BFDA463177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
 				4B6629CE177387FA00FA146A /* Icon-Retweet-Normal@2x.png in Resources */,
+				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
 				4B6629D0177387FA00FA146A /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4B6629D1177387FA00FA146A /* Icon-Reply-Normal.png in Resources */,
@@ -895,10 +935,12 @@
 				4B6629DC177387FA00FA146A /* Button-NavigationBar-Normal@2x.png in Resources */,
 				4B6629DD177387FA00FA146A /* Button-NavigationBar-Disabled.png in Resources */,
 				4B6629DE177387FA00FA146A /* Button-NavigationBar-Disabled@2x.png in Resources */,
+				4BFDA46C17762C7A007EFBC4 /* Slice 1.png in Resources */,
 				4B6629DF177387FA00FA146A /* Icon-Navbar-Compose.png in Resources */,
 				4B6629E0177387FA00FA146A /* Icon-Navbar-Compose@2x.png in Resources */,
 				4B6629E1177387FA00FA146A /* Icon-Navbar-Hamburger.png in Resources */,
 				4B6629E2177387FA00FA146A /* Icon-Navbar-Hamburger@2x.png in Resources */,
+				4BFDA461177624A8007EFBC4 /* Btn-Location.png in Resources */,
 				4B6629E3177387FA00FA146A /* Done.png in Resources */,
 				4B6629E4177387FA00FA146A /* Done@2x.png in Resources */,
 				4B6629E5177387FA00FA146A /* Btn-Tweet-Detail-Favorite.png in Resources */,
@@ -906,6 +948,7 @@
 				4B6629E7177387FA00FA146A /* Btn-Tweet-Detail-Other.png in Resources */,
 				4B6629E8177387FA00FA146A /* Btn-Tweet-Detail-Other@2x.png in Resources */,
 				4B6629E9177387FA00FA146A /* Btn-Tweet-Detail-Reply.png in Resources */,
+				4BFDA46817762C7A007EFBC4 /* Btn-Add-Image.png in Resources */,
 				4B6629EA177387FA00FA146A /* Btn-Tweet-Detail-Reply@2x.png in Resources */,
 				4B6629EB177387FA00FA146A /* Btn-Tweet-Detail-Retweet.png in Resources */,
 				4B6629EC177387FA00FA146A /* Btn-Tweet-Detail-Retweet@2x.png in Resources */,
@@ -928,7 +971,9 @@
 				4BAEB3DB17522B950027A0D1 /* Icon-Retweet-Highlighted.png in Resources */,
 				4BAEB3DC17522B950027A0D1 /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4BAEB3DD17522B950027A0D1 /* Icon-Retweet-Normal.png in Resources */,
+				4BFDA462177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
 				4BAEB3DE17522B950027A0D1 /* Icon-Retweet-Normal@2x.png in Resources */,
+				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
 				4BAEB3E41752417A0027A0D1 /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4BAEB3E51752417A0027A0D1 /* Icon-Reply-Normal.png in Resources */,
@@ -945,10 +990,12 @@
 				4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */,
 				4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */,
 				4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */,
+				4BFDA46B17762C7A007EFBC4 /* Slice 1.png in Resources */,
 				4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */,
 				4BF0DC071764F1A1002578FF /* Icon-Navbar-Compose@2x.png in Resources */,
 				4BF0DC081764F1A1002578FF /* Icon-Navbar-Hamburger.png in Resources */,
 				4BF0DC091764F1A1002578FF /* Icon-Navbar-Hamburger@2x.png in Resources */,
+				4BFDA460177624A8007EFBC4 /* Btn-Location.png in Resources */,
 				4BF0DC12176518C9002578FF /* Done.png in Resources */,
 				4BF0DC13176518C9002578FF /* Done@2x.png in Resources */,
 				4BA84597176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png in Resources */,
@@ -956,6 +1003,7 @@
 				4BA84599176E4D0C007A531D /* Btn-Tweet-Detail-Other.png in Resources */,
 				4BA8459A176E4D0C007A531D /* Btn-Tweet-Detail-Other@2x.png in Resources */,
 				4BA8459B176E4D0C007A531D /* Btn-Tweet-Detail-Reply.png in Resources */,
+				4BFDA46717762C7A007EFBC4 /* Btn-Add-Image.png in Resources */,
 				4BA8459C176E4D0C007A531D /* Btn-Tweet-Detail-Reply@2x.png in Resources */,
 				4BA8459D176E4D0C007A531D /* Btn-Tweet-Detail-Retweet.png in Resources */,
 				4BA8459E176E4D0C007A531D /* Btn-Tweet-Detail-Retweet@2x.png in Resources */,
@@ -1064,6 +1112,7 @@
 				4B662999177387FA00FA146A /* TimelineController.m in Sources */,
 				4B66299A177387FA00FA146A /* NetImageView.m in Sources */,
 				4B66299B177387FA00FA146A /* WebController.m in Sources */,
+				4BFDA4561775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4B66299C177387FA00FA146A /* PPLabel.m in Sources */,
 				4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4B66299D177387FA00FA146A /* NSString+TwitterApp.m in Sources */,
@@ -1082,6 +1131,7 @@
 				4B6629AA177387FA00FA146A /* TimelineDocument.m in Sources */,
 				4B6629AB177387FA00FA146A /* TweetDetailController.m in Sources */,
 				4B6629AC177387FA00FA146A /* BaseTweetsController.m in Sources */,
+				4BFDA45D1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4B6629AD177387FA00FA146A /* UIActionSheet+TwitterApp.m in Sources */,
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
@@ -1109,6 +1159,7 @@
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
 				4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */,
 				4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */,
+				4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
@@ -1127,6 +1178,7 @@
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
 				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,
 				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
+				4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
