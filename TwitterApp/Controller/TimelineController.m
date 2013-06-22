@@ -114,7 +114,7 @@
         }
     }];
     
-    _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 64)];
+    _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
     _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_notificationViewPlaceholderView];

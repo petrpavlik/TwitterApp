@@ -26,7 +26,6 @@
 
 @interface MHFacebookImageViewer : UIViewController
 
-
 @property (weak, readonly, nonatomic) UIViewController *rootViewController;
 @property(nonatomic,strong) UIImageView * senderView;
 

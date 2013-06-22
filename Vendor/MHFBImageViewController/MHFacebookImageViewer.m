@@ -98,7 +98,10 @@ static const CGFloat kMinImageScale = 1.0f;
     [super viewDidLoad];
     _isAnimating = YES;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.senderView removeFromSuperview];
+        
+        //[self.senderView removeFromSuperview];
+        self.senderView.hidden = YES;
+        
         _imageView = [[UIImageView alloc]initWithFrame:_originalFrameRelativeToScreen];
         _imageView.contentMode = UIViewContentModeScaleAspectFill;
         [_scrollView addSubview:_imageView];
@@ -253,7 +256,10 @@ static const CGFloat kMinImageScale = 1.0f;
                 
                 [self.view removeFromSuperview];
                 [self removeFromParentViewController];
-                [_superView addSubview:self.senderView ];
+                
+                //[_superView addSubview:self.senderView ];
+                self.senderView.hidden = NO;
+                
                 [UIApplication sharedApplication].statusBarHidden = NO;
                 _isAnimating =NO;
                 
