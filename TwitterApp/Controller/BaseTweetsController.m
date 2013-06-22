@@ -15,13 +15,13 @@
 #import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import <PocketAPI.h>
+#import "RetweetersController.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
 #import "TweetDetailCell.h"
 #import "TweetEntity.h"
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+TwitterApp.h"
-#import "UserListController.h"
 #import "WebController.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
@@ -397,7 +397,7 @@
         destructiveButtonTitle = @"Delete";
     }
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Retweets", @"Favorites", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", nil];
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
@@ -461,6 +461,7 @@
     if (actionSheet.userInfo[@"tweet"]) {
         
         TweetEntity* tweet = actionSheet.userInfo[@"tweet"];
+        NSParameterAssert(tweet);
         
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             
@@ -473,13 +474,12 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
             }];
         }
-        else {
+        else if (buttonIndex==0) {
          
-            UserListController* userListController = [[UserListController alloc] initWithStyle:UITableViewStylePlain];
+            RetweetersController* retweetersController = [[RetweetersController alloc] initWithStyle:UITableViewStylePlain];
             
-            NSParameterAssert(tweet);
-            userListController.tweetIdForRetweets = tweet.tweetId;
-            [self.navigationController pushViewController:userListController animated:YES];
+            retweetersController.tweetId = tweet.tweetId;
+            [self.navigationController pushViewController:retweetersController animated:YES];
         }
     }
     else if (actionSheet.userInfo[@"url"]) {

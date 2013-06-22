@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "ErrorCell.h"
 #import "TweetEntity.h"
 #import "UIImage+TwitterApp.h"
 #import "UserCell.h"
@@ -15,11 +16,28 @@
 
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic, weak) NSOperation* runningRequestDataOperation;
-@property(nonatomic, strong) NSArray* users;
 
 @end
 
 @implementation UserListController
+
+- (void)setUsers:(NSArray *)users {
+    
+    _users = users;
+    
+    if ([self isViewLoaded]) {
+        [self didEndRefreshing];
+    }
+}
+
+- (void)setErrorMessage:(NSString *)errorMessage {
+    
+    _errorMessage = errorMessage;
+    
+    if ([self isViewLoaded]) {
+        [self didEndRefreshing];
+    }
+}
 
 - (void)dealloc {
     
@@ -30,23 +48,15 @@
 {
     [super viewDidLoad];
     
-    NSAssert(!(self.tweetIdForRetweets.length && self.tweetIdForFavorites.length), @"cannot set both tweetIdForRetweets and tweetIdForFavorites");
-    NSAssert(!(!self.tweetIdForRetweets.length && !self.tweetIdForFavorites.length), @"either tweetIdForRetweets or tweetIdForFavorites must be set");
-    
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
-    self.tableView.rowHeight = 68;
+    [self.tableView registerClass:[ErrorCell class] forCellReuseIdentifier:@"ErrorCell"];
+    //self.tableView.rowHeight = 68;
     self.tableView.tableFooterView = [UIView new];
     //self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    if (self.tweetIdForRetweets) {
-        self.title = @"Retweets";
-    }
-    else if (self.tweetIdForFavorites) {
-        self.title = @"Favorites";
-    }
-
-    [self requestData];
+    [self willBeginRefreshing];
+    self.runningRequestDataOperation = [self dataRequestOperation];
 }
 
 #pragma mark - Table view data source
@@ -60,26 +70,49 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return self.users.count;
-    //return 1;
+    return MAX(self.users.count, 1);
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"UserCell";
-    UserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
-    // Configure the cell...
-    UserEntity* user = self.users[indexPath.row];
-    
-    cell.nameLabel.text = user.name;
-    cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
-    [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+    if (self.users.count) {
         
-        return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
-    }];
+        static NSString *CellIdentifier = @"UserCell";
+        UserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        // Configure the cell...
+        UserEntity* user = self.users[indexPath.row];
+        
+        cell.nameLabel.text = user.name;
+        cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
+        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+            
+            return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
+        }];
+        
+        return cell;
+    }
+    else {
+        
+        static NSString *CellIdentifier = @"ErrorCell";
+        ErrorCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        
+        // Configure the cell...
+        cell.errorLabel.text = self.errorMessage;
+        
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return cell;
+    if (self.users.count) {
+        return 68;
+    }
+    else {
+        return self.tableView.frame.size.height; //error cell
+    }
 }
 
 #pragma mark - Table view delegate
@@ -91,36 +124,10 @@
 
 #pragma mark -
 
-- (void)requestData {
-    
-    [self willBeginRefreshing];
-    
-    __weak typeof(self) weakSelf = self;
-    
-    self.runningRequestDataOperation = [TweetEntity requestRetweetsOfTweet:self.tweetIdForRetweets completionBlock:^(NSArray *tweets, NSError *error) {
-        
-        if (!tweets.count) {
-            return;
-        }
-        
-        NSMutableArray* users = [[NSMutableArray alloc] initWithCapacity:tweets.count];
-        for (TweetEntity* tweet in tweets) {
-            [users addObject:tweet.user];
-        }
-        
-        weakSelf.users = users;
-        [weakSelf.tableView reloadData];
-        
-        [weakSelf didEndRefreshing];
-    }];
-    
-}
-
-#pragma mark -
-
 - (void)willBeginRefreshing {
     
     self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.bounds.size.height, 0, 0, 0);
+    self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, -self.tableView.bounds.size.height);
     self.tableView.scrollEnabled = NO;
     
     UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -131,6 +138,12 @@
 }
 
 - (void)didEndRefreshing {
+    
+    [self.tableView reloadData];
+    
+    if (self.tableView.contentInset.top == 0) {
+        return;
+    }
     
     [UIView animateWithDuration:0.3 animations:^{
         
@@ -145,6 +158,12 @@
         [self.activityIndicatorView removeFromSuperview];
         self.activityIndicatorView = nil;
     }];
+}
+
+#pragma mark -
+
+- (NSOperation*)dataRequestOperation {
+    return nil;
 }
 
 
