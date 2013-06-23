@@ -27,6 +27,10 @@
 
 + (NotificationView*)showInView:(UIView*)view message:(NSString*)message style:(NotificationViewStyle)style {
     
+    if (!view) {
+        return Nil;
+    }
+    
     CGFloat width = 260;
     CGFloat leftMargin = (view.bounds.size.width-width)/2;
     
@@ -83,11 +87,17 @@
     _messageLabel.font = [skin boldFontOfSize:16];
     _messageLabel.textColor = [UIColor whiteColor];
     _messageLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _messageLabel.backgroundColor = self.backgroundColor;
+    _messageLabel.backgroundColor = [UIColor clearColor];
+    _messageLabel.numberOfLines = 2;
+    _messageLabel.textAlignment = NSTextAlignmentCenter;
     
     [self addSubview:_messageLabel];
 
     [_messageLabel centerInSuperview];
+    
+    NSMutableArray* superviewConstraints = [NSMutableArray new];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_messageLabel]-|" options:NSLayoutFormatAlignAllTop metrics:nil views:NSDictionaryOfVariableBindings(_messageLabel)]];
+    [self addConstraints:superviewConstraints];
 }
 
 - (void)setStyle:(NotificationViewStyle)style {

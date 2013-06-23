@@ -117,7 +117,7 @@
     return (NSOperation*)operation;
 }
 
-+ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
++ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
@@ -126,6 +126,15 @@
     
     if (tweetId) {
         params[@"in_reply_to_status_id"] = tweetId;
+    }
+    
+    if (placeId) {
+        params[@"place_id"] = placeId;
+    }
+    
+    if (location) {
+        params[@"lat"] = @(location.coordinate.latitude);
+        params[@"long"] = @(location.coordinate.longitude);
     }
     
     NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"statuses/update.json" parameters:params];
@@ -138,6 +147,15 @@
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         block(nil, error);
+    }];
+    
+    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSDictionary *info = [bundle infoDictionary];
+        NSString *prodName = [info objectForKey:@"CFBundleDisplayName"];
+        
+        block(nil, [NSError errorWithDomain:prodName code:0 userInfo:@{NSLocalizedDescriptionKey: @"Background task for this operation expired before the operation was completed."}]);
     }];
     
     [apiClient enqueueHTTPRequestOperation:operation];

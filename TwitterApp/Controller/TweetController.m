@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <CoreLocation/CoreLocation.h>
 #import "NavigationController.h"
+#import "NotificationView.h"
 #import "PlaceEntity.h"
 #import "TweetEntity.h"
 #import "TweetController.h"
@@ -16,8 +17,10 @@
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
 
+@property(nonatomic, strong) UIImage* attachedImage;
+@property(nonatomic, strong) CLLocation* location;
 @property(nonatomic, strong) CLLocationManager* locationManager;
-@property(nonatomic, strong) NSMutableArray* mediaAttachments;
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSArray* places;
 @property(nonatomic, weak) NSOperation* runningPlacesOperation;
 @property(nonatomic, strong) PlaceEntity* selectedPlace;
@@ -29,15 +32,6 @@
 
 @implementation TweetController
 
-- (NSMutableArray*)mediaAttachments {
-    
-    if (!_mediaAttachments) {
-        _mediaAttachments = [NSMutableArray new];
-    }
-    
-    return _mediaAttachments;
-}
-
 - (CLLocationManager*)locationManager {
     
     if (!_locationManager) {
@@ -47,6 +41,20 @@
     
     return _locationManager;
 }
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
+
+#pragma mark -
 
 + (TweetController*)presentInViewController:(UIViewController*)viewController {
     return [TweetController presentAsReplyToTweet:nil inViewController:viewController];
@@ -128,7 +136,25 @@
 
 - (void)done {
     
-    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId completionBlock:^(TweetEntity *tweet, NSError *error) {
+    NSString* placeId = nil;
+    CLLocation* location = nil;
+    
+    if (self.tweetInputAccessoryView.locationEnabled && self.selectedPlace) {
+        
+        if (self.selectedPlace) {
+            placeId = self.selectedPlace.placeId;
+        }
+        
+        if (self.location) {
+            location = self.location;
+        }
+    }
+    
+    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId completionBlock:^(TweetEntity *tweet, NSError *error) {
+        
+        if (error) {
+            [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+        }
         
     }];
     
@@ -143,7 +169,34 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
-    self.title = [NSString stringWithFormat:@"%d", 140 - textView.text.length];
+    [self contentLengthDidChange];
+}
+
+#pragma mark -
+
+- (void)contentLengthDidChange {
+    
+    const static NSInteger linkLength = 23;
+    
+    NSInteger numberOfAvailableCharacters = 140 - self.tweetTextView.text.length;
+    if (self.attachedImage) {
+        numberOfAvailableCharacters -= linkLength;
+    }
+    
+    NSError *error = Nil;
+    NSDataDetector *detector = [NSDataDetector dataDetectorWithTypes:NSTextCheckingTypeLink error:&error];
+    NSArray *matches = [detector matchesInString:self.tweetTextView.text options:0 range:NSMakeRange(0, self.tweetTextView.text.length)];
+    
+    for (NSTextCheckingResult *match in matches) {
+        
+        NSRange matchRange = [match range];
+        numberOfAvailableCharacters += matchRange.length;
+        numberOfAvailableCharacters -= linkLength;
+        
+        NSLog(@"detected link %@", [self.tweetTextView.text substringWithRange:matchRange]);
+    }
+    
+    self.title = [NSString stringWithFormat:@"%d", numberOfAvailableCharacters];
     
     if (_tweetTextView.text.length > 0 && _tweetTextView.text.length <= 140) {
         self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -193,13 +246,40 @@
     [self presentViewController:mediaUI animated:YES completion:NULL];
 }
 
+#pragma mark -
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+    
+    UIImage* selectedImage = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
+    if (selectedImage) {
+        
+        self.attachedImage = selectedImage;
+        [self.tweetInputAccessoryView displaySelectedImae:selectedImage];
+        [self contentLengthDidChange];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not load selected image" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles: nil] show];
+    }
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
+    
+    [picker dismissViewControllerAnimated:YES completion:NULL];
+}
+
+#pragma mark -
+
 - (void)tweetInputAccessoryViewDidEnableLocation:(TweetInputAccessoryView *)view {
     
     CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
     
     if (authorizationStatus != kCLAuthorizationStatusAuthorized && authorizationStatus != kCLAuthorizationStatusNotDetermined) {
         
-        [[[UIAlertView alloc] initWithTitle:nil message:@"Location services seem to be disabled." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+        [NotificationView showInView:self.view message:@"Location services seem to be disabled." style:NotificationViewStyleError];
+        
+        [self.tweetInputAccessoryView disableLocation];
         
         return;
     }
@@ -217,7 +297,15 @@
         if (components.minute <= 5) {
             
             NSLog(@"using cached location %@", cachedLocation);
-            [self requestPlacesWithLocation:cachedLocation];
+            self.location = cachedLocation;
+            
+            if (self.places && self.selectedPlace) {
+                [self.tweetInputAccessoryView displayLocationPlace:self.selectedPlace.name];
+            }
+            else {
+                [self requestPlacesWithLocation:cachedLocation];
+            }
+            
             return;
         }
     }
@@ -226,29 +314,22 @@
     
 }
 
+- (void)tweetInputAccessoryViewDidRequestPlaceQuery:(TweetInputAccessoryView*)view {
+    
+    NSParameterAssert(self.places);
+    
+    UIActionSheet* selectPlaceActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Location" delegate:nil cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
+    
+    for (PlaceEntity* place in self.places) {
+        [selectPlaceActionSheet addButtonWithTitle:place.name];
+    }
+    
+    [selectPlaceActionSheet showInView:self.view];
+}
+
 - (void)tweetInputAccessoryViewDidDisableLocation:(TweetInputAccessoryView *)view {
     
     [_locationManager stopUpdatingLocation];
-}
-
-#pragma mark -
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
-    
-    UIImage* selectedImage = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
-    if (selectedImage) {
-        [self.mediaAttachments addObject:selectedImage];
-    }
-    else {
-        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not load selected image" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles: nil] show];
-    }
-    
-    [picker dismissViewControllerAnimated:YES completion:NULL];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    
-    [picker dismissViewControllerAnimated:YES completion:NULL];
 }
 
 #pragma mark -
@@ -259,6 +340,7 @@
     
     CLLocation* location = locations.lastObject;
     NSLog(@"using new location %@", location);
+    self.location = location;
     [self requestPlacesWithLocation:location];
     
 }
@@ -268,6 +350,10 @@
     [manager stopUpdatingLocation];
     
     NSLog(@"did fail to update location: %@", error);
+    
+    [NotificationView showInView:self.view message:@"Location services seem to be disabled." style:NotificationViewStyleError];
+    
+    [self.tweetInputAccessoryView disableLocation];
 }
 
 #pragma mark -
@@ -278,13 +364,25 @@
         return;
     }
     
+    self.places = nil;
+    self.selectedPlace = nil;
+    
     __weak typeof(self) weakSelf = self;
     
     self.runningPlacesOperation = [PlaceEntity requestPlacesWithLocation:location completionBlock:^(NSArray *places, NSError *error) {
         
+        if (error) {
+            
+            [NotificationView showInView:weakSelf.view message:@"Could not load nearby places" style:NotificationViewStyleError];
+            [weakSelf.tweetInputAccessoryView disableLocation];
+        }
+        
         NSLog(@"%@", places);
         
-        [weakSelf.tweetInputAccessoryView displayLocationPlace:[places[0] name]];
+        weakSelf.places = places;
+        weakSelf.selectedPlace = places[0];
+        
+        [weakSelf.tweetInputAccessoryView displayLocationPlace:weakSelf.selectedPlace.name];
         
     }];
 }
