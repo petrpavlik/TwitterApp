@@ -10,8 +10,9 @@
 
 @interface PlaceEntity : BaseEntity
 
-@property(nonatomic, strong) NSString* placeId;
+@property(nonatomic, strong) NSString* fullName;
 @property(nonatomic, strong) NSString* name;
+@property(nonatomic, strong) NSString* placeId;
 
 + (NSOperation*)requestPlacesWithLocation:(CLLocation*)location completionBlock:(void (^)(NSArray* places, NSError* error))block;
 

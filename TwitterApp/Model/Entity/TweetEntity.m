@@ -117,7 +117,7 @@
     return (NSOperation*)operation;
 }
 
-+ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
++ (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId media:(NSArray*)media completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
@@ -137,7 +137,22 @@
         params[@"long"] = @(location.coordinate.longitude);
     }
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"statuses/update.json" parameters:params];
+    NSMutableURLRequest *request = nil;
+    
+    if (media.count) {
+    
+        request = [apiClient signedMultipartFormRequestWithMethod:@"POST" path:@"statuses/update_with_media.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+            
+            for (UIImage* image in media) {
+                
+                [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.8) name:@"media[]" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
+            }
+        }];
+    }
+    else {
+        
+        request = [apiClient signedRequestWithMethod:@"POST" path:@"statuses/update.json" parameters:params];
+    }
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         
@@ -389,7 +404,7 @@
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"https://stream.twitter.com/1.1/statuses/filter.json" parameters:@{@"follow": @"14461738,145816941"}];
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"https://stream.twitter.com/1.1/statuses/filter.json" parameters:@{@" follow": @"14461738,145816941"}];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         

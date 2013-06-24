@@ -58,6 +58,7 @@
     _placeButton.translatesAutoresizingMaskIntoConstraints = NO;
     _placeButton.hidden = YES;
     _placeButton.alpha = 0;
+    _placeButton.titleLabel.lineBreakMode = UILineBreakModeTailTruncation; //TODO: switch to TextKit after dropping iOS 6;
     [_placeButton addTarget:self action:@selector(placeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_placeButton];
     
@@ -69,7 +70,7 @@
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton)];
+    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]->=0-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton)];
     
     self.locationDisabledConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-[_mediaButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton)];
     self.locationDisabledConstraints = [self.locationDisabledConstraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_locationButton]-4-[_placeButton]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _placeButton)]];
@@ -176,8 +177,10 @@
     UIGraphicsEndImageContext();
     
     scaledImage = [scaledImage imageWithRoundCornersWithRadius:3];
-    scaledImage = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     
+    if ([scaledImage respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        scaledImage = [scaledImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
     
     [self.mediaButton setImage:scaledImage forState:UIControlStateNormal];
 }

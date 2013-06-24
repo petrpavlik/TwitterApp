@@ -138,6 +138,7 @@
     
     NSString* placeId = nil;
     CLLocation* location = nil;
+    NSArray* media = nil;
     
     if (self.tweetInputAccessoryView.locationEnabled && self.selectedPlace) {
         
@@ -150,7 +151,11 @@
         }
     }
     
-    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId completionBlock:^(TweetEntity *tweet, NSError *error) {
+    if (self.attachedImage) {
+        media = @[self.attachedImage];
+    }
+    
+    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId media:media completionBlock:^(TweetEntity *tweet, NSError *error) {
         
         if (error) {
             [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
@@ -318,11 +323,14 @@
     
     NSParameterAssert(self.places);
     
-    UIActionSheet* selectPlaceActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Location" delegate:nil cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:nil];
+    UIActionSheet* selectPlaceActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Location" delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
     
     for (PlaceEntity* place in self.places) {
-        [selectPlaceActionSheet addButtonWithTitle:place.name];
+        [selectPlaceActionSheet addButtonWithTitle:place.fullName];
     }
+    
+    [selectPlaceActionSheet addButtonWithTitle:@"Cancel"];
+    [selectPlaceActionSheet setCancelButtonIndex:selectPlaceActionSheet.numberOfButtons-1];
     
     [selectPlaceActionSheet showInView:self.view];
 }

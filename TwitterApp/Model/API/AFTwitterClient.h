@@ -15,6 +15,8 @@
 
 + (AFTwitterClient*)sharedClient;
 
+- (NSMutableURLRequest *)signedMultipartFormRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block;
+
 - (NSMutableURLRequest *)signedRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters;
 
 @end
