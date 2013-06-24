@@ -67,6 +67,7 @@
 
 - (void)commonSetup {
     
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
     
@@ -75,6 +76,7 @@
     [self setSelectedBackgroundView:bgColorView];
     
     _slidingContentView = [[UIView alloc] init];
+    _slidingContentView.frame = CGRectMake(0, 0, 320, 320); //dummy values to prevent crash on iOS 7 beta 2
     [self.contentView addSubview:_slidingContentView];
     
     UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureMoveAround:)];
@@ -159,6 +161,7 @@
     //separatorView.image = [separatorView.image imageWithTint:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] alpha:1.0];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
+    
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
