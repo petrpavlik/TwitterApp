@@ -14,8 +14,9 @@
 #import "TweetEntity.h"
 #import "TweetController.h"
 #import "TweetInputAccessoryView.h"
+#import "UIActionSheet+TwitterApp.h"
 
-@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate>
+@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) UIImage* attachedImage;
 @property(nonatomic, strong) CLLocation* location;
@@ -129,7 +130,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [[LocalyticsSession shared] tagScreen:@"Compose Tweet"];
 }
 
 #pragma mark -
@@ -154,6 +154,8 @@
     if (self.attachedImage) {
         media = @[self.attachedImage];
     }
+    
+    [[LogService sharedInstance] logEvent:@"tweet composed" userInfo:@{@"location enabled": @(placeId!=nil), @"media attached": @(media.count!=0)}];
     
     [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId media:media completionBlock:^(TweetEntity *tweet, NSError *error) {
         
@@ -244,11 +246,24 @@
 
 - (void)tweetInputAccessoryViewDidRequestMediaQuery:(TweetInputAccessoryView *)view {
     
-    UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
-    mediaUI.sourceType = UIImagePickerControllerSourceTypeSavedPhotosAlbum;
-    mediaUI.delegate = self;
+    NSString* destructiveButtonTitle = nil;
+    if (self.attachedImage) {
+        destructiveButtonTitle = @"Remove image";
+    }
     
-    [self presentViewController:mediaUI animated:YES completion:NULL];
+    UIActionSheet* mediaActionSheet = nil;
+    
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+    
+        mediaActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Take photo", @"Choose from library", nil];
+    }
+    else {
+        
+        mediaActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Choose from library", nil];
+    }
+    
+    mediaActionSheet.userInfo = @{@"type": @"mediaQuery"};
+    [mediaActionSheet showInView:self.view];
 }
 
 #pragma mark -
@@ -323,7 +338,8 @@
     
     NSParameterAssert(self.places);
     
-    UIActionSheet* selectPlaceActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Location" delegate:nil cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    UIActionSheet* selectPlaceActionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Location" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil];
+    selectPlaceActionSheet.userInfo = @{@"type": @"selectLocation"};
     
     for (PlaceEntity* place in self.places) {
         [selectPlaceActionSheet addButtonWithTitle:place.fullName];
@@ -393,6 +409,52 @@
         [weakSelf.tweetInputAccessoryView displayLocationPlace:weakSelf.selectedPlace.name];
         
     }];
+}
+
+#pragma mark -
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
+    if (buttonIndex == actionSheet.cancelButtonIndex) {
+        return;
+    }
+    
+    NSString* type = actionSheet.userInfo[@"type"];
+    NSParameterAssert(type);
+    
+    if ([type isEqualToString:@"selectLocation"]) {
+        
+        self.selectedPlace = self.places[buttonIndex];
+        [self.tweetInputAccessoryView displayLocationPlace:self.selectedPlace.name];
+    }
+    else if ([type isEqualToString:@"mediaQuery"]) {
+        
+        if (buttonIndex == actionSheet.destructiveButtonIndex) {
+            
+            [self.tweetInputAccessoryView displaySelectedImae:nil];
+            self.attachedImage = nil;
+            return;
+        }
+        
+        UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
+        
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+            
+            if (buttonIndex==0) {
+                mediaUI.sourceType = UIImagePickerControllerSourceTypeCamera;
+            }
+            else {
+                mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            }
+        }
+        else {
+            mediaUI.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        }
+        
+        mediaUI.delegate = self;
+         
+        [self presentViewController:mediaUI animated:YES completion:NULL];
+    }
 }
 
 @end

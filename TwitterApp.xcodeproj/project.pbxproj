@@ -13,6 +13,8 @@
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
+		4B349FC51779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
+		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
 		4B66298E177387FA00FA146A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428961742D9CE00AEB85C /* main.m */; };
@@ -240,6 +242,8 @@
 		4B16B2C2177503E1000FEFDD /* ErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorCell.m; path = View/Cell/ErrorCell.m; sourceTree = "<group>"; };
 		4B1D0136175B6A5A00B04036 /* TweetDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailController.h; path = Controller/TweetDetailController.h; sourceTree = "<group>"; };
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
+		4B349FC31779C0FA007D035D /* LogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogService.h; path = Service/LogService.h; sourceTree = "<group>"; };
+		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
 		4B4B8F9D17677C3400E427DE /* ModernSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernSkin.m; path = View/Skin/ModernSkin.m; sourceTree = "<group>"; };
 		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
@@ -458,6 +462,15 @@
 			name = API;
 			sourceTree = "<group>";
 		};
+		4B349FC21779C06C007D035D /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				4B349FC31779C0FA007D035D /* LogService.h */,
+				4B349FC41779C0FA007D035D /* LogService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
 		4B662A16177387FB00FA146A /* Resources-iPad */ = {
 			isa = PBXGroup;
 			children = (
@@ -515,6 +528,7 @@
 		4B7428901742D9CE00AEB85C /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B349FC21779C06C007D035D /* Service */,
 				4BF0DC0A176518AF002578FF /* Vendor */,
 				4BDB0F371748CD8F004980EB /* Controller */,
 				4B7428D51742DFB400AEB85C /* Model */,
@@ -1097,6 +1111,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B349FC61779C0FA007D035D /* LogService.m in Sources */,
 				4B66298E177387FA00FA146A /* main.m in Sources */,
 				4B66298F177387FA00FA146A /* AppDelegate.m in Sources */,
 				4B662990177387FA00FA146A /* AbstractSkin.m in Sources */,
@@ -1144,6 +1159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,

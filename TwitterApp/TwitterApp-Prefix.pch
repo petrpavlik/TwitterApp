@@ -14,7 +14,7 @@
     #import <SystemConfiguration/SystemConfiguration.h>
     #import <MobileCoreServices/MobileCoreServices.h>
     #import "UIView+AutoLayout.h"
-    #import "LocalyticsSession.h"
+    #import "LogService.h"
 #endif
 
 #define kTweetDeletedNotification @"kTweetDeletedNotification"

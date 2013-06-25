@@ -9,6 +9,7 @@
 #import "BaseEntity.h"
 #import <Foundation/Foundation.h>
 #import "UserEntity.h"
+#import <MapKit/MapKit.h>
 
 @interface TweetEntity : BaseEntity
 

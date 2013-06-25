@@ -7,6 +7,7 @@
 //
 
 #import "BaseEntity.h"
+#import <MapKit/MapKit.h>
 
 @interface PlaceEntity : BaseEntity
 

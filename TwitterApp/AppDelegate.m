@@ -13,6 +13,7 @@
 #import <ECSlidingViewController.h>
 #import <HockeySDK/HockeySDK.h>
 #import "LightSkin.h"
+#import "LocalyticsSession.h"
 #import "ModernSkin.h"
 #import "NavigationController.h"
 #import "NetImageView.h"
@@ -92,11 +93,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [[LocalyticsSession shared] startSession:@"3048d2b4028b670f856d4fc-f57032a8-d91f-11e2-0f5b-004a77f8b47f"];
-    
-#ifdef DEBUG
-    [[LocalyticsSession shared] setLoggingEnabled:YES];
-#endif
+    [LogService instatiate];
     
     return YES;
 }

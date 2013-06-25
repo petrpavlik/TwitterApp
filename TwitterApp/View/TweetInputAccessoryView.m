@@ -155,7 +155,27 @@
 }
 
 - (void)displaySelectedImae:(UIImage*)image {
-    NSParameterAssert(image);
+    
+    [UIView animateWithDuration:0.3 animations:^{
+       
+        self.mediaButton.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        [self assignImageToMediaButton:image];
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.mediaButton.alpha = 1;
+        }];
+    }];
+}
+
+- (void)assignImageToMediaButton:(UIImage*)image {
+    
+    if (!image) {
+        [_mediaButton setImage:[UIImage imageNamed:@"Btn-Add-Image"] forState:UIControlStateNormal];
+        return;
+    }
     
     CGSize previewImageSize = CGSizeMake(34, 34);
     CGRect imageDrawRect;
