@@ -15,6 +15,7 @@
 #import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import <PocketAPI.h>
+#import "ProfileController.h"
 #import "RetweetersController.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
@@ -370,7 +371,7 @@
     
     NSParameterAssert(tweet);
     
-    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+    /*TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
     
     if (tweet.retweetedStatus) {
         timelineController.screenName = tweet.retweetedStatus.user.screenName;
@@ -379,7 +380,18 @@
         timelineController.screenName = tweet.user.screenName;
     }
     
-    [self.navigationController pushViewController:timelineController animated:YES];
+    [self.navigationController pushViewController:timelineController animated:YES];*/
+    
+    ProfileController* profileController = [[ProfileController alloc] initWithStyle:UITableViewStylePlain];
+    
+    if (tweet.retweetedStatus) {
+        profileController.user = tweet.retweetedStatus.user;
+    }
+    else {
+        profileController.user = tweet.user;
+    }
+    
+    [self.navigationController pushViewController:profileController animated:YES];
 }
 
 - (void)tweetCellDidLongPress:(TweetCell *)cell {

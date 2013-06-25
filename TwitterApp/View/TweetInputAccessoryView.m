@@ -126,6 +126,13 @@
     [self addConstraints:self.locationEnabledCOnstraints];
     self.placeButton.hidden = NO;
     
+    /*[UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:10 options:0 animations:^{
+        
+        [self layoutIfNeeded];
+        self.placeButton.alpha = 1;
+        
+    } completion:NULL];*/
+    
     [UIView animateWithDuration:0.25 animations:^{
         
         [self layoutIfNeeded];

@@ -25,6 +25,16 @@ static UserEntity* currentUser;
     }
 }
 
+- (void)setValue:(id)value forKey:(NSString *)key {
+    
+    if ([key isEqualToString:@"Description"]) {
+        self.userDescription = value;
+    }
+    else {
+        [super setValue:value forKey:key];
+    }
+}
+
 #pragma mark -
 
 + (void)registerCurrentUser:(UserEntity *)user {

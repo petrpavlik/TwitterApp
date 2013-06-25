@@ -16,6 +16,10 @@
 		4B349FC51779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
+		4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
+		4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
+		4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
+		4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
 		4B66298E177387FA00FA146A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428961742D9CE00AEB85C /* main.m */; };
 		4B66298F177387FA00FA146A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B74289A1742D9CE00AEB85C /* AppDelegate.m */; };
@@ -246,6 +250,10 @@
 		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
 		4B4B8F9D17677C3400E427DE /* ModernSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernSkin.m; path = View/Skin/ModernSkin.m; sourceTree = "<group>"; };
+		4B4E80A4177A2B6A005358A5 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileCell.h; path = View/Cell/ProfileCell.h; sourceTree = "<group>"; };
+		4B4E80A5177A2B6A005358A5 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileCell.m; path = View/Cell/ProfileCell.m; sourceTree = "<group>"; };
+		4B4E80A8177A341F005358A5 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileController.h; path = Controller/ProfileController.h; sourceTree = "<group>"; };
+		4B4E80A9177A341F005358A5 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileController.m; path = Controller/ProfileController.m; sourceTree = "<group>"; };
 		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
 		4B573FA5176B695200166461 /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailCell.m; path = View/Cell/TweetDetailCell.m; sourceTree = "<group>"; };
 		4B6629F1177387FA00FA146A /* TwitterApp-iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TwitterApp-iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -640,6 +648,8 @@
 				4B573FA5176B695200166461 /* TweetDetailCell.m */,
 				4B16B2C1177503E1000FEFDD /* ErrorCell.h */,
 				4B16B2C2177503E1000FEFDD /* ErrorCell.m */,
+				4B4E80A4177A2B6A005358A5 /* ProfileCell.h */,
+				4B4E80A5177A2B6A005358A5 /* ProfileCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -783,6 +793,8 @@
 				4BFC4407175B91FB004199C3 /* BaseTweetsController.m */,
 				4BFDA44A1775A61B007EFBC4 /* RetweetersController.h */,
 				4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */,
+				4B4E80A8177A341F005358A5 /* ProfileController.h */,
+				4B4E80A9177A341F005358A5 /* ProfileController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1139,6 +1151,7 @@
 				4B6629A3177387FA00FA146A /* TwitterAppWindow.m in Sources */,
 				4B6629A4177387FA00FA146A /* UserTitleView.m in Sources */,
 				4B6629A5177387FA00FA146A /* LoadMoreCell.m in Sources */,
+				4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */,
 				4B6629A6177387FA00FA146A /* GapTweetEntity.m in Sources */,
 				4B6629A7177387FA00FA146A /* NotificationView.m in Sources */,
 				4B6629A8177387FA00FA146A /* BasementController.m in Sources */,
@@ -1148,6 +1161,7 @@
 				4B6629AC177387FA00FA146A /* BaseTweetsController.m in Sources */,
 				4BFDA45D1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4B6629AD177387FA00FA146A /* UIActionSheet+TwitterApp.m in Sources */,
+				4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
 				4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */,
@@ -1187,6 +1201,7 @@
 				4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */,
 				4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */,
 				4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */,
+				4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */,
 				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
 				4BC63C1F17590B9F00F7E0C3 /* BasementController.m in Sources */,
@@ -1196,6 +1211,7 @@
 				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
 				4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
+				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
