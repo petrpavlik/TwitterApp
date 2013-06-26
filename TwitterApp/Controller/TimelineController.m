@@ -618,8 +618,8 @@
 
 - (void)showBasement {
     
-    NSMutableArray* crash = [NSMutableArray new];
-    [crash addObject:nil];
+    [[[UIAlertView alloc] initWithTitle:Nil message:@"blah blah" delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+    
     //[self.slidingViewController anchorTopViewTo:ECRight];
 }
 

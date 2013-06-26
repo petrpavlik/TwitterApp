@@ -537,6 +537,8 @@
 
 - (void)saveImagesForVisibleCells {
     
+    return;
+    
     NSMutableDictionary* savedImagesForVisibleRows = [NSMutableDictionary new];
     
     for (UITableViewCell* cell in [self.tableView visibleCells]) {

@@ -48,14 +48,22 @@
         
     } completion:^(BOOL finished) {
         
-        [UIView animateWithDuration:0.5 delay:3 options:0 animations:^{
+        [notificationView setupMotionEffects];
+        
+        double delayInSeconds = 3.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+           
+            [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
+                
+                notificationView.alpha = 0;
+                
+            } completion:^(BOOL finished) {
+                
+                [notificationView removeFromSuperview];
+            }];
             
-            notificationView.alpha = 0;
-            
-        } completion:^(BOOL finished) {
-            
-            [notificationView removeFromSuperview];
-        }];
+        });
     }];
     
     return nil;
@@ -98,6 +106,7 @@
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_messageLabel]-|" options:NSLayoutFormatAlignAllTop metrics:nil views:NSDictionaryOfVariableBindings(_messageLabel)]];
     [self addConstraints:superviewConstraints];
+    
 }
 
 - (void)setStyle:(NotificationViewStyle)style {
@@ -114,6 +123,25 @@
     }
     else {
         @throw [NSException exceptionWithName:@"UnkownStyleException" reason:[NSString stringWithFormat:@"%d is not a valid style", _style] userInfo:nil];
+    }
+}
+
+- (void)setupMotionEffects {
+    
+    if ([self respondsToSelector:@selector(addMotionEffect:)]) {
+        
+        UIInterpolatingMotionEffect* xAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.x" type:UIInterpolatingMotionEffectTypeTiltAlongHorizontalAxis];
+        xAxis.minimumRelativeValue = @(-10.0);
+        xAxis.maximumRelativeValue = @(10.0);
+        
+        UIInterpolatingMotionEffect* yAxis = [[UIInterpolatingMotionEffect alloc] initWithKeyPath:@"center.y" type:UIInterpolatingMotionEffectTypeTiltAlongVerticalAxis];
+        yAxis.minimumRelativeValue = @(-10.0);
+        yAxis.maximumRelativeValue = @(10.0);
+        
+        UIMotionEffectGroup* group = [UIMotionEffectGroup new];
+        group.motionEffects = @[xAxis, yAxis];
+        
+        [self addMotionEffect:group];
     }
 }
 
