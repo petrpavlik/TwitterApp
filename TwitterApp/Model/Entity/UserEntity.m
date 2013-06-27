@@ -101,4 +101,70 @@ static UserEntity* currentUser;
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestFollowersOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* followers, NSError* error))block {
+    
+    NSParameterAssert(userId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"followers/list.json" parameters:@{@"user_id": userId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* followers = [[NSMutableArray alloc] initWithCapacity:[JSON[@"users"] count]];
+        
+        for (NSDictionary* userAsDictionary in JSON[@"users"]) {
+            
+            UserEntity* userEntity = [[UserEntity alloc] initWithDictionary:userAsDictionary];
+            [followers addObject:userEntity];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(followers, nil);
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
++ (NSOperation*)requestFriendsOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* friends, NSError* error))block {
+    
+    NSParameterAssert(userId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"friends/list.json" parameters:@{@"user_id": userId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* friends = [[NSMutableArray alloc] initWithCapacity:[JSON[@"users"] count]];
+        
+        for (NSDictionary* userAsDictionary in JSON[@"users"]) {
+            
+            UserEntity* userEntity = [[UserEntity alloc] initWithDictionary:userAsDictionary];
+            [friends addObject:userEntity];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(friends, nil);
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

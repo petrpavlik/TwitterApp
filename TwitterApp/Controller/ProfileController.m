@@ -6,9 +6,12 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "FollowersController.h"
+#import "FollowingController.h"
 #import "ProfileController.h"
 #import "ProfileCell.h"
 #import "ProfilePushCell.h"
+#import "TimelineController.h"
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
 
@@ -125,6 +128,28 @@
 {
     if (indexPath.section==0) {
         return;
+    }
+    
+    if (indexPath.row==0) {
+        
+        TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
+        timelineController.screenName = self.user.screenName;
+        
+        [self.navigationController pushViewController:timelineController animated:YES];
+    }
+    else if (indexPath.row==1) {
+        
+        FollowersController* followersController = [[FollowersController alloc] initWithStyle:UITableViewStylePlain];
+        followersController.userId = self.user.userId;
+        
+        [self.navigationController pushViewController:followersController animated:YES];
+    }
+    else if (indexPath.row==2) {
+        
+        FollowingController* followingController = [[FollowingController alloc] initWithStyle:UITableViewStylePlain];
+        followingController.userId = self.user.userId;
+        
+        [self.navigationController pushViewController:followingController animated:YES];
     }
 }
 

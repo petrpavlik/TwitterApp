@@ -185,6 +185,10 @@
 		4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */; };
 		4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */; };
 		4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */; };
+		4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD31177CE01200CA0F8B /* FollowersController.m */; };
+		4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD31177CE01200CA0F8B /* FollowersController.m */; };
+		4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD35177CE47800CA0F8B /* FollowingController.m */; };
+		4BB3AD37177CE47800CA0F8B /* FollowingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD35177CE47800CA0F8B /* FollowingController.m */; };
 		4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C04175794F900311FF5 /* LoadMoreCell.m */; };
 		4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */; };
 		4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB5BE23175A15FE00BE88DD /* TimelineDocument.m */; };
@@ -351,6 +355,10 @@
 		4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Normal@2x.png"; path = "Image/Button-NavigationBar-Normal@2x.png"; sourceTree = "<group>"; };
 		4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled.png"; path = "Image/Button-NavigationBar-Disabled.png"; sourceTree = "<group>"; };
 		4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled@2x.png"; path = "Image/Button-NavigationBar-Disabled@2x.png"; sourceTree = "<group>"; };
+		4BB3AD30177CE01200CA0F8B /* FollowersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowersController.h; path = Controller/FollowersController.h; sourceTree = "<group>"; };
+		4BB3AD31177CE01200CA0F8B /* FollowersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FollowersController.m; path = Controller/FollowersController.m; sourceTree = "<group>"; };
+		4BB3AD34177CE47800CA0F8B /* FollowingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowingController.h; path = Controller/FollowingController.h; sourceTree = "<group>"; };
+		4BB3AD35177CE47800CA0F8B /* FollowingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FollowingController.m; path = Controller/FollowingController.m; sourceTree = "<group>"; };
 		4BB42C03175794F900311FF5 /* LoadMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadMoreCell.h; path = View/Cell/LoadMoreCell.h; sourceTree = "<group>"; };
 		4BB42C04175794F900311FF5 /* LoadMoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadMoreCell.m; path = View/Cell/LoadMoreCell.m; sourceTree = "<group>"; };
 		4BB42C061757A1CC00311FF5 /* GapTweetEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GapTweetEntity.h; path = Model/Entity/GapTweetEntity.h; sourceTree = "<group>"; };
@@ -809,6 +817,10 @@
 				4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */,
 				4B4E80A8177A341F005358A5 /* ProfileController.h */,
 				4B4E80A9177A341F005358A5 /* ProfileController.m */,
+				4BB3AD30177CE01200CA0F8B /* FollowersController.h */,
+				4BB3AD31177CE01200CA0F8B /* FollowersController.m */,
+				4BB3AD34177CE47800CA0F8B /* FollowingController.h */,
+				4BB3AD35177CE47800CA0F8B /* FollowingController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1162,6 +1174,7 @@
 				4B66299C177387FA00FA146A /* PPLabel.m in Sources */,
 				4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4B66299D177387FA00FA146A /* NSString+TwitterApp.m in Sources */,
+				4BB3AD37177CE47800CA0F8B /* FollowingController.m in Sources */,
 				4B66299E177387FA00FA146A /* LoadingCell.m in Sources */,
 				4B66299F177387FA00FA146A /* UIView+AutoLayout.m in Sources */,
 				4B6629A0177387FA00FA146A /* TweetController.m in Sources */,
@@ -1173,6 +1186,7 @@
 				4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */,
 				4B6629A6177387FA00FA146A /* GapTweetEntity.m in Sources */,
 				4B6629A7177387FA00FA146A /* NotificationView.m in Sources */,
+				4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */,
 				4B6629A8177387FA00FA146A /* BasementController.m in Sources */,
 				4B6629A9177387FA00FA146A /* NavigationController.m in Sources */,
 				4B6629AA177387FA00FA146A /* TimelineDocument.m in Sources */,
@@ -1213,6 +1227,7 @@
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
+				4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */,
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
 				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
 				4BAEB3D41752280E0027A0D1 /* TweetController.m in Sources */,
@@ -1224,6 +1239,7 @@
 				4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */,
 				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
+				4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */,
 				4BC63C1F17590B9F00F7E0C3 /* BasementController.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,

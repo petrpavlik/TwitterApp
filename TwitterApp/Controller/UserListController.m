@@ -7,6 +7,7 @@
 //
 
 #import "ErrorCell.h"
+#import "ProfileController.h"
 #import "TweetEntity.h"
 #import "UIImage+TwitterApp.h"
 #import "UserCell.h"
@@ -120,6 +121,12 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
+    UserEntity* user = self.users[indexPath.row];
+    
+    ProfileController* profileController = [[ProfileController alloc] initWithStyle:UITableViewStylePlain];
+    profileController.user = user;
+    
+    [self.navigationController pushViewController:profileController animated:YES];
 }
 
 #pragma mark -

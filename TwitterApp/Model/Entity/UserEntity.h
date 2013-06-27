@@ -43,5 +43,7 @@
 
 + (NSOperation*)requestUserWithId:(NSString*)userId completionBlock:(void (^)(UserEntity* user, NSError* error))block;
 + (NSOperation*)requestUserWithScreenName:(NSString*)screenName completionBlock:(void (^)(UserEntity* user, NSError* error))block;
++ (NSOperation*)requestFollowersOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* followers, NSError* error))block;
++ (NSOperation*)requestFriendsOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* friends, NSError* error))block;
 
 @end
