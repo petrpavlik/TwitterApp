@@ -114,6 +114,10 @@
 		4B6629EA177387FA00FA146A /* Btn-Tweet-Detail-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA84594176E4D0C007A531D /* Btn-Tweet-Detail-Reply@2x.png */; };
 		4B6629EB177387FA00FA146A /* Btn-Tweet-Detail-Retweet.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA84595176E4D0C007A531D /* Btn-Tweet-Detail-Retweet.png */; };
 		4B6629EC177387FA00FA146A /* Btn-Tweet-Detail-Retweet@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA84596176E4D0C007A531D /* Btn-Tweet-Detail-Retweet@2x.png */; };
+		4B6718AD177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6718AB177CAEB800151224 /* Icon-Disclosure-Indocator.png */; };
+		4B6718AE177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6718AB177CAEB800151224 /* Icon-Disclosure-Indocator.png */; };
+		4B6718AF177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */; };
+		4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -135,6 +139,8 @@
 		4B7428D41742DED500AEB85C /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D31742DED500AEB85C /* TweetCell.m */; };
 		4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
 		4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428DB1742E4E900AEB85C /* UserEntity.m */; };
+		4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75431A177C829A005AF691 /* ProfilePushCell.m */; };
+		4B75431C177C829A005AF691 /* ProfilePushCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B75431A177C829A005AF691 /* ProfilePushCell.m */; };
 		4B755D8917732E7A002A577D /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8817732E7A002A577D /* AdSupport.framework */; };
 		4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8A17732E8D002A577D /* SystemConfiguration.framework */; };
 		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
@@ -258,6 +264,8 @@
 		4B573FA5176B695200166461 /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailCell.m; path = View/Cell/TweetDetailCell.m; sourceTree = "<group>"; };
 		4B6629F1177387FA00FA146A /* TwitterApp-iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TwitterApp-iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B662A17177387FB00FA146A /* TwitterApp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TwitterApp copy-Info.plist"; path = "/Users/petr/Documents/development/xcode/TwitterApp/TwitterApp copy-Info.plist"; sourceTree = "<absolute>"; };
+		4B6718AB177CAEB800151224 /* Icon-Disclosure-Indocator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Disclosure-Indocator.png"; path = "Image/Icon-Disclosure-Indocator.png"; sourceTree = "<group>"; };
+		4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Disclosure-Indocator@2x.png"; path = "Image/Icon-Disclosure-Indocator@2x.png"; sourceTree = "<group>"; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -290,6 +298,8 @@
 		4B7428D81742DFF200AEB85C /* TweetEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetEntity.m; path = Model/Entity/TweetEntity.m; sourceTree = "<group>"; };
 		4B7428DA1742E4E900AEB85C /* UserEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserEntity.h; path = Model/Entity/UserEntity.h; sourceTree = "<group>"; };
 		4B7428DB1742E4E900AEB85C /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEntity.m; path = Model/Entity/UserEntity.m; sourceTree = "<group>"; };
+		4B754319177C829A005AF691 /* ProfilePushCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfilePushCell.h; path = View/Cell/ProfilePushCell.h; sourceTree = "<group>"; };
+		4B75431A177C829A005AF691 /* ProfilePushCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfilePushCell.m; path = View/Cell/ProfilePushCell.m; sourceTree = "<group>"; };
 		4B755D8517732E55002A577D /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLocalyticsAMP.a; path = Vendor/Localytics.bin/libLocalyticsAMP.a; sourceTree = SOURCE_ROOT; };
 		4B755D8617732E55002A577D /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsAmpSession.h; path = Vendor/Localytics.bin/LocalyticsAmpSession.h; sourceTree = SOURCE_ROOT; };
 		4B755D8717732E55002A577D /* LocalyticsSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics.bin/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
@@ -650,6 +660,8 @@
 				4B16B2C2177503E1000FEFDD /* ErrorCell.m */,
 				4B4E80A4177A2B6A005358A5 /* ProfileCell.h */,
 				4B4E80A5177A2B6A005358A5 /* ProfileCell.m */,
+				4B754319177C829A005AF691 /* ProfilePushCell.h */,
+				4B75431A177C829A005AF691 /* ProfilePushCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -713,6 +725,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4B6718AB177CAEB800151224 /* Icon-Disclosure-Indocator.png */,
+				4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */,
 				4BFDA46417762C7A007EFBC4 /* Btn-Add-Image.png */,
 				4BFDA46517762C7A007EFBC4 /* Btn-Add-Image@2x.png */,
 				4BFDA46617762C7A007EFBC4 /* Slice 1.png */,
@@ -946,8 +960,10 @@
 				4B6629CE177387FA00FA146A /* Icon-Retweet-Normal@2x.png in Resources */,
 				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
+				4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
 				4B6629D0177387FA00FA146A /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4B6629D1177387FA00FA146A /* Icon-Reply-Normal.png in Resources */,
+				4B6718AE177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */,
 				4B6629D2177387FA00FA146A /* Icon-Reply-Normal@2x.png in Resources */,
 				4B6629D3177387FA00FA146A /* Button-NavigationBar-Highlighted.png in Resources */,
 				4B6629D4177387FA00FA146A /* Button-NavigationBar-Highlighted@2x.png in Resources */,
@@ -1001,8 +1017,10 @@
 				4BAEB3DE17522B950027A0D1 /* Icon-Retweet-Normal@2x.png in Resources */,
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
+				4B6718AF177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
 				4BAEB3E41752417A0027A0D1 /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4BAEB3E51752417A0027A0D1 /* Icon-Reply-Normal.png in Resources */,
+				4B6718AD177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */,
 				4BAEB3E61752417A0027A0D1 /* Icon-Reply-Normal@2x.png in Resources */,
 				4BAEB3EF175266C70027A0D1 /* Button-NavigationBar-Highlighted.png in Resources */,
 				4BAEB3F0175266C70027A0D1 /* Button-NavigationBar-Highlighted@2x.png in Resources */,
@@ -1128,6 +1146,7 @@
 				4B66298F177387FA00FA146A /* AppDelegate.m in Sources */,
 				4B662990177387FA00FA146A /* AbstractSkin.m in Sources */,
 				4B662991177387FA00FA146A /* LightSkin.m in Sources */,
+				4B75431C177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B662992177387FA00FA146A /* UIImage+TwitterApp.m in Sources */,
 				4B662993177387FA00FA146A /* TweetCell.m in Sources */,
 				4B662994177387FA00FA146A /* TweetEntity.m in Sources */,
@@ -1178,6 +1197,7 @@
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
 				4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */,
+				4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,
 				4B7428D41742DED500AEB85C /* TweetCell.m in Sources */,
 				4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */,

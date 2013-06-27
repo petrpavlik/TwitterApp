@@ -17,5 +17,7 @@
 @property(nonatomic, strong) UILabel* usernameLabel;
 
 @property(nonatomic, strong) UILabel* descriptionLabel;
+@property(nonatomic, strong) UIButton* websiteButton;
+@property(nonatomic, strong) UIButton* locationButton;
 
 @end

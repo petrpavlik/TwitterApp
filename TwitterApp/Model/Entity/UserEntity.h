@@ -15,6 +15,7 @@
 @property(nonatomic, strong) NSDate* createdAt;
 @property(nonatomic, strong) NSNumber* defaultProfile;
 @property(nonatomic, strong) NSNumber* defaultProfileImage;
+@property(nonatomic, strong) NSDictionary* entities;
 @property(nonatomic, strong) NSNumber* favouritesCount;
 @property(nonatomic, strong) NSNumber* followRequestSent;
 @property(nonatomic, strong) NSNumber* followersCount;

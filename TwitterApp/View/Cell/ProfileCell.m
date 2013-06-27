@@ -24,8 +24,14 @@
 
 - (void)commonSetup {
     
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
+    
+    if ([self respondsToSelector:@selector(setTintColor:)]) {
+        self.tintColor = [skin linkColor];
+    }
     
     UIView *bgColorView = [[UIView alloc] init];
     [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
@@ -58,7 +64,6 @@
     _followButton.translatesAutoresizingMaskIntoConstraints = NO;
     _followButton.titleLabel.font = [skin fontOfSize:16];
     [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
-    _followButton.tintColor = [skin linkColor];
     [contentView addSubview:_followButton];
     
     _descriptionLabel = [UILabel new];
@@ -69,6 +74,17 @@
     _descriptionLabel.textAlignment = NSTextAlignmentCenter;
     _descriptionLabel.numberOfLines = 0;
     [contentView addSubview:_descriptionLabel];
+    
+    _websiteButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _websiteButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _websiteButton.titleLabel.font = [skin fontOfSize:16];
+    [contentView addSubview:_websiteButton];
+    
+    _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _locationButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _locationButton.titleLabel.font = [skin fontOfSize:16];
+    [_locationButton setTitle:@"fsfs" forState:UIControlStateNormal];
+    [contentView addSubview:_locationButton];
     
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -89,12 +105,28 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_descriptionLabel]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-[_descriptionLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-[_descriptionLabel][_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_locationButton
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:contentView
+                                                                 attribute:NSLayoutAttributeCenterX
+                                                                multiplier:1.0
+                                                                  constant:0]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
                                                                  attribute:NSLayoutAttributeLeading
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_usernameLabel
+                                                                    toItem:_avatarImageView
                                                                  attribute:NSLayoutAttributeLeading
                                                                 multiplier:1.0
                                                                   constant:0]];
