@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import "TweetCell.h"
 #import "TweetDetailController.h"
@@ -13,6 +14,7 @@
 
 @interface TweetDetailController ()
 
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSArray* olderRelatedTweets;
 @property(nonatomic, strong) NSArray* replies;
 @property(nonatomic, weak) NSOperation* runningOlderRelatedTweetRequest;
@@ -21,6 +23,20 @@
 @end
 
 @implementation TweetDetailController
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.backgroundColor = [UIColor redColor];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        //_notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
 
 - (void)dealloc {
 
@@ -115,6 +131,13 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    UIEdgeInsets insets =  self.tableView.contentInset;
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2 + insets.top);
+}
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -136,6 +159,11 @@
     
     [TweetEntity requestSearchRepliesWithTweetId:self.tweet.tweetId screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
         
+        if (error) {
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not load replies" style:NotificationViewStyleError];
+            return;
+        }
+        
         weakSelf.replies = tweets;
         
         CGFloat heightOfContent = 0;
@@ -150,6 +178,8 @@
         weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
         
         [weakSelf.tableView reloadData];
+        
+        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
     }];
 }
 
