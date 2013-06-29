@@ -167,4 +167,63 @@ static UserEntity* currentUser;
     return (NSOperation*)operation;
 }
 
+- (NSOperation*)requestFriendshipStatusWithUser:(NSString*)userId completionBlock:(void (^)(NSNumber* following, NSNumber* followedBy, NSError* error))block {
+    
+    NSParameterAssert(userId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"friendships/show.json" parameters:@{@"source_id": self.userId, @"target_id": userId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        block(JSON[@"relationship"][@"source"][@"following"], JSON[@"relationship"][@"source"][@"followed_by"], nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
+- (NSOperation*)requestFollowingWithCompletionBlock:(void (^)(NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"friendships/create.json" parameters:@{@"user_id": self.userId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        block(nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
+- (NSOperation*)requestUnfollowingWithCompletionBlock:(void (^)(NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"friendships/destroy.json" parameters:@{@"user_id": self.userId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        block(nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

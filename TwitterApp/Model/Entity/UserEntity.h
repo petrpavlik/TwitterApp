@@ -45,5 +45,9 @@
 + (NSOperation*)requestUserWithScreenName:(NSString*)screenName completionBlock:(void (^)(UserEntity* user, NSError* error))block;
 + (NSOperation*)requestFollowersOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* followers, NSError* error))block;
 + (NSOperation*)requestFriendsOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* friends, NSError* error))block;
+- (NSOperation*)requestFriendshipStatusWithUser:(NSString*)userId completionBlock:(void (^)(NSNumber* following, NSNumber* followedBy, NSError* error))block;
+- (NSOperation*)requestFollowingWithCompletionBlock:(void (^)(NSError* error))block;
+- (NSOperation*)requestUnfollowingWithCompletionBlock:(void (^)(NSError* error))block;
+
 
 @end

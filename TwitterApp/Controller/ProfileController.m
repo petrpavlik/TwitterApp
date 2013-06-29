@@ -8,6 +8,7 @@
 
 #import "FollowersController.h"
 #import "FollowingController.h"
+#import "NotificationView.h"
 #import "ProfileController.h"
 #import "ProfileCell.h"
 #import "ProfilePushCell.h"
@@ -15,11 +16,27 @@
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
 
-@interface ProfileController ()
+@interface ProfileController () <ProfileCellDelegate>
+
+@property(nonatomic, strong) NSNumber* following;
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 
 @end
 
 @implementation ProfileController
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
 
 - (void)viewDidLoad
 {
@@ -33,6 +50,8 @@
     
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    [self requestData];
 }
 
 #pragma mark - Table view data source
@@ -60,6 +79,7 @@
         
         static NSString *CellIdentifier = @"ProfileCell";
         ProfileCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.delegate = self;
         
         // Configure the cell...
         UserEntity* user = self.user;
@@ -67,6 +87,19 @@
         cell.nameLabel.text = user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
         cell.descriptionLabel.text = user.userDescription;
+        
+        if (self.following) {
+            
+            cell.followButton.hidden = NO;
+            
+            if (self.following.boolValue==YES) {
+                [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+                cell.followButton.selected = YES;
+            }
+            else {
+                [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+            }
+        }
         
         NSArray* urls = user.entities[@"url"][@"urls"];
         if (urls.count) {
@@ -122,6 +155,11 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -150,6 +188,62 @@
         followingController.userId = self.user.userId;
         
         [self.navigationController pushViewController:followingController animated:YES];
+    }
+}
+
+#pragma mark -
+
+- (void)requestData {
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [[UserEntity currentUser] requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
+        
+        if (error) {
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not detect following status" style:NotificationViewStyleError];
+            return;
+        }
+        
+        weakSelf.following = following;
+        [weakSelf.tableView reloadData];
+    }];
+}
+
+#pragma mark -
+
+- (void)profileCellDidRequestChengeOfFriendship:(ProfileCell *)cell {
+    
+    if (!self.following) {
+        return;
+    }
+    
+    __weak typeof(self)weakSelf = self;
+    
+    if (self.following.boolValue) {
+        
+        [self.user requestUnfollowingWithCompletionBlock:^(NSError *error) {
+            
+            if (error) {
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not unfollow @%@", weakSelf.user.screenName] style:NotificationViewStyleError];
+                return;
+            }
+            
+            weakSelf.following = [NSNumber numberWithBool:NO];
+            [weakSelf.tableView reloadData];
+        }];
+    }
+    else {
+        
+        [self.user requestFollowingWithCompletionBlock:^(NSError *error) {
+            
+            if (error) {
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not start following @%@", weakSelf.user.screenName] style:NotificationViewStyleError];
+                return;
+            }
+            
+            weakSelf.following = [NSNumber numberWithBool:YES];
+            [weakSelf.tableView reloadData];
+        }];
     }
 }
 

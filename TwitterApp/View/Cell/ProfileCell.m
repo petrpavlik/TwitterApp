@@ -64,6 +64,7 @@
     _followButton.translatesAutoresizingMaskIntoConstraints = NO;
     _followButton.titleLabel.font = [skin fontOfSize:16];
     [_followButton setTitle:@"Follow" forState:UIControlStateNormal];
+    [_followButton addTarget:self action:@selector(friendshipButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_followButton];
     
     _descriptionLabel = [UILabel new];
@@ -150,12 +151,20 @@
     
     [contentView addConstraints:superviewConstraints];
     
+    [self prepareForReuse];
+    
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     
     self.avatarImageView.image = nil;
+    self.followButton.hidden = YES;
+    self.followButton.selected = NO;
+}
+
+- (void)friendshipButtonSelected {
+    [self.delegate profileCellDidRequestChengeOfFriendship:self];
 }
 
 @end
