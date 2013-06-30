@@ -90,10 +90,16 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
 - (NSMutableURLRequest *)signedMultipartFormRequestWithMethod:(NSString *)method
                                                    path:(NSString *)path
                                              parameters:(NSDictionary *)parameters
-                              constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))block
+                                            multipartData:(NSArray*)multipartData
 {
     
-    NSMutableURLRequest* afRequest = [self multipartFormRequestWithMethod:method path:path parameters:parameters constructingBodyWithBlock:block];
+    NSMutableURLRequest* afRequest = [self multipartFormRequestWithMethod:method path:path parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        
+        for (NSDictionary* data in multipartData) {
+            
+            [formData appendPartWithFileData:data[@"data"] name:data[@"name"] fileName:data[@"filename"] mimeType:data[@"mime"]];
+        }
+    }];
     
     SLRequestMethod requestMethod = SLRequestMethodGET;
     
@@ -119,12 +125,19 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:requestMethod URL:afRequest.URL parameters:parameters];
     slRequest.account = self.account;
     
+    for (NSDictionary* data in multipartData) {
+        
+        [slRequest addMultipartData:data[@"data"] withName:data[@"name"] type:data[@"mime"] filename:data[@"filename"]];
+    }
+    
     NSURLRequest* signedRequest = slRequest.preparedURLRequest;
+    NSMutableDictionary* headerFields = [signedRequest.allHTTPHeaderFields mutableCopy];
+    headerFields[@"User-Agent"] = afRequest.allHTTPHeaderFields[@"User-Agent"];
     
-    [afRequest setValue:signedRequest.allHTTPHeaderFields[@"Authorization"] forHTTPHeaderField:@"Authorization"];
-    afRequest.HTTPBody = signedRequest.HTTPBody;
+    NSMutableURLRequest* mutableSignedRequest = [signedRequest mutableCopy];
+    mutableSignedRequest.allHTTPHeaderFields = headerFields;
     
-    return afRequest;
+    return mutableSignedRequest;
 }
 
 

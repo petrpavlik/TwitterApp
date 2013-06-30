@@ -141,13 +141,15 @@
     
     if (media.count) {
     
-        request = [apiClient signedMultipartFormRequestWithMethod:@"POST" path:@"statuses/update_with_media.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        /*request = [apiClient signedMultipartFormRequestWithMethod:@"POST" path:@"statuses/update_with_media.json" parameters:params constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
             
             for (UIImage* image in media) {
                 
                 [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 0.8) name:@"media[]" fileName:@"image.jpeg" mimeType:@"image/jpeg"];
             }
-        }];
+        }];*/
+        
+        request = [apiClient signedMultipartFormRequestWithMethod:@"POST" path:@"statuses/update_with_media.json" parameters:params multipartData:@[@{@"data": UIImageJPEGRepresentation(media[0], 0.8), @"name": @"media[]", @"filename": @"image.jpeg", @"mime": @"image/jpeg"}]];
     }
     else {
         
