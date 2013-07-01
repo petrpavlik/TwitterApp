@@ -48,8 +48,9 @@
     NSAssert(!(self.searchQuery.length && self.screenName.length), @"cannot set both searchQuery and screenName");
     
     self.title = @"Timeline";
-    //self.restorationIdentifier = @"Timeline";
-    self.tableView.restorationIdentifier = @"TweetsTableView";
+    self.tabBarItem.title = self.title;
+    self.restorationIdentifier = @"Timeline";
+    //self.restorationClass = [self class];
     
     self.navigationItem.titleView = [UIView new];
     
@@ -704,6 +705,8 @@
         [UserEntity registerCurrentUser:user];
         [weakSelf setupTitleViewWithUser:user];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
+        
     }];
 }
 
@@ -771,6 +774,15 @@
     
     return nil;
 }
+
+/*+ (UIViewController *) viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    
+    TimelineController* timelineController = [[TimelineController alloc] init];
+    return timelineController;
+}*/
+
+
+#pragma mark -
 
 - (void)didDeleteTweet:(TweetEntity *)tweet {
     

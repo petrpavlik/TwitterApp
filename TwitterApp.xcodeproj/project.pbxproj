@@ -21,6 +21,8 @@
 		4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
 		4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
+		4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */; };
+		4B5CC7BD1781DCBE00EFA5B1 /* MyProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */; };
 		4B66298E177387FA00FA146A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428961742D9CE00AEB85C /* main.m */; };
 		4B66298F177387FA00FA146A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B74289A1742D9CE00AEB85C /* AppDelegate.m */; };
 		4B662990177387FA00FA146A /* AbstractSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428C81742DB4800AEB85C /* AbstractSkin.m */; };
@@ -266,6 +268,8 @@
 		4B4E80A9177A341F005358A5 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileController.m; path = Controller/ProfileController.m; sourceTree = "<group>"; };
 		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
 		4B573FA5176B695200166461 /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailCell.m; path = View/Cell/TweetDetailCell.m; sourceTree = "<group>"; };
+		4B5CC7BA1781DCBE00EFA5B1 /* MyProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyProfileController.h; path = Controller/MyProfileController.h; sourceTree = "<group>"; };
+		4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyProfileController.m; path = Controller/MyProfileController.m; sourceTree = "<group>"; };
 		4B6629F1177387FA00FA146A /* TwitterApp-iPad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TwitterApp-iPad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B662A17177387FB00FA146A /* TwitterApp copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "TwitterApp copy-Info.plist"; path = "/Users/petr/Documents/development/xcode/TwitterApp/TwitterApp copy-Info.plist"; sourceTree = "<absolute>"; };
 		4B6718AB177CAEB800151224 /* Icon-Disclosure-Indocator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Disclosure-Indocator.png"; path = "Image/Icon-Disclosure-Indocator.png"; sourceTree = "<group>"; };
@@ -821,6 +825,8 @@
 				4BB3AD31177CE01200CA0F8B /* FollowersController.m */,
 				4BB3AD34177CE47800CA0F8B /* FollowingController.h */,
 				4BB3AD35177CE47800CA0F8B /* FollowingController.m */,
+				4B5CC7BA1781DCBE00EFA5B1 /* MyProfileController.h */,
+				4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1166,6 +1172,7 @@
 				4B662996177387FA00FA146A /* BaseEntity.m in Sources */,
 				4B662997177387FA00FA146A /* AFTwitterClient.m in Sources */,
 				4B662998177387FA00FA146A /* AFTwitterJSONRequestOperation.m in Sources */,
+				4B5CC7BD1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
 				4BFDA44E1775ABAC007EFBC4 /* RetweetersController.m in Sources */,
 				4B662999177387FA00FA146A /* TimelineController.m in Sources */,
 				4B66299A177387FA00FA146A /* NetImageView.m in Sources */,
@@ -1219,6 +1226,7 @@
 				4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */,
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
+				4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
 				4BFDA44C1775A61B007EFBC4 /* RetweetersController.m in Sources */,
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
 				4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */,

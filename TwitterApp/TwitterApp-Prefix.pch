@@ -18,3 +18,4 @@
 #endif
 
 #define kTweetDeletedNotification @"kTweetDeletedNotification"
+#define kAuthenticatedUserDidLoadNotification @"AuthenticatedUserDidLoadNotification"
