@@ -24,6 +24,7 @@
 
 @property(nonatomic, strong) UIScrollView* dummyScrollView;
 @property(nonatomic, strong) UIView* quickAccessView;
+@property(nonatomic, strong) UIView* panDetectView;
 
 @end
 
@@ -81,16 +82,12 @@
     _dummyScrollView = [UIScrollView new];
     _dummyScrollView.pagingEnabled = YES;
     _dummyScrollView.delegate = self;
+    _dummyScrollView.directionalLockEnabled = YES;
     [self.contentView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
     
     _slidingContentView = [UIView new];
     _slidingContentView.frame = CGRectMake(0, 0, 320, 320); //dummy values to prevent crash on iOS 7 beta 2
     [self.contentView addSubview:_slidingContentView];
-    
-    /*UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureMoveAround:)];
-    [panGesture setMaximumNumberOfTouches:1];
-    [panGesture setDelegate:self];
-    [_slidingContentView addGestureRecognizer:panGesture];*/
     
     UIView* contentView = _slidingContentView;
     
@@ -160,6 +157,12 @@
     
     _quickAccessView = [self createQuickAccessView];
     [self.contentView addSubview:_quickAccessView];
+    
+    _panDetectView = [UIView new];
+    _panDetectView.backgroundColor = [UIColor clearColor];
+    //[_panDetectView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
+    //_panDetectView.userInteractionEnabled = NO;
+    //[self.contentView addSubview:_panDetectView];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -242,8 +245,9 @@
     quickAccessViewFrame.origin.x = slidingContentViewFrame.origin.x + slidingContentViewFrame.size.width;
     self.quickAccessView.frame = quickAccessViewFrame;
     
+    self.panDetectView.frame = self.contentView.bounds;
     _dummyScrollView.frame = self.contentView.bounds;
-    _dummyScrollView.contentSize = CGSizeMake(_dummyScrollView.frame.size.width*2, _dummyScrollView.frame.size.height);
+    _dummyScrollView.contentSize = CGSizeMake(_dummyScrollView.frame.size.width*2, _dummyScrollView.frame.size.height-1);
     
     //UIScrollView* scrollView = (UIScrollView*)_slidingContentView.superview;
     //scrollView.contentSize = CGSizeMake(scrollView.frame.size.width*2, scrollView.frame.size.height);
@@ -447,7 +451,7 @@
 
 #pragma mark -
 
--(void)panGestureMoveAround:(UIPanGestureRecognizer *)gesture;
+/*-(void)panGestureMoveAround:(UIPanGestureRecognizer *)gesture;
 {
     UIView *contentView = [gesture view];
     //[self adjustAnchorPointForGestureRecognizer:gesture];
@@ -501,15 +505,15 @@
             contentView.center = CGPointMake(self.contentView.center.x, contentView.center.y);
         }];
     }
-}
+}*/
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     
-    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+    /*if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
         
         CGPoint translation = [(UIPanGestureRecognizer*)gestureRecognizer translationInView:[[gestureRecognizer view] superview] ];
         return (fabs(translation.x) / fabs(translation.y) > 5) ? YES : NO;
-    }
+    }*/
 
     return [super gestureRecognizerShouldBegin:gestureRecognizer];
 }
