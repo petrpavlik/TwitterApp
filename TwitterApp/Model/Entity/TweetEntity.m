@@ -117,6 +117,28 @@
     return (NSOperation*)operation;
 }
 
+- (NSOperation*)requestFavoriteWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block {
+    
+    NSParameterAssert(self.tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"favorites/create.json" parameters:@{@"id": self.tweetId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:JSON];
+        block(tweet, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 + (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId media:(NSArray*)media completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
@@ -204,7 +226,6 @@
     
     [apiClient enqueueHTTPRequestOperation:operation];
     return (NSOperation*)operation;
-
 }
 
 + (NSOperation*)requestSearchWithQuery:(NSString*)query maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {

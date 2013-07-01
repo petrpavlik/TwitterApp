@@ -529,10 +529,9 @@
 
 #pragma mark -
 
-- (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
+- (void)tweetCellDidRequestRetweet:(TweetCell *)cell {
     
-    NSLog(@"about to retweet");
-    //return; //!!!!!
+    __weak typeof(self) weakSelf = self;
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = self.tweets[indexPath.row];
@@ -540,9 +539,7 @@
     [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
        
         if (error) {
-            
-            [[[UIAlertView alloc] initWithTitle:Nil message:error.description delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
             return;
         }
         
@@ -562,15 +559,44 @@
         [self.tableView beginUpdates];
         [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
         [self.tableView endUpdates];
+        
+        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
     }];
 }
 
-- (void)tweetCellDidRequestLeftAction:(TweetCell *)cell {
+- (void)tweetCellDidRequestFavorite:(TweetCell *)cell {
+    
+    __weak typeof(self) weakSelf = self;
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = self.tweets[indexPath.row];
     
-    [TweetController presentAsReplyToTweet:tweet inViewController:self];
+    [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        
+        if (error) {
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+            return;
+        }
+        
+        //NSLog(@"%@", updatedTweet);
+        if ([self.tweets isKindOfClass:[NSMutableArray class]]) {
+            
+            NSMutableArray *mutableTweets = (NSMutableArray*)self.tweets;
+            mutableTweets[indexPath.row] = updatedTweet;
+        }
+        else {
+            
+            NSMutableArray *mutableTweets = [self.tweets mutableCopy];
+            mutableTweets[indexPath.row] = updatedTweet;
+            self.tweets = mutableTweets;
+        }
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Favorited '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+    }];
 }
 
 #pragma mark -

@@ -19,6 +19,7 @@
 #import "RetweetersController.h"
 #import "TimelineController.h"
 #import "TweetCell.h"
+#import "TweetController.h"
 #import "TweetDetailCell.h"
 #import "TweetEntity.h"
 #import "UIActionSheet+TwitterApp.h"
@@ -356,11 +357,27 @@
 }
 
 
-- (void)tweetCellDidRequestRightAction:(TweetCell *)cell {
+- (void)tweetCellDidRequestReply:(TweetCell *)cell {
     
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    
+    if (!indexPath) {
+        return;
+    }
+    
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    [TweetController presentAsReplyToTweet:tweet inViewController:self];
 }
 
-- (void)tweetCellDidRequestLeftAction:(TweetCell *)cell {
+- (void)tweetCellDidRequestRetweet:(TweetCell *)cell {
+    //handled in a subclass
+}
+
+- (void)tweetCellDidRequestFavorite:(TweetCell *)cell {
+    //handled in a subclass
+}
+
+- (void)tweetCellDidRequestOtherAction:(TweetCell *)cell {
     
 }
 

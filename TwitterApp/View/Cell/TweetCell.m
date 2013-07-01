@@ -451,71 +451,25 @@
 
 #pragma mark -
 
-/*-(void)panGestureMoveAround:(UIPanGestureRecognizer *)gesture;
-{
-    UIView *contentView = [gesture view];
-    //[self adjustAnchorPointForGestureRecognizer:gesture];
+- (void)replySelected {
     
-    if ([gesture state] == UIGestureRecognizerStateBegan || [gesture state] == UIGestureRecognizerStateChanged) {
-        
-        [self setSelected:NO animated:YES];
-        
-        //CGPoint translation = [gesture translationInView:[piece superview]];
-        CGPoint velocity = [gesture velocityInView:[contentView superview]];
-        
-        CGFloat frictionCoefficient = abs(contentView.frame.origin.x)*0.05;
-        if (frictionCoefficient < 1) {
-            frictionCoefficient = 1;
-        }
-        
-        contentView.center = CGPointMake(contentView.center.x + velocity.x/(60*frictionCoefficient), contentView.center.y);
-        
-        if (contentView.frame.origin.x < -50) {
-            
-            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
-            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Highlighted"];
-        }
-        else if (contentView.frame.origin.x > 50) {
-            
-            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Highlighted"];
-            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
-        }
-        else {
-            
-            _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
-            _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
-        }
-    }
-    else if ([gesture state] == UIGestureRecognizerStateEnded || [gesture state] == UIGestureRecognizerStateCancelled) {
-        
-        if (contentView.frame.origin.x < -50) {
-            
-            NSLog(@"right action triggered");
-            [self.delegate tweetCellDidRequestRightAction:self];
-        }
-        else if (contentView.frame.origin.x > 50) {
-            
-            NSLog(@"left action triggered");
-            [self.delegate tweetCellDidRequestLeftAction:self];
-        }
-        
-        CGFloat animationSpeed = abs(contentView.frame.origin.x)*0.002;
-        
-        [UIView animateWithDuration:animationSpeed animations:^{
-            contentView.center = CGPointMake(self.contentView.center.x, contentView.center.y);
-        }];
-    }
-}*/
+    [self.delegate tweetCellDidRequestReply:self];
+    [self cancelAccessViewAnimated];
+}
 
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    
-    /*if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
-        
-        CGPoint translation = [(UIPanGestureRecognizer*)gestureRecognizer translationInView:[[gestureRecognizer view] superview] ];
-        return (fabs(translation.x) / fabs(translation.y) > 5) ? YES : NO;
-    }*/
+- (void)retweetSelected {
+    [self.delegate tweetCellDidRequestRetweet:self];
+    [self cancelAccessViewAnimated];
+}
 
-    return [super gestureRecognizerShouldBegin:gestureRecognizer];
+- (void)favoriteSelected {
+    [self.delegate tweetCellDidRequestFavorite:self];
+    [self cancelAccessViewAnimated];
+}
+
+- (void)otherActionSelected {
+    [self.delegate tweetCellDidRequestOtherAction:self];
+    [self cancelAccessViewAnimated];
 }
 
 #pragma mark -
@@ -569,33 +523,35 @@
     
     UIView* quickAccessView = [UIView new];
     
-    
     quickAccessView.tintColor = skin.linkColor;
     
-    UIButton* replyButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [replyButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] forState:UIControlStateNormal];
-    [replyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    replyButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [quickAccessView addSubview:replyButton];
+    UIImageView* replyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"]];
+    replyImage.translatesAutoresizingMaskIntoConstraints = NO;
+    replyImage.contentMode = UIViewContentModeCenter;
+    [replyImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replySelected)]];
+    replyImage.userInteractionEnabled = YES;
+    [quickAccessView addSubview:replyImage];
     
-    UIButton* retweetButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [retweetButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] forState:UIControlStateNormal];
-    [retweetButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    retweetButton.translatesAutoresizingMaskIntoConstraints = NO;
-    retweetButton.selected = YES;
-    [quickAccessView addSubview:retweetButton];
+    UIImageView* retweetImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"]];
+    retweetImage.translatesAutoresizingMaskIntoConstraints = NO;
+    retweetImage.contentMode = UIViewContentModeCenter;
+    [retweetImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retweetSelected)]];
+    retweetImage.userInteractionEnabled = YES;
+    [quickAccessView addSubview:retweetImage];
     
-    UIButton* favoriteButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [favoriteButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] forState:UIControlStateNormal];
-    [favoriteButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    favoriteButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [quickAccessView addSubview:favoriteButton];
+    UIImageView* favoriteImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"]];
+    favoriteImage.translatesAutoresizingMaskIntoConstraints = NO;
+    favoriteImage.contentMode = UIViewContentModeCenter;
+    [favoriteImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favoriteSelected)]];
+    favoriteImage.userInteractionEnabled = YES;
+    [quickAccessView addSubview:favoriteImage];
     
-    UIButton* otherButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [otherButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] forState:UIControlStateNormal];
-    [otherButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    otherButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [quickAccessView addSubview:otherButton];
+    UIImageView* otherImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"]];
+    otherImage.translatesAutoresizingMaskIntoConstraints = NO;
+    otherImage.contentMode = UIViewContentModeCenter;
+    [otherImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(otherActionSelected)]];
+    otherImage.userInteractionEnabled = YES;
+    [quickAccessView addSubview:otherImage];
     
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -603,9 +559,9 @@
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyImage][retweetImage(replyImage)][favoriteImage(replyImage)][otherImage(replyImage)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyImage, retweetImage, favoriteImage, otherImage)]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
                                                                  attribute:NSLayoutAttributeLeading
@@ -635,6 +591,29 @@
     
     return quickAccessView;
     
+}
+
+#pragma mark -
+
+- (void)cancelAccessViewAnimated {
+    
+    CGRect slidingContentViewFrame = self.slidingContentView.frame;
+    CGRect quickAccessViewFrame = self.quickAccessView.frame;
+    
+    slidingContentViewFrame.origin.x = 0;
+    quickAccessViewFrame.origin.x = slidingContentViewFrame.size.width;
+    
+    self.dummyScrollView.panGestureRecognizer.enabled = NO;
+    
+    [UIView animateWithDuration:self.contentView.frame.size.width*0.001 animations:^{
+        
+        self.slidingContentView.frame = slidingContentViewFrame;
+        self.quickAccessView.frame = quickAccessViewFrame;
+        
+    } completion:^(BOOL finished) {
+        self.dummyScrollView.contentOffset = CGPointMake(0, self.dummyScrollView.contentOffset.y);
+        self.dummyScrollView.panGestureRecognizer.enabled = YES;
+    }];
 }
 
 @end

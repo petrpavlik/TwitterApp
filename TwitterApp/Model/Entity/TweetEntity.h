@@ -37,6 +37,7 @@
 + (NSOperation*)requestUserTimelineWithScreenName:(NSString*)screenName maxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
 - (NSOperation*)requestRetweetWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block;
+- (NSOperation*)requestFavoriteWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block;
 
 + (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId media:(NSArray*)media completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
 
