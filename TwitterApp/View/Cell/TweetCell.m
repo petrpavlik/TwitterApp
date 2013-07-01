@@ -11,7 +11,7 @@
 #import "TweetCell.h"
 #import "UIImage+TwitterApp.h"
 
-@interface TweetCell () <PPLabelDelegate>
+@interface TweetCell () <PPLabelDelegate, UIScrollViewDelegate>
 
 @property(nonatomic, strong) UIGestureRecognizer* cellLongPressGestureRecognizer;
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
@@ -21,6 +21,9 @@
 @property(nonatomic, strong) UIImageView* rightActionImageView;
 @property(nonatomic, strong) UIImageView* leftActionImageView;
 @property(nonatomic, strong) NSTimer* linkLongPressTimer;
+
+@property(nonatomic, strong) UIScrollView* dummyScrollView;
+@property(nonatomic, strong) UIView* quickAccessView;
 
 @end
 
@@ -75,14 +78,19 @@
     [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
     [self setSelectedBackgroundView:bgColorView];
     
-    _slidingContentView = [[UIView alloc] init];
+    _dummyScrollView = [UIScrollView new];
+    _dummyScrollView.pagingEnabled = YES;
+    _dummyScrollView.delegate = self;
+    [self.contentView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
+    
+    _slidingContentView = [UIView new];
     _slidingContentView.frame = CGRectMake(0, 0, 320, 320); //dummy values to prevent crash on iOS 7 beta 2
     [self.contentView addSubview:_slidingContentView];
     
-    UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureMoveAround:)];
+    /*UIPanGestureRecognizer* panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panGestureMoveAround:)];
     [panGesture setMaximumNumberOfTouches:1];
     [panGesture setDelegate:self];
-    [_slidingContentView addGestureRecognizer:panGesture];
+    [_slidingContentView addGestureRecognizer:panGesture];*/
     
     UIView* contentView = _slidingContentView;
     
@@ -144,24 +152,14 @@
     _mediaImageView.clipsToBounds = YES;
     [contentView addSubview:_mediaImageView];
     
-    _rightActionImageView = [[UIImageView alloc] init];
-    _rightActionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _rightActionImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _rightActionImageView.image = [UIImage imageNamed:@"Icon-Retweet-Normal"];
-    [contentView addSubview:_rightActionImageView];
-    
-    _leftActionImageView = [[UIImageView alloc] init];
-    _leftActionImageView.translatesAutoresizingMaskIntoConstraints = NO;
-    _leftActionImageView.contentMode = UIViewContentModeScaleAspectFit;
-    _leftActionImageView.image = [UIImage imageNamed:@"Icon-Reply-Normal"];
-    [contentView addSubview:_leftActionImageView];
-    
     //UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
     //separatorView.image = [separatorView.image imageWithTint:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] alpha:1.0];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     
+    _quickAccessView = [self createQuickAccessView];
+    [self.contentView addSubview:_quickAccessView];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -179,27 +177,7 @@
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel(240)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
-    
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetAgeLabel]-20-[_rightActionImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_rightActionImageView, _tweetAgeLabel)]];
-    
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_leftActionImageView]-20-[_avatarImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_leftActionImageView, _avatarImageView)]];
 
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_rightActionImageView
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_leftActionImageView
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeCenterY
-                                                                multiplier:1.0
-                                                                  constant:0]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
                                                                  attribute:NSLayoutAttributeLeading
@@ -248,13 +226,27 @@
     [self.urlsDictonary removeAllObjects];
     [self.hashtagsDictonary removeAllObjects];
     [self.mentionsDictonary removeAllObjects];
+    
+    self.dummyScrollView.contentOffset = CGPointMake(0, 0);
 
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _slidingContentView.frame = self.contentView.bounds;
+    CGRect slidingContentViewFrame = self.contentView.bounds;
+    slidingContentViewFrame.origin.x = MIN(-self.dummyScrollView.contentOffset.x, 0);
+    _slidingContentView.frame = slidingContentViewFrame;
+    
+    CGRect quickAccessViewFrame = slidingContentViewFrame;
+    quickAccessViewFrame.origin.x = slidingContentViewFrame.origin.x + slidingContentViewFrame.size.width;
+    self.quickAccessView.frame = quickAccessViewFrame;
+    
+    _dummyScrollView.frame = self.contentView.bounds;
+    _dummyScrollView.contentSize = CGSizeMake(_dummyScrollView.frame.size.width*2, _dummyScrollView.frame.size.height);
+    
+    //UIScrollView* scrollView = (UIScrollView*)_slidingContentView.superview;
+    //scrollView.contentSize = CGSizeMake(scrollView.frame.size.width*2, scrollView.frame.size.height);
 }
 
 #pragma mark -
@@ -545,6 +537,100 @@
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.delegate tweetCellDidLongPress:self];
     }
+}
+
+#pragma mark - Scroll View Delegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    if (scrollView.contentOffset.x!=0) {
+        [self setSelected:NO animated:YES];
+    }
+    
+    CGRect slidingContentViewFrame = self.slidingContentView.frame;
+    slidingContentViewFrame.origin.x = MIN(-scrollView.contentOffset.x, 0);
+    self.slidingContentView.frame = slidingContentViewFrame;
+    
+    CGRect quickAccessViewFrame = self.quickAccessView.frame;
+    quickAccessViewFrame.origin.x = slidingContentViewFrame.origin.x + slidingContentViewFrame.size.width;
+    self.quickAccessView.frame = quickAccessViewFrame;
+}
+
+#pragma mark -
+
+- (UIView*)createQuickAccessView {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    UIView* quickAccessView = [UIView new];
+    
+    
+    quickAccessView.tintColor = skin.linkColor;
+    
+    UIButton* replyButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [replyButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] forState:UIControlStateNormal];
+    [replyButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    replyButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [quickAccessView addSubview:replyButton];
+    
+    UIButton* retweetButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [retweetButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] forState:UIControlStateNormal];
+    [retweetButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    retweetButton.translatesAutoresizingMaskIntoConstraints = NO;
+    retweetButton.selected = YES;
+    [quickAccessView addSubview:retweetButton];
+    
+    UIButton* favoriteButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [favoriteButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] forState:UIControlStateNormal];
+    [favoriteButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    favoriteButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [quickAccessView addSubview:favoriteButton];
+    
+    UIButton* otherButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [otherButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] forState:UIControlStateNormal];
+    [otherButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    otherButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [quickAccessView addSubview:otherButton];
+    
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [quickAccessView addSubview:separatorView];
+    
+    NSMutableArray* superviewConstraints = [NSMutableArray new];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:quickAccessView
+                                                                 attribute:NSLayoutAttributeLeading
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:quickAccessView
+                                                                 attribute:NSLayoutAttributeTrailing
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:quickAccessView
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:0]];
+    
+    [quickAccessView addConstraints:superviewConstraints];
+    
+    return quickAccessView;
+    
 }
 
 @end
