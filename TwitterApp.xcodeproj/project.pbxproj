@@ -159,7 +159,11 @@
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
 		4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
+		4B93D80B17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
+		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
+		4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
+		4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
 		4BA84597176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */; };
 		4BA84598176E4D0C007A531D /* Btn-Tweet-Detail-Favorite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA84590176E4D0C007A531D /* Btn-Tweet-Detail-Favorite@2x.png */; };
 		4BA84599176E4D0C007A531D /* Btn-Tweet-Detail-Other.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA84591176E4D0C007A531D /* Btn-Tweet-Detail-Other.png */; };
@@ -329,8 +333,12 @@
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4B9348A317457A3F00AAE017 /* AFTwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterClient.h; path = Model/API/AFTwitterClient.h; sourceTree = "<group>"; };
 		4B9348A417457A3F00AAE017 /* AFTwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterClient.m; path = Model/API/AFTwitterClient.m; sourceTree = "<group>"; };
+		4B93D80917823069005BE43C /* MentionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsController.h; path = Controller/MentionsController.h; sourceTree = "<group>"; };
+		4B93D80A17823069005BE43C /* MentionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsController.m; path = Controller/MentionsController.m; sourceTree = "<group>"; };
 		4B93FE381743E5CA0053FCD7 /* BaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseEntity.h; path = Model/Entity/BaseEntity.h; sourceTree = "<group>"; };
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
+		4BA3CAF61782EB470029586E /* TweetsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetsDataSource.h; path = Model/DataSource/TweetsDataSource.h; sourceTree = "<group>"; };
+		4BA3CAF71782EB470029586E /* TweetsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetsDataSource.m; path = Model/DataSource/TweetsDataSource.m; sourceTree = "<group>"; };
 		4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Tweet-Detail-Favorite.png"; path = "Image/Btn-Tweet-Detail-Favorite.png"; sourceTree = "<group>"; };
 		4BA84590176E4D0C007A531D /* Btn-Tweet-Detail-Favorite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Tweet-Detail-Favorite@2x.png"; path = "Image/Btn-Tweet-Detail-Favorite@2x.png"; sourceTree = "<group>"; };
 		4BA84591176E4D0C007A531D /* Btn-Tweet-Detail-Other.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Tweet-Detail-Other.png"; path = "Image/Btn-Tweet-Detail-Other.png"; sourceTree = "<group>"; };
@@ -681,6 +689,7 @@
 		4B7428D51742DFB400AEB85C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4BA3CAF51782E7610029586E /* DataSource */,
 				4BB5BE1C175A140200BE88DD /* Persistence */,
 				4B2A884B174576DF00CCE953 /* API */,
 				4B7428D61742DFBB00AEB85C /* Entity */,
@@ -732,6 +741,15 @@
 				4B755D9517733833002A577D /* HockeySDKResources.bundle */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		4BA3CAF51782E7610029586E /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				4BA3CAF61782EB470029586E /* TweetsDataSource.h */,
+				4BA3CAF71782EB470029586E /* TweetsDataSource.m */,
+			);
+			name = DataSource;
 			sourceTree = "<group>";
 		};
 		4BAEB3D617522B800027A0D1 /* Image */ = {
@@ -827,6 +845,8 @@
 				4BB3AD35177CE47800CA0F8B /* FollowingController.m */,
 				4B5CC7BA1781DCBE00EFA5B1 /* MyProfileController.h */,
 				4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */,
+				4B93D80917823069005BE43C /* MentionsController.h */,
+				4B93D80A17823069005BE43C /* MentionsController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1159,6 +1179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B93D80C17823069005BE43C /* MentionsController.m in Sources */,
 				4B349FC61779C0FA007D035D /* LogService.m in Sources */,
 				4B66298E177387FA00FA146A /* main.m in Sources */,
 				4B66298F177387FA00FA146A /* AppDelegate.m in Sources */,
@@ -1203,6 +1224,7 @@
 				4B6629AD177387FA00FA146A /* UIActionSheet+TwitterApp.m in Sources */,
 				4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
+				4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
 				4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */,
 				4B6629B1177387FA00FA146A /* TweetDetailCell.m in Sources */,
@@ -1213,6 +1235,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B93D80B17823069005BE43C /* MentionsController.m in Sources */,
 				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
@@ -1257,6 +1280,7 @@
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
 				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
+				4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
 				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
