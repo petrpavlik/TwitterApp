@@ -15,10 +15,12 @@
 #import "TweetController.h"
 #import "TweetInputAccessoryView.h"
 #import "UIActionSheet+TwitterApp.h"
+#import "UIImage+ImageEffects.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) UIImage* attachedImage;
+@property(nonatomic, strong) UIImageView* backgroundImageView;
 @property(nonatomic, strong) CLLocation* location;
 @property(nonatomic, strong) CLLocationManager* locationManager;
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
@@ -77,6 +79,17 @@
         tweetController.tweetToReplyTo = tweet;
     }
     
+    CGRect bounds = viewController.view.bounds;
+    bounds.origin.y = 0;
+    
+    UIGraphicsBeginImageContextWithOptions(bounds.size, YES, [UIScreen mainScreen].scale);
+    [viewController.view drawViewHierarchyInRect:bounds];
+    UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    tweetController.backgroundImage = backgroundImage;
+
+    
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
     
@@ -96,13 +109,24 @@
     self.restorationIdentifier = [[self class] description];
     self.restorationClass = [self class];
     
+    self.view.backgroundColor = [UIColor whiteColor];
+    [self setEdgesForExtendedLayout:UIExtendedEdgeNone];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
+    
+    self.backgroundImageView = [UIImageView new];
+    [self.view addSubview:self.backgroundImageView];
+    [self.backgroundImageView stretchInSuperview];
+    if (self.backgroundImage) {
+        self.backgroundImageView.image = [self.backgroundImage applyExtraLightEffect];
+    }
 
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
     _tweetTextView.restorationIdentifier = @"TweetTextTextView";
     _tweetTextView.font = [skin fontOfSize:16];
+    _tweetTextView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     

@@ -11,6 +11,7 @@
 @interface LogService : NSObject
 
 + (void)instatiate;
+- (void)logError:(NSError*)error;
 - (void)logEvent:(NSString*)event userInfo:(NSDictionary*)userInfo;
 + (LogService*)sharedInstance;
 

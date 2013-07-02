@@ -208,6 +208,9 @@
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
 		4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB691754DF2800075F7D /* UserListController.m */; };
 		4BE5557C1758F87400A214FC /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5557B1758F87400A214FC /* NotificationView.m */; };
+		4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */; };
+		4BEBAC01178371D9004B99FC /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */; };
+		4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEBAC04178372C1004B99FC /* Accelerate.framework */; };
 		4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */; };
 		4BF0DBFC17649598002578FF /* BasementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBFB17649598002578FF /* BasementCell.m */; };
 		4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */; };
@@ -397,6 +400,10 @@
 		4BDFDB691754DF2800075F7D /* UserListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListController.m; path = Controller/UserListController.m; sourceTree = "<group>"; };
 		4BE5557A1758F87400A214FC /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationView.h; path = View/NotificationView.h; sourceTree = "<group>"; };
 		4BE5557B1758F87400A214FC /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationView.m; path = View/NotificationView.m; sourceTree = "<group>"; };
+		4BEBABFE178371D9004B99FC /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageEffects.h"; path = "Category/UIImage+ImageEffects.h"; sourceTree = "<group>"; };
+		4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageEffects.m"; path = "Category/UIImage+ImageEffects.m"; sourceTree = "<group>"; };
+		4BEBAC0217837298004B99FC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		4BEBAC04178372C1004B99FC /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		4BF0DBF717648A62002578FF /* UIActionSheet+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+TwitterApp.h"; path = "Category/UIActionSheet+TwitterApp.h"; sourceTree = "<group>"; };
 		4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIActionSheet+TwitterApp.m"; path = "Category/UIActionSheet+TwitterApp.m"; sourceTree = "<group>"; };
 		4BF0DBFA17649598002578FF /* BasementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasementCell.h; path = View/Cell/BasementCell.h; sourceTree = "<group>"; };
@@ -458,6 +465,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */,
 				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
 				4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */,
@@ -544,6 +552,8 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BEBAC04178372C1004B99FC /* Accelerate.framework */,
+				4BEBAC0217837298004B99FC /* CoreImage.framework */,
 				4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */,
 				4B755D991773386A002A577D /* QuartzCore.framework */,
 				4B755D9117733833002A577D /* HockeySDK.embeddedframework */,
@@ -649,6 +659,8 @@
 		4B7428CD1742DCC300AEB85C /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				4BEBABFE178371D9004B99FC /* UIImage+ImageEffects.h */,
+				4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */,
 				4B7428CE1742DD0900AEB85C /* UIImage+TwitterApp.h */,
 				4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */,
 				4BCB2286174D1078006602AA /* NSString+TwitterApp.h */,
@@ -1185,6 +1197,7 @@
 				4B66298F177387FA00FA146A /* AppDelegate.m in Sources */,
 				4B662990177387FA00FA146A /* AbstractSkin.m in Sources */,
 				4B662991177387FA00FA146A /* LightSkin.m in Sources */,
+				4BEBAC01178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431C177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B662992177387FA00FA146A /* UIImage+TwitterApp.m in Sources */,
 				4B662993177387FA00FA146A /* TweetCell.m in Sources */,
@@ -1241,6 +1254,7 @@
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
 				4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */,
+				4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,
 				4B7428D41742DED500AEB85C /* TweetCell.m in Sources */,

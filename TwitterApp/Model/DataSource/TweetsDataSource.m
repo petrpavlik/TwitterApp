@@ -6,13 +6,16 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "TimelineDocument.h"
 #import "TweetsDataSource.h"
 
 @interface TweetsDataSource ()
 
-@property(nonatomic, strong) NSArray* tweets;
+@property(nonatomic, strong) NSString* persistenceIdentifier;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningOldTweetsOperation;
+@property(nonatomic, weak) TimelineDocument* document;
+@property(nonatomic, strong) NSArray* tweets;
 
 @end
 
@@ -22,6 +25,16 @@
     
     self.runningNewTweetsOperation = nil;
     self.runningOldTweetsOperation = nil;
+}
+
+- (instancetype)initWithPersistenceIdentifier:(NSString*)persistenceIdentifier {
+    
+    self = [super init];
+    if (self) {
+        
+        self.persistenceIdentifier = persistenceIdentifier;
+    }
+    return self;
 }
 
 - (NSArray*)tweets {
@@ -35,6 +48,13 @@
 
 - (void)loadNewTweets {
     
+    if (self.persistenceIdentifier && !self.document) {
+        
+        
+    }
+    
+    ////////////
+    
     if (self.runningNewTweetsOperation) {
         return;
     }
@@ -42,6 +62,8 @@
     NSString* sinceId = nil;
     
     if (self.tweets.count) {
+        
+        sinceId = [self.tweets.firstObject tweetId];
         
         //we want out most recent tweet to be eventually returned again in order to detect a gap
         long long sinceIdLong = [sinceId longLongValue];

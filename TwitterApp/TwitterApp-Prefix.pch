@@ -19,3 +19,5 @@
 
 #define kTweetDeletedNotification @"kTweetDeletedNotification"
 #define kAuthenticatedUserDidLoadNotification @"AuthenticatedUserDidLoadNotification"
+
+#define kLogEventError @"Error"

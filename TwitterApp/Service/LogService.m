@@ -38,6 +38,10 @@
     return self;
 }
 
+- (void)logError:(NSError*)error {
+    [self logEvent:kLogEventError userInfo:@{@"error": error}];
+}
+
 - (void)logEvent:(NSString *)event userInfo:(NSDictionary *)userInfo {
     
     NSParameterAssert(event);

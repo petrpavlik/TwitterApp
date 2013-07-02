@@ -13,11 +13,25 @@
 @interface MentionsController () <TweetDataSourceDelegate>
 
 @property(nonatomic, strong) TweetsDataSource* dataSource;
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSArray* tweets;
 
 @end
 
 @implementation MentionsController
+
+- (UIView*)notificationViewPlaceholderView {
+ 
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
 
 - (void)viewDidLoad
 {
@@ -53,6 +67,8 @@
 }
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToLoadNewTweetsWithError:(NSError*)error {
     
+    [[LogService sharedInstance] logError:error];
+    
     [self.refreshControl endRefreshing];
     [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
 }
@@ -72,6 +88,9 @@
 }
 
 - (void)tweetDataSource:(TweetsDataSource *)dataSource didFailToLoadOldTweetsWithError:(NSError *)error {
+    
+    [[LogService sharedInstance] logError:error];
+    
     [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
 }
 

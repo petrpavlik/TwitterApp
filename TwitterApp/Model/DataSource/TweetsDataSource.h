@@ -27,6 +27,8 @@
 
 - (NSArray*)tweets;
 
+- (instancetype)initWithPersistenceIdentifier:(NSString*)persistenceIdentifier;
+
 - (void)loadNewTweets;
 - (void)loadOldTweets;
 - (void)loadTweetsForGap:(GapTweetEntity*)gap;

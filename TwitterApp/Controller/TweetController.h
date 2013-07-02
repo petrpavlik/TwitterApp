@@ -14,4 +14,6 @@
 + (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController;
 + (TweetController*)presentInViewController:(UIViewController*)viewController;
 
+@property(nonatomic, strong) UIImage* backgroundImage;
+
 @end
