@@ -118,9 +118,6 @@
     self.backgroundImageView = [UIImageView new];
     [self.view addSubview:self.backgroundImageView];
     [self.backgroundImageView stretchInSuperview];
-    if (self.backgroundImage) {
-        self.backgroundImageView.image = [self.backgroundImage applyExtraLightEffect];
-    }
 
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
@@ -153,6 +150,19 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    if (self.backgroundImage) {
+        
+        self.backgroundImageView.image = [self.backgroundImage applyLightEffect];
+        self.backgroundImageView.alpha = 0;
+        
+        [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
+            
+            self.backgroundImageView.alpha = 1;
+            
+        } completion:NULL];
+        
+    }
     
 }
 
