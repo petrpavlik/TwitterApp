@@ -27,7 +27,7 @@
 #import "UserTitleView.h"
 #import "WebController.h"
 
-@interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate, UIDataSourceModelAssociation>
+@interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate, UIDataSourceModelAssociation, UIViewControllerRestoration>
 
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
@@ -48,8 +48,9 @@
     
     self.title = @"Timeline";
     self.tabBarItem.title = self.title;
-    self.restorationIdentifier = @"Timeline";
-    //self.restorationClass = [self class];
+    self.restorationIdentifier = @"TimelineController";
+    self.restorationClass = [self class];
+    self.tableView.restorationIdentifier = @"TableView";
     
     self.navigationItem.titleView = [UIView new];
     
@@ -745,11 +746,11 @@
     return nil;
 }
 
-/*+ (UIViewController *) viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
++ (UIViewController *) viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
     
     TimelineController* timelineController = [[TimelineController alloc] init];
     return timelineController;
-}*/
+}
 
 
 #pragma mark -
