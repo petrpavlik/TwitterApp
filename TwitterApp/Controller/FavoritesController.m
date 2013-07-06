@@ -1,17 +1,17 @@
 //
-//  MentionsController.m
+//  FavoritesController.m
 //  TwitterApp
 //
-//  Created by Petr Pavlik on 7/1/13.
+//  Created by Petr Pavlik on 7/6/13.
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "MentionsController.h"
+#import "FavoritesController.h"
+#import "LoadingCell.h"
 #import "NotificationView.h"
 #import "TweetsDataSource.h"
-#import "LoadingCell.h"
 
-@interface MentionsController () <TweetDataSourceDelegate>
+@interface FavoritesController () <TweetDataSourceDelegate>
 
 @property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
@@ -19,21 +19,21 @@
 
 @end
 
-@implementation MentionsController
+@implementation FavoritesController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = @"Mentions";
+    self.title = @"Favorites";
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(loadNewTweets) forControlEvents:UIControlEventValueChanged];
     self.refreshControl = refreshControl;
     self.refreshControl.tintColor = [UIColor blackColor];
     
-    self.dataSource = [[TweetsDataSource alloc] initWithPersistenceIdentifier:@"mentions"];
+    self.dataSource = [[TweetsDataSource alloc] initWithPersistenceIdentifier:Nil];
     self.dataSource.delegate = self;
     [self.dataSource loadNewTweets];
 }
@@ -194,9 +194,9 @@
     else {
         
         /*TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
-        tweetDetailController.tweet = tweet;
-        
-        [self.navigationController pushViewController:tweetDetailController animated:YES];*/
+         tweetDetailController.tweet = tweet;
+         
+         [self.navigationController pushViewController:tweetDetailController animated:YES];*/
     }
 }
 
@@ -210,6 +210,5 @@
     
     [self.dataSource loadNewTweets];
 }
-
 
 @end
