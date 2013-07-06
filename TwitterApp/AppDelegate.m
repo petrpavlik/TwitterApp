@@ -14,7 +14,9 @@
 #import <HockeySDK/HockeySDK.h>
 #import "LightSkin.h"
 #import "LocalyticsSession.h"
+#import "MentionsController.h"
 #import "ModernSkin.h"
+#import "MyProfileController.h"
 #import "NavigationController.h"
 #import "NetImageView.h"
 #import <PocketAPI.h>
@@ -87,6 +89,25 @@
 #ifdef DEBUG
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
 #endif
+    
+    UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
+    
+    TimelineController* timelineController = [[TimelineController alloc] init];
+    UINavigationController* timelineNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    timelineNavigationController.restorationIdentifier = @"TimelineNavigationController";
+    timelineNavigationController.viewControllers = @[timelineController];
+    
+    MentionsController* mentionsController = [MentionsController new];
+    UINavigationController* mentionsNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    mentionsNavigationController.restorationIdentifier = @"MentionsNavigationController";
+    mentionsNavigationController.viewControllers = @[mentionsController];
+    
+    MyProfileController* profileController = [MyProfileController new];
+    UINavigationController* profileNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
+    profileNavigationController.viewControllers = @[profileController];
+    
+    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, profileNavigationController];
     
     return YES;
 }
