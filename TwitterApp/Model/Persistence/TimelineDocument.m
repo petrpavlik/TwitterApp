@@ -17,6 +17,28 @@
 
 @implementation TimelineDocument
 
+- (void)openAsync {
+    
+    NSFileManager *filemgr = [NSFileManager defaultManager];
+    
+    if ([filemgr fileExistsAtPath:self.fileURL.path]) {
+        
+        [self openWithCompletionHandler:^(BOOL success) {
+            
+            NSParameterAssert(success);
+            [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
+        }];
+        
+    } else {
+        
+        [self saveToURL:self.fileURL forSaveOperation: UIDocumentSaveForCreating completionHandler:^(BOOL success) {
+            
+            NSParameterAssert(success);
+            [self.delegate timelineDocumentDidLoadPersistedTimeline:@[]];
+        }];
+    }
+}
+
 - (id)contentsForType:(NSString*)typeName error:(NSError**)outError {
     
     NSLog(@"saving document %@", [NSThread currentThread]);
@@ -43,9 +65,9 @@
     self.timeline = [NSKeyedUnarchiver unarchiveObjectWithData:contents];
     //NSLog(@"%@", self.timeline);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+    /*dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
-    });
+    });*/
     
     return YES;
 }

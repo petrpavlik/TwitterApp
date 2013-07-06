@@ -7,11 +7,13 @@
 //
 
 #import "MentionsController.h"
+#import "NotificationView.h"
 #import "TweetsDataSource.h"
 #import "LoadingCell.h"
 
 @interface MentionsController () <TweetDataSourceDelegate>
 
+@property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSArray* tweets;
@@ -19,19 +21,6 @@
 @end
 
 @implementation MentionsController
-
-- (UIView*)notificationViewPlaceholderView {
- 
-    if (!_notificationViewPlaceholderView) {
-        
-        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
-        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:_notificationViewPlaceholderView];
-    }
-    
-    return _notificationViewPlaceholderView;
-}
 
 - (void)viewDidLoad
 {
@@ -45,7 +34,7 @@
     self.refreshControl = refreshControl;
     self.refreshControl.tintColor = [UIColor blackColor];
     
-    self.dataSource = [[TweetsDataSource alloc] init];
+    self.dataSource = [[TweetsDataSource alloc] initWithPersistenceIdentifier:@"mentions"];
     self.dataSource.delegate = self;
     [self.dataSource loadNewTweets];
 }
@@ -54,6 +43,8 @@
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadNewTweets:(NSArray*)tweets {
     
+    NSParameterAssert(tweets);
+    
     [self.refreshControl endRefreshing];
     
     if (!self.tweets.count) {
@@ -61,11 +52,16 @@
     }
     else {
         self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
+        
+        [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", tweets.count]];
     }
     
     [self.tableView reloadData];
 }
+
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToLoadNewTweetsWithError:(NSError*)error {
+    
+    NSParameterAssert(error);
     
     [[LogService sharedInstance] logError:error];
     
@@ -75,19 +71,34 @@
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadOldTweets:(NSArray*)tweets {
     
-    [self.tableView beginUpdates];
+    NSParameterAssert(tweets);
     
-    NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
-    for (NSInteger i=0; i<tweets.count; i++) {
-        [indexPaths addObject:[NSIndexPath indexPathForRow:self.tweets.count-tweets.count+i inSection:0]];
+    if (tweets.count) {
+        
+        [self.tableView beginUpdates];
+        
+        NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
+        for (NSInteger i=0; i<tweets.count; i++) {
+            [indexPaths addObject:[NSIndexPath indexPathForRow:self.tweets.count-tweets.count+i inSection:0]];
+        }
+        
+        [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        [self.tableView endUpdates];
     }
-    
-    [self.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-    
-    [self.tableView endUpdates];
+    else {
+        
+        self.allTweetsLoaded = YES;
+        NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
+        [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+        
+        [NotificationView showInView:self.notificationViewPlaceholderView message:@"All tweets loaded"];
+    }
 }
 
 - (void)tweetDataSource:(TweetsDataSource *)dataSource didFailToLoadOldTweetsWithError:(NSError *)error {
+    
+    NSParameterAssert(error);
     
     [[LogService sharedInstance] logError:error];
     
@@ -104,7 +115,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    if (self.allTweetsLoaded) {
+        return 1;
+    }
+    else {
+        return 2;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

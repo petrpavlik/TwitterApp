@@ -35,6 +35,19 @@
 
 @implementation BaseTweetsController
 
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
+
 - (NSMutableDictionary*)savedImagesForVisibleCells {
     
     if (!_savedImagesForVisibleCells) {
@@ -587,6 +600,13 @@
 - (void)didDeleteTweet:(TweetEntity *)tweet {
     
     @throw [NSException exceptionWithName:@"MethodMustBeOverloadedException" reason:[NSString stringWithFormat:@"%s must be overloaded", __PRETTY_FUNCTION__] userInfo:Nil];
+}
+
+#pragma mark -
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
 }
 
 @end

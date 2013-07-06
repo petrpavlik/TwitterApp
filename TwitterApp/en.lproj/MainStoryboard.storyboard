@@ -28,11 +28,10 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" restorationIdentifier="TabBar" id="pRw-45-cNk">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="LJo-CY-V72" kind="relationship" relationship="viewControllers" id="cTj-KC-MqT"/>
                         <segue destination="tys-qt-meQ" kind="relationship" relationship="viewControllers" id="uhA-fS-Xzi"/>
+                        <segue destination="LJo-CY-V72" kind="relationship" relationship="viewControllers" id="cTj-KC-MqT"/>
                         <segue destination="nSY-oI-Iu1" kind="relationship" relationship="viewControllers" id="2LR-MR-gYh"/>
                     </connections>
                 </tabBarController>
@@ -140,6 +139,20 @@
             <point key="canvasLocation" x="1036" y="-826"/>
         </scene>
     </scenes>
+    <classes>
+        <class className="BaseTweetsController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/BaseTweetsController.h"/>
+        </class>
+        <class className="MentionsController" superclassName="BaseTweetsController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MentionsController.h"/>
+        </class>
+        <class className="MyProfileController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/MyProfileController.h"/>
+        </class>
+        <class className="TimelineController" superclassName="BaseTweetsController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/TimelineController.h"/>
+        </class>
+    </classes>
     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

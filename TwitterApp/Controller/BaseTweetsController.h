@@ -25,4 +25,6 @@
 - (void)saveImagesForVisibleCells;
 - (void)didDeleteTweet:(TweetEntity*)tweet;
 
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
+
 @end

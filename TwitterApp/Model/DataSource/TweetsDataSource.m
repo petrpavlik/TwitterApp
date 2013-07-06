@@ -9,13 +9,14 @@
 #import "TimelineDocument.h"
 #import "TweetsDataSource.h"
 
-@interface TweetsDataSource ()
+@interface TweetsDataSource () <TimelineDocumentDelegate>
 
 @property(nonatomic, strong) NSString* persistenceIdentifier;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningOldTweetsOperation;
-@property(nonatomic, weak) TimelineDocument* document;
+@property(nonatomic, strong) TimelineDocument* document;
 @property(nonatomic, strong) NSArray* tweets;
+@property(nonatomic, getter = isTaskInProgress) BOOL taskInProgress;
 
 @end
 
@@ -23,8 +24,8 @@
 
 - (void)dealloc {
     
-    self.runningNewTweetsOperation = nil;
-    self.runningOldTweetsOperation = nil;
+    [self.runningNewTweetsOperation cancel];
+    [self.runningOldTweetsOperation cancel];
 }
 
 - (instancetype)initWithPersistenceIdentifier:(NSString*)persistenceIdentifier {
@@ -48,79 +49,94 @@
 
 - (void)loadNewTweets {
     
-    if (self.persistenceIdentifier && !self.document) {
-        
-        
-    }
-    
-    ////////////
-    
-    if (self.runningNewTweetsOperation) {
+    if (self.isTaskInProgress) {
         return;
     }
     
-    NSString* sinceId = nil;
+    self.taskInProgress = YES;
     
-    if (self.tweets.count) {
+    if (self.persistenceIdentifier && !self.document) {
         
-        sinceId = [self.tweets.firstObject tweetId];
+        NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *docsDir = [dirPaths objectAtIndex:0];
+        NSString *dataFile = [docsDir stringByAppendingPathComponent:self.persistenceIdentifier];
+        NSURL* documentUrl = [NSURL fileURLWithPath:dataFile];
         
-        //we want out most recent tweet to be eventually returned again in order to detect a gap
-        long long sinceIdLong = [sinceId longLongValue];
-        sinceIdLong -= 1;
-        sinceId = @(sinceIdLong).description;
+        self.document = [[TimelineDocument alloc] initWithFileURL:documentUrl];
+        self.document.delegate = self;
+        
+        [self.document openAsync];
     }
-    
-    __weak typeof(self) weakSelf = self;
-    
-    NSParameterAssert(self.delegate);
-    
-    self.runningNewTweetsOperation = [self.delegate tweetDataSource:self requestForTweetsSinceId:sinceId withMaxId:nil completionBlock:^(NSArray *tweets, NSError *error) {
+    else {
         
-        if (error) {
+        NSString* sinceId = nil;
+        
+        if (self.tweets.count) {
             
-            [weakSelf.delegate tweetDataSource:weakSelf didFailToLoadNewTweetsWithError:error];
+            sinceId = [self.tweets.firstObject tweetId];
+            
+            //we want out most recent tweet to be eventually returned again in order to detect a gap
+            long long sinceIdLong = [sinceId longLongValue];
+            sinceIdLong -= 1;
+            sinceId = @(sinceIdLong).description;
         }
-        else {
+        
+        __weak typeof(self) weakSelf = self;
+        
+        NSParameterAssert(self.delegate);
+        
+        self.taskInProgress = YES;
+        
+        self.runningNewTweetsOperation = [self.delegate tweetDataSource:self requestForTweetsSinceId:sinceId withMaxId:nil completionBlock:^(NSArray *tweets, NSError *error) {
             
-            if (weakSelf.tweets.count) {
+            self.taskInProgress = NO;
+            
+            if (error) {
                 
-                NSMutableArray* mutableNewTweets = [tweets mutableCopy];
-                
-                if ([[mutableNewTweets.lastObject tweetId] isEqualToString:[weakSelf.tweets[0] tweetId]]) {
-                    
-                    //no gap detected
-                    NSLog(@"no gap detected");
-                    [mutableNewTweets removeLastObject];
-                }
-                else {
-                    
-                    //gap detected
-                    NSLog(@"gap detected");
-                    
-                    [mutableNewTweets removeLastObject];
-                    [mutableNewTweets addObject:[GapTweetEntity new]];
-                }
-                
-                tweets = mutableNewTweets;
+                [weakSelf.delegate tweetDataSource:weakSelf didFailToLoadNewTweetsWithError:error];
             }
             else {
-                weakSelf.tweets = tweets;
+                
+                if (weakSelf.tweets.count) {
+                    
+                    NSMutableArray* mutableNewTweets = [tweets mutableCopy];
+                    
+                    if ([[mutableNewTweets.lastObject tweetId] isEqualToString:[weakSelf.tweets[0] tweetId]]) {
+                        
+                        //no gap detected
+                        NSLog(@"no gap detected");
+                        [mutableNewTweets removeLastObject];
+                    }
+                    else {
+                        
+                        //gap detected
+                        NSLog(@"gap detected");
+                        
+                        [mutableNewTweets removeLastObject];
+                        [mutableNewTweets addObject:[GapTweetEntity new]];
+                    }
+                    
+                    tweets = mutableNewTweets;
+                }
+                else {
+                    weakSelf.tweets = tweets;
+                }
+                
+                weakSelf.tweets = [tweets arrayByAddingObjectsFromArray:weakSelf.tweets];
+                [weakSelf.delegate tweetDataSource:weakSelf didLoadNewTweets:tweets];
+                [weakSelf.document persistTimeline:weakSelf.tweets];
             }
-            
-            weakSelf.tweets = [tweets arrayByAddingObjectsFromArray:weakSelf.tweets];
-            [weakSelf.delegate tweetDataSource:weakSelf didLoadNewTweets:tweets];
-        }
-    }];
-    
-    NSParameterAssert(self.runningNewTweetsOperation);
+        }];
+        
+        NSParameterAssert(self.runningNewTweetsOperation);
+    }
 }
 
 - (void)loadOldTweets {
  
     NSParameterAssert(self.tweets.count);
     
-    if (self.runningOldTweetsOperation) {
+    if (self.isTaskInProgress) {
         return;
     }
     
@@ -137,6 +153,8 @@
     
     self.runningOldTweetsOperation = [self.delegate tweetDataSource:self requestForTweetsSinceId:nil withMaxId:maxId completionBlock:^(NSArray *tweets, NSError *error) {
         
+        self.taskInProgress = NO;
+        
         if (error) {
             
             [weakSelf.delegate tweetDataSource:weakSelf didFailToLoadOldTweetsWithError:error];
@@ -146,10 +164,28 @@
             NSParameterAssert(weakSelf.tweets);
             weakSelf.tweets = [weakSelf.tweets arrayByAddingObjectsFromArray:tweets];
             [weakSelf.delegate tweetDataSource:weakSelf didLoadOldTweets:tweets];
+            [weakSelf.document persistTimeline:weakSelf.tweets];
         }
     }];
     
     NSParameterAssert(self.runningOldTweetsOperation);
+}
+
+#pragma mark -
+
+- (void)timelineDocumentDidLoadPersistedTimeline:(NSArray *)tweets {
+    
+    self.taskInProgress = NO;
+    
+    if (tweets.count) {
+        
+        self.tweets = tweets;
+        [self.delegate tweetDataSource:self didLoadNewTweets:tweets];
+    }
+    else {
+        
+        [self loadNewTweets];
+    }
 }
 
 @end

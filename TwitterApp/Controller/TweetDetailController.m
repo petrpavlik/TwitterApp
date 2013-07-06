@@ -24,20 +24,6 @@
 
 @implementation TweetDetailController
 
-- (UIView*)notificationViewPlaceholderView {
-    
-    if (!_notificationViewPlaceholderView) {
-        
-        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
-        _notificationViewPlaceholderView.backgroundColor = [UIColor redColor];
-        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-        //_notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:_notificationViewPlaceholderView];
-    }
-    
-    return _notificationViewPlaceholderView;
-}
-
 - (void)dealloc {
 
     [self.runningOlderRelatedTweetRequest cancel];
@@ -130,13 +116,6 @@
         return 0;
     }
 }
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    UIEdgeInsets insets =  self.tableView.contentInset;
-    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2 + insets.top);
-}
-
 
 #pragma mark - Table view delegate
 

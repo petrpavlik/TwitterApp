@@ -56,6 +56,9 @@
     //self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    [self setEdgesForExtendedLayout:UIExtendedEdgeBottom];
+    self.automaticallyAdjustsScrollViewInsets = YES; //default YES
+    
     [self willBeginRefreshing];
     self.runningRequestDataOperation = [self dataRequestOperation];
 }

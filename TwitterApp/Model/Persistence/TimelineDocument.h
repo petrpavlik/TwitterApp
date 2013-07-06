@@ -18,7 +18,7 @@
 
 @interface TimelineDocument : UIDocument
 
-- (void)openOrCreateAsync;
+- (void)openAsync;
 
 - (void)persistTimeline:(NSArray*)tweets;
 

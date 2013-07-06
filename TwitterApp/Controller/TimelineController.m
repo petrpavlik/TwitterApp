@@ -29,7 +29,6 @@
 
 @interface TimelineController () <TweetCellDelegate, TimelineDocumentDelegate, UIDataSourceModelAssociation>
 
-@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, weak) NSOperation* runningOlderTweetsOperation;
 @property(nonatomic, weak) NSOperation* runningNewTweetsOperation;
@@ -62,12 +61,6 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Compose"] style:UIBarButtonItemStyleBordered target:self action:@selector(composeTweet)];
     [self.navigationItem.rightBarButtonItem setImageInsets:UIEdgeInsetsMake(-1, 0, 0, -3)];
     
-    if (self.navigationController.viewControllers[0] == self) {
- 
-        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Hamburger"] style:UIBarButtonItemStyleBordered target:self action:@selector(showBasement)];
-        [self.navigationItem.leftBarButtonItem setImageInsets:UIEdgeInsetsMake(1, 0, 0, 0)];
-    }
-    
     //self.searchQuery = @"ass";
     
     if (self.searchQuery.length) {
@@ -93,20 +86,7 @@
             self.timelineDocument = [[TimelineDocument alloc] initWithFileURL:documentUrl];
             self.timelineDocument.delegate = self;
             
-            NSFileManager *filemgr = [NSFileManager defaultManager];
-            
-            if ([filemgr fileExistsAtPath: dataFile]) {
-                
-                [self.timelineDocument openWithCompletionHandler:^(BOOL success) {
-                    NSLog(@"document open %d", success);
-                }];
-                
-            } else {
-                
-                [self.timelineDocument saveToURL:documentUrl forSaveOperation: UIDocumentSaveForCreating completionHandler:^(BOOL success) {
-                    NSLog(@"document created %d", success);
-                }];
-            }
+            [self.timelineDocument openAsync];
             
             /////////////
         }
@@ -114,11 +94,6 @@
             [self requestData];
         }
     }];
-    
-    _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
-    _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
-    _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_notificationViewPlaceholderView];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -214,11 +189,6 @@
         
         [self.navigationController pushViewController:tweetDetailController animated:YES];
     }
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
-    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
 }
 
 #pragma mark -
