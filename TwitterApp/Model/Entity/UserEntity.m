@@ -101,13 +101,20 @@ static UserEntity* currentUser;
     return (NSOperation*)operation;
 }
 
-+ (NSOperation*)requestFollowersOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* followers, NSError* error))block {
++ (NSOperation*)requestFollowersOfUser:(NSString*)userId cursor:(NSString*)cursor completionBlock:(void (^)(NSArray* followers, NSString* nextCursor, NSError* error))block {
     
     NSParameterAssert(userId);
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"followers/list.json" parameters:@{@"user_id": userId}];
+    NSDictionary* params = @{@"user_id": userId};
+    if (cursor) {
+        NSMutableDictionary* mutableParams = [params mutableCopy];
+        mutableParams[@"cursor"] = cursor;
+        params = mutableParams;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"followers/list.json" parameters:params];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         
@@ -120,12 +127,12 @@ static UserEntity* currentUser;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            block(followers, nil);
+            block(followers, [JSON[@"next_cursor"] description], nil);
         });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        block(nil, error);
+        block(nil, nil, error);
     }];
     
     [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
@@ -134,13 +141,20 @@ static UserEntity* currentUser;
     return (NSOperation*)operation;
 }
 
-+ (NSOperation*)requestFriendsOfUser:(NSString*)userId completionBlock:(void (^)(NSArray* friends, NSError* error))block {
++ (NSOperation*)requestFriendsOfUser:(NSString*)userId cursor:(NSString*)cursor completionBlock:(void (^)(NSArray* friends, NSString* nextCursor,  NSError* error))block {
     
     NSParameterAssert(userId);
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"friends/list.json" parameters:@{@"user_id": userId}];
+    NSDictionary* params = @{@"user_id": userId};
+    if (cursor) {
+        NSMutableDictionary* mutableParams = [params mutableCopy];
+        mutableParams[@"cursor"] = cursor;
+        params = mutableParams;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"friends/list.json" parameters:params];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         
@@ -153,12 +167,12 @@ static UserEntity* currentUser;
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            block(friends, nil);
+            block(friends, [JSON[@"next_cursor"] description], nil);
         });
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        block(nil, error);
+        block(nil, nil, error);
     }];
     
     [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];

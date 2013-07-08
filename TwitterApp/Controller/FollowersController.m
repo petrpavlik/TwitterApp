@@ -25,23 +25,9 @@
     self.title = @"Followers";
 }
 
-- (NSOperation*)dataRequestOperation {
+- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *followers, NSString* nextCursor, NSError *error))completionBlock; {
     
-    __weak typeof(self) weakSelf = self;
-    
-    return [UserEntity requestFollowersOfUser:self.userId completionBlock:^(NSArray *followers, NSError *error) {
-        
-        if (error) {
-            weakSelf.errorMessage = error.description;
-        }
-        else if (!followers.count) {
-            weakSelf.errorMessage = @"No followers found";
-        }
-        else {
-            
-            weakSelf.users = followers;
-        }
-    }];
+    return [UserEntity requestFollowersOfUser:self.userId cursor:nil completionBlock:completionBlock];
 }
 
 @end

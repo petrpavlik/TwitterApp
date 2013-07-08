@@ -25,23 +25,9 @@
     self.title = @"Following";
 }
 
-- (NSOperation*)dataRequestOperation {
+- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *friends, NSString* nextCursor, NSError *error))completionBlock; {
     
-    __weak typeof(self) weakSelf = self;
-    
-    return [UserEntity requestFriendsOfUser:self.userId completionBlock:^(NSArray *friends, NSError *error) {
-        
-        if (error) {
-            weakSelf.errorMessage = error.description;
-        }
-        else if (!friends.count) {
-            weakSelf.errorMessage = @"No users found";
-        }
-        else {
-            
-            weakSelf.users = friends;
-        }
-    }];
+    return [UserEntity requestFriendsOfUser:self.userId cursor:nil completionBlock:completionBlock];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "ErrorCell.h"
+#import "LoadingCell.h"
 #import "ProfileController.h"
 #import "TweetEntity.h"
 #import "UIImage+TwitterApp.h"
@@ -16,6 +17,7 @@
 @interface UserListController ()
 
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
+@property(nonatomic) BOOL allUsersLoaded;
 @property(nonatomic, weak) NSOperation* runningRequestDataOperation;
 
 @end
@@ -51,16 +53,32 @@
     
     [self.tableView registerClass:[UserCell class] forCellReuseIdentifier:@"UserCell"];
     [self.tableView registerClass:[ErrorCell class] forCellReuseIdentifier:@"ErrorCell"];
-    //self.tableView.rowHeight = 68;
+    [self.tableView registerClass:[LoadingCell class] forCellReuseIdentifier:@"LoadingCell"];
+    
     self.tableView.tableFooterView = [UIView new];
     //self.tableView.separatorColor = [UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self setEdgesForExtendedLayout:UIExtendedEdgeBottom];
+    [self setEdgesForExtendedLayout:UIExtendedEdgeNone];
     self.automaticallyAdjustsScrollViewInsets = YES; //default YES
     
     [self willBeginRefreshing];
-    self.runningRequestDataOperation = [self dataRequestOperation];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningRequestDataOperation = [self dataRequestOperationWithCompletionBlock:^(NSArray *users, NSString *nextCursor, NSError *error) {
+        
+        if (error) {
+            weakSelf.errorMessage = error.description;
+        }
+        else if (!users.count) {
+            weakSelf.errorMessage = @"No users found";
+        }
+        else {
+            
+            weakSelf.users = users;
+        }
+    }];
 }
 
 #pragma mark - Table view data source
@@ -68,42 +86,69 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    if (self.allUsersLoaded) {
+        return 1;
+    }
+    else {
+        return 2;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return MAX(self.users.count, 1);
+    
+    if (self.users.count==0) {
+        return 1;
+    }
+    
+    if (section==0) {
+        return self.users.count;
+    }
+    else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (self.users.count) {
-        
-        static NSString *CellIdentifier = @"UserCell";
-        UserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-        
-        // Configure the cell...
-        UserEntity* user = self.users[indexPath.row];
-        
-        cell.nameLabel.text = user.name;
-        cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
-        [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+    if (indexPath.section==0) {
+     
+        if (self.users.count) {
             
-            return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
-        }];
-        
-        return cell;
+            static NSString *CellIdentifier = @"UserCell";
+            UserCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            // Configure the cell...
+            UserEntity* user = self.users[indexPath.row];
+            
+            cell.nameLabel.text = user.name;
+            cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
+            [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {
+                
+                return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
+            }];
+            
+            return cell;
+        }
+        else {
+            
+            static NSString *CellIdentifier = @"ErrorCell";
+            ErrorCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            // Configure the cell...
+            cell.errorLabel.text = self.errorMessage;
+            
+            return cell;
+        }
     }
     else {
         
-        static NSString *CellIdentifier = @"ErrorCell";
-        ErrorCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        //[self.dataSource loadOldTweets];
         
-        // Configure the cell...
-        cell.errorLabel.text = self.errorMessage;
+        static NSString *CellIdentifier = @"LoadingCell";
+        LoadingCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
         return cell;
     }
@@ -111,11 +156,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if (self.users.count) {
-        return 68;
+    if (indexPath.section==0) {
+     
+        if (self.users.count) {
+            return 68; //user cell
+        }
+        else {
+            return self.tableView.frame.size.height; //error cell
+        }
     }
     else {
-        return self.tableView.frame.size.height; //error cell
+        return 44; //loading cell
     }
 }
 
@@ -172,7 +223,7 @@
 
 #pragma mark -
 
-- (NSOperation*)dataRequestOperation {
+- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *followers, NSString* nextCursor, NSError *error))completionBlock {
     return nil;
 }
 

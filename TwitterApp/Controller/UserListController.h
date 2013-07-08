@@ -15,5 +15,6 @@
 
 //override
 - (NSOperation*)dataRequestOperation;
+- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock;
 
 @end
