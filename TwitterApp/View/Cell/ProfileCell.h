@@ -14,6 +14,7 @@
 @protocol ProfileCellDelegate <NSObject>
 
 - (void)profileCellDidRequestChengeOfFriendship:(ProfileCell*)cell;
+- (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url;
 
 @end
 

@@ -34,6 +34,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    self.title = @"My profile";
+    self.tabBarItem.title = self.title;
+    
     [self.tableView registerClass:[ProfileCell class] forCellReuseIdentifier:@"ProfileCell"];
     [self.tableView registerClass:[ProfilePushCell class] forCellReuseIdentifier:@"ProfilePushCell"];
     

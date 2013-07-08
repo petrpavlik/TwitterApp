@@ -15,6 +15,7 @@
 #import "TimelineController.h"
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
+#import "WebController.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -247,5 +248,9 @@
     }
 }
 
+- (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url {
+    
+    [WebController presentWithUrl:url viewController:self];
+}
 
 @end

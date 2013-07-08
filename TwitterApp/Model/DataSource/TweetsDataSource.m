@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "GapTweetEntity.h"
 #import "TimelineDocument.h"
 #import "TweetsDataSource.h"
 
@@ -169,6 +170,91 @@
     }];
     
     NSParameterAssert(self.runningOldTweetsOperation);
+}
+
+- (void)deleteTweet:(TweetEntity*)tweet {
+    
+    NSParameterAssert(tweet);
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [TweetEntity requestDeletionOfTweetWithId:tweet.tweetId completionBlock:^(NSError *error) {
+        
+        if (error) {
+            [weakSelf.delegate tweetDataSource:weakSelf didFailToDeleteTweetWithError:error];
+        }
+        
+        [weakSelf.delegate tweetDataSource:self didDeleteTweet:tweet];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
+    }];
+}
+
+- (void)loadTweetsForGap:(GapTweetEntity*)gap {
+    
+    NSParameterAssert(gap);
+    NSParameterAssert([gap isKindOfClass:[GapTweetEntity class]]);
+    
+    NSInteger indexOfGapTweet = [self.tweets indexOfObject:gap];
+    NSAssert(indexOfGapTweet != NSNotFound, @"gap tweet not found in the timeline");
+    
+    NSString *maxId = [self.tweets[indexOfGapTweet-1] tweetId];
+    NSString *sinceId = [self.tweets[indexOfGapTweet+1] tweetId];
+    
+    long long maxIdLong = [maxId longLongValue];
+    maxIdLong -= 1;
+    maxId = @(maxIdLong).description;
+    
+    long long sinceIdLong = [sinceId longLongValue];
+    sinceIdLong -= 1;
+    sinceId = @(sinceIdLong).description;
+    
+    __weak typeof(self) weakSelf = self;
+
+    self.runningOldTweetsOperation = [self.delegate tweetDataSource:self requestForTweetsSinceId:sinceId withMaxId:maxId completionBlock:^(NSArray *tweets, NSError *error) {
+        
+        self.taskInProgress = NO;
+        
+        if (error) {
+            
+            [weakSelf.delegate tweetDataSource:weakSelf didFailToFillGap:gap error:error];
+        }
+        else {
+            
+            NSParameterAssert(weakSelf.tweets);
+            
+            /*NSInteger indexOfGapTweet = [weakSelf.tweets indexOfObject:gap];
+            NSMutableArray* mutableTweets = [self.tweets mutableCopy];
+            
+            for (TweetEntity* tweetToAdd in tweets) {
+                
+                if (tweetToAdd == tweets.lastObject) {
+                    
+                    if ([tweetToAdd.tweetId isEqualToString:[mutableTweets[index] tweetId]]) {
+                        
+                        //no gap
+                    }
+                    else {
+                        
+                        [mutableTweets insertObject:[GapTweetEntity new] atIndex:index];
+                        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+                        contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+                        index++;
+                    }
+                }
+                else {
+                    
+                    [mutableTweets insertObject:tweetToAdd atIndex:indexOfGapTweet];
+                    indexOfGapTweet++;
+                }
+            }
+            
+            self.tweets = mutableTweets;
+            
+            weakSelf.tweets = [weakSelf.tweets arrayByAddingObjectsFromArray:tweets];
+            [weakSelf.delegate tweetDataSource:weakSelf didLoadOldTweets:tweets];
+            [weakSelf.document persistTimeline:weakSelf.tweets];*/
+        }
+    }];
 }
 
 #pragma mark -

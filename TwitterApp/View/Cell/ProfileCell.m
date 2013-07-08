@@ -79,6 +79,7 @@
     _websiteButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _websiteButton.translatesAutoresizingMaskIntoConstraints = NO;
     _websiteButton.titleLabel.font = [skin fontOfSize:16];
+    [_websiteButton addTarget:self action:@selector(websiteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_websiteButton];
     
     _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -165,6 +166,11 @@
 
 - (void)friendshipButtonSelected {
     [self.delegate profileCellDidRequestChengeOfFriendship:self];
+}
+
+- (void)websiteButtonSelected:(UIButton*)sender {
+    
+    [self.delegate profileCell:self didSelectURL:[NSURL URLWithString:[sender titleForState:UIControlStateNormal]]];
 }
 
 @end
