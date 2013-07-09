@@ -19,4 +19,6 @@
 - (UIColor*)linkColor;
 - (UIColor*)navigationBarColor;
 
+- (UIImage*)separatorImage;
+
 @end

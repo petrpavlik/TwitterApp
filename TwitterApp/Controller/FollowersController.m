@@ -25,9 +25,9 @@
     self.title = @"Followers";
 }
 
-- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *followers, NSString* nextCursor, NSError *error))completionBlock; {
+- (NSOperation*)dataRequestOperationWithCursor:(NSString*)cursor completionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock {
     
-    return [UserEntity requestFollowersOfUser:self.userId cursor:nil completionBlock:completionBlock];
+    return [UserEntity requestFollowersOfUser:self.userId cursor:cursor completionBlock:completionBlock];
 }
 
 @end

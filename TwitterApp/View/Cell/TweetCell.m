@@ -149,9 +149,7 @@
     _mediaImageView.clipsToBounds = YES;
     [contentView addSubview:_mediaImageView];
     
-    //UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
-    //separatorView.image = [separatorView.image imageWithTint:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] alpha:1.0];
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     

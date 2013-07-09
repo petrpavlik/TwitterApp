@@ -91,6 +91,7 @@
 #endif
     
     UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
+    rootTabBarController.tabBar.tintColor = self.skin.linkColor;
     
     TimelineController* timelineController = [[TimelineController alloc] init];
     UINavigationController* timelineNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
@@ -98,11 +99,15 @@
     timelineNavigationController.viewControllers = @[timelineController];
     
     MentionsController* mentionsController = [MentionsController new];
+    mentionsController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Mentions"];
+    mentionsController.tabBarItem.title = @"Mentions";
     UINavigationController* mentionsNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
     mentionsNavigationController.restorationIdentifier = @"MentionsNavigationController";
     mentionsNavigationController.viewControllers = @[mentionsController];
     
     MyProfileController* profileController = [MyProfileController new];
+    profileController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Profile"];
+    profileController.tabBarItem.title = @"Profile";
     UINavigationController* profileNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
     profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
     profileNavigationController.viewControllers = @[profileController];

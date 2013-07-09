@@ -10,4 +10,9 @@
 
 @implementation AbstractSkin
 
+- (UIImage*)separatorImage {
+    
+    @throw [NSException exceptionWithName:@"MustBeOverloadedException" reason:@"This method must be overloaded" userInfo:Nil];
+}
+
 @end

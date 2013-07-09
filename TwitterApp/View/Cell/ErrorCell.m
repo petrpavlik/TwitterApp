@@ -29,10 +29,16 @@
     AbstractSkin* skin = appDelegate.skin;
     
     _errorLabel = [UILabel new];
+    _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _errorLabel.font = [skin fontOfSize:16];
+    _errorLabel.numberOfLines = 0;
+    _errorLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_errorLabel];
     
-    [_errorLabel centerInSuperview];
+    //[_errorLabel centerInSuperview];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_errorLabel]-|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(_errorLabel)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[_errorLabel]-|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(_errorLabel)]];
 }
 
 @end

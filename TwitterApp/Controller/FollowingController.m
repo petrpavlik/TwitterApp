@@ -25,9 +25,9 @@
     self.title = @"Following";
 }
 
-- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *friends, NSString* nextCursor, NSError *error))completionBlock; {
+- (NSOperation*)dataRequestOperationWithCursor:(NSString*)cursor completionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock {
     
-    return [UserEntity requestFriendsOfUser:self.userId cursor:nil completionBlock:completionBlock];
+    return [UserEntity requestFriendsOfUser:self.userId cursor:cursor completionBlock:completionBlock];
 }
 
 @end

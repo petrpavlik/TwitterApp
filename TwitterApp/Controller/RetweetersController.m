@@ -26,17 +26,12 @@
     self.title = @"Retweets";
 }
 
-- (NSOperation*)dataRequestOperation {
-    
-    __weak typeof(self) weakSelf = self;
+- (NSOperation*)dataRequestOperationWithCursor:(NSString *)cursor completionBlock:(void (^)(NSArray *users, NSString *cursor, NSError *error))completionBlock {
     
     return [TweetEntity requestRetweetsOfTweet:self.tweetId completionBlock:^(NSArray *tweets, NSError *error) {
         
         if (error) {
-            weakSelf.errorMessage = error.description;
-        }
-        else if (!tweets.count) {
-            weakSelf.errorMessage = @"No retweets found";
+            completionBlock(Nil, Nil, error);
         }
         else {
             
@@ -45,9 +40,10 @@
                 [users addObject:tweet.user];
             }
             
-            weakSelf.users = users;
+            completionBlock(users, Nil, error);
         }
     }];
 }
+
 
 @end

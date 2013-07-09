@@ -10,11 +10,11 @@
 
 @interface UserListController : UITableViewController
 
+@property(nonatomic, readonly) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) NSString* errorMessage;
 @property(nonatomic, strong) NSArray* users;
 
 //override
-- (NSOperation*)dataRequestOperation;
-- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock;
+- (NSOperation*)dataRequestOperationWithCursor:(NSString*)cursor completionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock;
 
 @end

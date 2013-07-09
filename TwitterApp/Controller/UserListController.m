@@ -8,6 +8,7 @@
 
 #import "ErrorCell.h"
 #import "LoadingCell.h"
+#import "NotificationView.h"
 #import "ProfileController.h"
 #import "TweetEntity.h"
 #import "UIImage+TwitterApp.h"
@@ -18,20 +19,14 @@
 
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic) BOOL allUsersLoaded;
+@property(nonatomic, strong) NSString* cursor;
 @property(nonatomic, weak) NSOperation* runningRequestDataOperation;
 
 @end
 
 @implementation UserListController
 
-- (void)setUsers:(NSArray *)users {
-    
-    _users = users;
-    
-    if ([self isViewLoaded]) {
-        [self didEndRefreshing];
-    }
-}
+@synthesize notificationViewPlaceholderView = _notificationViewPlaceholderView;
 
 - (void)setErrorMessage:(NSString *)errorMessage {
     
@@ -41,6 +36,20 @@
         [self didEndRefreshing];
     }
 }
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
+
 
 - (void)dealloc {
     
@@ -64,21 +73,7 @@
     
     [self willBeginRefreshing];
     
-    __weak typeof(self) weakSelf = self;
-    
-    self.runningRequestDataOperation = [self dataRequestOperationWithCompletionBlock:^(NSArray *users, NSString *nextCursor, NSError *error) {
-        
-        if (error) {
-            weakSelf.errorMessage = error.description;
-        }
-        else if (!users.count) {
-            weakSelf.errorMessage = @"No users found";
-        }
-        else {
-            
-            weakSelf.users = users;
-        }
-    }];
+    [self requestData];
 }
 
 #pragma mark - Table view data source
@@ -86,7 +81,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    if (self.allUsersLoaded) {
+    if (self.allUsersLoaded || self.users.count==0) {
         return 1;
     }
     else {
@@ -145,7 +140,7 @@
     }
     else {
         
-        //[self.dataSource loadOldTweets];
+        [self requestData];
         
         static NSString *CellIdentifier = @"LoadingCell";
         LoadingCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -170,10 +165,20 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
+}
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
     
     UserEntity* user = self.users[indexPath.row];
     
@@ -181,6 +186,68 @@
     profileController.user = user;
     
     [self.navigationController pushViewController:profileController animated:YES];
+}
+
+#pragma mark -
+
+- (void)requestData {
+    
+    NSLog(@"request data");
+    
+    if (self.runningRequestDataOperation) {
+        NSLog(@"already loading data");
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningRequestDataOperation = [self dataRequestOperationWithCursor:self.cursor completionBlock:^(NSArray *users, NSString *nextCursor, NSError *error) {
+        
+        if (error) {
+            weakSelf.errorMessage = error.description;
+        }
+        else if (!users.count) {
+            weakSelf.errorMessage = @"No users found";
+        }
+        else {
+            
+            if (nextCursor.integerValue==0) {
+                weakSelf.allUsersLoaded = YES;
+            }
+            
+            weakSelf.cursor = nextCursor;
+            
+            if (!weakSelf.users.count) {
+                
+                weakSelf.users = users;
+                [weakSelf didEndRefreshing];
+                
+            }
+            else {
+                
+                weakSelf.users = [weakSelf.users arrayByAddingObjectsFromArray:users];
+                
+                [weakSelf.tableView beginUpdates];
+                
+                NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:users.count];
+                for (NSInteger i=0; i<users.count; i++) {
+                    [indexPaths addObject:[NSIndexPath indexPathForRow:weakSelf.users.count-users.count+i inSection:0]];
+                }
+                
+                [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                
+                if (weakSelf.allUsersLoaded) {
+                    
+                    NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
+                    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                    
+                    [NotificationView showInView:self.notificationViewPlaceholderView message:@"All users loaded"];
+                }
+                
+                [weakSelf.tableView endUpdates];
+            }
+        }
+    }];
 }
 
 #pragma mark -
@@ -223,7 +290,7 @@
 
 #pragma mark -
 
-- (NSOperation*)dataRequestOperationWithCompletionBlock:(void (^)(NSArray *followers, NSString* nextCursor, NSError *error))completionBlock {
+- (NSOperation*)dataRequestOperationWithCursor:(NSString*)cursor completionBlock:(void (^)(NSArray *users, NSString* nextCursor, NSError *error))completionBlock {
     return nil;
 }
 

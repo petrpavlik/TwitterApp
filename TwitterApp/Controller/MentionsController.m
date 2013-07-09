@@ -88,8 +88,10 @@
     else {
         
         self.allTweetsLoaded = YES;
+        [self.tableView beginUpdates];
         NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
         [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableView endUpdates];
         
         [NotificationView showInView:self.notificationViewPlaceholderView message:@"All tweets loaded"];
     }

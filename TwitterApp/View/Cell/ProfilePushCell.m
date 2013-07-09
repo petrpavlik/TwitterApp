@@ -51,7 +51,7 @@
     disclosureImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:disclosureImageView];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     

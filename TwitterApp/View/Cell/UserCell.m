@@ -57,7 +57,7 @@
     _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     

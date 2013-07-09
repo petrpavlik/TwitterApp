@@ -87,4 +87,8 @@
     return [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
 }
 
+- (UIImage*)separatorImage {
+    return [UIImage imageNamed:@"Image-Separator"];
+}
+
 @end

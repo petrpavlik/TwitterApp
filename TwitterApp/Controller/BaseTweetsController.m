@@ -379,6 +379,11 @@
     }
     
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
     [TweetController presentAsReplyToTweet:tweet inViewController:self];
     
 }

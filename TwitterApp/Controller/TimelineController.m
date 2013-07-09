@@ -48,6 +48,7 @@
     
     self.title = @"Timeline";
     self.tabBarItem.title = self.title;
+    self.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];
     self.restorationIdentifier = @"TimelineController";
     self.restorationClass = [self class];
     self.tableView.restorationIdentifier = @"TableView";
