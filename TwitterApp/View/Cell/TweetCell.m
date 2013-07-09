@@ -26,6 +26,10 @@
 @property(nonatomic, strong) UIView* quickAccessView;
 @property(nonatomic, strong) UIView* panDetectView;
 
+@property(nonatomic, strong) UIButton* favoriteButton;
+@property(nonatomic, strong) UIButton* retweetButton;
+
+
 @end
 
 @implementation TweetCell
@@ -55,6 +59,18 @@
     }
     
     return _mentionsDictonary;
+}
+
+- (void)setRetweetedByUser:(BOOL)retweetedByUser {
+
+    _retweetedByUser = retweetedByUser;
+    self.retweetButton.selected = retweetedByUser;
+}
+
+- (void)setFavoritedByUser:(BOOL)favoritedByUser {
+    
+    _favoritedByUser = favoritedByUser;
+    self.favoriteButton.selected = favoritedByUser;
 }
 
 #pragma mark -
@@ -523,33 +539,32 @@
     
     quickAccessView.tintColor = skin.linkColor;
     
-    UIImageView* replyImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"]];
-    replyImage.translatesAutoresizingMaskIntoConstraints = NO;
-    replyImage.contentMode = UIViewContentModeCenter;
-    [replyImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(replySelected)]];
-    replyImage.userInteractionEnabled = YES;
-    [quickAccessView addSubview:replyImage];
+    UIButton* replyButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    replyButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [replyButton addTarget:self action:@selector(replySelected) forControlEvents:UIControlEventTouchUpInside];
+    [replyButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Reply"] forState:UIControlStateNormal];
     
-    UIImageView* retweetImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"]];
-    retweetImage.translatesAutoresizingMaskIntoConstraints = NO;
-    retweetImage.contentMode = UIViewContentModeCenter;
-    [retweetImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(retweetSelected)]];
-    retweetImage.userInteractionEnabled = YES;
-    [quickAccessView addSubview:retweetImage];
+    [quickAccessView addSubview:replyButton];
     
-    UIImageView* favoriteImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"]];
-    favoriteImage.translatesAutoresizingMaskIntoConstraints = NO;
-    favoriteImage.contentMode = UIViewContentModeCenter;
-    [favoriteImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(favoriteSelected)]];
-    favoriteImage.userInteractionEnabled = YES;
-    [quickAccessView addSubview:favoriteImage];
+    UIButton* retweetButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    retweetButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [retweetButton addTarget:self action:@selector(retweetSelected) forControlEvents:UIControlEventTouchUpInside];
+    [retweetButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Retweet"] forState:UIControlStateNormal];
+    [quickAccessView addSubview:retweetButton];
+    self.retweetButton = retweetButton;
     
-    UIImageView* otherImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] highlightedImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"]];
-    otherImage.translatesAutoresizingMaskIntoConstraints = NO;
-    otherImage.contentMode = UIViewContentModeCenter;
-    [otherImage addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(otherActionSelected)]];
-    otherImage.userInteractionEnabled = YES;
-    [quickAccessView addSubview:otherImage];
+    UIButton* favoriteButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    favoriteButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [favoriteButton addTarget:self action:@selector(favoriteSelected) forControlEvents:UIControlEventTouchUpInside];
+    [favoriteButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Favorite"] forState:UIControlStateNormal];
+    [quickAccessView addSubview:favoriteButton];
+    self.favoriteButton = favoriteButton;
+    
+    UIButton* otherButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [otherButton setImage:[UIImage imageNamed:@"Btn-Tweet-Detail-Other"] forState:UIControlStateNormal];
+    [otherButton addTarget:self action:@selector(otherActionSelected) forControlEvents:UIControlEventTouchUpInside];
+    otherButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [quickAccessView addSubview:otherButton];
     
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -557,9 +572,9 @@
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyImage][retweetImage(replyImage)][favoriteImage(replyImage)][otherImage(replyImage)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyImage, retweetImage, favoriteImage, otherImage)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyImage attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
                                                                  attribute:NSLayoutAttributeLeading

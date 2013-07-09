@@ -222,6 +222,9 @@
         cell.nameLabel.text = tweet.user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", tweet.user.screenName];
         
+        cell.retweetedByUser = tweet.retweeted.boolValue;
+        cell.favoritedByUser = tweet.favorited.boolValue;
+        
         if (NO && self.savedImagesForVisibleCells[tweet.tweetId]) {
             
             cell.avatarImageView.image = self.savedImagesForVisibleCells[tweet.tweetId];
@@ -611,7 +614,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
-    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2+scrollView.contentInset.top);
 }
 
 @end
