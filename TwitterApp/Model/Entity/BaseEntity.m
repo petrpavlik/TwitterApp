@@ -1,9 +1,9 @@
 //
 //  BaseEntity.m
-//  Felixus
+//  Base Entity
 //
 //  Created by Petr Pavlik on 12/30/12.
-//  Copyright (c) 2012 uLikeIT. All rights reserved.
+//  Copyright (c) 2012 Petr Pavlik. All rights reserved.
 //
 
 #import "BaseEntity.h"
@@ -43,7 +43,7 @@ EntityToDictionaryKeyAdjusterBlock entityToDictionaryKeyAdjusterBlock;
     
     NSError* error;
     
-    NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:[JSON dataUsingEncoding:NSUTF8StringEncoding] options:NULL error:&error];
+    NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:[JSON dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     
     if (error || !dictionary) {
         return nil;
@@ -98,25 +98,13 @@ EntityToDictionaryKeyAdjusterBlock entityToDictionaryKeyAdjusterBlock;
     }
     
     NSError* error;
-    NSData* data = [NSJSONSerialization dataWithJSONObject:dictionary options:NULL error:&error];
+    NSData* data = [NSJSONSerialization dataWithJSONObject:dictionary options:0 error:&error];
     
     if (data) {
         return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     }
     
     return nil;
-}
-
-- (NSDate*)dateFromString:(NSString*)dateString {
-    
-    NSRange range = [dateString rangeOfString:@":" options:NSBackwardsSearch];
-    dateString = [dateString stringByReplacingCharactersInRange:range withString:@""];
-    
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    //[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ssZZZZ"];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mmZZZZ"];
-    
-    return [dateFormatter dateFromString:dateString];
 }
 
 - (NSArray*)arrayByEliminatingBaseEntitiesInArray:(NSArray*)array {
