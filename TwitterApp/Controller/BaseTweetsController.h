@@ -7,6 +7,7 @@
 //
 
 #import "TweetCell.h"
+#import "TweetDetailCell.h"
 #import <UIKit/UIKit.h>
 
 @class TweetEntity;

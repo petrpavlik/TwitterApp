@@ -234,6 +234,10 @@
 		4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DC0D176518C9002578FF /* MHFacebookImageViewer.m */; };
 		4BF0DC12176518C9002578FF /* Done.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC0F176518C9002578FF /* Done.png */; };
 		4BF0DC13176518C9002578FF /* Done@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC10176518C9002578FF /* Done@2x.png */; };
+		4BF2DCE8178F45B50007C343 /* TweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2DCE7178F45B50007C343 /* TweetsController.m */; };
+		4BF2DCE9178F45B50007C343 /* TweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2DCE7178F45B50007C343 /* TweetsController.m */; };
+		4BF2DCEC178F4CEA0007C343 /* UserTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */; };
+		4BF2DCED178F4CEA0007C343 /* UserTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */; };
 		4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
 		4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B9174A89A200DA3318 /* PPLabel.m */; };
 		4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BF9B6BB174A8C2E00DA3318 /* CoreText.framework */; };
@@ -438,6 +442,10 @@
 		4BF0DC0D176518C9002578FF /* MHFacebookImageViewer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MHFacebookImageViewer.m; path = Vendor/MHFBImageViewController/MHFacebookImageViewer.m; sourceTree = SOURCE_ROOT; };
 		4BF0DC0F176518C9002578FF /* Done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Done.png; sourceTree = "<group>"; };
 		4BF0DC10176518C9002578FF /* Done@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Done@2x.png"; sourceTree = "<group>"; };
+		4BF2DCE6178F45B50007C343 /* TweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetsController.h; path = Controller/TweetsController.h; sourceTree = "<group>"; };
+		4BF2DCE7178F45B50007C343 /* TweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetsController.m; path = Controller/TweetsController.m; sourceTree = "<group>"; };
+		4BF2DCEA178F4CEA0007C343 /* UserTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTweetsController.h; path = Controller/UserTweetsController.h; sourceTree = "<group>"; };
+		4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTweetsController.m; path = Controller/UserTweetsController.m; sourceTree = "<group>"; };
 		4BF9B6B4174A878D00DA3318 /* WebController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebController.h; path = Controller/WebController.h; sourceTree = "<group>"; };
 		4BF9B6B5174A878D00DA3318 /* WebController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebController.m; path = Controller/WebController.m; sourceTree = "<group>"; };
 		4BF9B6B8174A89A200DA3318 /* PPLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPLabel.h; path = View/Label/PPLabel.h; sourceTree = "<group>"; };
@@ -889,6 +897,10 @@
 				4B93D80A17823069005BE43C /* MentionsController.m */,
 				4B938B4917883345002068DB /* FavoritesController.h */,
 				4B938B4A17883345002068DB /* FavoritesController.m */,
+				4BF2DCE6178F45B50007C343 /* TweetsController.h */,
+				4BF2DCE7178F45B50007C343 /* TweetsController.m */,
+				4BF2DCEA178F4CEA0007C343 /* UserTweetsController.h */,
+				4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1268,6 +1280,7 @@
 				4B6629A4177387FA00FA146A /* UserTitleView.m in Sources */,
 				4B6629A5177387FA00FA146A /* LoadMoreCell.m in Sources */,
 				4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */,
+				4BF2DCED178F4CEA0007C343 /* UserTweetsController.m in Sources */,
 				4B6629A6177387FA00FA146A /* GapTweetEntity.m in Sources */,
 				4B6629A7177387FA00FA146A /* NotificationView.m in Sources */,
 				4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */,
@@ -1282,6 +1295,7 @@
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
 				4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
+				4BF2DCE9178F45B50007C343 /* TweetsController.m in Sources */,
 				4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */,
 				4B6629B1177387FA00FA146A /* TweetDetailCell.m in Sources */,
 			);
@@ -1326,6 +1340,7 @@
 				4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */,
 				4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */,
 				4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */,
+				4BF2DCEC178F4CEA0007C343 /* UserTweetsController.m in Sources */,
 				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
 				4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */,
@@ -1340,6 +1355,7 @@
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
+				4BF2DCE8178F45B50007C343 /* TweetsController.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
 				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
 			);

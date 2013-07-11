@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "BaseTweetsController.h"
+#import "TweetsController.h"
 
-@interface MentionsController : BaseTweetsController
+@interface MentionsController : TweetsController
 
 @end

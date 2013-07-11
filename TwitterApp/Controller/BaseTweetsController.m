@@ -182,7 +182,37 @@
 
 - (CGFloat)heightForTweetDetail:(TweetEntity*)tweet {
     
-    return 300;
+    TweetEntity* retweet = nil;
+    
+    if (tweet.retweetedStatus) {
+        
+        retweet = tweet;
+        tweet = tweet.retweetedStatus;
+    }
+    
+    NSString* tweetText = [tweet.text stringByStrippingHTMLTags];
+    
+    NSArray* urls = tweet.entities[@"urls"];
+    for (NSDictionary* url in urls) {
+        
+        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
+    NSArray* media = tweet.entities[@"media"];
+    for (NSDictionary* url in media) {
+        
+        tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
+    CGFloat mediaHeight = 0;
+    
+    if (media.count) {
+        
+        mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
+    }
+    
+    
+    return [TweetDetailCell requiredHeightForTweetText:tweetText] + mediaHeight;
 }
 
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath {
@@ -329,6 +359,70 @@
     
     if (tweet.place[@"name"]) {
         cell.locationLabel.text = [NSString stringWithFormat:@"from %@", tweet.place[@"name"]];
+    }
+    
+    cell.retweetedByUser = tweet.retweeted.boolValue;
+    cell.favoritedByUser = tweet.favorited.boolValue;
+    
+    NSString* expandedTweet = [tweet.text stringByStrippingHTMLTags];
+    
+    NSArray* urls = tweet.entities[@"urls"];
+    NSArray* media = tweet.entities[@"media"];
+    NSArray* hashtags = tweet.entities[@"hashtags"];
+    NSArray* mentions = tweet.entities[@"user_mentions"];
+    
+    for (NSDictionary* url in urls) {
+        expandedTweet = [expandedTweet stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
+    for (NSDictionary* url in media) {
+        expandedTweet = [expandedTweet stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
+    cell.tweetTextLabel.text = expandedTweet;
+    
+    for (NSDictionary* url in urls) {
+        
+        NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+        if (expandedUrl) {
+            [cell addURL:expandedUrl atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+        }
+        else {
+            //TODO: should not happen, log an error
+            NSLog(@"could not convert '%@' to NSURL", url[@"expanded_url"]);
+        }
+    }
+    
+    for (NSDictionary* url in media) {
+        
+        [cell addURL:[NSURL URLWithString:url[@"media_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+    }
+    
+    if (media.count) {
+        
+        [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil imageProcessingBlock:^UIImage *(UIImage *image) {
+            
+            UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);
+            [image drawAtPoint:CGPointZero];
+            image = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+            
+            return image;
+        }];
+        cell.mediaImageView.hidden = NO;
+        [cell.mediaImageView  setupImageViewer];
+    }
+    
+    for (NSDictionary* item in hashtags) {
+        
+        NSString* hashtag = [NSString stringWithFormat:@"#%@", item[@"text"]];
+        [cell addHashtag:hashtag atRange:[expandedTweet rangeOfString:hashtag options:NSCaseInsensitiveSearch]];
+    }
+    
+    for (NSDictionary* item in mentions) {
+        
+        NSString* mention = [NSString stringWithFormat:@"@%@", item[@"screen_name"]];
+        [cell addMention:mention atRange:[expandedTweet rangeOfString:mention options:NSCaseInsensitiveSearch]];
     }
     
     return cell;

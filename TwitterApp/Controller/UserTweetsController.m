@@ -1,38 +1,35 @@
 //
-//  MentionsController.m
+//  UserTweetsController.m
 //  TwitterApp
 //
-//  Created by Petr Pavlik on 7/1/13.
+//  Created by Petr Pavlik on 7/11/13.
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "MentionsController.h"
+#import "UserTweetsController.h"
 
-@interface MentionsController ()
+@interface UserTweetsController ()
 
 @end
 
-@implementation MentionsController
+@implementation UserTweetsController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = @"Mentions";
-    
-    
+    self.title = [NSString stringWithFormat:@"@%@", self.screenName];
 }
 
 - (NSString*)tweetsPersistenceIdentifier {
     
-    return @"mentions";
+    return nil;
 }
 
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock {
     
-    return [TweetEntity requestMentionsTimelineWithMaxId:maxId sinceId:sinceId completionBlock:completionBlock];
+    return [TweetEntity requestUserTimelineWithScreenName:self.screenName maxId:maxId sinceId:sinceId completionBlock:completionBlock];;
 }
-
 
 @end

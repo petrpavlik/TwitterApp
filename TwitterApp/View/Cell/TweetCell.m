@@ -18,8 +18,7 @@
 @property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
 @property(nonatomic, strong) NSMutableDictionary* mentionsDictonary;
 @property(nonatomic, strong) UIView* slidingContentView;
-@property(nonatomic, strong) UIImageView* rightActionImageView;
-@property(nonatomic, strong) UIImageView* leftActionImageView;
+
 @property(nonatomic, strong) NSTimer* linkLongPressTimer;
 
 @property(nonatomic, strong) UIScrollView* dummyScrollView;
@@ -28,7 +27,6 @@
 
 @property(nonatomic, strong) UIButton* favoriteButton;
 @property(nonatomic, strong) UIButton* retweetButton;
-
 
 @end
 
@@ -245,7 +243,6 @@
     [self.mentionsDictonary removeAllObjects];
     
     self.dummyScrollView.contentOffset = CGPointMake(0, 0);
-
 }
 
 - (void)layoutSubviews {
