@@ -18,6 +18,7 @@
 @property(nonatomic, strong) NSArray* olderRelatedTweets;
 @property(nonatomic, strong) NSArray* replies;
 @property(nonatomic, weak) NSOperation* runningOlderRelatedTweetRequest;
+@property(nonatomic, weak) NSOperation* runningOlderRelatedTweetsRequest;
 @property(nonatomic, weak) NSOperation* runningRepliesRequest;
 
 @end
@@ -28,6 +29,7 @@
 
     [self.runningOlderRelatedTweetRequest cancel];
     [self.runningRepliesRequest cancel];
+    [self.runningOlderRelatedTweetsRequest cancel];
 }
 
 - (void)viewDidLoad
@@ -41,7 +43,9 @@
     [self requestReplies];
     
     if (self.tweet.inReplyToStatusId) {
-        [self requestOlderRelatedTweetToTweetId:self.tweet.inReplyToStatusId];
+        
+        //[self requestOlderRelatedTweetToTweetId:self.tweet.inReplyToStatusId];
+        [self requestOlderRelatedTweets];
     }
 }
 
@@ -183,6 +187,31 @@
             
             if (tweet.inReplyToStatusId && ![tweet.inReplyToStatusId isEqualToString:tweet.tweetId]) { //second condition should never be YES, but I rather added it
                 [weakSelf requestOlderRelatedTweetToTweetId:tweet.inReplyToStatusId];
+            }
+        }
+    }];
+}
+
+- (void)requestOlderRelatedTweets {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningOlderRelatedTweetsRequest = [TweetEntity requestSearchOlderRelatedTweetsWithTweetId:self.tweet.inReplyToStatusId screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
+        
+        if (tweets.count) {
+            
+            if (!weakSelf.olderRelatedTweets) {
+                weakSelf.olderRelatedTweets = tweets;
+            }
+            else {
+                weakSelf.olderRelatedTweets = [weakSelf.olderRelatedTweets arrayByAddingObjectsFromArray:tweets];
+            }
+            
+            [self.tableView reloadData];
+            
+            if ([weakSelf.olderRelatedTweets.lastObject inReplyToStatusId]) {
+                
+                [weakSelf requestOlderRelatedTweetToTweetId:[weakSelf.olderRelatedTweets.lastObject inReplyToStatusId]];
             }
         }
     }];

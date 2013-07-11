@@ -34,7 +34,10 @@
         self.inReplyToStatusId = value;
     }
     else if ([key isEqualToString:@"InReplyToStatusId"]) {
-        //do nothing
+        
+        if ([value isKindOfClass:[NSString class]]) {
+            self.inReplyToStatusId = value;
+        }
     }
     else {
         [super setValue:value forKey:key];
@@ -372,6 +375,56 @@
             TweetEntity* reply = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
             if ([reply.inReplyToStatusId isEqualToString:tweetId]) {
                 [tweets addObject:reply];
+            }
+        }
+        
+        block(tweets, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
++ (NSOperation*)requestSearchOlderRelatedTweetsWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    NSParameterAssert(tweetId);
+    NSParameterAssert(screenName);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSDictionary* parameters = @{@"q": [NSString stringWithFormat:@"from:%@ OR to:%@", screenName, screenName], @"count": @"100", @"result_type": @"recent", @"max_id": tweetId};
+    
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"search/tweets.json" parameters:parameters];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        JSON = JSON[@"statuses"];
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            
+            if (tweets.count) {
+                
+                if ([tweets.lastObject inReplyToStatusId]) {
+                    
+                    if ([[tweets.lastObject inReplyToStatusId] isEqualToString:tweet.tweetId]) {
+                        [tweets addObject:tweet];
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+            else {
+                [tweets addObject:tweet];
             }
         }
         
