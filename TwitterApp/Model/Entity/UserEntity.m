@@ -240,4 +240,33 @@ static UserEntity* currentUser;
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)searchUsersWithQuery:(NSString*)query count:(NSInteger)count page:(NSInteger)page completionBlock:(void (^)(NSArray* users, NSError* error))block {
+    
+    NSParameterAssert(query.length);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"users/search.json" parameters:@{@"q": query, @"count": @(count), @"page": @(page)}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* users = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* userAsDictionary in JSON) {
+            
+            UserEntity* user = [[UserEntity alloc] initWithDictionary:userAsDictionary];
+            [users addObject:user];
+        }
+        
+        block(users, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

@@ -20,6 +20,7 @@
 #import "NavigationController.h"
 #import "NetImageView.h"
 #import <PocketAPI.h>
+#import "SearchController.h"
 #import "TimelineController.h"
 #import "TwitterAppWindow.h"
 
@@ -105,6 +106,12 @@
     mentionsNavigationController.restorationIdentifier = @"MentionsNavigationController";
     mentionsNavigationController.viewControllers = @[mentionsController];
     
+    SearchController* searchController = [SearchController new];
+    UINavigationController* searchNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    searchNavigationController.restorationIdentifier = @"SearchNavigationController";
+    searchNavigationController.viewControllers = @[searchController];
+
+    
     MyProfileController* profileController = [MyProfileController new];
     profileController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Profile"];
     profileController.tabBarItem.title = @"Profile";
@@ -112,7 +119,7 @@
     profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
     profileNavigationController.viewControllers = @[profileController];
     
-    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, profileNavigationController];
+    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];
     
     return YES;
 }

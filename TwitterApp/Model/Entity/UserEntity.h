@@ -49,5 +49,7 @@
 - (NSOperation*)requestFollowingWithCompletionBlock:(void (^)(NSError* error))block;
 - (NSOperation*)requestUnfollowingWithCompletionBlock:(void (^)(NSError* error))block;
 
++ (NSOperation*)searchUsersWithQuery:(NSString*)query count:(NSInteger)count page:(NSInteger)page completionBlock:(void (^)(NSArray* users, NSError* error))block;
+
 
 @end

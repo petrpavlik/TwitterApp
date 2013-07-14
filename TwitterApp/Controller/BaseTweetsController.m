@@ -25,6 +25,9 @@
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+TwitterApp.h"
 #import "WebController.h"
+#import "TweetDetailController.h"
+#import "UserTweetsController.h"
+#import "SearchTweetsController.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -430,6 +433,40 @@
 
 #pragma mark -
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
+    
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    NSParameterAssert(tweet);
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
+    if ([tweet isKindOfClass:[GapTweetEntity class]]) {
+        
+        /*GapTweetEntity* gapTweet = (GapTweetEntity*)tweet;
+        gapTweet.loading = @(YES);
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        [self requestTweetsSinceId:[self.tweets[indexPath.row+1] tweetId] withMaxId:[self.tweets[indexPath.row-1] tweetId]];*/
+    }
+    else {
+        
+        TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
+        tweetDetailController.tweet = tweet;
+        
+        [self.navigationController pushViewController:tweetDetailController animated:YES];
+    }
+}
+
 
 #pragma mark -
 
@@ -450,20 +487,20 @@
     
     NSLog(@"selected hashtag %@", hashstag);
     
-    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-    timelineController.searchQuery = hashstag;
+    SearchTweetsController* searchController = [SearchTweetsController new];
+    searchController.searchExpression = hashstag;
     
-    [self.navigationController pushViewController:timelineController animated:YES];
+    [self.navigationController pushViewController:searchController animated:YES];
 }
 
 - (void)tweetCell:(TweetCell *)cell didSelectMention:(NSString *)mention {
     
     NSLog(@"selected mention %@", mention);
     
-    TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-    timelineController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    UserTweetsController* userTweetsController = [UserTweetsController new];
+    userTweetsController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
     
-    [self.navigationController pushViewController:timelineController animated:YES];
+    [self.navigationController pushViewController:userTweetsController animated:YES];
 }
 
 

@@ -77,6 +77,8 @@
     
     if (tweets.count) {
         
+        self.tweets = [self.tweets arrayByAddingObjectsFromArray:tweets];
+        
         [self.tableView beginUpdates];
         
         NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:tweets.count];
