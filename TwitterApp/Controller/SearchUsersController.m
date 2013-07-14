@@ -10,6 +10,7 @@
 #import "LoadingCell.h"
 #import "NetImageView.h"
 #import "NotificationView.h"
+#import "ProfileController.h"
 #import "SearchUsersController.h"
 #import "UIImage+TwitterApp.h"
 #import "UserCell.h"
@@ -161,6 +162,21 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2+scrollView.contentInset.top);
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
+    
+    UserEntity* user = self.users[indexPath.row];
+    
+    ProfileController* profileController = [[ProfileController alloc] initWithStyle:UITableViewStylePlain];
+    profileController.user = user;
+    
+    [self.navigationController pushViewController:profileController animated:YES];
 }
 
 #pragma mark -

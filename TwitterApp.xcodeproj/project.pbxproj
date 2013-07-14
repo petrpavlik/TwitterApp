@@ -1561,7 +1561,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
