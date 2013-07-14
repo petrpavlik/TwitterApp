@@ -174,7 +174,7 @@
     if (indexPath.row==0) {
         
         SearchTweetsController* searchTweetsController = [SearchTweetsController new];
-        searchTweetsController.searchExpression = self.user.screenName;
+        searchTweetsController.searchExpression = [NSString stringWithFormat:@"from:%@", self.user.screenName];
         
         [self.navigationController pushViewController:searchTweetsController animated:YES];
     }
