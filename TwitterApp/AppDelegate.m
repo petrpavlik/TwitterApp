@@ -95,6 +95,8 @@
     rootTabBarController.tabBar.tintColor = self.skin.linkColor;
     
     TimelineController* timelineController = [[TimelineController alloc] init];
+    timelineController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];
+    timelineController.tabBarItem.title = @"Timeline";
     UINavigationController* timelineNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
     timelineNavigationController.restorationIdentifier = @"TimelineNavigationController";
     timelineNavigationController.viewControllers = @[timelineController];
@@ -107,6 +109,8 @@
     mentionsNavigationController.viewControllers = @[mentionsController];
     
     SearchController* searchController = [SearchController new];
+    searchController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Search"];
+    searchController.tabBarItem.title = @"Search";
     UINavigationController* searchNavigationController = [rootTabBarController.storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
     searchNavigationController.restorationIdentifier = @"SearchNavigationController";
     searchNavigationController.viewControllers = @[searchController];

@@ -231,6 +231,10 @@
 		4BEEA6C61792B32C005FCC90 /* SearchFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEEA6C41792B32C005FCC90 /* SearchFieldCell.m */; };
 		4BEEA6C91792BAB8005FCC90 /* SearchUsersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEEA6C81792BAB8005FCC90 /* SearchUsersController.m */; };
 		4BEEA6CA1792BAB8005FCC90 /* SearchUsersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEEA6C81792BAB8005FCC90 /* SearchUsersController.m */; };
+		4BEEA6CD17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BEEA6CB17933E2D005FCC90 /* Icon-TabBar-Search.png */; };
+		4BEEA6CE17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BEEA6CB17933E2D005FCC90 /* Icon-TabBar-Search.png */; };
+		4BEEA6CF17933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BEEA6CC17933E2D005FCC90 /* Icon-TabBar-Search@2x.png */; };
+		4BEEA6D017933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BEEA6CC17933E2D005FCC90 /* Icon-TabBar-Search@2x.png */; };
 		4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */; };
 		4BF0DBFC17649598002578FF /* BasementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF0DBFB17649598002578FF /* BasementCell.m */; };
 		4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */; };
@@ -442,6 +446,8 @@
 		4BEEA6C41792B32C005FCC90 /* SearchFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchFieldCell.m; path = View/Cell/SearchFieldCell.m; sourceTree = "<group>"; };
 		4BEEA6C71792BAB8005FCC90 /* SearchUsersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchUsersController.h; path = Controller/SearchUsersController.h; sourceTree = "<group>"; };
 		4BEEA6C81792BAB8005FCC90 /* SearchUsersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchUsersController.m; path = Controller/SearchUsersController.m; sourceTree = "<group>"; };
+		4BEEA6CB17933E2D005FCC90 /* Icon-TabBar-Search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-TabBar-Search.png"; path = "Image/Icon-TabBar-Search.png"; sourceTree = "<group>"; };
+		4BEEA6CC17933E2D005FCC90 /* Icon-TabBar-Search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-TabBar-Search@2x.png"; path = "Image/Icon-TabBar-Search@2x.png"; sourceTree = "<group>"; };
 		4BF0DBF717648A62002578FF /* UIActionSheet+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIActionSheet+TwitterApp.h"; path = "Category/UIActionSheet+TwitterApp.h"; sourceTree = "<group>"; };
 		4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIActionSheet+TwitterApp.m"; path = "Category/UIActionSheet+TwitterApp.m"; sourceTree = "<group>"; };
 		4BF0DBFA17649598002578FF /* BasementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BasementCell.h; path = View/Cell/BasementCell.h; sourceTree = "<group>"; };
@@ -811,6 +817,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BEEA6CB17933E2D005FCC90 /* Icon-TabBar-Search.png */,
+				4BEEA6CC17933E2D005FCC90 /* Icon-TabBar-Search@2x.png */,
 				4BB48454178C948100A30BC4 /* Icon-TabBar-Home.png */,
 				4BB48455178C948100A30BC4 /* Icon-TabBar-Home@2x.png */,
 				4BB48456178C948100A30BC4 /* Icon-TabBar-Mentions.png */,
@@ -1055,6 +1063,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B6629C2177387FA00FA146A /* InfoPlist.strings in Resources */,
+				4BEEA6CE17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */,
 				4B6629C3177387FA00FA146A /* Default.png in Resources */,
 				4B6629C4177387FA00FA146A /* Default@2x.png in Resources */,
 				4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */,
@@ -1068,6 +1077,7 @@
 				4B6629CC177387FA00FA146A /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4B6629CD177387FA00FA146A /* Icon-Retweet-Normal.png in Resources */,
 				4BFDA463177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
+				4BEEA6D017933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */,
 				4B6629CE177387FA00FA146A /* Icon-Retweet-Normal@2x.png in Resources */,
 				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
@@ -1118,6 +1128,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B7428951742D9CE00AEB85C /* InfoPlist.strings in Resources */,
+				4BEEA6CD17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */,
 				4B74289D1742D9CE00AEB85C /* Default.png in Resources */,
 				4B74289F1742D9CE00AEB85C /* Default@2x.png in Resources */,
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
@@ -1131,6 +1142,7 @@
 				4BAEB3DC17522B950027A0D1 /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4BAEB3DD17522B950027A0D1 /* Icon-Retweet-Normal.png in Resources */,
 				4BFDA462177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
+				4BEEA6CF17933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */,
 				4BAEB3DE17522B950027A0D1 /* Icon-Retweet-Normal@2x.png in Resources */,
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
@@ -1547,6 +1559,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
 				INFOPLIST_FILE = "TwitterApp/TwitterApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
@@ -1569,6 +1582,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
 				INFOPLIST_FILE = "TwitterApp/TwitterApp-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",

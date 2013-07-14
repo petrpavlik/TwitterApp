@@ -11,8 +11,8 @@
 #import "MyProfileController.h"
 #import "ProfileCell.h"
 #import "ProfilePushCell.h"
+#import "SearchTweetsController.h"
 #import "UserEntity.h"
-#import "TimelineController.h"
 #import "UIImage+TwitterApp.h"
 
 @interface MyProfileController ()
@@ -166,10 +166,10 @@
     
     if (indexPath.row==0) {
         
-        TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-        timelineController.screenName = self.user.screenName;
+        SearchTweetsController* searchTweetsController = [SearchTweetsController new];
+        searchTweetsController.searchExpression = self.user.screenName;
         
-        [self.navigationController pushViewController:timelineController animated:YES];
+        [self.navigationController pushViewController:searchTweetsController animated:YES];
     }
     else if (indexPath.row==1) {
         

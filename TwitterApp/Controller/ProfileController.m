@@ -12,7 +12,7 @@
 #import "ProfileController.h"
 #import "ProfileCell.h"
 #import "ProfilePushCell.h"
-#import "TimelineController.h"
+#import "SearchTweetsController.h"
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
 #import "WebController.h"
@@ -51,6 +51,8 @@
     
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.title = [NSString stringWithFormat:@"@%@", self.user.screenName];
     
     [self requestData];
 }
@@ -171,10 +173,10 @@
     
     if (indexPath.row==0) {
         
-        TimelineController* timelineController = [[TimelineController alloc] initWithStyle:UITableViewStylePlain];
-        timelineController.screenName = self.user.screenName;
+        SearchTweetsController* searchTweetsController = [SearchTweetsController new];
+        searchTweetsController.searchExpression = self.user.screenName;
         
-        [self.navigationController pushViewController:timelineController animated:YES];
+        [self.navigationController pushViewController:searchTweetsController animated:YES];
     }
     else if (indexPath.row==1) {
         

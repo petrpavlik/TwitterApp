@@ -586,13 +586,6 @@
     [TweetController presentInViewController:self];
 }
 
-- (void)showBasement {
-    
-    [[[UIAlertView alloc] initWithTitle:Nil message:@"blah blah" delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-    
-    //[self.slidingViewController anchorTopViewTo:ECRight];
-}
-
 #pragma mark -
 
 - (void)validateTwitterAccountWithCompletionBlock:(void (^)(NSError* error))block {
@@ -625,7 +618,8 @@
             
         } else {
             
-            NSLog(@"No access granted %@", error);
+            [[[UIAlertView alloc] initWithTitle:@"Oh Shit!" message:@"Could not access your Twitter account. Haven't handled this scenario yet so the app will probably crash or something." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 block(nil);
             });
