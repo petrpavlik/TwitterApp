@@ -34,4 +34,11 @@
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_textField]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(_textField)]];
 }
 
+- (BOOL)resignFirstResponder {
+    
+    [self.textField resignFirstResponder];
+    
+    return [super resignFirstResponder];
+}
+
 @end

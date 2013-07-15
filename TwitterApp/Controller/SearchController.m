@@ -110,6 +110,14 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    for (UITableViewCell* cell in [self.tableView visibleCells]) {
+        
+        [cell resignFirstResponder];
+    }
+}
+
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
