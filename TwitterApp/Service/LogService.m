@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "LocalyticsSession.h"
+#import "Flurry.h"
 #import "LogService.h"
 
 @implementation LogService
@@ -28,10 +28,10 @@
     
     if (self) {
         
-        [[LocalyticsSession shared] startSession:@"3048d2b4028b670f856d4fc-f57032a8-d91f-11e2-0f5b-004a77f8b47f"];
+        [Flurry startSession:@"4KXXWFQNX9MYSFD52TJ5"];
         
         #ifdef DEBUG
-        [[LocalyticsSession shared] setLoggingEnabled:YES];
+        [Flurry setDebugLogEnabled:YES];
         #endif
     }
     
@@ -39,17 +39,24 @@
 }
 
 - (void)logError:(NSError*)error {
-    [self logEvent:kLogEventError userInfo:@{@"error": error}];
+    
+    NSParameterAssert(error);
+    [Flurry logError:@"App Error" message:Nil error:error];
 }
 
 - (void)logEvent:(NSString *)event userInfo:(NSDictionary *)userInfo {
     
-    NSParameterAssert(event);
-    [[LocalyticsSession shared] tagEvent:event attributes:userInfo];
+    NSParameterAssert(event.length);
+    [Flurry logEvent:event withParameters:userInfo];
 }
 
 + (void)instatiate {
     [LogService sharedInstance];
+}
+
+- (void)setUserId:(NSString*)userId {
+    
+    [Flurry setUserID:userId];
 }
 
 @end

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
+		4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
+		4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
 		4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
 		4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
@@ -59,7 +61,6 @@
 		4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
 		4B6629B1177387FA00FA146A /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
 		4B6629B3177387FA00FA146A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D991773386A002A577D /* QuartzCore.framework */; };
-		4B6629B4177387FA00FA146A /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8517732E55002A577D /* libLocalyticsAMP.a */; };
 		4B6629B5177387FA00FA146A /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
 		4B6629B6177387FA00FA146A /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
 		4B6629B7177387FA00FA146A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8A17732E8D002A577D /* SystemConfiguration.framework */; };
@@ -146,7 +147,6 @@
 		4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8A17732E8D002A577D /* SystemConfiguration.framework */; };
 		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
 		4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
-		4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8517732E55002A577D /* libLocalyticsAMP.a */; };
 		4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D9217733833002A577D /* HockeySDK.framework */; };
 		4B755D9717733833002A577D /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9417733833002A577D /* HockeySDK.xcconfig */; };
 		4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9517733833002A577D /* HockeySDKResources.bundle */; };
@@ -287,6 +287,8 @@
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
+		4B132D5817949BE500EFA90C /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.2.a; sourceTree = "<group>"; };
 		4B165EE71771D874004A09BC /* Image-Separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator.png"; path = "Image/Image-Separator.png"; sourceTree = "<group>"; };
 		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
 		4B16B2C1177503E1000FEFDD /* ErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorCell.h; path = View/Cell/ErrorCell.h; sourceTree = "<group>"; };
@@ -343,9 +345,6 @@
 		4B7428DB1742E4E900AEB85C /* UserEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserEntity.m; path = Model/Entity/UserEntity.m; sourceTree = "<group>"; };
 		4B754319177C829A005AF691 /* ProfilePushCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfilePushCell.h; path = View/Cell/ProfilePushCell.h; sourceTree = "<group>"; };
 		4B75431A177C829A005AF691 /* ProfilePushCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfilePushCell.m; path = View/Cell/ProfilePushCell.m; sourceTree = "<group>"; };
-		4B755D8517732E55002A577D /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLocalyticsAMP.a; path = Vendor/Localytics.bin/libLocalyticsAMP.a; sourceTree = SOURCE_ROOT; };
-		4B755D8617732E55002A577D /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsAmpSession.h; path = Vendor/Localytics.bin/LocalyticsAmpSession.h; sourceTree = SOURCE_ROOT; };
-		4B755D8717732E55002A577D /* LocalyticsSession.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics.bin/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
 		4B755D8817732E7A002A577D /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		4B755D8A17732E8D002A577D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4B755D8C17732E95002A577D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -493,13 +492,13 @@
 			files = (
 				4BFDA4591775FC2F007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B6629B3177387FA00FA146A /* QuartzCore.framework in Frameworks */,
-				4B6629B4177387FA00FA146A /* libLocalyticsAMP.a in Frameworks */,
 				4B6629B5177387FA00FA146A /* libsqlite3.dylib in Frameworks */,
 				4B6629B6177387FA00FA146A /* libz.dylib in Frameworks */,
 				4B6629B7177387FA00FA146A /* SystemConfiguration.framework in Frameworks */,
 				4B6629B8177387FA00FA146A /* AdSupport.framework in Frameworks */,
 				4B6629B9177387FA00FA146A /* CoreText.framework in Frameworks */,
 				4B6629BA177387FA00FA146A /* Accounts.framework in Frameworks */,
+				4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B6629BB177387FA00FA146A /* Social.framework in Frameworks */,
 				4B6629BC177387FA00FA146A /* UIKit.framework in Frameworks */,
 				4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */,
@@ -516,7 +515,6 @@
 				4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */,
 				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
-				4B755D90177331C7002A577D /* libLocalyticsAMP.a in Frameworks */,
 				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
 				4B755D8D17732E95002A577D /* libz.dylib in Frameworks */,
 				4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */,
@@ -528,6 +526,7 @@
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
+				4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -545,6 +544,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B132D5717949BE500EFA90C /* Flurry */ = {
+			isa = PBXGroup;
+			children = (
+				4B132D5817949BE500EFA90C /* Flurry.h */,
+				4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */,
+			);
+			name = Flurry;
+			path = Vendor/Flurry;
+			sourceTree = SOURCE_ROOT;
+		};
 		4B2A884B174576DF00CCE953 /* API */ = {
 			isa = PBXGroup;
 			children = (
@@ -776,16 +785,6 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
-		4B755D8417732E44002A577D /* Localytics */ = {
-			isa = PBXGroup;
-			children = (
-				4B755D8517732E55002A577D /* libLocalyticsAMP.a */,
-				4B755D8617732E55002A577D /* LocalyticsAmpSession.h */,
-				4B755D8717732E55002A577D /* LocalyticsSession.h */,
-			);
-			name = Localytics;
-			sourceTree = "<group>";
-		};
 		4B755D9117733833002A577D /* HockeySDK.embeddedframework */ = {
 			isa = PBXGroup;
 			children = (
@@ -934,7 +933,7 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
-				4B755D8417732E44002A577D /* Localytics */,
+				4B132D5717949BE500EFA90C /* Flurry */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
 			);
 			name = Vendor;
@@ -1459,6 +1458,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
+					"$(SRCROOT)/Vendor/Flurry",
 				);
 				PRODUCT_NAME = "TwitterApp-iPad";
 				PROVISIONING_PROFILE = "";
@@ -1483,6 +1483,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
+					"$(SRCROOT)/Vendor/Flurry",
 				);
 				PRODUCT_NAME = "TwitterApp-iPad";
 				PROVISIONING_PROFILE = "";
@@ -1563,6 +1564,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
+					"$(SRCROOT)/Vendor/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1586,6 +1588,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
+					"$(SRCROOT)/Vendor/Flurry",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

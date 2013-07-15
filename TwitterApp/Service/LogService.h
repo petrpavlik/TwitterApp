@@ -14,5 +14,6 @@
 - (void)logError:(NSError*)error;
 - (void)logEvent:(NSString*)event userInfo:(NSDictionary*)userInfo;
 + (LogService*)sharedInstance;
+- (void)setUserId:(NSString*)userId;
 
 @end
