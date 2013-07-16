@@ -42,6 +42,8 @@
 
 - (void)saveSelected {
     
+    self.navigationItem.rightBarButtonItem = nil;
+    
     __weak typeof(self) weakSelf = self;
     
     [SavedSearchEntity requestSavedSearchSave:self.searchExpression completionBlock:^(SavedSearchEntity *savedSearch, NSError *error) {
@@ -51,7 +53,10 @@
             [[LogService sharedInstance] logError:error];
             
             if (weakSelf) {
+             
                 [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not save '%@'", weakSelf.searchExpression] style:NotificationViewStyleError];
+                
+                weakSelf.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(saveSelected)];;
             }
         }
         else {
@@ -60,7 +65,6 @@
                 
                 [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Saved '%@'", weakSelf.searchExpression] style:NotificationViewStyleInformation];
                 
-                weakSelf.navigationItem.rightBarButtonItem = nil;
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:kSavedSearchesDidUpdateNotification object:Nil];
