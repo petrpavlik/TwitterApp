@@ -131,6 +131,8 @@
     
     [LogService instatiate];
     
+    //application.statusBarStyle = UIStatusBarStyleLightContent;
+    
     return YES;
 }
 

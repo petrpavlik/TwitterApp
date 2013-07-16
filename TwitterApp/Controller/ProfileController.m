@@ -151,7 +151,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        return 170;
+        return [ProfileCell requiredHeightWithDescription:self.user.userDescription width:self.view.bounds.size.width];
     }
     else {
         return 44;

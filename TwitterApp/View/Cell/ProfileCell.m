@@ -107,7 +107,7 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_descriptionLabel]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-[_descriptionLabel][_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel][_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
                                                                  attribute:NSLayoutAttributeCenterX
@@ -171,6 +171,18 @@
 - (void)websiteButtonSelected:(UIButton*)sender {
     
     [self.delegate profileCell:self didSelectURL:[NSURL URLWithString:[sender titleForState:UIControlStateNormal]]];
+}
+
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width {
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    CGFloat textHeight = [description sizeWithFont:[skin fontOfSize:15] constrainedToSize:CGSizeMake(width-20-20, FLT_MAX)].height;
+    
+    CGFloat height = 170 + textHeight;
+    
+    return height;
 }
 
 @end

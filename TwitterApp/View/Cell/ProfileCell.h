@@ -29,4 +29,6 @@
 @property(nonatomic, strong) UILabel* usernameLabel;
 @property(nonatomic, strong) UIButton* websiteButton;
 
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width;
+
 @end

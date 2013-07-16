@@ -532,6 +532,7 @@
 
 - (void)tweetCellDidRequestOtherAction:(TweetCell *)cell {
     
+    [self tweetCellDidLongPress:cell];
 }
 
 - (void)tweetCellDidSelectAvatarImage:(TweetCell *)cell {
