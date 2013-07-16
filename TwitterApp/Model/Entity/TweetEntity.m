@@ -496,7 +496,7 @@
 
 + (NSOperation*)requestDeletionOfTweetWithId:(NSString*)tweetId completionBlock:(void (^)(NSError* error))block {
     
-    NSParameterAssert(tweetId);
+    NSParameterAssert(tweetId.length);
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     

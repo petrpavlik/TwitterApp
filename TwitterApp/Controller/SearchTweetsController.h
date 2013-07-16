@@ -8,8 +8,18 @@
 
 #import "TweetsController.h"
 
+@class SearchTweetsController;
+@class SavedSearchEntity;
+
+@protocol SearchTweetsControllerDelegate <NSObject>
+
+- (void)searchTweetsControllerDidSaveSearch:(SavedSearchEntity*)savedSearch;
+
+@end
+
 @interface SearchTweetsController : TweetsController
 
+@property(nonatomic, weak) id <SearchTweetsControllerDelegate> delegate;
 @property(nonatomic, strong) NSString* searchExpression;
 
 @end

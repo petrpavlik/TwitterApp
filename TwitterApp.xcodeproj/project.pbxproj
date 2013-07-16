@@ -194,6 +194,8 @@
 		4BAEB3F6175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */; };
 		4BAEB3F917526EE40027A0D1 /* Button-NavigationBar-Disabled.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */; };
 		4BAEB3FA17526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */; };
+		4BB3456D17955C0700A6408A /* SavedSearchEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3456C17955C0700A6408A /* SavedSearchEntity.m */; };
+		4BB3456E17955C0700A6408A /* SavedSearchEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3456C17955C0700A6408A /* SavedSearchEntity.m */; };
 		4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD31177CE01200CA0F8B /* FollowersController.m */; };
 		4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD31177CE01200CA0F8B /* FollowersController.m */; };
 		4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB3AD35177CE47800CA0F8B /* FollowingController.m */; };
@@ -401,6 +403,8 @@
 		4BAEB3EE175266C70027A0D1 /* Button-NavigationBar-Normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Normal@2x.png"; path = "Image/Button-NavigationBar-Normal@2x.png"; sourceTree = "<group>"; };
 		4BAEB3F717526EE40027A0D1 /* Button-NavigationBar-Disabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled.png"; path = "Image/Button-NavigationBar-Disabled.png"; sourceTree = "<group>"; };
 		4BAEB3F817526EE40027A0D1 /* Button-NavigationBar-Disabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Disabled@2x.png"; path = "Image/Button-NavigationBar-Disabled@2x.png"; sourceTree = "<group>"; };
+		4BB3456B17955C0700A6408A /* SavedSearchEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SavedSearchEntity.h; path = Model/Entity/SavedSearchEntity.h; sourceTree = "<group>"; };
+		4BB3456C17955C0700A6408A /* SavedSearchEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SavedSearchEntity.m; path = Model/Entity/SavedSearchEntity.m; sourceTree = "<group>"; };
 		4BB3AD30177CE01200CA0F8B /* FollowersController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowersController.h; path = Controller/FollowersController.h; sourceTree = "<group>"; };
 		4BB3AD31177CE01200CA0F8B /* FollowersController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FollowersController.m; path = Controller/FollowersController.m; sourceTree = "<group>"; };
 		4BB3AD34177CE47800CA0F8B /* FollowingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowingController.h; path = Controller/FollowingController.h; sourceTree = "<group>"; };
@@ -781,6 +785,8 @@
 				4BB42C071757A1CC00311FF5 /* GapTweetEntity.m */,
 				4BFDA45A1776024D007EFBC4 /* PlaceEntity.h */,
 				4BFDA45B1776024D007EFBC4 /* PlaceEntity.m */,
+				4BB3456B17955C0700A6408A /* SavedSearchEntity.h */,
+				4BB3456C17955C0700A6408A /* SavedSearchEntity.m */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -1323,6 +1329,7 @@
 				4B6629AC177387FA00FA146A /* BaseTweetsController.m in Sources */,
 				4BFDA45D1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4B6629AD177387FA00FA146A /* UIActionSheet+TwitterApp.m in Sources */,
+				4BB3456E17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
 				4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */,
@@ -1386,6 +1393,7 @@
 				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
 				4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */,
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
+				4BB3456D17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */,
