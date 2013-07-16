@@ -61,9 +61,9 @@
                 [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Saved '%@'", weakSelf.searchExpression] style:NotificationViewStyleInformation];
                 
                 weakSelf.navigationItem.rightBarButtonItem = nil;
-                
-                //TODO: report to search controller
             }
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSavedSearchesDidUpdateNotification object:Nil];
         }
     }];
 }

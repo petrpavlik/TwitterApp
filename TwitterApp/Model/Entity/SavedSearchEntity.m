@@ -97,4 +97,32 @@
     return (NSOperation*)operation;
 }
 
+- (NSOperation*)requestSavedSearchDestroyWithCompletionBlock:(void (^)(NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:[NSString stringWithFormat:@"saved_searches/destroy/%@.json", self.savedSearchId] parameters:nil];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        block(nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(error);
+    }];
+    
+    [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{
+        
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSDictionary *info = [bundle infoDictionary];
+        NSString *prodName = [info objectForKey:@"CFBundleDisplayName"];
+        
+        block([NSError errorWithDomain:prodName code:0 userInfo:@{NSLocalizedDescriptionKey: @"Background task for this operation expired before the operation was completed."}]);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 @end

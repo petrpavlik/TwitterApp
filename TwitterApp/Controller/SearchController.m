@@ -14,7 +14,9 @@
 
 @interface SearchController ()
 
+@property(nonatomic, weak) NSOperation* runningSavedSearchesOperation;
 @property(nonatomic, strong) NSArray* savedSearches;
+@property(nonatomic, strong) id savedSearchesChangeObserver;
 
 @end
 
@@ -29,22 +31,40 @@
     return self;
 }
 
+- (void)dealloc {
+    
+    [self.runningSavedSearchesOperation cancel];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self.savedSearchesChangeObserver];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     [self.tableView registerClass:[SearchFieldCell class] forCellReuseIdentifier:@"SearchFieldCell"];
     
     self.title = @"Search";
     
+    __weak typeof(self) weakSelf = self;
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    self.savedSearchesChangeObserver = [center addObserverForName:kSavedSearchesDidUpdateNotification object:nil                                                      queue:Nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf requestData];
+    }];
+    
     [self requestData];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (!self.savedSearches.count) {
+        [self requestData];
+    }
 }
 
 #pragma mark - Table view data source
@@ -184,6 +204,14 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
+        SavedSearchEntity* savedSearchToDelete = self.savedSearches[indexPath.row];
+        [savedSearchToDelete requestSavedSearchDestroyWithCompletionBlock:^(NSError *error) {
+           
+            if (error) {
+                [[LogService sharedInstance] logError:error];
+            }
+        }];
+        
         NSMutableArray* mutableSavedSearches = [self.savedSearches mutableCopy];
         [mutableSavedSearches removeObjectAtIndex:indexPath.row];
         self.savedSearches = [mutableSavedSearches copy];
@@ -198,9 +226,13 @@
 
 - (void)requestData {
     
+    if (self.runningSavedSearchesOperation) {
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     
-    [SavedSearchEntity requestSavedSearchesWithCompletionBlock:^(NSArray *savedSearches, NSError *error) {
+    self.runningSavedSearchesOperation = [SavedSearchEntity requestSavedSearchesWithCompletionBlock:^(NSArray *savedSearches, NSError *error) {
         
         if (error) {
             
@@ -208,13 +240,26 @@
         }
         else if (savedSearches.count) {
             
-            weakSelf.savedSearches = savedSearches;
-            
-            [weakSelf.tableView beginUpdates];
-            [weakSelf.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
-            [weakSelf.tableView endUpdates];
-            
-            weakSelf.navigationItem.rightBarButtonItem = weakSelf.editButtonItem;
+            if (weakSelf.savedSearches.count) {
+                
+                weakSelf.savedSearches = savedSearches;
+                
+                [weakSelf.tableView beginUpdates];
+                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+                [weakSelf.tableView endUpdates];
+                
+                weakSelf.navigationItem.rightBarButtonItem = weakSelf.editButtonItem;
+            }
+            else {
+                
+                weakSelf.savedSearches = savedSearches;
+                
+                [weakSelf.tableView beginUpdates];
+                [weakSelf.tableView insertSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationFade];
+                [weakSelf.tableView endUpdates];
+                
+                weakSelf.navigationItem.rightBarButtonItem = weakSelf.editButtonItem;
+            }
         }
     }];
 }

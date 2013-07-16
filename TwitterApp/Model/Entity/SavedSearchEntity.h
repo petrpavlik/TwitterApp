@@ -17,5 +17,6 @@
 
 + (NSOperation*)requestSavedSearchSave:(NSString*)query completionBlock:(void (^)(SavedSearchEntity* savedSearch, NSError* error))block;
 + (NSOperation*)requestSavedSearchesWithCompletionBlock:(void (^)(NSArray* savedSearches, NSError* error))block;
+- (NSOperation*)requestSavedSearchDestroyWithCompletionBlock:(void (^)(NSError* error))block;
 
 @end
