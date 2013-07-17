@@ -28,7 +28,6 @@
 		4B66298E177387FA00FA146A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428961742D9CE00AEB85C /* main.m */; };
 		4B66298F177387FA00FA146A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B74289A1742D9CE00AEB85C /* AppDelegate.m */; };
 		4B662990177387FA00FA146A /* AbstractSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428C81742DB4800AEB85C /* AbstractSkin.m */; };
-		4B662991177387FA00FA146A /* LightSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CB1742DBFF00AEB85C /* LightSkin.m */; };
 		4B662992177387FA00FA146A /* UIImage+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */; };
 		4B662993177387FA00FA146A /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D31742DED500AEB85C /* TweetCell.m */; };
 		4B662994177387FA00FA146A /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
@@ -136,7 +135,6 @@
 		4B7428B91742D9CE00AEB85C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428B71742D9CE00AEB85C /* InfoPlist.strings */; };
 		4B7428BC1742D9CE00AEB85C /* TwitterAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428BB1742D9CE00AEB85C /* TwitterAppTests.m */; };
 		4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428C81742DB4800AEB85C /* AbstractSkin.m */; };
-		4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CB1742DBFF00AEB85C /* LightSkin.m */; };
 		4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */; };
 		4B7428D41742DED500AEB85C /* TweetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D31742DED500AEB85C /* TweetCell.m */; };
 		4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428D81742DFF200AEB85C /* TweetEntity.m */; };
@@ -219,6 +217,12 @@
 		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
+		4BCBC921179691C100232B7E /* PhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBC920179691C100232B7E /* PhotoController.m */; };
+		4BCBC922179691C100232B7E /* PhotoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBC920179691C100232B7E /* PhotoController.m */; };
+		4BCBC92517969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */; };
+		4BCBC92617969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */; };
+		4BCBC92717969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
+		4BCBC92817969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
@@ -335,8 +339,6 @@
 		4B7428BB1742D9CE00AEB85C /* TwitterAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwitterAppTests.m; sourceTree = "<group>"; };
 		4B7428C71742DB4800AEB85C /* AbstractSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AbstractSkin.h; path = View/Skin/AbstractSkin.h; sourceTree = "<group>"; };
 		4B7428C81742DB4800AEB85C /* AbstractSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AbstractSkin.m; path = View/Skin/AbstractSkin.m; sourceTree = "<group>"; };
-		4B7428CA1742DBFF00AEB85C /* LightSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LightSkin.h; path = View/Skin/LightSkin.h; sourceTree = "<group>"; };
-		4B7428CB1742DBFF00AEB85C /* LightSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LightSkin.m; path = View/Skin/LightSkin.m; sourceTree = "<group>"; };
 		4B7428CE1742DD0900AEB85C /* UIImage+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+TwitterApp.h"; path = "Category/UIImage+TwitterApp.h"; sourceTree = "<group>"; };
 		4B7428CF1742DD0900AEB85C /* UIImage+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+TwitterApp.m"; path = "Category/UIImage+TwitterApp.m"; sourceTree = "<group>"; };
 		4B7428D21742DED500AEB85C /* TweetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetCell.h; path = View/Cell/TweetCell.h; sourceTree = "<group>"; };
@@ -429,6 +431,10 @@
 		4BCB2287174D1078006602AA /* NSString+TwitterApp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+TwitterApp.m"; path = "Category/NSString+TwitterApp.m"; sourceTree = "<group>"; };
 		4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LoadingCell.h; path = View/Cell/LoadingCell.h; sourceTree = "<group>"; };
 		4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoadingCell.m; path = View/Cell/LoadingCell.m; sourceTree = "<group>"; };
+		4BCBC91F179691C100232B7E /* PhotoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoController.h; path = Controller/PhotoController.h; sourceTree = "<group>"; };
+		4BCBC920179691C100232B7E /* PhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoController.m; path = Controller/PhotoController.m; sourceTree = "<group>"; };
+		4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply.png"; path = "Image/Button-NavigationBar-Reply.png"; sourceTree = "<group>"; };
+		4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply@2x.png"; path = "Image/Button-NavigationBar-Reply@2x.png"; sourceTree = "<group>"; };
 		4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterJSONRequestOperation.h; path = Model/API/AFTwitterJSONRequestOperation.h; sourceTree = "<group>"; };
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
@@ -709,8 +715,6 @@
 			children = (
 				4B7428C71742DB4800AEB85C /* AbstractSkin.h */,
 				4B7428C81742DB4800AEB85C /* AbstractSkin.m */,
-				4B7428CA1742DBFF00AEB85C /* LightSkin.h */,
-				4B7428CB1742DBFF00AEB85C /* LightSkin.m */,
 				4B4B8F9C17677C3400E427DE /* ModernSkin.h */,
 				4B4B8F9D17677C3400E427DE /* ModernSkin.m */,
 			);
@@ -822,6 +826,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */,
+				4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */,
 				4BEEA6CB17933E2D005FCC90 /* Icon-TabBar-Search.png */,
 				4BEEA6CC17933E2D005FCC90 /* Icon-TabBar-Search@2x.png */,
 				4BB48454178C948100A30BC4 /* Icon-TabBar-Home.png */,
@@ -932,6 +938,8 @@
 				4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */,
 				4BF9B6B4174A878D00DA3318 /* WebController.h */,
 				4BF9B6B5174A878D00DA3318 /* WebController.m */,
+				4BCBC91F179691C100232B7E /* PhotoController.h */,
+				4BCBC920179691C100232B7E /* PhotoController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1087,6 +1095,7 @@
 				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
+				4BCBC92617969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */,
 				4B6629D0177387FA00FA146A /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4B6629D1177387FA00FA146A /* Icon-Reply-Normal.png in Resources */,
 				4B6718AE177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */,
@@ -1097,6 +1106,7 @@
 				4B6629D5177387FA00FA146A /* Button-NavigationBar-Important-Highlighted.png in Resources */,
 				4B6629D6177387FA00FA146A /* Button-NavigationBar-Important-Highlighted@2x.png in Resources */,
 				4B6629D7177387FA00FA146A /* Button-NavigationBar-Important-Normal.png in Resources */,
+				4BCBC92817969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */,
 				4B6629D8177387FA00FA146A /* HockeySDKResources.bundle in Resources */,
 				4B6629D9177387FA00FA146A /* Button-NavigationBar-Important-Normal@2x.png in Resources */,
 				4B6629DA177387FA00FA146A /* Button-NavigationBar-Normal.png in Resources */,
@@ -1152,6 +1162,7 @@
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718AF177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
+				4BCBC92517969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */,
 				4BAEB3E41752417A0027A0D1 /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4BAEB3E51752417A0027A0D1 /* Icon-Reply-Normal.png in Resources */,
 				4B6718AD177CAEB800151224 /* Icon-Disclosure-Indocator.png in Resources */,
@@ -1162,6 +1173,7 @@
 				4BAEB3F1175266C70027A0D1 /* Button-NavigationBar-Important-Highlighted.png in Resources */,
 				4BAEB3F2175266C70027A0D1 /* Button-NavigationBar-Important-Highlighted@2x.png in Resources */,
 				4BAEB3F3175266C70027A0D1 /* Button-NavigationBar-Important-Normal.png in Resources */,
+				4BCBC92717969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */,
 				4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */,
 				4BAEB3F4175266C70027A0D1 /* Button-NavigationBar-Important-Normal@2x.png in Resources */,
 				4BAEB3F5175266C70027A0D1 /* Button-NavigationBar-Normal.png in Resources */,
@@ -1284,8 +1296,8 @@
 				4B349FC61779C0FA007D035D /* LogService.m in Sources */,
 				4B66298E177387FA00FA146A /* main.m in Sources */,
 				4B66298F177387FA00FA146A /* AppDelegate.m in Sources */,
+				4BCBC922179691C100232B7E /* PhotoController.m in Sources */,
 				4B662990177387FA00FA146A /* AbstractSkin.m in Sources */,
-				4B662991177387FA00FA146A /* LightSkin.m in Sources */,
 				4BEBAC01178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431C177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B662992177387FA00FA146A /* UIImage+TwitterApp.m in Sources */,
@@ -1348,8 +1360,8 @@
 				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
+				4BCBC921179691C100232B7E /* PhotoController.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
-				4B7428CC1742DBFF00AEB85C /* LightSkin.m in Sources */,
 				4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,
@@ -1468,6 +1480,22 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-all_load",
+				);
 				PRODUCT_NAME = "TwitterApp-iPad";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 2;
@@ -1492,6 +1520,22 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-all_load",
 				);
 				PRODUCT_NAME = "TwitterApp-iPad";
 				PROVISIONING_PROFILE = "";
@@ -1574,6 +1618,22 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -1597,6 +1657,22 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-framework",
+					CoreGraphics,
+					"-framework",
+					CoreText,
+					"-framework",
+					Foundation,
+					"-framework",
+					MobileCoreServices,
+					"-framework",
+					Security,
+					"-framework",
+					SystemConfiguration,
+					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

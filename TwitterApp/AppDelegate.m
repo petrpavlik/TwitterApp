@@ -12,7 +12,6 @@
 #import "BaseEntity.h"
 #import <ECSlidingViewController.h>
 #import <HockeySDK/HockeySDK.h>
-#import "LightSkin.h"
 #import "MentionsController.h"
 #import "ModernSkin.h"
 #import "MyProfileController.h"
@@ -51,6 +50,9 @@
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -130,8 +132,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [LogService instatiate];
-    
-    //application.statusBarStyle = UIStatusBarStyleLightContent;
     
     return YES;
 }

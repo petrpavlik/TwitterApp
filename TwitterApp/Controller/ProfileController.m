@@ -8,11 +8,13 @@
 
 #import "FollowersController.h"
 #import "FollowingController.h"
+#import "MHFacebookImageViewer.h"
 #import "NotificationView.h"
 #import "ProfileController.h"
 #import "ProfileCell.h"
 #import "ProfilePushCell.h"
 #import "SearchTweetsController.h"
+#import "TweetController.h"
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
 #import "WebController.h"
@@ -53,6 +55,15 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     self.title = [NSString stringWithFormat:@"@%@", self.user.screenName];
+    
+    UIButton* spamOrReportButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    spamOrReportButton.frame = CGRectMake(0, 0, 0, 70);
+    [spamOrReportButton setTitle:@"Block or Report" forState:UIControlStateNormal];
+    spamOrReportButton.tintColor = [UIColor colorWithRed:0.827 green:0.361 blue:0.310 alpha:1];
+    [spamOrReportButton addTarget:self action:@selector(spamOrReportSelected) forControlEvents:UIControlEventTouchUpInside];
+    self.tableView.tableFooterView = spamOrReportButton;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-NavigationBar-Reply"] style:UIBarButtonItemStyleBordered target:self action:@selector(replySelected)];
     
     [self requestData];
 }
@@ -117,6 +128,8 @@
             
             return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
         }];
+        
+        [cell.avatarImageView setupImageViewer];
         
         return cell;
     }
@@ -253,6 +266,13 @@
 - (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url {
     
     [WebController presentWithUrl:url viewController:self];
+}
+
+#pragma mark -
+
+- (void)replySelected {
+    
+    [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"@%@ ", self.user.screenName]];
 }
 
 @end

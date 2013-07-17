@@ -21,6 +21,7 @@
 
 @property(nonatomic, strong) UIImage* attachedImage;
 @property(nonatomic, strong) UIImageView* backgroundImageView;
+@property(nonatomic, strong) NSString* initialText;
 @property(nonatomic, strong) CLLocation* location;
 @property(nonatomic, strong) CLLocationManager* locationManager;
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
@@ -61,6 +62,14 @@
 
 + (TweetController*)presentInViewController:(UIViewController*)viewController {
     return [TweetController presentAsReplyToTweet:nil inViewController:viewController];
+}
+
++ (TweetController*)presentInViewController:(UIViewController*)viewController prefilledText:(NSString*)text {
+    
+    TweetController* controller = [TweetController presentAsReplyToTweet:Nil inViewController:viewController];
+    controller.initialText = text;
+    
+    return controller;
 }
 
 - (void)dealloc {
@@ -145,6 +154,10 @@
     if (self.tweetToReplyTo) {
         NSString* content = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
         _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
+    }
+    else if (self.initialText) {
+        
+        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:self.initialText attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
     }
 }
 

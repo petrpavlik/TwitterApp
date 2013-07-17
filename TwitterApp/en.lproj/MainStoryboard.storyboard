@@ -9,7 +9,8 @@
             <objects>
                 <navigationController storyboardIdentifier="UINavigationController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="PdM-MV-lMX" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="lOg-Xt-sM4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="lOg-Xt-sM4">
+                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                 </navigationController>

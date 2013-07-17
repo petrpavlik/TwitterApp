@@ -13,6 +13,7 @@
 
 + (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController;
 + (TweetController*)presentInViewController:(UIViewController*)viewController;
++ (TweetController*)presentInViewController:(UIViewController*)viewController prefilledText:(NSString*)text;
 
 @property(nonatomic, strong) UIImage* backgroundImage;
 

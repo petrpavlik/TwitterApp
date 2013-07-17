@@ -16,31 +16,26 @@
 
 - (void)applyGlobalAppearance {
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
+    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    //AbstractSkin* skin = appDelegate.skin;
     
     UINavigationBar* navigationBar = [UINavigationBar appearance];
     
     UIColor* navigationBarColor = self.navigationBarColor;
-    //UIColor* navigationBarColor = [UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1];
-    [navigationBar configureFlatNavigationBarWithColor:navigationBarColor];
+    navigationBar.barTintColor = navigationBarColor;
+    navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     
-    /*[UIBarButtonItem configureFlatButtonsWithColor:[UIColor colorWithRed:0.161 green:0.502 blue:0.725 alpha:1]
-                                  highlightedColor:[UIColor colorWithRed:0.129 green:0.400 blue:0.580 alpha:1]
-                                      cornerRadius:5
-                                   whenContainedIn:[UINavigationBar class]];*/
+    //UIBarButtonItem* barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     
-    UIBarButtonItem* barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
+    //[barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+    //[barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
     
-    [barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    [barButtonItem setBackgroundImage:[UIImage new] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
-    
-    [barButtonItem setBackButtonBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:CGSizeMake(20, 20)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[barButtonItem setBackButtonBackgroundImage:[UIImage imageWithColor:[UIColor clearColor] size:CGSizeMake(20, 20)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     //[barButtonItem setBackButtonBackgroundImage:[UIImage new] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     //[barButtonItem setBackButtonBackgroundImage:[UIImage new] forState:UIControlStateDisabled barMetrics:UIBarMetricsDefault];
     
-    [barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
+    /*[barButtonItem setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                            [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
                                            [UIColor whiteColor], UITextAttributeTextColor,
                                            [skin fontOfSize:16], UITextAttributeFont,
@@ -60,7 +55,7 @@
      [UIColor whiteColor], UITextAttributeTextColor,
      [NSValue valueWithUIOffset:UIOffsetMake(0, 0)], UITextAttributeTextShadowOffset,
      [skin boldFontOfSize:18], UITextAttributeFont,
-     nil]];
+     nil]];*/
      
      [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
      [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
