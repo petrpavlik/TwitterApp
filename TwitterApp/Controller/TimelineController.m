@@ -655,7 +655,7 @@
     UserTitleView* userTitleView = [[UserTitleView alloc] initWithFrame:CGRectMake(0, 0, 200, 44)];
     
     NSDictionary* attributes = self.navigationController.navigationBar.titleTextAttributes;
-    attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[skin fontOfSize:18], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[UIFont preferredFontForTextStyle:UIFontTextStyleHeadline], NSFontAttributeName, [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     
     NSAttributedString* nameAttrString = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"@%@", user.screenName] attributes:attributes];
     userTitleView.nameLabel.attributedText = nameAttrString;

@@ -33,6 +33,7 @@
 
 @property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
 @property(nonatomic, strong) NSMutableDictionary* savedImagesForVisibleCells;
+@property(nonatomic, strong) id textSizeChangedObserver;
 
 @end
 
@@ -64,6 +65,7 @@
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 - (void)viewDidLoad
@@ -86,6 +88,15 @@
     self.tableView.tableFooterView = [UIView new];
     
     self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        NSIndexPath* topmostIndexPath = [weakSelf.tableView indexPathsForVisibleRows].firstObject;
+        [weakSelf.tableView reloadData];
+        [weakSelf.tableView scrollToRowAtIndexPath:topmostIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

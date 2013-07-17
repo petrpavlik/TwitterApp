@@ -25,6 +25,8 @@
 @property(nonatomic, strong) UIView* quickAccessView;
 @property(nonatomic, strong) UIView* panDetectView;
 
+@property(nonatomic, strong) id textSizeChangedObserver;
+
 @property(nonatomic, strong) UIButton* favoriteButton;
 @property(nonatomic, strong) UIButton* retweetButton;
 
@@ -60,7 +62,7 @@
 }
 
 - (void)setRetweetedByUser:(BOOL)retweetedByUser {
-
+    
     _retweetedByUser = retweetedByUser;
     self.retweetButton.selected = retweetedByUser;
 }
@@ -72,6 +74,11 @@
 }
 
 #pragma mark -
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -120,20 +127,20 @@
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [skin boldFontOfSize:16];
+    //_nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
     [contentView addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    _usernameLabel.font = [skin fontOfSize:15];
+    //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
     _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [contentView addSubview:_usernameLabel];
     
     _retweetedLabel = [[UILabel alloc] init];
-    _retweetedLabel.font = [skin fontOfSize:15];
+    //_retweetedLabel.font = [skin fontOfSize:15];
     _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _retweetedLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [contentView addSubview:_retweetedLabel];
@@ -141,7 +148,8 @@
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
-    _tweetAgeLabel.font = [skin fontOfSize:15];
+    //_tweetAgeLabel.font = [skin fontOfSize:15];
+    _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     _tweetAgeLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
@@ -150,7 +158,7 @@
     _tweetTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetTextLabel.numberOfLines = 0;
     _tweetTextLabel.preferredMaxLayoutWidth = 240;
-    _tweetTextLabel.font = [skin fontOfSize:16];
+    //_tweetTextLabel.font = [skin fontOfSize:16];
     _tweetTextLabel.text = @"blah blah";
     [contentView addSubview:_tweetTextLabel];
     
@@ -175,6 +183,8 @@
     //[_panDetectView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
     //_panDetectView.userInteractionEnabled = NO;
     //[self.contentView addSubview:_panDetectView];
+    
+    [self setupFonts];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -224,7 +234,25 @@
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];
     self.cellLongPressGestureRecognizer = longPressRecognizer;
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf setupFonts];
+    }];
+
 }
+
+- (void)setupFonts {
+    
+    _nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _usernameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    _tweetTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _retweetedLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+}
+
 
 #pragma mark -
 
@@ -268,12 +296,12 @@
 
 + (CGFloat)requiredHeightForTweetText:(NSString*)text {
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
+    //AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    //AbstractSkin* skin = appDelegate.skin;
     
-    CGFloat textHeight = [text sizeWithFont:[skin fontOfSize:16] constrainedToSize:CGSizeMake(240, FLT_MAX)].height;
+    CGFloat textHeight = [text boundingRectWithSize:CGSizeMake(240, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
-    CGFloat height = 10 + 16 + 1 + textHeight + 10 + 2;
+    CGFloat height = 10 + [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline].pointSize + 1 + textHeight + 10 + 5;
     
     if (height < 70) {
         return 70;
