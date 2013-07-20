@@ -20,10 +20,15 @@
     //AbstractSkin* skin = appDelegate.skin;
     
     UINavigationBar* navigationBar = [UINavigationBar appearance];
+    UITabBar* tabBar = [UITabBar appearance];
+    UIToolbar* toolBar = [UIToolbar appearance];
     
     UIColor* navigationBarColor = self.navigationBarColor;
     navigationBar.barTintColor = navigationBarColor;
     navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+    
+    tabBar.barTintColor = [UIColor blackColor];
+    toolBar.barTintColor = self.navigationBarColor;
     
     //UIBarButtonItem* barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     
@@ -57,8 +62,8 @@
      [skin boldFontOfSize:18], UITextAttributeFont,
      nil]];*/
      
-     [[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
-     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+     //[[UITabBar appearance] setShadowImage:[[UIImage alloc] init]];
+     //[[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     
 }
 

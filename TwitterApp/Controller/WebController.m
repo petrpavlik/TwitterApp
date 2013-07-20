@@ -7,8 +7,9 @@
 //
 
 #import "WebController.h"
+#import "UIActionSheet+TwitterApp.h"
 
-@interface WebController () <UIWebViewDelegate>
+@interface WebController () <UIWebViewDelegate, UIActionSheetDelegate>
 
 @property(nonatomic, strong) UIWebView* webView;
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicator;
@@ -43,6 +44,14 @@
         NSURLRequest* request = [NSURLRequest requestWithURL:self.url];
         [self.webView loadRequest:request];
     }
+    
+    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(backSelected)],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFastForward target:self action:@selector(forwardSelected)],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadSelected)],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
+                          [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(bookmarksSelected)]];
 
 }
 
@@ -55,7 +64,13 @@
     WebController* webController = [[WebController alloc] init];
     webController.url = url;
     
-    UINavigationController* navigationController = [[UINavigationController alloc] initWithRootViewController:webController];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    navigationController.viewControllers = @[webController];
+    
+    navigationController.navigationBar.translucent = YES;
+    navigationController.toolbarHidden = NO;
+    navigationController.toolbar.tintColor = [UIColor whiteColor];
     
     [viewController presentViewController:navigationController animated:YES completion:NULL];
     
@@ -74,6 +89,34 @@
     
     [self.activityIndicator stopAnimating];
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+}
+
+#pragma mark -
+
+- (void)backSelected {
+    
+    [self.webView goBack];
+}
+
+- (void)forwardSelected {
+    
+    [self.webView goForward];
+}
+
+- (void)reloadSelected {
+    
+    [self.webView reload];
+}
+
+- (void)bookmarksSelected {
+    
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"a" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"a" otherButtonTitles:@"Save to Pocket", "Open in Safari", "Save to Reading List", nil];
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    
 }
 
 @end

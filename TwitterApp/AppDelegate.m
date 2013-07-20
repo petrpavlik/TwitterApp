@@ -93,7 +93,7 @@
 #endif
     
     UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
-    rootTabBarController.tabBar.tintColor = self.skin.linkColor;
+    rootTabBarController.tabBar.tintColor = [UIColor whiteColor];
     
     TimelineController* timelineController = [[TimelineController alloc] init];
     timelineController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];

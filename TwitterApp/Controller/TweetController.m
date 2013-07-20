@@ -101,8 +101,9 @@
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-    
     navigationController.viewControllers = @[tweetController];
+    
+    //navigationController.navigationBar.translucent = YES;
     
     [viewController presentViewController:navigationController animated:YES completion:NULL];
     
