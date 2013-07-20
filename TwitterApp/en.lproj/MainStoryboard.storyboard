@@ -21,7 +21,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="m1c-Ln-S1X">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YJL-bo-rvN" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" definesPresentationContext="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="YJL-bo-rvN" customClass="TabBarController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" restorationIdentifier="TabBar" id="pRw-45-cNk">

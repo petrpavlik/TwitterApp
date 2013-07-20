@@ -11,6 +11,12 @@
 #import "UIImage+TwitterApp.h"
 #import "UserCell.h"
 
+@interface UserCell ()
+
+@property(nonatomic, strong) id textSizeChangedObserver;
+
+@end
+
 @implementation UserCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -21,6 +27,11 @@
         [self commonSetup];
     }
     return self;
+}
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 - (void)commonSetup {
@@ -46,13 +57,13 @@
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _nameLabel.font = [skin boldFontOfSize:16];
+    //_nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
     [credentialsPlaceholder addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [skin fontOfSize:15];
+    //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
     _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
@@ -109,7 +120,23 @@
     
     [contentView addConstraints:superviewConstraints];
     
+    [self setupFonts];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf setupFonts];
+    }];
+    
 }
+
+- (void)setupFonts {
+    
+    _nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _usernameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+}
+
 
 - (void)prepareForReuse {
     [super prepareForReuse];

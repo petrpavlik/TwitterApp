@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import "AFTwitterClient.h"
 #import "TweetsController.h"
 #import "NotificationView.h"
 #import "TweetsDataSource.h"
@@ -17,6 +18,7 @@
 @property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) NSArray* tweets;
+@property(nonatomic, strong) id didGainAccessObserver;
 
 @end
 
@@ -24,6 +26,11 @@
 
 - (NSString*)tweetsPersistenceIdentifier {
     return nil;
+}
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
 }
 
 - (void)viewDidLoad
@@ -38,7 +45,25 @@
     
     self.dataSource = [[TweetsDataSource alloc] initWithPersistenceIdentifier:self.tweetsPersistenceIdentifier];
     self.dataSource.delegate = self;
-    [self.dataSource loadNewTweets];
+    
+    __weak typeof(self) weakSelf = self;
+    self.didGainAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kDidGainAccessToAccountNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+       
+        if (!weakSelf.tweets.count) {
+            [weakSelf loadNewTweets];
+        }
+    }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([AFTwitterClient sharedClient].account) {
+        
+        if (!self.tweets.count) {
+            [self.dataSource loadNewTweets];
+        }
+    }
 }
 
 #pragma mark -

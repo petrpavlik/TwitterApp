@@ -21,6 +21,7 @@
 @property(nonatomic) BOOL allUsersLoaded;
 @property(nonatomic, strong) NSString* cursor;
 @property(nonatomic, weak) NSOperation* runningRequestDataOperation;
+@property(nonatomic, strong) id textSizeChangedObserver;
 
 @end
 
@@ -54,6 +55,7 @@
 - (void)dealloc {
     
     [self.runningRequestDataOperation cancel];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 - (void)viewDidLoad
@@ -74,6 +76,14 @@
     [self willBeginRefreshing];
     
     [self requestData];
+    
+    __weak typeof(self) weakSelf = self;
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        NSIndexPath* topmostIndexPath = [weakSelf.tableView indexPathsForVisibleRows].firstObject;
+        [weakSelf.tableView reloadData];
+        [weakSelf.tableView scrollToRowAtIndexPath:topmostIndexPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    }];
 }
 
 #pragma mark - Table view data source

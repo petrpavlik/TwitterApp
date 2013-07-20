@@ -19,6 +19,7 @@
 
 #define kTweetDeletedNotification @"kTweetDeletedNotification"
 #define kAuthenticatedUserDidLoadNotification @"AuthenticatedUserDidLoadNotification"
+#define kDidGainAccessToAccountNotification @"kDidGainAccessToAccountNotification"
 #define kSavedSearchesDidUpdateNotification @"kSavedSearchesDidUpdateNotification"
 
 #define kLogEventError @"Error"

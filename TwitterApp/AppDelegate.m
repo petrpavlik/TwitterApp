@@ -6,12 +6,14 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <Accounts/Accounts.h>
 #import <AFNetworkActivityIndicatorManager.h>
 #import "AFTwitterClient.h"
 #import "AppDelegate.h"
 #import "BaseEntity.h"
 #import <ECSlidingViewController.h>
 #import <HockeySDK/HockeySDK.h>
+#import "LoginController.h"
 #import "MentionsController.h"
 #import "ModernSkin.h"
 #import "MyProfileController.h"
@@ -132,6 +134,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [LogService instatiate];
+    
+    ACAccountStore* accountStore = [[ACAccountStore alloc] init];
+    ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
+    
+    if (accounts.count) {
+        
+        NSLog(@"found active account");
+        [AFTwitterClient sharedClient].account = accounts.firstObject;
+    }
     
     return YES;
 }
