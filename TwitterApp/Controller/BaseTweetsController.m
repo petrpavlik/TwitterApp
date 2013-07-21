@@ -690,7 +690,7 @@
                 if (!weakSelf) {
                     
                     if (error) {
-                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     }
@@ -700,10 +700,10 @@
                 
                 if (error) {
                     
-                    [NotificationView showInView:weakSelf.view message:error.localizedDescription];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
                 } else {
                     
-                    [NotificationView showInView:weakSelf.view message:@"Link saved to Pocket"];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Pocket"];
                 }
             }];
         }
