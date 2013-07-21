@@ -24,6 +24,8 @@
 
 - (void)commonInit {
     
+    self.tintColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
     
@@ -35,20 +37,24 @@
 
     _mainLabel = [UILabel new];
     _mainLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _mainLabel.font = [skin boldFontOfSize:16];
+    //_mainLabel.font = [skin boldFontOfSize:16];
+    _mainLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     _mainLabel.text = @"title";
     [contentView addSubview:_mainLabel];
     
     _valueLabel = [UILabel new];
     _valueLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _valueLabel.font = [skin fontOfSize:16];
+    //_valueLabel.font = [skin fontOfSize:16];
+    _mainLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _valueLabel.text = @"value";
     _valueLabel.textAlignment = NSTextAlignmentRight;
     [_valueLabel setContentHuggingPriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    _valueLabel.textColor = self.tintColor;
     [contentView addSubview:_valueLabel];
     
     UIImageView* disclosureImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Icon-Disclosure-Indocator"]];
     disclosureImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    disclosureImageView.image = [disclosureImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [contentView addSubview:disclosureImageView];
     
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];

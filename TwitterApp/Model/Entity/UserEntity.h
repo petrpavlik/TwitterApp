@@ -27,6 +27,7 @@
 @property(nonatomic, strong) NSNumber* listedCount;
 @property(nonatomic, strong) NSString* location;
 @property(nonatomic, strong) NSString* name;
+@property(nonatomic, strong) NSString* profileBannerUrl;
 @property(nonatomic, strong) NSString* profileImageUrl;
 @property(nonatomic, strong) NSNumber* protectedTweets;
 @property(nonatomic, strong) NSString* screenName;
@@ -36,7 +37,9 @@
 @property(nonatomic, strong) NSString* userDescription;
 @property(nonatomic, strong) NSString* url;
 @property(nonatomic, strong) NSNumber* utcOffset;
-@property(nonatomic, strong) NSNumber* verified;
+@property(nonatomic, readonly) NSNumber* verified;
+
+@property(nonatomic, strong) NSString* expandedUserDescription;
 
 + (UserEntity*)currentUser;
 + (void)registerCurrentUser:(UserEntity*)user;

@@ -29,6 +29,10 @@
     return @"mentions";
 }
 
+- (NSString*)stateRestorationIdentifier {
+    return @"mentions";
+}
+
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock {
     
     return [TweetEntity requestMentionsTimelineWithMaxId:maxId sinceId:sinceId completionBlock:completionBlock];

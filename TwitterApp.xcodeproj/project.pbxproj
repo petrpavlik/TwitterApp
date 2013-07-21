@@ -156,8 +156,6 @@
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
 		4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
-		4B938B4B17883345002068DB /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B938B4A17883345002068DB /* FavoritesController.m */; };
-		4B938B4C17883345002068DB /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B938B4A17883345002068DB /* FavoritesController.m */; };
 		4B93D80B17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
@@ -371,8 +369,6 @@
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4B9348A317457A3F00AAE017 /* AFTwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterClient.h; path = Model/API/AFTwitterClient.h; sourceTree = "<group>"; };
 		4B9348A417457A3F00AAE017 /* AFTwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterClient.m; path = Model/API/AFTwitterClient.m; sourceTree = "<group>"; };
-		4B938B4917883345002068DB /* FavoritesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesController.h; path = Controller/FavoritesController.h; sourceTree = "<group>"; };
-		4B938B4A17883345002068DB /* FavoritesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesController.m; path = Controller/FavoritesController.m; sourceTree = "<group>"; };
 		4B93D80917823069005BE43C /* MentionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsController.h; path = Controller/MentionsController.h; sourceTree = "<group>"; };
 		4B93D80A17823069005BE43C /* MentionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsController.m; path = Controller/MentionsController.m; sourceTree = "<group>"; };
 		4B93FE381743E5CA0053FCD7 /* BaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseEntity.h; path = Model/Entity/BaseEntity.h; sourceTree = "<group>"; };
@@ -896,6 +892,47 @@
 			name = Persistence;
 			sourceTree = "<group>";
 		};
+		4BB78926179B149C008C1DCC /* Timelines */ = {
+			isa = PBXGroup;
+			children = (
+				4B93D80917823069005BE43C /* MentionsController.h */,
+				4B93D80A17823069005BE43C /* MentionsController.m */,
+				4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */,
+				4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */,
+				4BF2DCEA178F4CEA0007C343 /* UserTweetsController.h */,
+				4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */,
+			);
+			name = Timelines;
+			sourceTree = "<group>";
+		};
+		4BB78927179B14D2008C1DCC /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				4BB3AD30177CE01200CA0F8B /* FollowersController.h */,
+				4BB3AD31177CE01200CA0F8B /* FollowersController.m */,
+				4BB3AD34177CE47800CA0F8B /* FollowingController.h */,
+				4BB3AD35177CE47800CA0F8B /* FollowingController.m */,
+				4BFDA44A1775A61B007EFBC4 /* RetweetersController.h */,
+				4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */,
+				4BEEA6C71792BAB8005FCC90 /* SearchUsersController.h */,
+				4BEEA6C81792BAB8005FCC90 /* SearchUsersController.m */,
+			);
+			name = Users;
+			sourceTree = "<group>";
+		};
+		4BB78928179B1517008C1DCC /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4BFC4406175B91FB004199C3 /* BaseTweetsController.h */,
+				4BFC4407175B91FB004199C3 /* BaseTweetsController.m */,
+				4BF2DCE6178F45B50007C343 /* TweetsController.h */,
+				4BF2DCE7178F45B50007C343 /* TweetsController.m */,
+				4BDFDB681754DF2800075F7D /* UserListController.h */,
+				4BDFDB691754DF2800075F7D /* UserListController.m */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
 		4BBDA6EB174912EE00E849FD /* Image */ = {
 			isa = PBXGroup;
 			children = (
@@ -908,42 +945,23 @@
 		4BDB0F371748CD8F004980EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4BFC4406175B91FB004199C3 /* BaseTweetsController.h */,
-				4BFC4407175B91FB004199C3 /* BaseTweetsController.m */,
-				4B938B4917883345002068DB /* FavoritesController.h */,
-				4B938B4A17883345002068DB /* FavoritesController.m */,
-				4BB3AD30177CE01200CA0F8B /* FollowersController.h */,
-				4BB3AD31177CE01200CA0F8B /* FollowersController.m */,
-				4BB3AD34177CE47800CA0F8B /* FollowingController.h */,
-				4BB3AD35177CE47800CA0F8B /* FollowingController.m */,
-				4B93D80917823069005BE43C /* MentionsController.h */,
-				4B93D80A17823069005BE43C /* MentionsController.m */,
+				4BB78928179B1517008C1DCC /* Base */,
+				4BB78927179B14D2008C1DCC /* Users */,
+				4BB78926179B149C008C1DCC /* Timelines */,
 				4B5CC7BA1781DCBE00EFA5B1 /* MyProfileController.h */,
 				4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */,
 				4BC63C201759133200F7E0C3 /* NavigationController.h */,
 				4BC63C211759133200F7E0C3 /* NavigationController.m */,
 				4B4E80A8177A341F005358A5 /* ProfileController.h */,
 				4B4E80A9177A341F005358A5 /* ProfileController.m */,
-				4BFDA44A1775A61B007EFBC4 /* RetweetersController.h */,
-				4BFDA44B1775A61B007EFBC4 /* RetweetersController.m */,
 				4BEEA6BF1792B2FA005FCC90 /* SearchController.h */,
 				4BEEA6C01792B2FA005FCC90 /* SearchController.m */,
-				4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */,
-				4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */,
-				4BEEA6C71792BAB8005FCC90 /* SearchUsersController.h */,
-				4BEEA6C81792BAB8005FCC90 /* SearchUsersController.m */,
 				4BDB0F381748CE15004980EB /* TimelineController.h */,
 				4BDB0F391748CE15004980EB /* TimelineController.m */,
 				4BAEB3D21752280E0027A0D1 /* TweetController.h */,
 				4BAEB3D31752280E0027A0D1 /* TweetController.m */,
 				4B1D0136175B6A5A00B04036 /* TweetDetailController.h */,
 				4B1D0137175B6A5A00B04036 /* TweetDetailController.m */,
-				4BF2DCE6178F45B50007C343 /* TweetsController.h */,
-				4BF2DCE7178F45B50007C343 /* TweetsController.m */,
-				4BDFDB681754DF2800075F7D /* UserListController.h */,
-				4BDFDB691754DF2800075F7D /* UserListController.m */,
-				4BF2DCEA178F4CEA0007C343 /* UserTweetsController.h */,
-				4BF2DCEB178F4CEA0007C343 /* UserTweetsController.m */,
 				4BF9B6B4174A878D00DA3318 /* WebController.h */,
 				4BF9B6B5174A878D00DA3318 /* WebController.m */,
 				4BCBC91F179691C100232B7E /* PhotoController.h */,
@@ -1320,7 +1338,6 @@
 				4B662997177387FA00FA146A /* AFTwitterClient.m in Sources */,
 				4B662998177387FA00FA146A /* AFTwitterJSONRequestOperation.m in Sources */,
 				4B5CC7BD1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
-				4B938B4C17883345002068DB /* FavoritesController.m in Sources */,
 				4BFDA44E1775ABAC007EFBC4 /* RetweetersController.m in Sources */,
 				4B662999177387FA00FA146A /* TimelineController.m in Sources */,
 				4BB78925179AE041008C1DCC /* TabBarController.m in Sources */,
@@ -1386,7 +1403,6 @@
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
 				4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
-				4B938B4B17883345002068DB /* FavoritesController.m in Sources */,
 				4BFDA44C1775A61B007EFBC4 /* RetweetersController.m in Sources */,
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
 				4BB78924179AE041008C1DCC /* TabBarController.m in Sources */,

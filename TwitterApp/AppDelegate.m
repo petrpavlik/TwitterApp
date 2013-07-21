@@ -23,6 +23,7 @@
 #import "SearchController.h"
 #import "TimelineController.h"
 #import "TwitterAppWindow.h"
+#import "UserEntity.h"
 
 @implementation AppDelegate
 
@@ -91,7 +92,7 @@
     [[PocketAPI sharedAPI] setConsumerKey:@"15055-3b898b85423c8af7f67ec331"];
     
 #ifdef DEBUG
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
 #endif
     
     UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
@@ -135,6 +136,8 @@
     
     [LogService instatiate];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGainAccessToTwitterNotification:) name:kDidGainAccessToAccountNotification object:nil];
+    
     ACAccountStore* accountStore = [[ACAccountStore alloc] init];
     ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
@@ -143,6 +146,7 @@
         
         NSLog(@"found active account");
         [AFTwitterClient sharedClient].account = accounts.firstObject;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
     }
     
     return YES;
@@ -219,7 +223,31 @@
 
 // Gets called only in debug state
 - (void)applicationDidReceiveNotification:(NSNotification*)notification {
-    //NSLog(@"%@", notification);
+    NSLog(@"%@", notification);
+}
+
+#pragma mark -
+
+- (void)didGainAccessToTwitterNotification:(NSNotification*)notification {
+    
+    if(![[NSThread currentThread] isMainThread]) {
+        
+        return;
+    }
+    
+    ACAccount* account = [AFTwitterClient sharedClient].account;
+    
+    [UserEntity requestUserWithScreenName:account.username completionBlock:^(UserEntity *user, NSError *error) {
+        
+        if (error) {
+            //report error
+            return;
+        }
+        
+        [UserEntity registerCurrentUser:user];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
+        
+    }];
 }
 
 @end

@@ -11,6 +11,7 @@
 
 @interface TweetsController : BaseTweetsController <TweetDataSourceDelegate>
 
+- (NSString*)stateRestorationIdentifier;
 - (NSString*)tweetsPersistenceIdentifier;
 
 @end

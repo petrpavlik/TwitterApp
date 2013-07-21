@@ -29,6 +29,8 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
     
+    self.tintColor = skin.linkColor;
+    
     if ([self respondsToSelector:@selector(setTintColor:)]) {
         self.tintColor = [skin linkColor];
     }
@@ -50,12 +52,12 @@
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _nameLabel.font = [skin boldFontOfSize:16];
-    _nameLabel.text = @"name";
+    //_nameLabel.text = @"name";
     [credentialsPlaceholder addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _usernameLabel.font = [skin fontOfSize:15];
+    //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
     _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
@@ -69,7 +71,7 @@
     
     _descriptionLabel = [UILabel new];
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _descriptionLabel.font = [skin fontOfSize:15];
+    //_descriptionLabel.font = [skin fontOfSize:15];
     _descriptionLabel.text = @"description";
     _descriptionLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     _descriptionLabel.textAlignment = NSTextAlignmentCenter;
@@ -84,7 +86,7 @@
     
     _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _locationButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _locationButton.titleLabel.font = [skin fontOfSize:16];
+    //_locationButton.titleLabel.font = [skin fontOfSize:16];
     [_locationButton setTitle:@"fsfs" forState:UIControlStateNormal];
     [contentView addSubview:_locationButton];
     
@@ -107,7 +109,7 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_descriptionLabel]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel][_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
                                                                  attribute:NSLayoutAttributeCenterX
@@ -154,6 +156,8 @@
     
     [self prepareForReuse];
     
+    [self setupFonts];
+    
 }
 
 - (void)prepareForReuse {
@@ -173,14 +177,20 @@
     [self.delegate profileCell:self didSelectURL:[NSURL URLWithString:[sender titleForState:UIControlStateNormal]]];
 }
 
+- (void)setupFonts {
+    
+    _nameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _usernameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    _descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _websiteButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _locationButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+}
+
 + (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width {
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
+    CGFloat textHeight = [description boundingRectWithSize:CGSizeMake(width-20-20, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
-    CGFloat textHeight = [description sizeWithFont:[skin fontOfSize:15] constrainedToSize:CGSizeMake(width-20-20, FLT_MAX)].height;
-    
-    CGFloat height = 170 + textHeight;
+    CGFloat height = 170 + textHeight + 20;
     
     return height;
 }

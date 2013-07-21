@@ -8,6 +8,7 @@
 
 #import <AFHTTPRequestOperation.h>
 #import "AFTwitterClient.h"
+#import "NSString+TwitterApp.h"
 #import "UserEntity.h"
 
 static UserEntity* currentUser;
@@ -46,6 +47,23 @@ static UserEntity* currentUser;
 
 + (UserEntity*)currentUser {
     return currentUser;
+}
+
+- (NSString*)expandedUserDescription {
+    
+    if (!self.userDescription.length) {
+        return nil;
+    }
+    
+    NSString* description = [self.userDescription stringByStrippingHTMLTags];
+    
+    NSArray* urls = self.entities[@"description"][@"urls"];
+    for (NSDictionary* url in urls) {
+        
+        description = [description stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+    }
+    
+    return description;
 }
 
 #pragma mark -

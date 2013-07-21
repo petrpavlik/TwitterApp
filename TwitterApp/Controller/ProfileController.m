@@ -66,6 +66,7 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-NavigationBar-Reply"] style:UIBarButtonItemStyleBordered target:self action:@selector(replySelected)];
     
     [self requestData];
+    [self setupProfileBanner];
 }
 
 #pragma mark - Table view data source
@@ -100,7 +101,7 @@
         
         cell.nameLabel.text = user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
-        cell.descriptionLabel.text = user.userDescription;
+        cell.descriptionLabel.text = user.expandedUserDescription;
         
         if (self.following) {
             
@@ -164,7 +165,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        return [ProfileCell requiredHeightWithDescription:self.user.userDescription width:self.view.bounds.size.width];
+        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width];
     }
     else {
         return 44;
@@ -273,6 +274,33 @@
 - (void)replySelected {
     
     [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"@%@ ", self.user.screenName]];
+}
+
+#pragma mark - profile banner
+
+- (void)setupProfileBanner {
+    
+    NSParameterAssert(self.user);
+    
+    if (!self.user.profileBannerUrl.length) {
+        return; //no background image set up
+    }
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(-150, 0, 0, 0);
+    
+    NetImageView* imageView = [NetImageView new];
+    imageView.frame = CGRectMake(0, 0, 0, 160);
+    self.tableView.tableHeaderView = imageView;
+    
+    NSString* bannetURLString = nil;
+    if ([UIScreen mainScreen].scale > 1) {
+        bannetURLString = [self.user.profileBannerUrl stringByAppendingString:@"/mobile_retina"];
+    }
+    else {
+        bannetURLString = [self.user.profileBannerUrl stringByAppendingString:@"/mobile"];
+    }
+    
+    [imageView setImageWithURL:[NSURL URLWithString:bannetURLString] placeholderImage:nil];
 }
 
 @end

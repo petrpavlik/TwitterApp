@@ -6,13 +6,8 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "BaseTweetsController.h"
+#import "TweetsController.h"
 
-@interface TimelineController : BaseTweetsController
-
-@property(nonatomic, strong) NSString* searchQuery;
-@property(nonatomic, strong) NSString* screenName;
-@property(nonatomic) BOOL shouldAutoRefresh;
-@property(nonatomic) BOOL shouldPersistTimeline;
+@interface TimelineController : TweetsController
 
 @end

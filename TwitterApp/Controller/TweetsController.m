@@ -13,18 +13,23 @@
 #import "LoadingCell.h"
 #import "TweetDetailController.h"
 
-@interface TweetsController ()
+@interface TweetsController () <UIDataSourceModelAssociation, UIViewControllerRestoration>
 
 @property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) NSArray* tweets;
 @property(nonatomic, strong) id didGainAccessObserver;
+@property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 
 @end
 
 @implementation TweetsController
 
 - (NSString*)tweetsPersistenceIdentifier {
+    return nil;
+}
+
+- (NSString*)stateRestorationIdentifier {
     return nil;
 }
 
@@ -45,6 +50,10 @@
     
     self.dataSource = [[TweetsDataSource alloc] initWithPersistenceIdentifier:self.tweetsPersistenceIdentifier];
     self.dataSource.delegate = self;
+    
+    self.restorationClass = [self class];
+    self.restorationIdentifier = self.stateRestorationIdentifier;
+    self.tableView.restorationIdentifier = @"TableView";
     
     __weak typeof(self) weakSelf = self;
     self.didGainAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kDidGainAccessToAccountNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
@@ -75,15 +84,74 @@
     [self.refreshControl endRefreshing];
     
     if (!self.tweets.count) {
+        
         self.tweets = tweets;
+        [self.tableView reloadData];
+        
+        if (self.restoredIndexPathIdentifier) {
+            
+            NSInteger index = 0;
+            for (TweetEntity* tweet in self.tweets) {
+                
+                if ([tweet.tweetId isEqual:self.restoredIndexPathIdentifier]) {
+                    
+                    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                    break;
+                }
+                
+                index++;
+            }
+            
+            self.restorationIdentifier = nil;
+        }
     }
     else {
-        self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
         
-        [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", tweets.count]];
+        if (tweets.count==0) {
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            return;
+        }
+        
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            NSMutableArray* mutableNewTweets = [tweets mutableCopy];
+            
+            if ([[mutableNewTweets.lastObject tweetId] isEqualToString:[self.tweets[0] tweetId]]) {
+                
+                //no gap detected
+                NSLog(@"no gap detected");
+                [mutableNewTweets removeLastObject];
+            }
+            else {
+                
+                //gap detected
+                NSLog(@"gap detected");
+                
+                [mutableNewTweets removeLastObject];
+                [mutableNewTweets addObject:[GapTweetEntity new]];
+            }
+            
+            self.tweets = [mutableNewTweets arrayByAddingObjectsFromArray:self.tweets];
+            
+            CGFloat contentOffsetY = self.tableView.contentOffset.y;
+            
+            [self.tableView reloadData];
+            
+            for (TweetEntity* tweet in mutableNewTweets) {
+                
+                NSIndexPath* indexPath = [NSIndexPath indexPathForRow:[self.tweets indexOfObject:tweet] inSection:0];
+                contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
+            }
+            
+            self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count]];
+            
+        });
     }
-    
-    [self.tableView reloadData];
 }
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToLoadNewTweetsWithError:(NSError*)error {
@@ -242,6 +310,42 @@
 - (void)loadNewTweets {
     
     [self.dataSource loadNewTweets];
+}
+
+#pragma mark - state restoration
+
++ (UIViewController*)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+    
+    UIViewController* tweetsController = [[[self class] alloc] init];
+    return tweetsController;
+}
+
+- (NSString*)modelIdentifierForElementAtIndexPath:(NSIndexPath*)idx inView:(UIView*)view {
+    
+    TweetEntity* tweet = self.tweets[idx.row];
+    return tweet.tweetId;
+}
+
+- (NSIndexPath*)indexPathForElementWithModelIdentifier:(NSString*)identifier inView:(UIView*)view {
+    
+    if (!self.tweets) {
+        
+        //model has not been loaded yet
+        self.restoredIndexPathIdentifier = [identifier copy];
+        return nil;
+    }
+    
+    NSInteger index = 0;
+    for (TweetEntity* tweet in self.tweets) {
+        
+        if ([tweet.tweetId isEqual:identifier]) {
+            return [NSIndexPath indexPathForRow:index inSection:0];
+        }
+        
+        index++;
+    }
+    
+    return nil;
 }
 
 
