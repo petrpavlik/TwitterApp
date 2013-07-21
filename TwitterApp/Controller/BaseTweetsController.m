@@ -507,15 +507,8 @@
     
     NSLog(@"selected mention %@", mention);
     
-    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    
-    if (tweet.retweetedStatus) {
-        tweet = tweet.retweetedStatus;
-    }
-    
     ProfileController* profileController = [ProfileController new];
-    profileController.user = tweet.user;
+    profileController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
     
     [self.navigationController pushViewController:profileController animated:YES];
 }

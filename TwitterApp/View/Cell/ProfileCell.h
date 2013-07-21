@@ -9,6 +9,12 @@
 #import "NetImageView.h"
 #import <UIKit/UIKit.h>
 
+typedef enum {
+    kFollowedByStatusUnknown,
+    kFollowedByStatusYes,
+    kFollowedByStatusNo
+} FollowedByStatus;
+
 @class ProfileCell;
 
 @protocol ProfileCellDelegate <NSObject>
@@ -24,10 +30,13 @@
 @property(nonatomic, weak) id <ProfileCellDelegate> delegate;
 @property(nonatomic, strong) UILabel* descriptionLabel;
 @property(nonatomic, strong) UIButton* followButton;
+@property(nonatomic, strong) UILabel* followingLabel;
 @property(nonatomic, strong) UIButton* locationButton;
 @property(nonatomic, strong) UILabel* nameLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
 @property(nonatomic, strong) UIButton* websiteButton;
+
+- (void)setFollowedByStatus:(FollowedByStatus)status;
 
 + (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width;
 

@@ -12,6 +12,7 @@
 
 @interface ProfileController : UITableViewController
 
+@property(nonatomic, strong) NSString* screenName;
 @property(nonatomic, strong) UserEntity* user;
 
 @end

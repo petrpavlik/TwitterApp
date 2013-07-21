@@ -22,7 +22,10 @@
 @interface ProfileController () <ProfileCellDelegate>
 
 @property(nonatomic, strong) NSNumber* following;
+@property(nonatomic, strong) NSNumber* followedBy;
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
+@property(nonatomic, weak) NSOperation* runningUserOperation;
+@property(nonatomic, weak) NSOperation* runningRelationshipOperation;
 
 @end
 
@@ -41,12 +44,16 @@
     return _notificationViewPlaceholderView;
 }
 
+- (void)dealloc {
+    
+    [self.runningUserOperation cancel];
+    [self.runningRelationshipOperation cancel];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    
-    NSParameterAssert(self.user);
     
     [self.tableView registerClass:[ProfileCell class] forCellReuseIdentifier:@"ProfileCell"];
     [self.tableView registerClass:[ProfilePushCell class] forCellReuseIdentifier:@"ProfilePushCell"];
@@ -54,7 +61,12 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.title = [NSString stringWithFormat:@"@%@", self.user.screenName];
+    if (self.user) {
+        self.title = [NSString stringWithFormat:@"@%@", self.user.screenName];
+    }
+    else {
+        self.title = [NSString stringWithFormat:@"@%@", self.screenName];
+    }
     
     UIButton* spamOrReportButton = [UIButton buttonWithType:UIButtonTypeSystem];
     spamOrReportButton.frame = CGRectMake(0, 0, 0, 70);
@@ -65,8 +77,16 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-NavigationBar-Reply"] style:UIBarButtonItemStyleBordered target:self action:@selector(replySelected)];
     
-    [self requestData];
-    [self setupProfileBanner];
+    if (self.user) {
+        
+        [self requestDataRelationshitData];
+        [self setupProfileBanner];
+    }
+    else {
+        
+        NSParameterAssert(self.screenName.length);
+        [self requestUserData];
+    }
 }
 
 #pragma mark - Table view data source
@@ -74,7 +94,12 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    if (self.user) {
+        return 2;
+    }
+    else {
+        return 0;
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -114,6 +139,19 @@
             else {
                 [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
             }
+        }
+        
+        if (self.followedBy) {
+            
+            if (self.followedBy.boolValue) {
+                [cell setFollowedByStatus:kFollowedByStatusYes];
+            }
+            else {
+                [cell setFollowedByStatus:kFollowedByStatusNo];
+            }
+        }
+        else {
+            [cell setFollowedByStatus:kFollowedByStatusUnknown];
         }
         
         NSArray* urls = user.entities[@"url"][@"urls"];
@@ -210,11 +248,13 @@
 
 #pragma mark -
 
-- (void)requestData {
+- (void)requestDataRelationshitData {
+    
+    NSParameterAssert(self.user);
     
     __weak typeof(self)weakSelf = self;
     
-    [[UserEntity currentUser] requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
+    self.runningRelationshipOperation = [[UserEntity currentUser] requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
         
         if (error) {
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not detect following status" style:NotificationViewStyleError];
@@ -222,7 +262,30 @@
         }
         
         weakSelf.following = following;
+        weakSelf.followedBy = followedBy;
         [weakSelf.tableView reloadData];
+    }];
+}
+
+- (void)requestUserData {
+    
+    NSParameterAssert(self.screenName.length);
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningUserOperation = [UserEntity requestUserWithScreenName:self.screenName completionBlock:^(UserEntity *user, NSError *error) {
+       
+        if (error) {
+            
+            
+        }
+        else {
+            
+            weakSelf.user = user;
+            [weakSelf.tableView reloadData];
+            [weakSelf requestDataRelationshitData];
+            [weakSelf setupProfileBanner];
+        }
     }];
 }
 

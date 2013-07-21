@@ -90,6 +90,11 @@
     [_locationButton setTitle:@"fsfs" forState:UIControlStateNormal];
     [contentView addSubview:_locationButton];
     
+    _followingLabel = [UILabel new];
+    _followingLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _followingLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    [contentView addSubview:_followingLabel];
+    
     UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
@@ -109,7 +114,11 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_descriptionLabel]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel)]];
     
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_followingLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
+    
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_followingLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
                                                                  attribute:NSLayoutAttributeCenterX
@@ -184,15 +193,31 @@
     _descriptionLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _websiteButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _locationButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _followingLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
 + (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width {
     
     CGFloat textHeight = [description boundingRectWithSize:CGSizeMake(width-20-20, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
-    CGFloat height = 170 + textHeight + 20;
+    CGFloat height = 170 + textHeight + 20 + 15;
     
     return height;
+}
+
+- (void)setFollowedByStatus:(FollowedByStatus)status {
+    
+    if (status == kFollowedByStatusUnknown) {
+        self.followingLabel.text = nil;
+    }
+    else if (status == kFollowedByStatusYes) {
+        self.followingLabel.text = @"Following you";
+        self.followingLabel.textColor = [UIColor blackColor];
+    }
+    else if (status == kFollowedByStatusNo) {
+        self.followingLabel.text = @"Not following you";
+        self.followingLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    }
 }
 
 @end
