@@ -48,10 +48,18 @@
     return _tweets;
 }
 
-- (void)loadNewTweets {
+- (BOOL)isReady {
+    return self.document.documentState == UIDocumentStateNormal;
+}
+
+- (BOOL)loadNewTweets {
     
     if (self.isTaskInProgress) {
-        return;
+        return NO;
+    }
+    
+    if (self.document.documentState != UIDocumentStateNormal) {
+        return NO;
     }
     
     self.taskInProgress = YES;
@@ -90,7 +98,8 @@
         
         self.runningNewTweetsOperation = [self.delegate tweetDataSource:self requestForTweetsSinceId:sinceId withMaxId:nil completionBlock:^(NSArray *tweets, NSError *error) {
             
-            self.taskInProgress = NO;
+            weakSelf.taskInProgress = NO;
+            weakSelf.runningNewTweetsOperation = nil;
             
             if (error) {
                 
@@ -124,13 +133,15 @@
                 }
                 
                 weakSelf.tweets = [tweets arrayByAddingObjectsFromArray:weakSelf.tweets];
-                [weakSelf.delegate tweetDataSource:weakSelf didLoadNewTweets:tweets];
+                [weakSelf.delegate tweetDataSource:weakSelf didLoadNewTweets:tweets cached:NO];
                 [weakSelf.document persistTimeline:weakSelf.tweets];
             }
         }];
         
         NSParameterAssert(self.runningNewTweetsOperation);
     }
+    
+    return YES;
 }
 
 - (void)loadOldTweets {
@@ -266,7 +277,7 @@
     if (tweets.count) {
         
         self.tweets = tweets;
-        [self.delegate tweetDataSource:self didLoadNewTweets:tweets];
+        [self.delegate tweetDataSource:self didLoadNewTweets:tweets cached:YES];
     }
     else {
         

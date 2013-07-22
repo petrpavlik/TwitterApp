@@ -1080,6 +1080,15 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Petr Pavlik";
+				TargetAttributes = {
+					4B7428861742D9CE00AEB85C = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 4B7428821742D9CE00AEB85C /* Build configuration list for PBXProject "TwitterApp" */;
 			compatibilityVersion = "Xcode 3.2";

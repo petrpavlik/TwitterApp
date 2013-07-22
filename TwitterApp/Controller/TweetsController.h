@@ -14,4 +14,6 @@
 - (NSString*)stateRestorationIdentifier;
 - (NSString*)tweetsPersistenceIdentifier;
 
+- (void)fetchNewTweetsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
+
 @end

@@ -13,6 +13,8 @@
 #import "LoadingCell.h"
 #import "TweetDetailController.h"
 
+typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
+
 @interface TweetsController () <UIDataSourceModelAssociation, UIViewControllerRestoration>
 
 @property(nonatomic) BOOL allTweetsLoaded;
@@ -20,6 +22,7 @@
 @property(nonatomic, strong) NSArray* tweets;
 @property(nonatomic, strong) id didGainAccessObserver;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
+@property(nonatomic, strong) BackgroundFetchCompletionBlock backgroundFetchCompletionBlock;
 
 @end
 
@@ -77,7 +80,7 @@
 
 #pragma mark -
 
-- (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadNewTweets:(NSArray*)tweets {
+- (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadNewTweets:(NSArray*)tweets cached:(BOOL)cached {
     
     NSParameterAssert(tweets);
     
@@ -102,7 +105,30 @@
                 index++;
             }
             
-            self.restorationIdentifier = nil;
+            self.restoredIndexPathIdentifier = nil;
+        }
+        
+        if (cached) {
+            [self.dataSource loadNewTweets];
+        }
+        else {
+            
+            if (tweets.count) {
+                
+                if (self.backgroundFetchCompletionBlock) {
+                    
+                    self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNewData);
+                    self.backgroundFetchCompletionBlock = nil;
+                }
+            }
+            else {
+                
+                if (self.backgroundFetchCompletionBlock) {
+                    
+                    self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNoData);
+                    self.backgroundFetchCompletionBlock = nil;
+                }
+            }
         }
     }
     else {
@@ -110,6 +136,13 @@
         if (tweets.count==0) {
             
             [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            
+            if (self.backgroundFetchCompletionBlock) {
+                
+                self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNoData);
+                self.backgroundFetchCompletionBlock = nil;
+            }
+            
             return;
         }
         
@@ -150,6 +183,11 @@
             
             [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count]];
             
+            if (self.backgroundFetchCompletionBlock) {
+                
+                self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNewData);
+                self.backgroundFetchCompletionBlock = nil;
+            }
         });
     }
 }
@@ -161,7 +199,16 @@
     [[LogService sharedInstance] logError:error];
     
     [self.refreshControl endRefreshing];
-    [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+    
+    if (self.backgroundFetchCompletionBlock) {
+        
+        self.backgroundFetchCompletionBlock(UIBackgroundFetchResultFailed);
+        self.backgroundFetchCompletionBlock = nil;
+    }
+    else {
+        
+        [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+    }
 }
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadOldTweets:(NSArray*)tweets {
@@ -346,6 +393,18 @@
     }
     
     return nil;
+}
+
+#pragma mark -
+
+- (void)fetchNewTweetsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    if (!self.dataSource.isReady || [self.dataSource loadNewTweets]) {
+        self.backgroundFetchCompletionBlock = completionHandler;
+    }
+    else {
+        completionHandler(UIBackgroundFetchResultNoData); //most likely currently already loading new tweets
+    }
 }
 
 

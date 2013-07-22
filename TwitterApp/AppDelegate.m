@@ -149,6 +149,8 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
     }
     
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
     return YES;
 }
 
@@ -217,6 +219,16 @@
 
 - (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
     NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+    
+    NSLog(@"should perform fetch");
+    
+    UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
+    TweetsController* timelineDocument = [rootTabBarController.viewControllers[0] viewControllers][0];
+    
+    [timelineDocument fetchNewTweetsWithCompletionHandler:completionHandler];
 }
 
 #pragma mark -

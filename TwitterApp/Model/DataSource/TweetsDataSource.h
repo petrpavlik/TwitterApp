@@ -13,7 +13,7 @@
 
 @protocol TweetDataSourceDelegate <NSObject>
 
-- (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadNewTweets:(NSArray*)tweets;
+- (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadNewTweets:(NSArray*)tweets cached:(BOOL)cached;
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToLoadNewTweetsWithError:(NSError*)error;
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadOldTweets:(NSArray*)tweets;
@@ -35,11 +35,12 @@
 
 - (instancetype)initWithPersistenceIdentifier:(NSString*)persistenceIdentifier;
 
-- (void)loadNewTweets;
+- (BOOL)loadNewTweets;
 - (void)loadOldTweets;
 - (void)loadTweetsForGap:(GapTweetEntity*)gap;
 - (void)deleteTweet:(TweetEntity*)tweet;
 
 @property(nonatomic, weak) id <TweetDataSourceDelegate> delegate;
+@property(nonatomic, readonly) BOOL isReady;
 
 @end
