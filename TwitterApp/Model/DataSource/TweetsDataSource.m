@@ -233,37 +233,34 @@
             
             NSParameterAssert(weakSelf.tweets);
             
-            /*NSInteger indexOfGapTweet = [weakSelf.tweets indexOfObject:gap];
-            NSMutableArray* mutableTweets = [self.tweets mutableCopy];
+            NSInteger indexOfGapTweet = [weakSelf.tweets indexOfObject:gap];
+            NSMutableArray* mutableTimeline = [self.tweets mutableCopy];
+            NSMutableArray* mutableTweets = [tweets mutableCopy];
             
-            for (TweetEntity* tweetToAdd in tweets) {
+            [mutableTimeline removeObjectAtIndex:indexOfGapTweet];
+            
+            if ([[mutableTweets.lastObject tweetId] isEqualToString:[mutableTimeline[indexOfGapTweet] tweetId]]) {
                 
-                if (tweetToAdd == tweets.lastObject) {
-                    
-                    if ([tweetToAdd.tweetId isEqualToString:[mutableTweets[index] tweetId]]) {
-                        
-                        //no gap
-                    }
-                    else {
-                        
-                        [mutableTweets insertObject:[GapTweetEntity new] atIndex:index];
-                        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:index inSection:0];
-                        contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
-                        index++;
-                    }
-                }
-                else {
-                    
-                    [mutableTweets insertObject:tweetToAdd atIndex:indexOfGapTweet];
-                    indexOfGapTweet++;
-                }
+                [mutableTweets removeLastObject];
+            }
+            else {
+                
+                [mutableTweets removeLastObject];
+                [mutableTweets addObject:[GapTweetEntity new]];
             }
             
-            self.tweets = mutableTweets;
+            NSInteger indexForTweet = indexOfGapTweet;
+            for (TweetEntity* tweetToInsert in mutableTweets) {
+                
+                [mutableTimeline insertObject:tweetToInsert atIndex:indexForTweet];
+                indexForTweet++;
+            }
             
-            weakSelf.tweets = [weakSelf.tweets arrayByAddingObjectsFromArray:tweets];
-            [weakSelf.delegate tweetDataSource:weakSelf didLoadOldTweets:tweets];
-            [weakSelf.document persistTimeline:weakSelf.tweets];*/
+            
+            weakSelf.tweets = mutableTimeline;
+            
+            [weakSelf.delegate tweetDataSource:weakSelf didFillGap:gap withTweets:mutableTweets];
+            [weakSelf.document persistTimeline:weakSelf.tweets];
         }
     }];
 }

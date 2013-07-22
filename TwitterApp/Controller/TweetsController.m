@@ -211,6 +211,25 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }
 }
 
+- (void)tweetDataSource:(TweetsDataSource *)dataSource didFillGap:(GapTweetEntity *)gap withTweets:(NSArray *)tweets {
+    
+    NSInteger indexOfGapTweet = [self.tweets indexOfObject:gap];
+    NSMutableArray* mutableTimeline = [self.tweets mutableCopy];
+    
+    [mutableTimeline removeObjectAtIndex:indexOfGapTweet];
+    
+    NSInteger indexForTweet = indexOfGapTweet;
+    for (TweetEntity* tweetToInsert in tweets) {
+        
+        [mutableTimeline insertObject:tweetToInsert atIndex:indexForTweet];
+        indexForTweet++;
+    }
+    
+    
+    self.tweets = mutableTimeline;
+    [self.tableView reloadData];
+}
+
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadOldTweets:(NSArray*)tweets {
     
     NSParameterAssert(tweets);
@@ -338,6 +357,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         [self.tableView endUpdates];
         
         //[self requestTweetsSinceId:[self.tweets[indexPath.row+1] tweetId] withMaxId:[self.tweets[indexPath.row-1] tweetId]];
+        [self.dataSource loadTweetsForGap:gapTweet];
     }
     else {
         
