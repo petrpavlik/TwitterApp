@@ -895,6 +895,8 @@
 		4BB78926179B149C008C1DCC /* Timelines */ = {
 			isa = PBXGroup;
 			children = (
+				4BDB0F381748CE15004980EB /* TimelineController.h */,
+				4BDB0F391748CE15004980EB /* TimelineController.m */,
 				4B93D80917823069005BE43C /* MentionsController.h */,
 				4B93D80A17823069005BE43C /* MentionsController.m */,
 				4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */,
@@ -956,8 +958,6 @@
 				4B4E80A9177A341F005358A5 /* ProfileController.m */,
 				4BEEA6BF1792B2FA005FCC90 /* SearchController.h */,
 				4BEEA6C01792B2FA005FCC90 /* SearchController.m */,
-				4BDB0F381748CE15004980EB /* TimelineController.h */,
-				4BDB0F391748CE15004980EB /* TimelineController.m */,
 				4BAEB3D21752280E0027A0D1 /* TweetController.h */,
 				4BAEB3D31752280E0027A0D1 /* TweetController.m */,
 				4B1D0136175B6A5A00B04036 /* TweetDetailController.h */,

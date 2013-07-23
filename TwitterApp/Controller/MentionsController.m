@@ -21,7 +21,7 @@
     
     self.title = @"Mentions";
     
-    
+    self.tabBarItem.title = @"Mentions";
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

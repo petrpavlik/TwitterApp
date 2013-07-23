@@ -110,9 +110,8 @@
 
 - (void)bookmarksSelected {
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"a" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"a" otherButtonTitles:@"Save to Pocket", "Open in Safari", "Save to Reading List", nil];
-    
-    [actionSheet showInView:self.view];
+    //UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"a" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"a" otherButtonTitles:@"Save to Pocket", "Open in Safari", "Save to Reading List", nil];
+    //[actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {

@@ -366,4 +366,9 @@
     [imageView setImageWithURL:[NSURL URLWithString:bannetURLString] placeholderImage:nil];
 }
 
+- (void)spamOrReportSelected {
+    
+    
+}
+
 @end

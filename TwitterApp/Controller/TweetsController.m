@@ -150,30 +150,13 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            NSMutableArray* mutableNewTweets = [tweets mutableCopy];
-            
-            if ([[mutableNewTweets.lastObject tweetId] isEqualToString:[self.tweets[0] tweetId]]) {
-                
-                //no gap detected
-                NSLog(@"no gap detected");
-                [mutableNewTweets removeLastObject];
-            }
-            else {
-                
-                //gap detected
-                NSLog(@"gap detected");
-                
-                [mutableNewTweets removeLastObject];
-                [mutableNewTweets addObject:[GapTweetEntity new]];
-            }
-            
-            self.tweets = [mutableNewTweets arrayByAddingObjectsFromArray:self.tweets];
+            self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
             
             CGFloat contentOffsetY = self.tableView.contentOffset.y;
             
             [self.tableView reloadData];
             
-            for (TweetEntity* tweet in mutableNewTweets) {
+            for (TweetEntity* tweet in tweets) {
                 
                 NSIndexPath* indexPath = [NSIndexPath indexPathForRow:[self.tweets indexOfObject:tweet] inSection:0];
                 contentOffsetY += [self tableView:self.tableView heightForRowAtIndexPath:indexPath];
@@ -181,7 +164,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
             
             self.tableView.contentOffset = CGPointMake(0, contentOffsetY);
             
-            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", mutableNewTweets.count]];
+            NSInteger numOfNewTweets = tweets.count;
+            if ([tweets.lastObject isKindOfClass:[GapTweetEntity class]]) {
+                numOfNewTweets--;
+            }
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
             
             if (self.backgroundFetchCompletionBlock) {
                 

@@ -7,6 +7,7 @@
 //
 
 #import "TimelineController.h"
+#import "TweetController.h"
 
 @implementation TimelineController
 
@@ -17,7 +18,8 @@
     
     self.title = @"Timeline";
     
-    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Compose"] style:UIBarButtonItemStyleBordered target:self action:@selector(composeTweet)];
+    [self.navigationItem.rightBarButtonItem setImageInsets:UIEdgeInsetsMake(-1, 0, 0, -3)];
 }
 
 - (NSString*)tweetsPersistenceIdentifier {
@@ -31,6 +33,13 @@
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock {
     
     return [TweetEntity requestHomeTimelineWithMaxId:maxId sinceId:sinceId completionBlock:completionBlock];
+}
+
+#pragma mark -
+
+- (void)composeTweet {
+    
+    [TweetController presentInViewController:self];
 }
 
 @end
