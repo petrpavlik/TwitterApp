@@ -13,6 +13,8 @@
 
 @property(nonatomic, strong) UIWebView* webView;
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicator;
+@property(nonatomic, strong) UIBarButtonItem* goBackBarButtonItem;
+@property(nonatomic, strong) UIBarButtonItem* goForwardBarButtonItem;
 
 @end
 
@@ -45,9 +47,15 @@
         [self.webView loadRequest:request];
     }
     
-    self.toolbarItems = @[[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-Toolbar-Back"] style:UIBarButtonItemStylePlain target:self action:@selector(backSelected)],
+    self.goBackBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-Toolbar-Back"] style:UIBarButtonItemStylePlain target:self action:@selector(backSelected)];
+    self.goBackBarButtonItem.enabled = NO;
+    
+    self.goForwardBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-Toolbar-Forward"] style:UIBarButtonItemStylePlain target:self action:@selector(forwardSelected)];
+    self.goForwardBarButtonItem.enabled = NO;
+    
+    self.toolbarItems = @[self.goBackBarButtonItem,
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
-                          [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-Toolbar-Forward"] style:UIBarButtonItemStylePlain target:self action:@selector(forwardSelected)],
+                          self.goForwardBarButtonItem,
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadSelected)],
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
@@ -83,12 +91,18 @@
     
     [self.activityIndicator startAnimating];
     self.title = @"Loading...";
+    
+    self.goBackBarButtonItem.enabled = webView.canGoBack;
+    self.goForwardBarButtonItem.enabled = webView.canGoForward;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
     [self.activityIndicator stopAnimating];
     self.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    
+    self.goBackBarButtonItem.enabled = webView.canGoBack;
+    self.goForwardBarButtonItem.enabled = webView.canGoForward;
 }
 
 #pragma mark -
