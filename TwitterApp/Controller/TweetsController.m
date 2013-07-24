@@ -21,6 +21,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) NSArray* tweets;
 @property(nonatomic, strong) id didGainAccessObserver;
+@property(nonatomic, strong) id didPostTweetObserver;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, strong) BackgroundFetchCompletionBlock backgroundFetchCompletionBlock;
 
@@ -39,6 +40,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.didPostTweetObserver];
 }
 
 - (void)viewDidLoad
@@ -59,11 +61,17 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     self.tableView.restorationIdentifier = @"TableView";
     
     __weak typeof(self) weakSelf = self;
+    
     self.didGainAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kDidGainAccessToAccountNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
        
         if (!weakSelf.tweets.count) {
             [weakSelf loadNewTweets];
         }
+    }];
+    
+    self.didPostTweetObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kUserDidPostTweetNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf.dataSource loadNewTweets];
     }];
 }
 

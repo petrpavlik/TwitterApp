@@ -109,6 +109,12 @@
                 
                 if (weakSelf.tweets.count) {
                     
+                    if (!tweets.count) {
+                        
+                        [weakSelf.delegate tweetDataSource:weakSelf didLoadNewTweets:tweets cached:NO];
+                        return;
+                    }
+                    
                     NSMutableArray* mutableNewTweets = [tweets mutableCopy];
                     
                     if ([[mutableNewTweets.lastObject tweetId] isEqualToString:[weakSelf.tweets[0] tweetId]]) {
@@ -233,6 +239,12 @@
             
             NSParameterAssert(weakSelf.tweets);
             
+            if (!tweets.count) { //probably experienced a deleted tweet
+                
+                [weakSelf.delegate tweetDataSource:weakSelf didFillGap:gap withTweets:tweets];
+                return;
+            }
+            
             NSInteger indexOfGapTweet = [weakSelf.tweets indexOfObject:gap];
             NSMutableArray* mutableTimeline = [self.tweets mutableCopy];
             NSMutableArray* mutableTweets = [tweets mutableCopy];
@@ -245,7 +257,6 @@
             }
             else {
                 
-                [mutableTweets removeLastObject];
                 [mutableTweets addObject:[GapTweetEntity new]];
             }
             

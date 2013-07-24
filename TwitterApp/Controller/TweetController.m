@@ -210,7 +210,10 @@
         if (error) {
             [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
         }
-        
+        else {
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:kUserDidPostTweetNotification object:Nil];
+        }
     }];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
