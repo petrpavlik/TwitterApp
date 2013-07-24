@@ -184,6 +184,9 @@
         if (media.count) {
             
             mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
+            if (mediaHeight > 300) {
+                mediaHeight = 300;
+            }
         }
         
         CGFloat retweetInformationHeight = 0;
