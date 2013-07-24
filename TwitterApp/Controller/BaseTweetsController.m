@@ -283,7 +283,16 @@
         cell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];
         
         if (retweet) {
-            cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by %@", retweet.user.name];
+            
+            if (tweet.retweeted.boolValue) {
+                cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by You and %@", retweet.user.name];
+            }
+            else {
+                cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by %@", retweet.user.name];
+            }
+        }
+        else if (tweet.retweeted.boolValue) {
+            cell.retweetedLabel.text = @"Retweeted by You";
         }
         
         cell.mediaImageView.hidden = YES;
@@ -532,12 +541,55 @@
     
 }
 
+
+#pragma mark -
+
 - (void)tweetCellDidRequestRetweet:(TweetCell *)cell {
-    //handled in a subclass
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    
+    [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        
+        if (error) {
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+            return;
+        }
+        
+        tweet.retweeted = @(YES);
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+    }];
 }
 
 - (void)tweetCellDidRequestFavorite:(TweetCell *)cell {
-    //handled in a subclass
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    
+    [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        
+        if (error) {
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+            return;
+        }
+        
+        tweet.favorited = @(YES);
+        
+        [self.tableView beginUpdates];
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Favorited '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+    }];
 }
 
 - (void)tweetCellDidRequestOtherAction:(TweetCell *)cell {
