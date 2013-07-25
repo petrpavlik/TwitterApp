@@ -18,6 +18,7 @@
 #import "UIImage+TwitterApp.h"
 #import "UserEntity.h"
 #import "WebController.h"
+#import "UserTweetsController.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -225,10 +226,10 @@
     
     if (indexPath.row==0) {
         
-        SearchTweetsController* searchTweetsController = [SearchTweetsController new];
-        searchTweetsController.searchExpression = [NSString stringWithFormat:@"from:%@", self.user.screenName];
+        UserTweetsController* userTweetsController = [UserTweetsController new];
+        userTweetsController.screenName = self.user.screenName;
         
-        [self.navigationController pushViewController:searchTweetsController animated:YES];
+        [self.navigationController pushViewController:userTweetsController animated:YES];
     }
     else if (indexPath.row==1) {
         

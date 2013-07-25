@@ -132,8 +132,9 @@
     _tweetTextView = [[UITextView alloc] init];
     _tweetTextView.delegate = self;
     _tweetTextView.restorationIdentifier = @"TweetTextTextView";
-    _tweetTextView.font = [skin fontOfSize:16];
+    _tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _tweetTextView.backgroundColor = [UIColor clearColor];
+    _tweetTextView.tintColor = skin.linkColor;
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     
