@@ -136,13 +136,13 @@
     [_usernameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
-    _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_usernameLabel];
     
     _retweetedLabel = [[UILabel alloc] init];
     //_retweetedLabel.font = [skin fontOfSize:15];
     _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _retweetedLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _retweetedLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_retweetedLabel];
     
     _tweetAgeLabel = [[UILabel alloc] init];
@@ -150,7 +150,7 @@
     _tweetAgeLabel.textAlignment = NSTextAlignmentRight;
     //_tweetAgeLabel.font = [skin fontOfSize:15];
     _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
-    _tweetAgeLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _tweetAgeLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     _tweetAgeLabel.text = @"1d";
     [contentView addSubview:_tweetAgeLabel];
     
