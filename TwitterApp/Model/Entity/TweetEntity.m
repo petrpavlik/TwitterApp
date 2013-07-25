@@ -389,17 +389,19 @@
     return (NSOperation*)operation;
 }
 
-+ (NSOperation*)requestSearchOlderRelatedTweetsWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
++ (NSOperation*)requestSearchOlderRelatedTweetsWithTweet:(TweetEntity*)tweet screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
     
-    NSParameterAssert(tweetId);
+    NSParameterAssert(tweet);
     NSParameterAssert(screenName);
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
-    NSDictionary* parameters = @{@"q": [NSString stringWithFormat:@"from:%@ OR to:%@", screenName, screenName], @"count": @"100", @"result_type": @"recent", @"max_id": tweetId};
+    NSDictionary* parameters = @{@"q": [NSString stringWithFormat:@"from:%@ OR to:%@", screenName, screenName], @"count": @"100", @"result_type": @"recent", @"max_id": tweet.tweetId};
     
     
     NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"search/tweets.json" parameters:parameters];
+    
+    TweetEntity* originalTweet = tweet;
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
         
@@ -424,7 +426,10 @@
                 }
             }
             else {
-                [tweets addObject:tweet];
+                
+                if ([originalTweet.inReplyToStatusId isEqualToString:tweet.tweetId]) {
+                    [tweets addObject:tweet];
+                }
             }
         }
         

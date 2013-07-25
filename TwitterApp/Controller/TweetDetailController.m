@@ -186,7 +186,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    self.runningOlderRelatedTweetsRequest = [TweetEntity requestSearchOlderRelatedTweetsWithTweetId:self.tweet.inReplyToStatusId screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
+    self.runningOlderRelatedTweetsRequest = [TweetEntity requestSearchOlderRelatedTweetsWithTweet:self.tweet screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
         
         if (tweets.count) {
             

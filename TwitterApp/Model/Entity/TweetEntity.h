@@ -48,7 +48,7 @@
 
 + (NSOperation*)requestSearchRepliesWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
-+ (NSOperation*)requestSearchOlderRelatedTweetsWithTweetId:(NSString*)tweetId screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
++ (NSOperation*)requestSearchOlderRelatedTweetsWithTweet:(TweetEntity*)tweet screenName:(NSString*)screenName completionBlock:(void (^)(NSArray* tweets, NSError* error))block;
 
 + (NSOperation*)requestTweetWithId:(NSString*)tweetId completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block;
 
