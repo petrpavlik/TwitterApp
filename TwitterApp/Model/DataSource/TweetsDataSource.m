@@ -198,7 +198,26 @@
     [TweetEntity requestDeletionOfTweetWithId:tweet.tweetId completionBlock:^(NSError *error) {
         
         if (error) {
+            
             [weakSelf.delegate tweetDataSource:weakSelf didFailToDeleteTweetWithError:error];
+            return;
+        }
+        
+        TweetEntity* deletedTweet = tweet;
+        
+        NSInteger index = 0;
+        for (TweetEntity* tweet in weakSelf.tweets) {
+            
+            if ([tweet.tweetId isEqualToString:deletedTweet.tweetId]) {
+                
+                NSMutableArray* mutableTimeline = [weakSelf.tweets mutableCopy];
+                [mutableTimeline removeObjectAtIndex:index];
+                weakSelf.tweets = [mutableTimeline copy];
+                
+                [weakSelf.document persistTimeline:weakSelf.tweets];
+                
+                break;
+            }
         }
         
         [weakSelf.delegate tweetDataSource:self didDeleteTweet:tweet];
