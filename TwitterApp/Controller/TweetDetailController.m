@@ -79,7 +79,8 @@
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
     
     if (indexPath.section==1) {
-        return [self cellForTweetDetail:tweet atIndexPath:indexPath];
+        //return [self cellForTweetDetail:tweet atIndexPath:indexPath];
+        return [self cellForTweet:tweet atIndexPath:indexPath];
     }
     else {
         return [self cellForTweet:tweet atIndexPath:indexPath];
@@ -91,7 +92,8 @@
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
     
     if (indexPath.section==1) {
-        return [self heightForTweetDetail:tweet];
+        //return [self heightForTweetDetail:tweet];
+        return [self heightForTweet:tweet];
     }
     else {
         return [self heightForTweet:tweet];

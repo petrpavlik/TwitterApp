@@ -197,7 +197,9 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_mediaImageView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel][_retweetedLabel]-[_mediaImageView(<=300)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel, _retweetedLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel]-[_mediaImageView(<=300)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_retweetedLabel]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_retweetedLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel(240)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
@@ -250,7 +252,7 @@
     _usernameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
     _tweetTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    _retweetedLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    _retweetedLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
 
@@ -271,6 +273,8 @@
     [self.mentionsDictonary removeAllObjects];
     
     self.dummyScrollView.contentOffset = CGPointMake(0, 0);
+    
+    self.avatarImageView.image = nil;
 }
 
 - (void)layoutSubviews {

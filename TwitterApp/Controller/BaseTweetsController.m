@@ -192,7 +192,7 @@
         
         CGFloat retweetInformationHeight = 0;
         if (retweet) {
-            retweetInformationHeight = 15;
+            retweetInformationHeight = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize + 5;
         }
         
         return [TweetCell requiredHeightForTweetText:tweetText] + mediaHeight + retweetInformationHeight;
