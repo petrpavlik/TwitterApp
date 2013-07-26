@@ -42,6 +42,7 @@
     ////////
     
     NSMutableAttributedString* optimizedAttributedText = [self.attributedText mutableCopy];
+    [optimizedAttributedText replaceCharactersInRange:NSMakeRange(0, optimizedAttributedText.string.length) withString:[self replaceEmojiWithDummyCharInString:optimizedAttributedText.string]];
     
     // use label's font and lineBreakMode properties in case the attributedText does not contain such attributes
     [self.attributedText enumerateAttributesInRange:NSMakeRange(0, [self.attributedText length]) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
@@ -239,6 +240,33 @@
         [self.delegate label:self didCancelTouch:[self.lastTouches anyObject]];
         self.lastTouches = nil;
     }
+}
+
+#pragma mark -
+
+- (NSString*)replaceEmojiWithDummyCharInString:(NSString*)string {
+    
+    __block NSMutableString* temp = [NSMutableString string];
+    
+    [string enumerateSubstringsInRange: NSMakeRange(0, [string length]) options:NSStringEnumerationByComposedCharacterSequences usingBlock:
+     ^(NSString *substring, NSRange substringRange, NSRange enclosingRange, BOOL *stop){
+         
+         const unichar hs = [substring characterAtIndex: 0];
+         
+         // surrogate pair
+         if (0xd800 <= hs && hs <= 0xdbff) {
+             const unichar ls = [substring characterAtIndex: 1];
+             const int uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000;
+             
+             [temp appendString: (0x1d000 <= uc && uc <= 0x1f77f)? @"XX": substring]; // U+1D000-1F77F
+             
+             // non surrogate
+         } else {
+             [temp appendString: (0x2100 <= hs && hs <= 0x26ff)? @"X": substring]; // U+2100-26FF
+         }
+     }];
+    
+    return temp;
 }
 
 @end

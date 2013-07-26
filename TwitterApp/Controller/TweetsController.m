@@ -17,6 +17,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
 @interface TweetsController () <UIDataSourceModelAssociation, UIViewControllerRestoration>
 
+@property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) NSArray* tweets;
@@ -81,6 +82,8 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     if ([AFTwitterClient sharedClient].account) {
         
         if (!self.tweets.count) {
+            
+            [self willBeginRefreshing];
             [self.dataSource loadNewTweets];
         }
     }
@@ -92,6 +95,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     NSParameterAssert(tweets);
     
+    [self didEndRefreshing];
     [self.refreshControl endRefreshing];
     
     if (!self.tweets.count) {
@@ -195,6 +199,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     [[LogService sharedInstance] logError:error];
     
     [self.refreshControl endRefreshing];
+    [self didEndRefreshing];
     
     if (self.backgroundFetchCompletionBlock) {
         
@@ -224,6 +229,14 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     self.tweets = mutableTimeline;
     [self.tableView reloadData];
+}
+
+- (void)tweetDataSource:(TweetsDataSource *)dataSource didFailToFillGap:(GapTweetEntity *)gap error:(NSError *)error {
+    
+    gap.loading = NO;
+    
+    [self.tableView reloadData];
+    [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not load tweets" style:NotificationViewStyleError];
 }
 
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didLoadOldTweets:(NSArray*)tweets {
@@ -421,6 +434,44 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     else {
         completionHandler(UIBackgroundFetchResultNoData); //most likely currently already loading new tweets
     }
+}
+
+#pragma mark -
+
+- (void)willBeginRefreshing {
+    
+    self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.bounds.size.height, 0, 0, 0);
+    self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, -self.tableView.bounds.size.height);
+    self.tableView.scrollEnabled = NO;
+    
+    UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.center = CGPointMake(self.tableView.bounds.size.width/2, 25 - self.tableView.bounds.size.height);
+    [activityIndicator startAnimating];
+    [self.view addSubview:activityIndicator];
+    self.activityIndicatorView = activityIndicator;
+}
+
+- (void)didEndRefreshing {
+    
+    [self.tableView reloadData];
+    
+    if (self.tableView.contentInset.top <= 64) {
+        return;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        
+        self.activityIndicatorView.center = CGPointMake(self.tableView.bounds.size.width/2, 25);
+        self.activityIndicatorView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        self.tableView.scrollEnabled = YES;
+        [self.activityIndicatorView removeFromSuperview];
+        self.activityIndicatorView = nil;
+    }];
 }
 
 

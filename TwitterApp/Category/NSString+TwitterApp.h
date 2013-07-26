@@ -11,5 +11,6 @@
 @interface NSString (TwitterApp)
 
 - (NSString*)stringByStrippingHTMLTags;
+- (NSString*)stringByRemovingEmoji;
 
 @end
