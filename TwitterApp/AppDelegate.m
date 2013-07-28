@@ -24,6 +24,13 @@
 #import "TimelineController.h"
 #import "TwitterAppWindow.h"
 #import "UserEntity.h"
+#import <WindowsAzureMessaging/WindowsAzureMessaging.h>
+
+@interface AppDelegate ()
+
+@property (strong, nonatomic) SBNotificationHub* hub;
+
+@end
 
 @implementation AppDelegate
 
@@ -56,6 +63,8 @@
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+    self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=X+WP16MQoASStF+zs1pu6gnwVO2LjC0pO2+7cBZwa0M=" notificationHubPath: @"https://tweetilus.servicebus.windows.net/tweetilus"];
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
@@ -151,6 +160,8 @@
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+    
     return YES;
 }
 
@@ -229,6 +240,23 @@
     TweetsController* timelineDocument = [rootTabBarController.viewControllers[0] viewControllers][0];
     
     [timelineDocument fetchNewTweetsWithCompletionHandler:completionHandler];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+ 
+    NSLog(@"did obtain notification token");
+    
+    [self.hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
+        
+        if (error != nil) {
+            NSLog(@"Error registering for notifications: %@", error);
+        }
+    }];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    
+    NSLog(@"did fail to obtain a notification token: %@", error);
 }
 
 #pragma mark -

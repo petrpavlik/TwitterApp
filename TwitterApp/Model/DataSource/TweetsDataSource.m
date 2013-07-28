@@ -213,7 +213,7 @@
                 NSMutableArray* mutableTimeline = [weakSelf.tweets mutableCopy];
                 [mutableTimeline removeObjectAtIndex:index];
                 weakSelf.tweets = [mutableTimeline copy];
-                
+                        
                 [weakSelf.document persistTimeline:weakSelf.tweets];
                 
                 break;

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
+		4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
 		4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
 		4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
@@ -277,6 +279,7 @@
 
 /* Begin PBXFileReference section */
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = Vendor/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		4B132D5817949BE500EFA90C /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
@@ -491,6 +494,7 @@
 				4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B6629BB177387FA00FA146A /* Social.framework in Frameworks */,
 				4B6629BC177387FA00FA146A /* UIKit.framework in Frameworks */,
+				4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 				4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */,
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
@@ -516,6 +520,7 @@
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
+				4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 				4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
@@ -599,6 +604,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */,
 				4BEBAC04178372C1004B99FC /* Accelerate.framework */,
 				4BEBAC0217837298004B99FC /* CoreImage.framework */,
 				4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */,
@@ -721,26 +727,26 @@
 		4B7428D11742DEB500AEB85C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				4B7428D21742DED500AEB85C /* TweetCell.h */,
-				4B7428D31742DED500AEB85C /* TweetCell.m */,
-				4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */,
-				4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */,
-				4BDFDB651754DEC400075F7D /* UserCell.h */,
-				4BDFDB661754DEC400075F7D /* UserCell.m */,
-				4BB42C03175794F900311FF5 /* LoadMoreCell.h */,
-				4BB42C04175794F900311FF5 /* LoadMoreCell.m */,
 				4BF0DBFA17649598002578FF /* BasementCell.h */,
 				4BF0DBFB17649598002578FF /* BasementCell.m */,
-				4B573FA4176B695200166461 /* TweetDetailCell.h */,
-				4B573FA5176B695200166461 /* TweetDetailCell.m */,
 				4B16B2C1177503E1000FEFDD /* ErrorCell.h */,
 				4B16B2C2177503E1000FEFDD /* ErrorCell.m */,
+				4BCBBF6B174E534F0004B1F4 /* LoadingCell.h */,
+				4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */,
+				4BB42C03175794F900311FF5 /* LoadMoreCell.h */,
+				4BB42C04175794F900311FF5 /* LoadMoreCell.m */,
 				4B4E80A4177A2B6A005358A5 /* ProfileCell.h */,
 				4B4E80A5177A2B6A005358A5 /* ProfileCell.m */,
 				4B754319177C829A005AF691 /* ProfilePushCell.h */,
 				4B75431A177C829A005AF691 /* ProfilePushCell.m */,
 				4BEEA6C31792B32C005FCC90 /* SearchFieldCell.h */,
 				4BEEA6C41792B32C005FCC90 /* SearchFieldCell.m */,
+				4B7428D21742DED500AEB85C /* TweetCell.h */,
+				4B7428D31742DED500AEB85C /* TweetCell.m */,
+				4B573FA4176B695200166461 /* TweetDetailCell.h */,
+				4B573FA5176B695200166461 /* TweetDetailCell.m */,
+				4BDFDB651754DEC400075F7D /* UserCell.h */,
+				4BDFDB661754DEC400075F7D /* UserCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1463,6 +1469,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+					"$(SRCROOT)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1504,6 +1511,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+					"$(SRCROOT)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1601,6 +1609,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+					"$(SRCROOT)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1641,6 +1650,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
+					"$(SRCROOT)/Vendor",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
