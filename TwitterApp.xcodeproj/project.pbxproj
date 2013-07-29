@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B0DA1D417A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
+		4B0DA1D517A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
 		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
@@ -279,6 +281,8 @@
 
 /* Begin PBXFileReference section */
 		247C6CFBE31346CFAFA5B8FE /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B0DA1D217A693E00021DBBD /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
+		4B0DA1D317A693E00021DBBD /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = Vendor/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
@@ -539,6 +543,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B0DA1D117A693E00021DBBD /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				4B0DA1D217A693E00021DBBD /* Base64.h */,
+				4B0DA1D317A693E00021DBBD /* Base64.m */,
+			);
+			name = Base64;
+			path = Vendor/Base64;
+			sourceTree = SOURCE_ROOT;
+		};
 		4B132D5717949BE500EFA90C /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
@@ -951,6 +965,7 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4B0DA1D117A693E00021DBBD /* Base64 */,
 				4B132D5717949BE500EFA90C /* Flurry */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
 			);
@@ -1310,6 +1325,7 @@
 				4BB78925179AE041008C1DCC /* TabBarController.m in Sources */,
 				4B66299A177387FA00FA146A /* NetImageView.m in Sources */,
 				4B66299B177387FA00FA146A /* WebController.m in Sources */,
+				4B0DA1D517A693E00021DBBD /* Base64.m in Sources */,
 				4BFDA4561775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6CA1792BAB8005FCC90 /* SearchUsersController.m in Sources */,
 				4B66299C177387FA00FA146A /* PPLabel.m in Sources */,
@@ -1375,6 +1391,7 @@
 				4BB78924179AE041008C1DCC /* TabBarController.m in Sources */,
 				4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */,
 				4BF9B6B6174A878D00DA3318 /* WebController.m in Sources */,
+				4B0DA1D417A693E00021DBBD /* Base64.m in Sources */,
 				4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6C91792BAB8005FCC90 /* SearchUsersController.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,

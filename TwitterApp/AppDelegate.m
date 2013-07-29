@@ -25,6 +25,7 @@
 #import "TwitterAppWindow.h"
 #import "UserEntity.h"
 #import <WindowsAzureMessaging/WindowsAzureMessaging.h>
+#import "Base64.h"
 
 @interface AppDelegate ()
 
@@ -64,13 +65,15 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=X+WP16MQoASStF+zs1pu6gnwVO2LjC0pO2+7cBZwa0M=" notificationHubPath: @"https://tweetilus.servicebus.windows.net/tweetilus"];
+    //self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=X+WP16MQoASStF+zs1pu6gnwVO2LjC0pO2+7cBZwa0M=" notificationHubPath: @"https://tweetilus.servicebus.windows.net/tweetilus"];
+    
+    self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=X+WP16MQoASStF+zs1pu6gnwVO2LjC0pO2+7cBZwa0M=" notificationHubPath: @"tweetilus"];
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
     
 #ifdef DEBUG
-    [[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
+    //[[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
 #endif
 
     
@@ -245,13 +248,23 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
  
     NSLog(@"did obtain notification token");
+    NSLog(@"%@", [deviceToken base64EncodedString]);
     
     [self.hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
         
         if (error != nil) {
             NSLog(@"Error registering for notifications: %@", error);
         }
+        else {
+            NSLog(@"token registered for azure");
+        }
     }];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    NSLog(@"did receive remote notification");
+    
+    [[[UIAlertView alloc] initWithTitle:@"Remote Notification" message:userInfo.description delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {

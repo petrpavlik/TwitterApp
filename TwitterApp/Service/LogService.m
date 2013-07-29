@@ -31,7 +31,7 @@
         [Flurry startSession:@"4KXXWFQNX9MYSFD52TJ5"];
         
         #ifdef DEBUG
-        [Flurry setDebugLogEnabled:YES];
+        //[Flurry setDebugLogEnabled:YES];
         #endif
     }
     
