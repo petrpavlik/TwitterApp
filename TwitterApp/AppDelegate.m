@@ -163,8 +163,6 @@
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
-    
     return YES;
 }
 
@@ -248,9 +246,10 @@
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
  
     NSLog(@"did obtain notification token");
-    NSLog(@"%@", [deviceToken base64EncodedString]);
     
-    [self.hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
+    NSParameterAssert([UserEntity currentUser]);
+    
+    [self.hub registerNativeWithDeviceToken:deviceToken tags:[[NSSet alloc] initWithArray:@[[UserEntity currentUser].userId]] completion:^(NSError* error) {
         
         if (error != nil) {
             NSLog(@"Error registering for notifications: %@", error);
@@ -301,6 +300,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
         
     }];
+}
+
+- (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
+    
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
 }
 
 @end
