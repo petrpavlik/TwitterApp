@@ -62,7 +62,7 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self setEdgesForExtendedLayout:UIExtendedEdgeNone];
+    [self setEdgesForExtendedLayout:UIRectEdgeNone];
     self.automaticallyAdjustsScrollViewInsets = YES; //default YES
     
     self.title = self.searchQuery;

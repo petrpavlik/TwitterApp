@@ -78,7 +78,7 @@
     [self.tableView registerClass:[LoadMoreCell class] forCellReuseIdentifier:@"LoadMoreCell"];
     
     self.clearsSelectionOnViewWillAppear = YES;
-    [self setEdgesForExtendedLayout:UIExtendedEdgeBottom];
+    [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:nil];

@@ -92,7 +92,7 @@
     bounds.origin.y = 0;
     
     UIGraphicsBeginImageContextWithOptions(bounds.size, YES, [UIScreen mainScreen].scale);
-    [viewController.view drawViewHierarchyInRect:bounds];
+    [viewController.view drawViewHierarchyInRect:bounds afterScreenUpdates:NO];
     UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
@@ -120,7 +120,7 @@
     self.restorationClass = [self class];
     
     self.view.backgroundColor = [UIColor whiteColor];
-    [self setEdgesForExtendedLayout:UIExtendedEdgeNone];
+    [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
