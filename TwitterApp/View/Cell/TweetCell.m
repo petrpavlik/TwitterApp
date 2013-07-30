@@ -171,12 +171,12 @@
     _mediaImageView.clipsToBounds = YES;
     [contentView addSubview:_mediaImageView];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
-    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [contentView addSubview:separatorView];
-    
     _quickAccessView = [self createQuickAccessView];
     [self.contentView addSubview:_quickAccessView];
+    
+    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
+    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.contentView addSubview:separatorView];
     
     _panDetectView = [UIView new];
     _panDetectView.backgroundColor = [UIColor clearColor];
@@ -204,34 +204,11 @@
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel(240)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
-
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_tweetTextLabel
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0]];
-
     
     [contentView addConstraints:superviewConstraints];
+    
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-64-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];
@@ -545,7 +522,13 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     if (scrollView.contentOffset.x!=0) {
+        
         [self setSelected:NO animated:YES];
+        self.selectionStyle = UITableViewCellSelectionStyleNone;
+        [self.delegate tweetCellDidScrollHorizontally:self];
+    }
+    else {
+        self.selectionStyle = UITableViewCellSelectionStyleDefault;
     }
     
     CGRect slidingContentViewFrame = self.slidingContentView.frame;
@@ -595,44 +578,17 @@
     [otherButton addTarget:self action:@selector(otherActionSelected) forControlEvents:UIControlEventTouchUpInside];
     otherButton.translatesAutoresizingMaskIntoConstraints = NO;
     [quickAccessView addSubview:otherButton];
-    
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Image-Separator"]];
-    separatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [quickAccessView addSubview:separatorView];
+   
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-<=54-[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[replyButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[retweetButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[favoriteButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[otherButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:replyButton attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:quickAccessView attribute:NSLayoutAttributeCenterY multiplier:1 constant:-1]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:quickAccessView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:quickAccessView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:quickAccessView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0]];
     
     [quickAccessView addConstraints:superviewConstraints];
     

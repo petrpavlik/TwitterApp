@@ -352,6 +352,20 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 {
     TweetEntity* tweet = self.tweets[indexPath.row];
     
+    for (UITableViewCell* testedCell in [self.tableView visibleCells]) {
+        
+        if ([testedCell isKindOfClass:[TweetCell class]]) {
+            
+            TweetCell* tweetCell = (TweetCell*)testedCell;
+            [tweetCell cancelAccessViewAnimated];
+        }
+    }
+    
+    UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
+    
     if (tweet.retweetedStatus) {
         tweet = tweet.retweetedStatus;
     }

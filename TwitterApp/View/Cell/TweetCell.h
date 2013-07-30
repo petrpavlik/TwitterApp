@@ -25,6 +25,8 @@
 - (void)tweetCellDidRequestReply:(TweetCell*)cell;
 - (void)tweetCellDidRequestRetweet:(TweetCell*)cell;
 
+- (void)tweetCellDidScrollHorizontally:(TweetCell *)cell;
+
 @end
 
 @interface TweetCell : UITableViewCell
@@ -46,5 +48,7 @@
 - (void)addMention:(NSString*)mention atRange:(NSRange)range;
 - (void)addURL:(NSURL*)url atRange:(NSRange)range;
 + (CGFloat)requiredHeightForTweetText:(NSString*)text;
+
+- (void)cancelAccessViewAnimated;
 
 @end

@@ -458,40 +458,6 @@
 
 #pragma mark -
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell* cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
-        return;
-    }
-    
-    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    NSParameterAssert(tweet);
-    
-    if (tweet.retweetedStatus) {
-        tweet = tweet.retweetedStatus;
-    }
-    
-    if ([tweet isKindOfClass:[GapTweetEntity class]]) {
-        
-        /*GapTweetEntity* gapTweet = (GapTweetEntity*)tweet;
-        gapTweet.loading = @(YES);
-        
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-        
-        [self requestTweetsSinceId:[self.tweets[indexPath.row+1] tweetId] withMaxId:[self.tweets[indexPath.row-1] tweetId]];*/
-    }
-    else {
-        
-        TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
-        tweetDetailController.tweet = tweet;
-        
-        [self.navigationController pushViewController:tweetDetailController animated:YES];
-    }
-}
-
 
 #pragma mark -
 
@@ -652,6 +618,20 @@
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
+}
+
+- (void)tweetCellDidScrollHorizontally:(TweetCell *)cell {
+    
+    for (UITableViewCell* testedCell in [self.tableView visibleCells]) {
+        
+        if ([testedCell isKindOfClass:[TweetCell class]]) {
+            
+            TweetCell* tweetCell = (TweetCell*)testedCell;
+            if (tweetCell != cell) {
+                [tweetCell cancelAccessViewAnimated];
+            }
+        }
+    }
 }
 
 #pragma mark -
