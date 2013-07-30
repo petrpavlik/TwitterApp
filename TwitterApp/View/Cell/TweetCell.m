@@ -567,6 +567,7 @@
     UIView* quickAccessView = [UIView new];
     
     quickAccessView.tintColor = skin.linkColor;
+    //quickAccessView.tintColor = [UIColor blackColor];
     
     UIButton* replyButton = [UIButton buttonWithType:UIButtonTypeSystem];
     replyButton.translatesAutoresizingMaskIntoConstraints = NO;
