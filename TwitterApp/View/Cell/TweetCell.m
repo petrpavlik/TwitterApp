@@ -96,9 +96,9 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
     
-    UIView *bgColorView = [[UIView alloc] init];
+    /*UIView *bgColorView = [[UIView alloc] init];
     [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
-    [self setSelectedBackgroundView:bgColorView];
+    [self setSelectedBackgroundView:bgColorView];*/
     
     _dummyScrollView = [UIScrollView new];
     _dummyScrollView.pagingEnabled = YES;
@@ -174,7 +174,11 @@
     _quickAccessView = [self createQuickAccessView];
     [self.contentView addSubview:_quickAccessView];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
+    //UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
+    
+    UIView* separatorView = [[UIView alloc] init];
+    separatorView.backgroundColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
+    
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:separatorView];
     
@@ -208,7 +212,7 @@
     [contentView addConstraints:superviewConstraints];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-64-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];
@@ -582,7 +586,7 @@
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-<=54-[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[replyButton][retweetButton(replyButton)][favoriteButton(replyButton)][otherButton(replyButton)]|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[replyButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[retweetButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[favoriteButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(replyButton, retweetButton, favoriteButton, otherButton)]];

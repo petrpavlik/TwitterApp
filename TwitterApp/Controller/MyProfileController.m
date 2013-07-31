@@ -14,6 +14,7 @@
 #import "SearchTweetsController.h"
 #import "UserEntity.h"
 #import "UIImage+TwitterApp.h"
+#import "FavoritesController.h"
 
 @interface MyProfileController ()
 
@@ -34,8 +35,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = @"My profile";
-    self.tabBarItem.title = self.title;
+    self.title = @"Profile";
     
     [self.tableView registerClass:[ProfileCell class] forCellReuseIdentifier:@"ProfileCell"];
     [self.tableView registerClass:[ProfilePushCell class] forCellReuseIdentifier:@"ProfilePushCell"];
@@ -72,7 +72,7 @@
         return 1;
     }
     else {
-        return 3;
+        return 4;
     }
 }
 
@@ -143,6 +143,10 @@
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
             cell.valueLabel.text = [formatter stringFromNumber:self.user.friendsCount];
         }
+        else if (indexPath.row == 3) {
+            cell.mainLabel.text = @"Favorites";
+            cell.valueLabel.text = Nil;
+        }
         
         return cell;
     }
@@ -154,7 +158,7 @@
         return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width];
     }
     else {
-        return 44;
+        return 56;
     }
 }
 
@@ -186,6 +190,11 @@
         followingController.userId = self.user.userId;
         
         [self.navigationController pushViewController:followingController animated:YES];
+    }
+    else if (indexPath.row==3) {
+        
+        FavoritesController* favoritesController = [[FavoritesController alloc] init];
+        [self.navigationController pushViewController:favoritesController animated:YES];
     }
 }
 

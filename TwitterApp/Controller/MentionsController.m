@@ -20,8 +20,6 @@
 	// Do any additional setup after loading the view.
     
     self.title = @"Mentions";
-    
-    self.tabBarItem.title = @"Mentions";
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

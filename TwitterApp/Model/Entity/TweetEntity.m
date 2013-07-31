@@ -139,6 +139,47 @@
     return (NSOperation*)operation;
 }
 
++ (NSOperation*)requestFavoritesTimelineWithMaxId:(NSString*)maxId sinceId:(NSString*)sinceId completionBlock:(void (^)(NSArray* tweets, NSError* error))block {
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableDictionary* mutableParams = [@{@"count": @"200"} mutableCopy];
+    
+    if (maxId) {
+        mutableParams[@"max_id"] = maxId;
+    }
+    
+    if (sinceId) {
+        mutableParams[@"since_id"] = sinceId;
+    }
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"favorites/list.json" parameters:mutableParams];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        NSMutableArray* tweets = [[NSMutableArray alloc] initWithCapacity:[JSON count]];
+        
+        for (NSDictionary* tweetDictionary in JSON) {
+            
+            TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
+            [tweets addObject:tweet];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(tweets, nil);
+        });
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [operation setSuccessCallbackQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 - (NSOperation*)requestRetweetWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block {
     
     NSParameterAssert(self.tweetId);
