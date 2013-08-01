@@ -59,7 +59,7 @@
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
-    _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
     
     _followButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -73,7 +73,7 @@
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     //_descriptionLabel.font = [skin fontOfSize:15];
     _descriptionLabel.text = @"description";
-    _descriptionLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _descriptionLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     _descriptionLabel.textAlignment = NSTextAlignmentCenter;
     _descriptionLabel.numberOfLines = 0;
     [contentView addSubview:_descriptionLabel];
@@ -96,10 +96,11 @@
     
     _followingLabel = [UILabel new];
     _followingLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _followingLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _followingLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_followingLabel];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:[UIImage imageWithColor:[UIColor colorWithRed:0.737 green:0.765 blue:0.784 alpha:1] size:CGSizeMake(1, 1)]];
+    UIView* separatorView = [[UIView alloc] init];
+    separatorView.backgroundColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     
@@ -120,7 +121,7 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_followingLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton][_locationButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton(>=44)][_locationButton(>=44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_followingLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
     
@@ -145,29 +146,8 @@
                                                                 multiplier:1.0
                                                                   constant:0]];*/
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_avatarImageView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     
     [contentView addConstraints:superviewConstraints];
@@ -209,7 +189,7 @@
     
     CGFloat textHeight = [description boundingRectWithSize:CGSizeMake(width-20-20, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
-    CGFloat height = 170 + textHeight + 20 + 15;
+    CGFloat height = 170 + textHeight + 20 + 15 + 15;
     
     return height;
 }

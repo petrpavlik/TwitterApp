@@ -106,7 +106,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    if (section==1) {
+    if (section==2) {
         
         CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
         
@@ -175,7 +175,11 @@
                 weakSelf.olderRelatedTweets = [weakSelf.olderRelatedTweets arrayByAddingObject:tweet];
             }
             
-            [self.tableView reloadData];
+            /*[weakSelf.tableView beginUpdates];
+            [weakSelf.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:weakSelf.olderRelatedTweets.count-1 inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];*/
+            
+            [weakSelf.tableView reloadData];
             
             if (tweet.inReplyToStatusId && ![tweet.inReplyToStatusId isEqualToString:tweet.tweetId]) { //second condition should never be YES, but I rather added it
                 [weakSelf requestOlderRelatedTweetToTweetId:tweet.inReplyToStatusId];
@@ -189,6 +193,11 @@
     __weak typeof(self) weakSelf = self;
     
     self.runningOlderRelatedTweetsRequest = [TweetEntity requestSearchOlderRelatedTweetsWithTweet:self.tweet screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
+        
+        if (error) {
+            //TODO: handle error
+            return;
+        }
         
         if (tweets.count) {
             
@@ -205,6 +214,10 @@
                 
                 [weakSelf requestOlderRelatedTweetToTweetId:[weakSelf.olderRelatedTweets.lastObject inReplyToStatusId]];
             }
+        }
+        else {
+           
+            [weakSelf requestOlderRelatedTweetToTweetId:[weakSelf.tweet inReplyToStatusId]];
         }
     }];
 }

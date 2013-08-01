@@ -25,6 +25,9 @@
     
     self.title = self.searchExpression;
     
+    self.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Search"];
+    self.tabBarItem.title = @"Search";
+    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStyleBordered target:self action:@selector(saveSelected)];
 }
 

@@ -24,7 +24,7 @@
 
 - (void)commonInit {
     
-    self.tintColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    self.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     AbstractSkin* skin = appDelegate.skin;
@@ -57,9 +57,11 @@
     disclosureImageView.image = [disclosureImageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [contentView addSubview:disclosureImageView];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
+    UIView* separatorView = [[UIView alloc] init];
+    separatorView.backgroundColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
+    
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [contentView addSubview:separatorView];
+    [self.contentView addSubview:separatorView];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -73,29 +75,8 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_mainLabel]->=8-[_valueLabel]-[disclosureImageView]-|" options:NSLayoutFormatAlignAllCenterY metrics:Nil views:NSDictionaryOfVariableBindings(_mainLabel, _valueLabel, disclosureImageView)]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_mainLabel
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     [contentView addConstraints:superviewConstraints];
 }

@@ -225,6 +225,10 @@
 		4BD506C317AA793D00D386F1 /* Btn-Web.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BC17AA793D00D386F1 /* Btn-Web.png */; };
 		4BD506C417AA793D00D386F1 /* Btn-Web@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BD17AA793D00D386F1 /* Btn-Web@2x.png */; };
 		4BD506C517AA793D00D386F1 /* Btn-Web@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BD17AA793D00D386F1 /* Btn-Web@2x.png */; };
+		4BD506C817AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */; };
+		4BD506C917AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */; };
+		4BD506CA17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */; };
+		4BD506CB17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */; };
 		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
@@ -440,6 +444,8 @@
 		4BD506BB17AA793D00D386F1 /* Btn-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Image@2x.png"; path = "Image/Btn-Image@2x.png"; sourceTree = "<group>"; };
 		4BD506BC17AA793D00D386F1 /* Btn-Web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Web.png"; path = "Image/Btn-Web.png"; sourceTree = "<group>"; };
 		4BD506BD17AA793D00D386F1 /* Btn-Web@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Web@2x.png"; path = "Image/Btn-Web@2x.png"; sourceTree = "<group>"; };
+		4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Avatar-Placeholder.png"; path = "Image/Img-Avatar-Placeholder.png"; sourceTree = "<group>"; };
+		4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Avatar-Placeholder@2x.png"; path = "Image/Img-Avatar-Placeholder@2x.png"; sourceTree = "<group>"; };
 		4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterJSONRequestOperation.h; path = Model/API/AFTwitterJSONRequestOperation.h; sourceTree = "<group>"; };
 		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
@@ -842,6 +848,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */,
+				4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */,
 				4BD506BA17AA793D00D386F1 /* Btn-Image.png */,
 				4BD506BB17AA793D00D386F1 /* Btn-Image@2x.png */,
 				4BD506BC17AA793D00D386F1 /* Btn-Web.png */,
@@ -1144,6 +1152,7 @@
 				4BFDA463177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
 				4BEEA6D017933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */,
 				4B6629CE177387FA00FA146A /* Icon-Retweet-Normal@2x.png in Resources */,
+				4BD506CB17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */,
 				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
@@ -1161,6 +1170,7 @@
 				4BAF3FF117A02145006528F5 /* Button-Toolbar-Back.png in Resources */,
 				4BD506C517AA793D00D386F1 /* Btn-Web@2x.png in Resources */,
 				4B6629DF177387FA00FA146A /* Icon-Navbar-Compose.png in Resources */,
+				4BD506C917AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */,
 				4B6629E0177387FA00FA146A /* Icon-Navbar-Compose@2x.png in Resources */,
 				4BB4845D178C948100A30BC4 /* Icon-TabBar-Home@2x.png in Resources */,
 				4BFDA461177624A8007EFBC4 /* Btn-Location.png in Resources */,
@@ -1207,6 +1217,7 @@
 				4BFDA462177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
 				4BEEA6CF17933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */,
 				4BAEB3DE17522B950027A0D1 /* Icon-Retweet-Normal@2x.png in Resources */,
+				4BD506CA17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */,
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718AF177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
@@ -1224,6 +1235,7 @@
 				4BAF3FF017A02145006528F5 /* Button-Toolbar-Back.png in Resources */,
 				4BD506C417AA793D00D386F1 /* Btn-Web@2x.png in Resources */,
 				4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */,
+				4BD506C817AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */,
 				4BF0DC071764F1A1002578FF /* Icon-Navbar-Compose@2x.png in Resources */,
 				4BB4845C178C948100A30BC4 /* Icon-TabBar-Home@2x.png in Resources */,
 				4BFDA460177624A8007EFBC4 /* Btn-Location.png in Resources */,

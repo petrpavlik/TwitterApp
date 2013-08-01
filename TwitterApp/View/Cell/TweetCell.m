@@ -116,6 +116,7 @@
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
     _avatarImageView.backgroundColor = [UIColor whiteColor];
     _avatarImageView.opaque = YES;
+    _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
     

@@ -20,6 +20,9 @@
 	// Do any additional setup after loading the view.
     
     self.title = @"Mentions";
+    
+    self.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Mentions"];
+    self.tabBarItem.title = @"Mentions";
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

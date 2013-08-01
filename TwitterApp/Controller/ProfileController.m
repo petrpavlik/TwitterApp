@@ -158,10 +158,18 @@
         NSArray* urls = user.entities[@"url"][@"urls"];
         if (urls.count) {
             [cell.websiteButton setTitle:user.entities[@"url"][@"urls"][0][@"expanded_url"] forState:UIControlStateNormal];
+            cell.websiteButton.hidden = NO;
+        }
+        else {
+            cell.websiteButton.hidden = YES;
         }
         
-        if (user.location) {
+        if (user.location.length) {
             [cell.locationButton setTitle:user.location forState:UIControlStateNormal];
+            cell.locationButton.hidden = NO;
+        }
+        else {
+            cell.locationButton.hidden = YES;
         }
         
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:nil imageProcessingBlock:^UIImage*(UIImage* image) {

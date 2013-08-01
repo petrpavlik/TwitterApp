@@ -27,6 +27,7 @@
     _textField = [UITextField new];
     _textField.placeholder = @"Search";
     _textField.translatesAutoresizingMaskIntoConstraints = NO;
+    _textField.clearButtonMode = UITextFieldViewModeAlways;
     [contentView addSubview:_textField];
     
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_textField]-|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(_textField)]];

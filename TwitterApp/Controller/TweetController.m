@@ -489,6 +489,7 @@
         }
         
         UIImagePickerController *mediaUI = [[UIImagePickerController alloc] init];
+        mediaUI.view.tintColor = [UIColor whiteColor];
         
         if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
             

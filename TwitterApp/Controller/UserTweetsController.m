@@ -20,6 +20,9 @@
 	// Do any additional setup after loading the view.
     
     self.title = [NSString stringWithFormat:@"@%@", self.screenName];
+    
+    self.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Profile"];
+    self.tabBarItem.title = @"Profile";
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

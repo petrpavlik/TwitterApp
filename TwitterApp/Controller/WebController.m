@@ -6,6 +6,9 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
+#import <AFNetworkActivityIndicatorManager.h>
+#import <PocketAPI.h>
+#import "NotificationView.h"
 #import "WebController.h"
 #import "UIActionSheet+TwitterApp.h"
 
@@ -124,12 +127,52 @@
 
 - (void)bookmarksSelected {
     
-    //UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"a" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:@"a" otherButtonTitles:@"Save to Pocket", "Open in Safari", "Save to Reading List", nil];
-    //[actionSheet showInView:self.view];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:Nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:Nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", @"Save to Reading List", nil];
+    [actionSheet showInView:self.view];
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
+    if (buttonIndex==0) {
+        
+        __weak typeof(self) weakSelf = self;
+        
+        [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+        
+        [[PocketAPI sharedAPI] saveURL:actionSheet.userInfo[@"url"] handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+            
+            [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+            
+            if (!weakSelf) {
+                
+                if (error) {
+                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                } else {
+                    [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                }
+                
+                return;
+            }
+            
+            if (error) {
+                
+                [NotificationView showInView:self.view message:error.localizedRecoverySuggestion];
+            } else {
+                
+                [NotificationView showInView:self.view message:@"Link saved to Pocket"];
+            }
+        }];
+    }
+    else if (buttonIndex==1) {
+        
+        if (self.webView.request.URL) {
+            [[UIApplication sharedApplication] openURL:self.webView.request.URL];
+        }
+    }
+    else if (buttonIndex==2) {
+        
+        [[[UIAlertView alloc] initWithTitle:Nil message:@"TODO" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    }
 }
 
 @end
