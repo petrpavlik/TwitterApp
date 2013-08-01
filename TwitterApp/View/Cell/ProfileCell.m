@@ -81,6 +81,8 @@
     _websiteButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _websiteButton.translatesAutoresizingMaskIntoConstraints = NO;
     _websiteButton.titleLabel.font = [skin fontOfSize:16];
+    [_websiteButton setImage:[UIImage imageNamed:@"Btn-Web"] forState:UIControlStateNormal];
+    [_websiteButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [_websiteButton addTarget:self action:@selector(websiteButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_websiteButton];
     
@@ -88,6 +90,8 @@
     _locationButton.translatesAutoresizingMaskIntoConstraints = NO;
     //_locationButton.titleLabel.font = [skin fontOfSize:16];
     [_locationButton setTitle:@"fsfs" forState:UIControlStateNormal];
+    [_locationButton setImage:[UIImage imageNamed:@"Btn-Location"] forState:UIControlStateNormal];
+    [_locationButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
     [contentView addSubview:_locationButton];
     
     _followingLabel = [UILabel new];
@@ -120,7 +124,12 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_followingLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_websiteButton]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_websiteButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_locationButton]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_locationButton)]];
+    
+    
+    
+    /*[superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
                                                                  attribute:NSLayoutAttributeCenterX
                                                                  relatedBy:NSLayoutRelationEqual
                                                                     toItem:contentView
@@ -134,7 +143,7 @@
                                                                     toItem:contentView
                                                                  attribute:NSLayoutAttributeCenterX
                                                                 multiplier:1.0
-                                                                  constant:0]];
+                                                                  constant:0]];*/
     
     [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
                                                                  attribute:NSLayoutAttributeLeading

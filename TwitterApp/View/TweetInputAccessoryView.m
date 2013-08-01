@@ -63,7 +63,7 @@
     [self addSubview:_placeButton];
     
     _mediaButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_mediaButton setImage:[UIImage imageNamed:@"Btn-Add-Image"] forState:UIControlStateNormal];
+    [_mediaButton setImage:[UIImage imageNamed:@"Btn-Image"] forState:UIControlStateNormal];
     _mediaButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_mediaButton addTarget:self action:@selector(mediaButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_mediaButton];
@@ -180,7 +180,7 @@
 - (void)assignImageToMediaButton:(UIImage*)image {
     
     if (!image) {
-        [_mediaButton setImage:[UIImage imageNamed:@"Btn-Add-Image"] forState:UIControlStateNormal];
+        [_mediaButton setImage:[UIImage imageNamed:@"Btn-Image"] forState:UIControlStateNormal];
         return;
     }
     
