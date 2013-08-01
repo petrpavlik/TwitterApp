@@ -305,7 +305,9 @@
 
 - (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
     
+#ifdef DEBUG
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
 }
+#endif
 
 @end
