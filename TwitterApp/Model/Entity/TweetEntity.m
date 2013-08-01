@@ -415,7 +415,10 @@
             
             TweetEntity* reply = [[TweetEntity alloc] initWithDictionary:tweetDictionary];
             if ([reply.inReplyToStatusId isEqualToString:tweetId]) {
-                [tweets addObject:reply];
+                
+                if ([[reply.text substringToIndex:1] isEqualToString:@"@"]) {
+                    [tweets addObject:reply];
+                }
             }
         }
         

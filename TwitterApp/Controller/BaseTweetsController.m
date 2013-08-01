@@ -191,7 +191,7 @@
         }
         
         CGFloat retweetInformationHeight = 0;
-        if (retweet) {
+        if (retweet || tweet.retweeted.boolValue) {
             retweetInformationHeight = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize + 5;
         }
         
@@ -523,6 +523,10 @@
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
     
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
     [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
         
         if (error) {
@@ -546,6 +550,10 @@
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
     
     [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
         
