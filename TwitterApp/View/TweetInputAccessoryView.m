@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "TweetInputAccessoryView.h"
 #import <QuartzCore/QuartzCore.h>
-#import <UIImage+TwitterApp.h>
+#import "UIImage+TwitterApp.h"
 
 @interface TweetInputAccessoryView ()
 
@@ -155,6 +155,10 @@
     }];
     
     [self.delegate tweetInputAccessoryViewDidDisableLocation:self];
+}
+
+- (void)enableLocation {
+    [self locationButtonPressed];
 }
 
 - (BOOL)locationEnabled {

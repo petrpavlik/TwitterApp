@@ -24,3 +24,5 @@
 #define kUserDidPostTweetNotification @"kUserDidPostTweetNotification"
 
 #define kLogEventError @"Error"
+
+#define kUserDefaultsKeyTweetLocationEnabled @"UserDefaultsKeyTweetLocationEnabled"

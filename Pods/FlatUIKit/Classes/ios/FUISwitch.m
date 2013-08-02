@@ -105,9 +105,9 @@
 
 - (void)setOn:(BOOL)on animated:(BOOL)animated {
     if (_on != on) {
+        _on = on;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
-    _on = on;
     [self setPercentOn:_on * 1.0f animated:animated];
 }
 
@@ -140,7 +140,7 @@
         
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        BOOL left = newOffset.x > self.frame.size.width / 2;
+        BOOL left = newOffset.x > maxOffset / 2;
         [self setOn:(!left) animated:YES];
     }
     
@@ -180,6 +180,13 @@
     self.onLabel.textColor = contentColor;
     self.offLabel.textColor = contentColor;
     self.thumbView.backgroundColor = contentColor;
+}
+
+- (void)setHighlighted:(BOOL)highlighted {
+    [super setHighlighted:highlighted];
+    
+    if (highlighted)
+        self.backgroundColor = self.highlightedColor;
 }
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {

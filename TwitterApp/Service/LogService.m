@@ -31,8 +31,10 @@
         [Flurry startSession:@"4KXXWFQNX9MYSFD52TJ5"];
         
         #ifdef DEBUG
-        //[Flurry setDebugLogEnabled:YES];
+        [Flurry setDebugLogEnabled:YES];
         #endif
+        
+        [Flurry logEvent:@"test event"];
     }
     
     return self;
@@ -47,7 +49,12 @@
 - (void)logEvent:(NSString *)event userInfo:(NSDictionary *)userInfo {
     
     NSParameterAssert(event.length);
-    [Flurry logEvent:event withParameters:userInfo];
+    if (userInfo) {
+        [Flurry logEvent:event withParameters:userInfo];
+    }
+    else {
+        [Flurry logEvent:event];
+    }
 }
 
 + (void)instatiate {

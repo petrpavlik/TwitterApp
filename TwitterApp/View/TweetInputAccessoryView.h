@@ -22,6 +22,7 @@
 @interface TweetInputAccessoryView : UIView
 
 - (void)disableLocation;
+- (void)enableLocation;
 - (void)displayLocationPlace:(NSString*)placeName;
 - (void)displaySelectedImae:(UIImage*)image;
 

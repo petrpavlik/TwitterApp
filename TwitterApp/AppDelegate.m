@@ -238,6 +238,15 @@
     
     NSLog(@"should perform fetch");
     
+    ACAccount* account = [AFTwitterClient sharedClient].account;
+    
+    NSString* accountName = @"unknown";
+    if (account.username) {
+        accountName = account.username;
+    }
+    
+    [[LogService sharedInstance] logEvent:@"background fetch requested" userInfo:@{@"Timestamp": [NSDate date].description, @"Account": accountName, @"State": @(application.applicationState)}];
+    
     UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
     TweetsController* timelineDocument = [rootTabBarController.viewControllers[0] viewControllers][0];
     

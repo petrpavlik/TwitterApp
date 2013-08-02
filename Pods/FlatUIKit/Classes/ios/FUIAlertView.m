@@ -145,7 +145,7 @@
     self.alertContainer.transform = CGAffineTransformMakeScale(0.01, 0.01);
     UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    while (topController.presentedViewController) {
+    while (topController.presentedViewController && !topController.presentedViewController.isBeingDismissed) {
         topController = topController.presentedViewController;
     }
     UIView *rootView = topController.view;
@@ -156,16 +156,24 @@
     if ([self.delegate respondsToSelector:@selector(willPresentAlertView:)]) {
         [self.delegate willPresentAlertView:self];
     }
-    [UIView animateWithDuration:self.animationDuration animations:^{
+    [UIView animateWithDuration:self.animationDuration/1.5 animations:^{
         self.backgroundOverlay.alpha = 1.0f;
-        self.alertContainer.transform = CGAffineTransformIdentity;
-    } completion:^(BOOL finished) {
-        _visible = YES;
-        if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
-            [self.delegate didPresentAlertView:self];
-        }
-    }];
-
+        self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1.0, 1.0);}
+                     completion:^(BOOL finished) {
+                         
+                         [UIView animateWithDuration:self.animationDuration/2 animations:^{
+                             self.alertContainer.transform = CGAffineTransformScale(CGAffineTransformIdentity, 0.9, 0.9);} completion:^(BOOL finished) {
+                                 
+                                 [UIView animateWithDuration:self.animationDuration/2 animations:^{
+                                     self.alertContainer.transform = CGAffineTransformIdentity;
+                                 } completion:^(BOOL finished) {
+                                     _visible = YES;
+                                     if ([self.delegate respondsToSelector:@selector(didPresentAlertView:)]) {
+                                         [self.delegate didPresentAlertView:self];
+                                     }
+                                 }];
+                             }];
+                     }];
 }
 
 - (NSString *)buttonTitleAtIndex:(NSInteger)buttonIndex {
@@ -195,6 +203,7 @@
 }
 
 - (NSInteger)addButtonWithTitle:(NSString *)title {
+    if (!title) return -1;
     if (!self.buttons) {
         self.buttons = [NSMutableArray array];
     }
@@ -207,7 +216,7 @@
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self.alertContentContainer addSubview:button];
     [self.buttons addObject:button];
-    return self.buttons.count;
+    return self.buttons.count-1;
 }
 
 - (void) buttonPressed:(FUIButton *)sender {
@@ -216,6 +225,10 @@
         [self.delegate alertView:self clickedButtonAtIndex:index];
     }
     [self dismissWithClickedButtonIndex:index animated:YES];
+}
+
+- (void)clickButtonAtIndex:(NSInteger)buttonIndex {
+    [[self.buttons objectAtIndex:buttonIndex] sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) setDefaultButtonFont:(UIFont *)defaultButtonFont {

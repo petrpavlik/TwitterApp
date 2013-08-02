@@ -143,6 +143,11 @@
     
     _tweetTextView.inputAccessoryView = _tweetInputAccessoryView;
     
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults boolForKey:kUserDefaultsKeyTweetLocationEnabled]) {
+        [_tweetInputAccessoryView enableLocation];
+    }
+    
     [_tweetTextView becomeFirstResponder];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
@@ -345,6 +350,10 @@
 
 - (void)tweetInputAccessoryViewDidEnableLocation:(TweetInputAccessoryView *)view {
     
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:YES forKey:kUserDefaultsKeyTweetLocationEnabled];
+    [userDefaults synchronize];
+    
     CLAuthorizationStatus authorizationStatus = [CLLocationManager authorizationStatus];
     
     if (authorizationStatus != kCLAuthorizationStatusAuthorized && authorizationStatus != kCLAuthorizationStatusNotDetermined) {
@@ -404,6 +413,10 @@
 }
 
 - (void)tweetInputAccessoryViewDidDisableLocation:(TweetInputAccessoryView *)view {
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setBool:NO forKey:kUserDefaultsKeyTweetLocationEnabled];
+    [userDefaults synchronize];
     
     [_locationManager stopUpdatingLocation];
 }

@@ -135,33 +135,36 @@
     
     if (buttonIndex==0) {
         
-        __weak typeof(self) weakSelf = self;
-        
-        [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
-        
-        [[PocketAPI sharedAPI] saveURL:actionSheet.userInfo[@"url"] handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+        if (self.webView.request.URL) {
             
-            [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+            __weak typeof(self) weakSelf = self;
             
-            if (!weakSelf) {
+            [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+            
+            [[PocketAPI sharedAPI] saveURL:self.webView.request.URL handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
                 
-                if (error) {
-                    [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-                } else {
-                    [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+                
+                if (!weakSelf) {
+                    
+                    if (error) {
+                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    }
+                    
+                    return;
                 }
                 
-                return;
-            }
-            
-            if (error) {
-                
-                [NotificationView showInView:self.view message:error.localizedRecoverySuggestion];
-            } else {
-                
-                [NotificationView showInView:self.view message:@"Link saved to Pocket"];
-            }
-        }];
+                if (error) {
+                    
+                    [NotificationView showInView:self.view message:error.localizedRecoverySuggestion];
+                } else {
+                    
+                    [NotificationView showInView:self.view message:@"Link saved to Pocket"];
+                }
+            }];
+        }
     }
     else if (buttonIndex==1) {
         
