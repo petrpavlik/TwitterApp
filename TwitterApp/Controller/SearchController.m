@@ -12,11 +12,12 @@
 #import "SearchUsersController.h"
 #import "SearchTweetsController.h"
 
-@interface SearchController ()
+@interface SearchController () <SearchFieldCellDelegate>
 
 @property(nonatomic, weak) NSOperation* runningSavedSearchesOperation;
 @property(nonatomic, strong) NSArray* savedSearches;
 @property(nonatomic, strong) id savedSearchesChangeObserver;
+@property(nonatomic, strong) NSString* searchExpression;
 
 @end
 
@@ -84,7 +85,13 @@
 {
     // Return the number of rows in the section.
     if (section==0) {
-        return 3;
+        
+        if (self.searchExpression.length) {
+            return 3;
+        }
+        else {
+            return 1;
+        }
     }
     else {
         return self.savedSearches.count;
@@ -99,9 +106,10 @@
         if (indexPath.row==0) {
             
             static NSString *CellIdentifier = @"SearchFieldCell";
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            SearchFieldCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
             
             // Configure the cell...
+            cell.delegate = self;
             
             return cell;
         }
@@ -139,25 +147,13 @@
     
     if (indexPath.section==0) {
         
-        SearchFieldCell* searchFieldCell = (SearchFieldCell*)[tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        
-        NSString* searchQuery = searchFieldCell.textField.text;
-        
-        if (!searchQuery.length) {
-            return;
-        }
-        
         if (indexPath.row==1) { //searching tweets
             
-            SearchTweetsController* searchTweetsController = [SearchTweetsController new];
-            searchTweetsController.searchExpression = searchQuery;
-            [self.navigationController pushViewController:searchTweetsController animated:YES];
+            [self searchTweets];
         }
         else if (indexPath.row==2) { //searching users
             
-            SearchUsersController* searchUsersController = [SearchUsersController new];
-            searchUsersController.searchQuery = searchQuery;
-            [self.navigationController pushViewController:searchUsersController animated:YES];
+            [self searchUsers];
         }
     }
     else {
@@ -262,6 +258,57 @@
             }
         }
     }];
+}
+
+#pragma mark -
+
+- (void)searchFieldCell:(SearchFieldCell *)cell didChangeValue:(NSString *)value {
+    
+    NSString* oldSearchExpression = self.searchExpression;
+    self.searchExpression = value;
+    
+    if (!oldSearchExpression.length && self.searchExpression.length) {
+        
+        //show search buttons
+        [self.tableView beginUpdates];
+        [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+    }
+    else if (oldSearchExpression.length && !self.searchExpression.length) {
+        
+        //hide search buttons
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0], [NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+    }
+}
+
+- (void)searchFieldCellDidReturn:(SearchFieldCell *)cell {
+    
+    if (self.searchExpression.length) {
+        [self searchTweets];
+    }
+}
+
+#pragma mark -
+
+- (void)searchTweets {
+    
+    NSParameterAssert(self.searchExpression.length);
+    
+    SearchTweetsController* searchTweetsController = [SearchTweetsController new];
+    searchTweetsController.searchExpression = self.searchExpression;
+    [self.navigationController pushViewController:searchTweetsController animated:YES];
+}
+
+- (void)searchUsers {
+    
+    NSParameterAssert(self.searchExpression.length);
+    
+    SearchUsersController* searchUsersController = [SearchUsersController new];
+    searchUsersController.searchQuery = self.searchExpression;
+    [self.navigationController pushViewController:searchUsersController animated:YES];
 }
 
 @end

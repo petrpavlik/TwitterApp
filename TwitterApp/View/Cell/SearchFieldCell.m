@@ -8,6 +8,10 @@
 
 #import "SearchFieldCell.h"
 
+@interface SearchFieldCell () <UITextFieldDelegate>
+
+@end
+
 @implementation SearchFieldCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -28,6 +32,9 @@
     _textField.placeholder = @"Search";
     _textField.translatesAutoresizingMaskIntoConstraints = NO;
     _textField.clearButtonMode = UITextFieldViewModeAlways;
+    _textField.returnKeyType = UIReturnKeySearch;
+    _textField.delegate = self;
+    [_textField addTarget:self action:@selector(textFIeldDidChangeEditing) forControlEvents:UIControlEventEditingChanged];
     [contentView addSubview:_textField];
     
     [contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_textField]-|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(_textField)]];
@@ -40,6 +47,19 @@
     [self.textField resignFirstResponder];
     
     return [super resignFirstResponder];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    
+    [self.delegate searchFieldCellDidReturn:self];
+    
+    return NO;
+}
+
+- (void)textFIeldDidChangeEditing {
+    [self.delegate searchFieldCell:self didChangeValue:self.textField.text];
 }
 
 @end
