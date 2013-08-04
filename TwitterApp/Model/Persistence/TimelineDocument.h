@@ -22,6 +22,8 @@
 
 - (void)persistTimeline:(NSArray*)tweets;
 
+- (NSUInteger)maxAmountOfTweetsToPersist;
+
 @property(nonatomic, weak) id<TimelineDocumentDelegate> delegate;
 //@property(nonatomic, readonly) NSArray* persistedTimeline;
 

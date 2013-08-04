@@ -78,7 +78,13 @@
     
     NSParameterAssert([NSThread isMainThread]);
     
-    tweets = [tweets copy];
+    if (tweets.count > self.maxAmountOfTweetsToPersist) {
+        tweets = [tweets subarrayWithRange:NSMakeRange(0, self.maxAmountOfTweetsToPersist)];
+    }
+    else {
+        tweets = [tweets copy];
+    }
+    
     self.timeline = tweets;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -100,6 +106,12 @@
     NSParameterAssert([NSThread isMainThread]);
     
     return _timeline;
+}
+
+#pragma mark -
+
+- (NSUInteger)maxAmountOfTweetsToPersist {
+    return 500;
 }
 
 @end
