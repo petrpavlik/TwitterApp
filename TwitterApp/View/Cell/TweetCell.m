@@ -10,6 +10,7 @@
 #import "PPLabel.h"
 #import "TweetCell.h"
 #import "UIImage+TwitterApp.h"
+#import "PersistentBackgroundColorView.h"
 
 @interface TweetCell () <PPLabelDelegate, UIScrollViewDelegate>
 
@@ -177,8 +178,8 @@
     
     //UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
     
-    UIView* separatorView = [[UIView alloc] init];
-    separatorView.backgroundColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
+    PersistentBackgroundColorView* separatorView = [[PersistentBackgroundColorView alloc] init];
+    [separatorView setPersistentBackgroundColor:[UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1]];
     
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:separatorView];

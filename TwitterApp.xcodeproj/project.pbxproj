@@ -26,6 +26,8 @@
 		4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
 		4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
 		4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
+		4B55C6CC17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */; };
+		4B55C6CD17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
 		4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */; };
 		4B5CC7BD1781DCBE00EFA5B1 /* MyProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5CC7BB1781DCBE00EFA5B1 /* MyProfileController.m */; };
@@ -318,6 +320,8 @@
 		4B4E80A5177A2B6A005358A5 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileCell.m; path = View/Cell/ProfileCell.m; sourceTree = "<group>"; };
 		4B4E80A8177A341F005358A5 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileController.h; path = Controller/ProfileController.h; sourceTree = "<group>"; };
 		4B4E80A9177A341F005358A5 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileController.m; path = Controller/ProfileController.m; sourceTree = "<group>"; };
+		4B55C6CA17AF03C300266FAA /* PersistentBackgroundColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistentBackgroundColorView.h; path = View/PersistentBackgroundColorView.h; sourceTree = "<group>"; };
+		4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistentBackgroundColorView.m; path = View/PersistentBackgroundColorView.m; sourceTree = "<group>"; };
 		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
 		4B573FA5176B695200166461 /* TweetDetailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailCell.m; path = View/Cell/TweetDetailCell.m; sourceTree = "<group>"; };
 		4B5CC7BA1781DCBE00EFA5B1 /* MyProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyProfileController.h; path = Controller/MyProfileController.h; sourceTree = "<group>"; };
@@ -742,6 +746,8 @@
 				4BE5557B1758F87400A214FC /* NotificationView.m */,
 				4BFDA4531775C1DF007EFBC4 /* TweetInputAccessoryView.h */,
 				4BFDA4541775C1DF007EFBC4 /* TweetInputAccessoryView.m */,
+				4B55C6CA17AF03C300266FAA /* PersistentBackgroundColorView.h */,
+				4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1369,6 +1375,7 @@
 				4BEBAC01178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431C177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B662992177387FA00FA146A /* UIImage+TwitterApp.m in Sources */,
+				4B55C6CD17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */,
 				4B662993177387FA00FA146A /* TweetCell.m in Sources */,
 				4B662994177387FA00FA146A /* TweetEntity.m in Sources */,
 				4B662995177387FA00FA146A /* UserEntity.m in Sources */,
@@ -1437,6 +1444,7 @@
 				4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */,
 				4B7428D01742DD0900AEB85C /* UIImage+TwitterApp.m in Sources */,
+				4B55C6CC17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */,
 				4B7428D41742DED500AEB85C /* TweetCell.m in Sources */,
 				4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */,
 				4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */,
