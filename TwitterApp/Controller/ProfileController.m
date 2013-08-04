@@ -19,6 +19,8 @@
 #import "UserEntity.h"
 #import "WebController.h"
 #import "UserTweetsController.h"
+#import "PhotoController.h"
+#import "ImageTransition.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -177,7 +179,7 @@
             return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
         }];
         
-        [cell.avatarImageView setupImageViewer];
+        //[cell.avatarImageView setupImageViewer];
         
         return cell;
     }
@@ -339,6 +341,20 @@
 - (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url {
     
     [WebController presentWithUrl:url viewController:self];
+}
+
+- (void)profileCellDidSelectAvatarImage:(ProfileCell *)cell {
+    
+    PhotoController* photoController = [PhotoController new];
+    photoController.placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];;
+    photoController.fullImageURL = [NSURL URLWithString:[self.user.profileImageUrl stringByReplacingOccurrencesOfString:@"_normal" withString:@""]];
+    
+    ImageTransition* imageTransition = [ImageTransition new];
+    
+    photoController.transitioningDelegate = imageTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:photoController animated:YES completion:NULL];
 }
 
 #pragma mark -

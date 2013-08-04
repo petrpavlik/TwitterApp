@@ -10,4 +10,7 @@
 
 @interface PhotoController : UIViewController
 
+@property(nonatomic, strong) UIImage* placeholderImage;
+@property(nonatomic, strong) NSURL* fullImageURL;
+
 @end

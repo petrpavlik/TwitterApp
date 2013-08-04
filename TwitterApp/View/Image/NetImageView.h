@@ -12,6 +12,7 @@
 //(UIImage *(^)(UIImage *))imageProcessingBlock
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder;
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock;
+- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock completionBlock:(void (^)(NetImageView *imageView, NSError* error))completionBlock;
 + (void)setSharedOperationQueue:(NSOperationQueue*)queue;
 + (NSCache*)sharedImageCache;
 

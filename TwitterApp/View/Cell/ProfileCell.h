@@ -21,6 +21,7 @@ typedef enum {
 
 - (void)profileCellDidRequestChengeOfFriendship:(ProfileCell*)cell;
 - (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url;
+- (void)profileCellDidSelectAvatarImage:(ProfileCell *)cell;
 
 @end
 

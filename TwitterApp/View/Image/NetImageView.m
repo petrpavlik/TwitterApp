@@ -46,6 +46,10 @@ static NSOperationQueue* operationQueue = nil;
 }
 
 - (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock {
+    [self setImageWithURL:url placeholderImage:placeholder imageProcessingBlock:imageProcessingBlock completionBlock:NULL];
+}
+
+- (void)setImageWithURL:(NSURL*)url placeholderImage:(UIImage*)placeholder imageProcessingBlock:(UIImage *(^)(UIImage *))imageProcessingBlock completionBlock:(void (^)(NetImageView *imageView, NSError* error))completionBlock {
     
     [self.operation cancel];
     
@@ -81,9 +85,18 @@ static NSOperationQueue* operationQueue = nil;
             
             [[NetImageView sharedImageCache] setObject:image forKey:url];
             weakSelf.image = image;
+            
+            if (completionBlock) {
+                completionBlock(weakSelf, Nil);
+            }
         }
         
-    } failure:nil];
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        
+        if (completionBlock) {
+            completionBlock(Nil, error);
+        }
+    }];
     
     operation.queuePriority = NSOperationQueuePriorityLow;
     

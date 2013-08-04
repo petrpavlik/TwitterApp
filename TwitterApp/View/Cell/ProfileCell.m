@@ -45,6 +45,9 @@
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:_avatarImageView];
     
+    _avatarImageView.userInteractionEnabled = YES;
+    [_avatarImageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(avatarSelected)]];
+    
     UIView* credentialsPlaceholder = [[UIView alloc] init];
     credentialsPlaceholder.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:credentialsPlaceholder];
@@ -207,6 +210,10 @@
         self.followingLabel.text = @"Not following you";
         self.followingLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
     }
+}
+
+- (void)avatarSelected {
+    [self.delegate profileCellDidSelectAvatarImage:self];
 }
 
 @end

@@ -113,6 +113,8 @@
 		4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */; };
 		4B6CCCAD17A968B300965E0C /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CCCAC17A968B300965E0C /* FavoritesController.m */; };
 		4B6CCCAE17A968B300965E0C /* FavoritesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6CCCAC17A968B300965E0C /* FavoritesController.m */; };
+		4B6EA1AC17AD329E000CEC49 /* ImageTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */; };
+		4B6EA1AD17AD329E000CEC49 /* ImageTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */; };
 		4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288A1742D9CE00AEB85C /* UIKit.framework */; };
 		4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
@@ -326,6 +328,8 @@
 		4B6718AC177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Disclosure-Indocator@2x.png"; path = "Image/Icon-Disclosure-Indocator@2x.png"; sourceTree = "<group>"; };
 		4B6CCCAB17A968B300965E0C /* FavoritesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FavoritesController.h; path = Controller/FavoritesController.h; sourceTree = "<group>"; };
 		4B6CCCAC17A968B300965E0C /* FavoritesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FavoritesController.m; path = Controller/FavoritesController.m; sourceTree = "<group>"; };
+		4B6EA1AA17AD329E000CEC49 /* ImageTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageTransition.h; path = View/Transition/ImageTransition.h; sourceTree = "<group>"; };
+		4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageTransition.m; path = View/Transition/ImageTransition.m; sourceTree = "<group>"; };
 		4B7428871742D9CE00AEB85C /* TwitterApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B74288A1742D9CE00AEB85C /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4B74288C1742D9CE00AEB85C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -612,6 +616,15 @@
 			name = "Resources-iPad";
 			sourceTree = "<group>";
 		};
+		4B6EA1A917AD3276000CEC49 /* Transition */ = {
+			isa = PBXGroup;
+			children = (
+				4B6EA1AA17AD329E000CEC49 /* ImageTransition.h */,
+				4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */,
+			);
+			name = Transition;
+			sourceTree = "<group>";
+		};
 		4B74287E1742D9CE00AEB85C = {
 			isa = PBXGroup;
 			children = (
@@ -716,6 +729,7 @@
 		4B7428C51742DA3500AEB85C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B6EA1A917AD3276000CEC49 /* Transition */,
 				4BF9B6B7174A898700DA3318 /* Label */,
 				4BBDA6EB174912EE00E849FD /* Image */,
 				4B7428D11742DEB500AEB85C /* Cell */,
@@ -1371,6 +1385,7 @@
 				4BFDA4561775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6CA1792BAB8005FCC90 /* SearchUsersController.m in Sources */,
 				4B66299C177387FA00FA146A /* PPLabel.m in Sources */,
+				4B6EA1AD17AD329E000CEC49 /* ImageTransition.m in Sources */,
 				4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4B66299D177387FA00FA146A /* NSString+TwitterApp.m in Sources */,
 				4BB3AD37177CE47800CA0F8B /* FollowingController.m in Sources */,
@@ -1438,6 +1453,7 @@
 				4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6C91792BAB8005FCC90 /* SearchUsersController.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
+				4B6EA1AC17AD329E000CEC49 /* ImageTransition.m in Sources */,
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
 				4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */,
