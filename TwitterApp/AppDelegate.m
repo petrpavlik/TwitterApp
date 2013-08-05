@@ -27,7 +27,7 @@
 #import <WindowsAzureMessaging/WindowsAzureMessaging.h>
 #import "Base64.h"
 
-@interface AppDelegate ()
+@interface AppDelegate () <BITUpdateManagerDelegate>
 
 @property (strong, nonatomic) SBNotificationHub* hub;
 
@@ -71,6 +71,7 @@
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
+    [[[BITHockeyManager sharedHockeyManager] updateManager] setDelegate:self];
     
 #ifdef DEBUG
     //[[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
@@ -317,6 +318,17 @@
 #ifdef DEBUG
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
 #endif
+}
+
+#pragma mark - BITUpdateManagerDelegate
+
+- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
+    
+#ifndef CONFIGURATION_AppStore
+    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)])
+        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
+#endif
+    return nil;
 }
 
 @end
