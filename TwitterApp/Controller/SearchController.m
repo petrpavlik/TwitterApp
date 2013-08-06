@@ -63,9 +63,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (!self.savedSearches.count) {
-        [self requestData];
-    }
+    [self requestData];
 }
 
 #pragma mark - Table view data source
@@ -238,13 +236,16 @@
             
             if (weakSelf.savedSearches.count) {
                 
-                weakSelf.savedSearches = savedSearches;
-                
-                [weakSelf.tableView beginUpdates];
-                [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
-                [weakSelf.tableView endUpdates];
-                
-                weakSelf.navigationItem.rightBarButtonItem = weakSelf.editButtonItem;
+                if (![weakSelf compareSavedSearches:weakSelf.savedSearches toSavedSearches:savedSearches]) {
+                    
+                    weakSelf.savedSearches = savedSearches;
+                    
+                    [weakSelf.tableView beginUpdates];
+                    [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+                    [weakSelf.tableView endUpdates];
+                    
+                    weakSelf.navigationItem.rightBarButtonItem = weakSelf.editButtonItem;
+                }
             }
             else {
                 
@@ -309,6 +310,29 @@
     SearchUsersController* searchUsersController = [SearchUsersController new];
     searchUsersController.searchQuery = self.searchExpression;
     [self.navigationController pushViewController:searchUsersController animated:YES];
+}
+
+#pragma mark -
+
+- (BOOL)compareSavedSearches:(NSArray*)savedSearches toSavedSearches:(NSArray*)savedSearchesToCompare {
+    
+    if (savedSearches.count != savedSearchesToCompare.count) {
+        return NO;
+    }
+    
+    NSInteger index = 0;
+    for (SavedSearchEntity* savedSearch in savedSearches) {
+        
+        SavedSearchEntity* savedSearchToCompare = savedSearchesToCompare[index];
+        
+        if (![savedSearch.savedSearchId isEqualToString:savedSearchToCompare.savedSearchId]) {
+            return NO;
+        }
+        
+        index++;
+    }
+    
+    return YES;
 }
 
 @end
