@@ -208,7 +208,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }
     else {
         
-        [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+        [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not load new tweets" style:NotificationViewStyleError];
     }
 }
 
@@ -276,7 +276,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     [[LogService sharedInstance] logError:error];
     
-    [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+    [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not load tweets" style:NotificationViewStyleError];
 }
 
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock {
