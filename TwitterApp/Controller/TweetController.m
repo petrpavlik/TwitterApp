@@ -74,6 +74,8 @@
 
 - (void)dealloc {
     
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [self.runningPlacesOperation cancel];
     
     [self.locationManager stopUpdatingLocation];
@@ -135,6 +137,7 @@
     _tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _tweetTextView.backgroundColor = [UIColor clearColor];
     _tweetTextView.tintColor = skin.linkColor;
+    //_tweetTextView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, -44, 0); //does nothing
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     
@@ -154,6 +157,14 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Send" style:UIBarButtonSystemItemDone target:self action:@selector(done)];
     
+    UIFont* rightItemFont = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    
+    UIFontDescriptor *descriptor = [[UIFontDescriptor alloc] initWithFontAttributes:@{UIFontDescriptorFamilyAttribute:rightItemFont.familyName}];
+    descriptor = [descriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold];
+    rightItemFont =  [UIFont fontWithDescriptor:descriptor size:rightItemFont.pointSize];
+    
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:@{NSFontAttributeName: rightItemFont} forState:UIControlStateNormal];
+    
     self.title = @"140";
     
     self.navigationItem.rightBarButtonItem.enabled = NO;
@@ -166,6 +177,8 @@
         
         _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:self.initialText attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
     }
+    
+    [self registerForKeyboardNotifications];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -234,6 +247,19 @@
 - (void)textViewDidChange:(UITextView *)textView {
     
     [self contentLengthDidChange];
+    
+    NSLog(@"%f", self.tweetTextView.contentSize.height);
+    CGPoint contentOffset =  self.tweetTextView.contentOffset;
+    contentOffset.y = self.tweetTextView.contentSize.height - (self.tweetTextView.bounds.size.height - self.tweetTextView.contentInset.bottom);
+    NSLog(@"%f", contentOffset.y);
+    
+    if (contentOffset.y < 0) {
+        contentOffset.y = 0;
+    }
+    
+    [UIView animateWithDuration:0.35 animations:^{
+        self.tweetTextView.contentOffset = contentOffset;
+    }];
 }
 
 #pragma mark -
@@ -521,6 +547,40 @@
          
         [self presentViewController:mediaUI animated:YES completion:NULL];
     }
+}
+
+#pragma mark -
+
+// Call this method somewhere in your view controller setup code.
+- (void)registerForKeyboardNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWasShown:)
+                                                 name:UIKeyboardDidShowNotification object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillBeHidden:)
+                                                 name:UIKeyboardWillHideNotification object:nil];
+    
+}
+
+// Called when the UIKeyboardDidShowNotification is sent.
+- (void)keyboardWasShown:(NSNotification*)aNotification
+{
+    NSDictionary* info = [aNotification userInfo];
+    CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+    
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    self.tweetTextView.contentInset = contentInsets;
+    self.tweetTextView.scrollIndicatorInsets = contentInsets;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification
+{
+    UIEdgeInsets contentInsets = UIEdgeInsetsZero;
+    self.tweetTextView.contentInset = contentInsets;
+    self.tweetTextView.scrollIndicatorInsets = contentInsets;
 }
 
 @end

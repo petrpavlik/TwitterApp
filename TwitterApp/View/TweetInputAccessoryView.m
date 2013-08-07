@@ -133,11 +133,18 @@
         
     } completion:NULL];*/
     
-    [UIView animateWithDuration:0.25 animations:^{
+    /*[UIView animateWithDuration:0.25 animations:^{
         
         [self layoutIfNeeded];
         self.placeButton.alpha = 1;
-    }];
+    }];*/
+    
+    [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:0 options:0 animations:^{
+        
+        [self layoutIfNeeded];
+        self.placeButton.alpha = 1;
+        
+    } completion:NULL];
 }
 
 - (void)disableLocation {
@@ -165,7 +172,7 @@
     return self.locationButton.selected;
 }
 
-- (void)displaySelectedImae:(UIImage*)image {
+- (void)displaySelectedImage:(UIImage*)image {
     
     [UIView animateWithDuration:0.3 animations:^{
        
