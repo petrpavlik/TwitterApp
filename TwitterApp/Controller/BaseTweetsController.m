@@ -624,7 +624,7 @@
         destructiveButtonTitle = @"Delete";
     }
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", @"Quote Tweet", nil];
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
@@ -721,6 +721,10 @@
             
             retweetersController.tweetId = tweet.tweetId;
             [self.navigationController pushViewController:retweetersController animated:YES];
+        }
+        else {
+            
+            TweetController* tweetController = [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"%@\" ", tweet.text]];
         }
     }
     else if (actionSheet.userInfo[@"url"]) {
