@@ -214,7 +214,7 @@
     [contentView addConstraints:superviewConstraints];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-64-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]-0.5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];
