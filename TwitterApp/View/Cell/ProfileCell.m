@@ -95,6 +95,7 @@
     [_locationButton setTitle:@"fsfs" forState:UIControlStateNormal];
     [_locationButton setImage:[UIImage imageNamed:@"Btn-Location"] forState:UIControlStateNormal];
     [_locationButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 0)];
+    [_locationButton addTarget:self action:@selector(locationButtonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_locationButton];
     
     _followingLabel = [UILabel new];
@@ -102,10 +103,10 @@
     _followingLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_followingLabel];
     
-    UIView* separatorView = [[UIView alloc] init];
+    /*UIView* separatorView = [[UIView alloc] init];
     separatorView.backgroundColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
-    [contentView addSubview:separatorView];
+    [contentView addSubview:separatorView];*/
     
     NSMutableArray* credentialsPlaceholderConstraints = [NSMutableArray new];
     
@@ -149,8 +150,8 @@
                                                                 multiplier:1.0
                                                                   constant:0]];*/
     
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    /*[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];*/
     
     
     [contentView addConstraints:superviewConstraints];
@@ -176,6 +177,11 @@
 - (void)websiteButtonSelected:(UIButton*)sender {
     
     [self.delegate profileCell:self didSelectURL:[NSURL URLWithString:[sender titleForState:UIControlStateNormal]]];
+}
+
+- (void)locationButtonSelected:(UIButton*)sender {
+    
+    [self.delegate profileCellDidSelectLocation:self];
 }
 
 - (void)setupFonts {

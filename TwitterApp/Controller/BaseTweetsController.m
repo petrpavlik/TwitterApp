@@ -295,7 +295,7 @@
             cell.retweetedButton.hidden = NO;
             
             if (tweet.retweeted.boolValue) {
-                [cell.retweetedButton setTitle:[NSString stringWithFormat:@"by You and %@", retweet.user.name] forState:UIControlStateNormal];
+                [cell.retweetedButton setTitle:[NSString stringWithFormat:@"by you and %@", retweet.user.name] forState:UIControlStateNormal];
             }
             else {
                 [cell.retweetedButton setTitle:[NSString stringWithFormat:@"by %@", retweet.user.name] forState:UIControlStateNormal];
@@ -304,7 +304,7 @@
         else if (tweet.retweeted.boolValue) {
             
             cell.retweetedButton.hidden = NO;
-            [cell.retweetedButton setTitle:@"by You" forState:UIControlStateNormal];
+            [cell.retweetedButton setTitle:@"by you" forState:UIControlStateNormal];
         }
         
         cell.mediaImageView.hidden = YES;

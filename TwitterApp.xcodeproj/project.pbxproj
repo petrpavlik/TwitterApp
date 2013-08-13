@@ -24,8 +24,6 @@
 		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
-		4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
-		4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */; };
 		4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
 		4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
@@ -33,6 +31,10 @@
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B349FC51779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
+		4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
+		4B39302517BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
+		4B39302717BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */; };
+		4B39302817BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
 		4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
 		4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
@@ -323,7 +325,6 @@
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		4B132D5817949BE500EFA90C /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
-		4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.2.a; sourceTree = "<group>"; };
 		4B165EE71771D874004A09BC /* Image-Separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator.png"; path = "Image/Image-Separator.png"; sourceTree = "<group>"; };
 		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
 		4B16B2C1177503E1000FEFDD /* ErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorCell.h; path = View/Cell/ErrorCell.h; sourceTree = "<group>"; };
@@ -332,6 +333,9 @@
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B349FC31779C0FA007D035D /* LogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogService.h; path = Service/LogService.h; sourceTree = "<group>"; };
 		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
+		4B39302217BA735A006ECB65 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCell.h; path = View/Cell/TableViewCell.h; sourceTree = "<group>"; };
+		4B39302317BA735A006ECB65 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewCell.m; path = View/Cell/TableViewCell.m; sourceTree = "<group>"; };
+		4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
 		4B4B8F9D17677C3400E427DE /* ModernSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernSkin.m; path = View/Skin/ModernSkin.m; sourceTree = "<group>"; };
 		4B4E80A4177A2B6A005358A5 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileCell.h; path = View/Cell/ProfileCell.h; sourceTree = "<group>"; };
@@ -543,7 +547,6 @@
 				4B6629B8177387FA00FA146A /* AdSupport.framework in Frameworks */,
 				4B6629B9177387FA00FA146A /* CoreText.framework in Frameworks */,
 				4B6629BA177387FA00FA146A /* Accounts.framework in Frameworks */,
-				4B132D5B17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B6629BB177387FA00FA146A /* Social.framework in Frameworks */,
 				4B6629BC177387FA00FA146A /* UIKit.framework in Frameworks */,
 				4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
@@ -551,6 +554,7 @@
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
 				4B6629C0177387FA00FA146A /* HockeySDK.framework in Frameworks */,
+				4B39302817BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -563,6 +567,7 @@
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
 				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
 				4B755D8D17732E95002A577D /* libz.dylib in Frameworks */,
+				4B39302717BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */,
 				4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */,
 				4B755D8917732E7A002A577D /* AdSupport.framework in Frameworks */,
 				4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */,
@@ -573,7 +578,6 @@
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
 				4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
-				4B132D5A17949BE500EFA90C /* libFlurry_4.2.2.a in Frameworks */,
 				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -604,8 +608,8 @@
 		4B132D5717949BE500EFA90C /* Flurry */ = {
 			isa = PBXGroup;
 			children = (
+				4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */,
 				4B132D5817949BE500EFA90C /* Flurry.h */,
-				4B132D5917949BE500EFA90C /* libFlurry_4.2.2.a */,
 			);
 			name = Flurry;
 			path = Vendor/Flurry;
@@ -821,6 +825,8 @@
 				4B573FA5176B695200166461 /* TweetDetailCell.m */,
 				4BDFDB651754DEC400075F7D /* UserCell.h */,
 				4BDFDB661754DEC400075F7D /* UserCell.m */,
+				4B39302217BA735A006ECB65 /* TableViewCell.h */,
+				4B39302317BA735A006ECB65 /* TableViewCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1451,6 +1457,7 @@
 				4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */,
 				4B6629A9177387FA00FA146A /* NavigationController.m in Sources */,
 				4B6629AA177387FA00FA146A /* TimelineDocument.m in Sources */,
+				4B39302517BA735A006ECB65 /* TableViewCell.m in Sources */,
 				4B6629AB177387FA00FA146A /* TweetDetailController.m in Sources */,
 				4B6629AC177387FA00FA146A /* BaseTweetsController.m in Sources */,
 				4BFDA45D1776024D007EFBC4 /* PlaceEntity.m in Sources */,
@@ -1520,6 +1527,7 @@
 				4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
+				4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */,
 				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,
 				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
 				4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */,
@@ -1600,6 +1608,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1642,6 +1651,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1740,6 +1750,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1781,6 +1792,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",

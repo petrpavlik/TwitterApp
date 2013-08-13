@@ -76,6 +76,11 @@
 #ifdef DEBUG
     //[[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
 #endif
+    
+    NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
+                                                         diskCapacity:20 * 1024 * 1024
+                                                             diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
 
     
     [BaseEntity setDictionaryToEntityKeyAdjusterBlock:^NSString *(NSString *key) {

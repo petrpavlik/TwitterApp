@@ -15,9 +15,13 @@
 #import "UserEntity.h"
 #import "UIImage+TwitterApp.h"
 #import "FavoritesController.h"
+#import "TableViewCell.h"
 #import "UserTweetsController.h"
+#import "WebController.h"
+#import "PhotoController.h"
+#import "ImageTransition.h"
 
-@interface MyProfileController ()
+@interface MyProfileController () <ProfileCellDelegate>
 
 @property(nonatomic, strong) NSNumber* following;
 @property(nonatomic, strong) UserEntity* user;
@@ -39,10 +43,10 @@
     self.title = @"Profile";
     
     [self.tableView registerClass:[ProfileCell class] forCellReuseIdentifier:@"ProfileCell"];
-    [self.tableView registerClass:[ProfilePushCell class] forCellReuseIdentifier:@"ProfilePushCell"];
+    [self.tableView registerClass:[TableViewCell class] forCellReuseIdentifier:@"UITableViewCell"];
     
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
     
@@ -83,6 +87,7 @@
         
         static NSString *CellIdentifier = @"ProfileCell";
         ProfileCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.delegate = self;
         //cell.delegate = self;
         
         // Configure the cell...
@@ -131,30 +136,31 @@
     }
     else {
         
-        static NSString *CellIdentifier = @"ProfilePushCell";
-        ProfilePushCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *CellIdentifier = @"UITableViewCell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         if (indexPath.row == 0) {
-            cell.mainLabel.text = @"Tweets";
+            cell.textLabel.text = @"Tweets";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.statusesCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.statusesCount];
         }
         else if (indexPath.row == 1) {
-            cell.mainLabel.text = @"Followers";
+            cell.textLabel.text = @"Followers";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.followersCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.followersCount];
         }
         else if (indexPath.row == 2) {
-            cell.mainLabel.text = @"Following";
+            cell.textLabel.text = @"Following";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.friendsCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.friendsCount];
         }
         else if (indexPath.row == 3) {
-            cell.mainLabel.text = @"Favorites";
-            cell.valueLabel.text = Nil;
+            cell.textLabel.text = @"Favorites";
+            cell.detailTextLabel.text = Nil;
         }
         
         return cell;
@@ -167,8 +173,21 @@
         return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width];
     }
     else {
-        return 56;
+        return 44;
     }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    
+    if (section == 1) {
+        return 20;
+    }
+    
+    return 0;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
 }
 
 #pragma mark - Table view delegate
@@ -242,6 +261,35 @@
     }
     
     [imageView setImageWithURL:[NSURL URLWithString:bannetURLString] placeholderImage:nil];
+}
+
+#pragma mark -
+
+- (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url {
+    
+    [WebController presentWithUrl:url viewController:self];
+}
+
+- (void)profileCellDidSelectAvatarImage:(ProfileCell *)cell {
+    
+    PhotoController* photoController = [PhotoController new];
+    photoController.placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];;
+    photoController.fullImageURL = [NSURL URLWithString:[self.user.profileImageUrl stringByReplacingOccurrencesOfString:@"_normal" withString:@""]];
+    
+    ImageTransition* imageTransition = [ImageTransition new];
+    
+    photoController.transitioningDelegate = imageTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:photoController animated:YES completion:NULL];
+}
+
+- (void)profileCellDidSelectLocation:(ProfileCell *)cell {
+    
+    if (self.user.location.length) {
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+    }
 }
 
 @end

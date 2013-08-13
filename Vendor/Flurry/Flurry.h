@@ -31,8 +31,8 @@
  */
 typedef enum {
     FlurryLogLevelNone = 0,         //No output
-    FlurryLogLevelCriticalOnly,     //Default, outputs only critical log events
-    FlurryLogLevelDebug,            //Debug level, outputs critical and main log events
+    FlurryLogLevelCriticalOnly,     //Default, outputs only crytical log events
+    FlurryLogLevelDebug,            //Debug level, outputs crytical and main log events
     FlurryLogLevelAll               //Highest level, outputs all log events
 } FlurryLogLevel;
 
@@ -118,7 +118,7 @@ typedef enum {
  *  @since 4.2.2
  *
  *  This is an optional method that displays debug information related to the Flurry SDK.
- *  display information to the console. The default setting for this method is @c FlurryLogLevelCriticalOnly.
+ *  display information to the console. The default setting for this method is @c FlurryLogLevelCritycalOnly.
  *
  *  @note Its good practice to call this method prior to invoking #startSession:. If debug logging is disabled earlier, this method will enable it.
  *
@@ -620,7 +620,7 @@ typedef enum {
  * 
  *  Use this method to capture the gender of your user. Only use this method if you collect this
  *  information explictly from your user (i.e. - there is no need to set a default value). Allowable
- *  values are @c @"M" or @c @"F"
+ *  values are @c @"m" or @c @"f"
  *
  *  @note The gender is aggregated across all users of your app and not available on a per user
  *  basis.

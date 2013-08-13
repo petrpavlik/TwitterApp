@@ -21,6 +21,7 @@
 #import "UserTweetsController.h"
 #import "PhotoController.h"
 #import "ImageTransition.h"
+#import "TableViewCell.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -59,10 +60,10 @@
 	// Do any additional setup after loading the view.
     
     [self.tableView registerClass:[ProfileCell class] forCellReuseIdentifier:@"ProfileCell"];
-    [self.tableView registerClass:[ProfilePushCell class] forCellReuseIdentifier:@"ProfilePushCell"];
+    [self.tableView registerClass:[TableViewCell class] forCellReuseIdentifier:@"TableViewCell"];
     
     self.tableView.tableFooterView = [UIView new];
-    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     if (self.user) {
         self.title = [NSString stringWithFormat:@"@%@", self.user.screenName];
@@ -185,26 +186,27 @@
     }
     else {
         
-        static NSString *CellIdentifier = @"ProfilePushCell";
-        ProfilePushCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        static NSString *CellIdentifier = @"TableViewCell";
+        TableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         
         if (indexPath.row == 0) {
-            cell.mainLabel.text = @"Tweets";
+            cell.textLabel.text = @"Tweets";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.statusesCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.statusesCount];
         }
         else if (indexPath.row == 1) {
-            cell.mainLabel.text = @"Followers";
+            cell.textLabel.text = @"Followers";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.followersCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.followersCount];
         }
         else if (indexPath.row == 2) {
-            cell.mainLabel.text = @"Following";
+            cell.textLabel.text = @"Following";
             NSNumberFormatter* formatter = [NSNumberFormatter new];
             [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
-            cell.valueLabel.text = [formatter stringFromNumber:self.user.friendsCount];
+            cell.detailTextLabel.text = [formatter stringFromNumber:self.user.friendsCount];
         }
         
         return cell;
@@ -355,6 +357,14 @@
     self.modalPresentationStyle = UIModalPresentationCustom;
     
     [self presentViewController:photoController animated:YES completion:NULL];
+}
+
+- (void)profileCellDidSelectLocation:(ProfileCell *)cell {
+    
+    if (self.user.location.length) {
+        
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+    }
 }
 
 #pragma mark -
