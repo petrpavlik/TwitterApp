@@ -7,6 +7,7 @@
 //
 
 #import <AFNetworkActivityIndicatorManager.h>
+#import "AppDelegate.h"
 #import "BaseTweetsController.h"
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
