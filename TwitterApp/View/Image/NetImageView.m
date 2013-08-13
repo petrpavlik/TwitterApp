@@ -100,6 +100,19 @@ static NSOperationQueue* operationQueue = nil;
     
     operation.queuePriority = NSOperationQueuePriorityLow;
     
+    [operation setCacheResponseBlock:^NSCachedURLResponse *(NSURLConnection *connection, NSCachedURLResponse *cachedResponse) {
+        
+        if (cachedResponse) {
+            
+            NSCachedURLResponse* newCachedResponse = [[NSCachedURLResponse alloc] initWithResponse:cachedResponse.response data:cachedResponse.data userInfo:cachedResponse.userInfo storagePolicy:NSURLCacheStorageAllowed];
+            
+            return newCachedResponse;
+        }
+        else {
+            return nil;
+        }
+    }];
+    
     if (!operationQueue) {
         operationQueue = [[NSOperationQueue alloc] init];
     }

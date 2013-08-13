@@ -15,6 +15,10 @@
 		4B00B7C917B80F5400606C4C /* Img-Geek-UserPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7C217B80F5400606C4C /* Img-Geek-UserPlaceholder.png */; };
 		4B00B7CA17B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7C317B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png */; };
 		4B00B7CB17B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7C317B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png */; };
+		4B00B7CE17B822B400606C4C /* 731-cloud-download.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7CC17B822B400606C4C /* 731-cloud-download.png */; };
+		4B00B7CF17B822B400606C4C /* 731-cloud-download.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7CC17B822B400606C4C /* 731-cloud-download.png */; };
+		4B00B7D017B822B400606C4C /* 731-cloud-download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */; };
+		4B00B7D117B822B400606C4C /* 731-cloud-download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */; };
 		4B0DA1D417A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
 		4B0DA1D517A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
 		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
@@ -311,6 +315,8 @@
 		4B00B7C117B80F5400606C4C /* Icon-Retweeted-By@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Retweeted-By@2x.png"; path = "Image/Icon-Retweeted-By@2x.png"; sourceTree = "<group>"; };
 		4B00B7C217B80F5400606C4C /* Img-Geek-UserPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Geek-UserPlaceholder.png"; path = "Image/Img-Geek-UserPlaceholder.png"; sourceTree = "<group>"; };
 		4B00B7C317B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Geek-UserPlaceholder%402x.png"; path = "Image/Img-Geek-UserPlaceholder%402x.png"; sourceTree = "<group>"; };
+		4B00B7CC17B822B400606C4C /* 731-cloud-download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "731-cloud-download.png"; path = "Image/731-cloud-download.png"; sourceTree = "<group>"; };
+		4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "731-cloud-download@2x.png"; path = "Image/731-cloud-download@2x.png"; sourceTree = "<group>"; };
 		4B0DA1D217A693E00021DBBD /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		4B0DA1D317A693E00021DBBD /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
 		4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = Vendor/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
@@ -880,6 +886,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4B00B7CC17B822B400606C4C /* 731-cloud-download.png */,
+				4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */,
 				4B00B7C017B80F5400606C4C /* Icon-Retweeted-By.png */,
 				4B00B7C117B80F5400606C4C /* Icon-Retweeted-By@2x.png */,
 				4B00B7C217B80F5400606C4C /* Img-Geek-UserPlaceholder.png */,
@@ -1172,6 +1180,7 @@
 				4B6629C2177387FA00FA146A /* InfoPlist.strings in Resources */,
 				4BEEA6CE17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */,
 				4B6629C3177387FA00FA146A /* Default.png in Resources */,
+				4B00B7CF17B822B400606C4C /* 731-cloud-download.png in Resources */,
 				4B6629C4177387FA00FA146A /* Default@2x.png in Resources */,
 				4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */,
 				4B6629C6177387FA00FA146A /* MainStoryboard.storyboard in Resources */,
@@ -1194,6 +1203,7 @@
 				4BFDA46A17762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4B6629CF177387FA00FA146A /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718B0177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
+				4B00B7D117B822B400606C4C /* 731-cloud-download@2x.png in Resources */,
 				4BCBC92617969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */,
 				4B6629D0177387FA00FA146A /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4B6629D1177387FA00FA146A /* Icon-Reply-Normal.png in Resources */,
@@ -1241,6 +1251,7 @@
 				4B7428951742D9CE00AEB85C /* InfoPlist.strings in Resources */,
 				4BEEA6CD17933E2D005FCC90 /* Icon-TabBar-Search.png in Resources */,
 				4B74289D1742D9CE00AEB85C /* Default.png in Resources */,
+				4B00B7CE17B822B400606C4C /* 731-cloud-download.png in Resources */,
 				4B74289F1742D9CE00AEB85C /* Default@2x.png in Resources */,
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
@@ -1263,6 +1274,7 @@
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
 				4B6718AF177CAEB800151224 /* Icon-Disclosure-Indocator@2x.png in Resources */,
+				4B00B7D017B822B400606C4C /* 731-cloud-download@2x.png in Resources */,
 				4BCBC92517969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */,
 				4BAEB3E41752417A0027A0D1 /* Icon-Reply-Highlighted@2x.png in Resources */,
 				4BAEB3E51752417A0027A0D1 /* Icon-Reply-Normal.png in Resources */,

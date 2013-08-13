@@ -292,15 +292,19 @@
         
         if (retweet) {
             
+            cell.retweetedButton.hidden = NO;
+            
             if (tweet.retweeted.boolValue) {
-                cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by You and %@", retweet.user.name];
+                [cell.retweetedButton setTitle:[NSString stringWithFormat:@"by You and %@", retweet.user.name] forState:UIControlStateNormal];
             }
             else {
-                cell.retweetedLabel.text = [NSString stringWithFormat:@"Retweeted by %@", retweet.user.name];
+                [cell.retweetedButton setTitle:[NSString stringWithFormat:@"by %@", retweet.user.name] forState:UIControlStateNormal];
             }
         }
         else if (tweet.retweeted.boolValue) {
-            cell.retweetedLabel.text = @"Retweeted by You";
+            
+            cell.retweetedButton.hidden = NO;
+            [cell.retweetedButton setTitle:@"by You" forState:UIControlStateNormal];
         }
         
         cell.mediaImageView.hidden = YES;
@@ -341,7 +345,7 @@
         
         if (media.count) {
             
-            [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:nil imageProcessingBlock:^UIImage *(UIImage *image) {
+            [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:[[UIImage imageNamed:@"731-cloud-download"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] imageProcessingBlock:^UIImage *(UIImage *image) {
                 
                 UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);
                 [image drawAtPoint:CGPointZero];

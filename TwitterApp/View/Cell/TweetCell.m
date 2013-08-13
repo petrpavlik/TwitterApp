@@ -141,11 +141,19 @@
     _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_usernameLabel];
     
-    _retweetedLabel = [[UILabel alloc] init];
+    _retweetedButton = [[UIButton alloc] init];
     //_retweetedLabel.font = [skin fontOfSize:15];
-    _retweetedLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _retweetedLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
-    [contentView addSubview:_retweetedLabel];
+    _retweetedButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_retweetedButton setTitleColor:[UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1] forState:UIControlStateNormal];
+    //_retweetedButton.backgroundColor = [UIColor redColor];
+    _retweetedButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    [_retweetedButton setImage:[[UIImage imageNamed:@"Icon-Retweeted-By"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+    _retweetedButton.imageEdgeInsets = UIEdgeInsetsMake(1, 0, -1, 0);
+    _retweetedButton.titleEdgeInsets = UIEdgeInsetsMake(0, 5, 0, 0);
+    _retweetedButton.userInteractionEnabled = NO;
+    _retweetedButton.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
+    _retweetedButton.hidden = YES;
+    [contentView addSubview:_retweetedButton];
     
     _tweetAgeLabel = [[UILabel alloc] init];
     _tweetAgeLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -171,6 +179,7 @@
     _mediaImageView.translatesAutoresizingMaskIntoConstraints = NO;
     _mediaImageView.contentMode = UIViewContentModeCenter;
     _mediaImageView.clipsToBounds = YES;
+    _mediaImageView.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_mediaImageView];
     
     _quickAccessView = [self createQuickAccessView];
@@ -205,11 +214,11 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel]-[_mediaImageView(<=300)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_retweetedLabel]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_retweetedLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_retweetedButton]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_retweetedButton)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_tweetTextLabel(240)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_tweetTextLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_avatarImageView]-[_retweetedButton]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _tweetTextLabel, _retweetedButton)]];
     
     [contentView addConstraints:superviewConstraints];
     
@@ -235,7 +244,7 @@
     _usernameLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
     _tweetTextLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
-    _retweetedLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
+    _retweetedButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
 }
 
 
@@ -245,7 +254,7 @@
     [super prepareForReuse];
     
     [self.urlsDictonary removeAllObjects];
-    _retweetedLabel.text = nil;
+    [_retweetedButton setTitle:Nil forState:UIControlStateNormal];
     
     CGRect contentViewFrame = self.contentView.frame;
     contentViewFrame.origin.x = -50;
@@ -258,6 +267,8 @@
     self.dummyScrollView.contentOffset = CGPointMake(0, 0);
     
     self.avatarImageView.image = nil;
+    
+    self.retweetedButton.hidden = YES;
 }
 
 - (void)layoutSubviews {
