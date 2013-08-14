@@ -19,10 +19,13 @@ typedef enum {
 
 @protocol ProfileCellDelegate <NSObject>
 
-- (void)profileCellDidRequestChengeOfFriendship:(ProfileCell*)cell;
 - (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url;
 - (void)profileCellDidSelectLocation:(ProfileCell*)cell;
 - (void)profileCellDidSelectAvatarImage:(ProfileCell *)cell;
+
+@optional
+
+- (void)profileCellDidRequestChengeOfFriendship:(ProfileCell*)cell;
 
 @end
 

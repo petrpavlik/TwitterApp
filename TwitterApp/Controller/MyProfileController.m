@@ -49,6 +49,7 @@
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:Nil];
     
     if ([UserEntity currentUser]) {
         
@@ -238,6 +239,11 @@
     
     [self.tableView reloadData];
     [self setupProfileBanner];
+}
+
+- (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
+    
+    
 }
 
 #pragma mark - profile banner

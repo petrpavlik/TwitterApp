@@ -534,21 +534,45 @@
         tweet = tweet.retweetedStatus;
     }
     
-    [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+    if (tweet.retweeted.boolValue && tweet.retweetByMeId) {
         
-        if (error) {
-            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
-            return;
-        }
+        [TweetEntity requestDeletionOfTweetWithId:tweet.retweetByMeId completionBlock:^(NSError *error) {
+           
+            if (error) {
+                
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not un-retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+                return;
+            }
+            
+            tweet.retweetByMeId = Nil;
+            tweet.retweeted = @(NO);
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
+            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Un-retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+        }];
+    }
+    else {
         
-        tweet.retweeted = @(YES);
-        
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-        
-        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
-    }];
+        [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            if (error) {
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+                return;
+            }
+            
+            tweet.retweeted = @(YES);
+            tweet.retweetByMeId = updatedTweet.tweetId;
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
+            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+        }];
+    }
 }
 
 - (void)tweetCellDidRequestFavorite:(TweetCell *)cell {
@@ -562,21 +586,42 @@
         tweet = tweet.retweetedStatus;
     }
     
-    [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+    if (tweet.favorited.boolValue) {
         
-        if (error) {
-            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
-            return;
-        }
+        [tweet requestUnfavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            if (error) {
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not un-favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+                return;
+            }
+            
+            tweet.favorited = @(NO);
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
+            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Un-favorited '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+        }];
+    }
+    else {
         
-        tweet.favorited = @(YES);
-        
-        [self.tableView beginUpdates];
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.tableView endUpdates];
-        
-        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Favorited '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
-    }];
+        [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            if (error) {
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
+                return;
+            }
+            
+            tweet.favorited = @(YES);
+            
+            [self.tableView beginUpdates];
+            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [self.tableView endUpdates];
+            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Favorited '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
+        }];
+    }
 }
 
 - (void)tweetCellDidRequestOtherAction:(TweetCell *)cell {

@@ -314,7 +314,7 @@
         
         [UserEntity registerCurrentUser:user];
         [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
-        
+         
     }];
 }
 

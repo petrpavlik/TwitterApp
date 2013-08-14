@@ -224,6 +224,28 @@
     return (NSOperation*)operation;
 }
 
+- (NSOperation*)requestUnfavoriteWithCompletionBlock:(void (^)(TweetEntity* updatedTweet, NSError* error))block {
+    
+    NSParameterAssert(self.tweetId);
+    
+    AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
+    
+    NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"POST" path:@"favorites/destroy.json" parameters:@{@"id": self.tweetId}];
+    
+    AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
+        
+        TweetEntity* tweet = [[TweetEntity alloc] initWithDictionary:JSON];
+        block(tweet, nil);
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        block(nil, error);
+    }];
+    
+    [apiClient enqueueHTTPRequestOperation:operation];
+    return (NSOperation*)operation;
+}
+
 + (NSOperation*)requestStatusUpdateWithText:(NSString*)text asReplyToTweet:(NSString*)tweetId location:(CLLocation*)location placeId:(NSString*)placeId media:(NSArray*)media completionBlock:(void (^)(TweetEntity* tweet, NSError* error))block {
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
