@@ -71,6 +71,8 @@
         self.user = [UserEntity currentUser];
         [self setupProfileBanner];
     }
+    
+    NSLog(@"bottom layoug guide %f", [self.bottomLayoutGuide length]);
 }
 
 #pragma mark - Table view data source
