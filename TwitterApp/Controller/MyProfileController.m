@@ -71,8 +71,6 @@
         self.user = [UserEntity currentUser];
         [self setupProfileBanner];
     }
-    
-    NSLog(@"bottom layoug guide %f", [self.bottomLayoutGuide length]);
 }
 
 #pragma mark - Table view data source
@@ -318,10 +316,12 @@
     
     if (self.user.location.length) {
         
-        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]];
+        NSString* urlString = [NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location];
+        urlString = [urlString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSURL* url = [NSURL URLWithString:urlString];
         
         if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+            [[UIApplication sharedApplication] openURL:url];
         }
         else {
             
