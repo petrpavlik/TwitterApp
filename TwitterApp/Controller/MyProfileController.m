@@ -20,15 +20,30 @@
 #import "WebController.h"
 #import "PhotoController.h"
 #import "ImageTransition.h"
+#import "NotificationView.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
 @property(nonatomic, strong) NSNumber* following;
 @property(nonatomic, strong) UserEntity* user;
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 
 @end
 
 @implementation MyProfileController
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
 
 - (void)dealloc {
     
@@ -230,6 +245,11 @@
     }
 }
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
+}
+
 #pragma mark -
 
 - (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
@@ -296,7 +316,16 @@
     
     if (self.user.location.length) {
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]];
+        
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+        }
+        else {
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"This location cannot be openen in Maps app" style:NotificationViewStyleError];
+            [[LogService sharedInstance] logError:[NSError errorWithDomain:@"Tweetilus" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open location %@", url]}]];
+        }
     }
 }
 

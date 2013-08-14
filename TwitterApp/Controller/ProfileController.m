@@ -365,7 +365,16 @@
     
     if (self.user.location.length) {
         
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+        NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]];
+        
+        if ([[UIApplication sharedApplication] canOpenURL:url]) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://maps.apple.com?q=%@", self.user.location]]];
+        }
+        else {
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"This location cannot be openen in Maps app" style:NotificationViewStyleError];
+            [[LogService sharedInstance] logError:[NSError errorWithDomain:@"Tweetilus" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open location %@", url]}]];
+        }
     }
 }
 

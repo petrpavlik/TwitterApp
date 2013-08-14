@@ -35,6 +35,8 @@
 @property(nonatomic, strong) NSTimer* updateTweetAgeTimer;
 @property(nonatomic, strong) NSMutableDictionary* savedImagesForVisibleCells;
 @property(nonatomic, strong) id textSizeChangedObserver;
+@property(nonatomic, strong) NSMutableDictionary* runningRetweetOperationsDictionary;
+@property(nonatomic, strong) NSMutableDictionary* runningFavoriteOperationsDictionary;
 
 @end
 
@@ -62,11 +64,37 @@
     return _savedImagesForVisibleCells;
 }
 
+- (NSMutableDictionary*)runningRetweetOperationsDictionary {
+    
+    if (!_runningRetweetOperationsDictionary) {
+        _runningRetweetOperationsDictionary = [NSMutableDictionary new];
+    }
+    
+    return _runningRetweetOperationsDictionary;
+}
+
+- (NSMutableDictionary*)runningFavoriteOperationsDictionary {
+    
+    if (!_runningFavoriteOperationsDictionary) {
+        _runningFavoriteOperationsDictionary = [NSMutableDictionary new];
+    }
+    
+    return _runningFavoriteOperationsDictionary;
+}
+
 - (void)dealloc {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
+    
+    for (NSOperation* operation in [self.runningRetweetOperationsDictionary allValues]) {
+        [operation cancel];
+    }
+    
+    for (NSOperation* operation in [self.runningFavoriteOperationsDictionary allValues]) {
+        [operation cancel];
+    }
 }
 
 - (void)viewDidLoad
@@ -534,9 +562,15 @@
         tweet = tweet.retweetedStatus;
     }
     
+    if (self.runningRetweetOperationsDictionary[tweet.tweetId]) {
+        return;
+    }
+    
     if (tweet.retweeted.boolValue && tweet.retweetByMeId) {
         
-        [TweetEntity requestDeletionOfTweetWithId:tweet.retweetByMeId completionBlock:^(NSError *error) {
+        self.runningRetweetOperationsDictionary[tweet.tweetId] = [TweetEntity requestDeletionOfTweetWithId:tweet.retweetByMeId completionBlock:^(NSError *error) {
+            
+            [weakSelf.runningRetweetOperationsDictionary removeObjectForKey:tweet.tweetId];
            
             if (error) {
                 
@@ -547,16 +581,18 @@
             tweet.retweetByMeId = Nil;
             tweet.retweeted = @(NO);
             
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
             
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Un-retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
         }];
     }
     else {
         
-        [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        self.runningRetweetOperationsDictionary[tweet.tweetId] = [tweet requestRetweetWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            [weakSelf.runningRetweetOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
@@ -566,9 +602,9 @@
             tweet.retweeted = @(YES);
             tweet.retweetByMeId = updatedTweet.tweetId;
             
-            [self.tableView beginUpdates];
-            [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [self.tableView endUpdates];
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
             
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Retweeted '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleInformation];
         }];
@@ -586,9 +622,15 @@
         tweet = tweet.retweetedStatus;
     }
     
+    if (self.runningFavoriteOperationsDictionary[tweet.tweetId]) {
+        return;
+    }
+    
     if (tweet.favorited.boolValue) {
         
-        [tweet requestUnfavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        self.runningFavoriteOperationsDictionary[tweet.tweetId] = [tweet requestUnfavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            [weakSelf.runningFavoriteOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not un-favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
@@ -606,7 +648,9 @@
     }
     else {
         
-        [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+        self.runningFavoriteOperationsDictionary[tweet.tweetId] = [tweet requestFavoriteWithCompletionBlock:^(TweetEntity *updatedTweet, NSError *error) {
+            
+            [weakSelf.runningFavoriteOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
