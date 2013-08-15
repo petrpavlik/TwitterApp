@@ -25,12 +25,10 @@
     
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
-    
     _errorLabel = [UILabel new];
     _errorLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    _errorLabel.font = [skin fontOfSize:16];
+    _errorLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    _errorLabel.textColor = [UIColor blackColor];
     _errorLabel.numberOfLines = 0;
     _errorLabel.textAlignment = NSTextAlignmentCenter;
     [self.contentView addSubview:_errorLabel];

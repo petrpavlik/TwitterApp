@@ -62,8 +62,7 @@
     self.tableView.tableFooterView = [UIView new];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [self setEdgesForExtendedLayout:UIRectEdgeNone];
-    self.automaticallyAdjustsScrollViewInsets = YES; //default YES
+    [self setEdgesForExtendedLayout:UIRectEdgeBottom];
     
     self.title = self.searchQuery;
     
@@ -154,7 +153,7 @@
             return 68; //user cell
         }
         else {
-            return self.tableView.frame.size.height; //error cell
+            return self.tableView.frame.size.height - self.tableView.contentInset.bottom; //error cell
         }
     }
     else {
@@ -193,6 +192,10 @@
         return;
     }
     
+    if (self.allUsersLoaded) {
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     
     self.runningRequestDataOperation = [UserEntity searchUsersWithQuery:self.searchQuery count:20 page:self.numPagesLoaded completionBlock:^(NSArray *users, NSError *error) {
@@ -204,7 +207,7 @@
         }
         else {
             
-            if (!users.count || [[users.firstObject userId] isEqualToString:[weakSelf.users.lastObject userId]]) {
+            if (!users.count) {
                 
                 weakSelf.allUsersLoaded = YES;
                 
@@ -213,19 +216,11 @@
                     weakSelf.errorMessage = @"No users found";
                     [weakSelf didEndRefreshing];
                 }
-                else {
-                    
-                    [weakSelf.tableView beginUpdates];
-                    NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
-                    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-                    [weakSelf.tableView endUpdates];
-                    
-                    [NotificationView showInView:self.notificationViewPlaceholderView message:@"All users loaded"];
-                }
             }
             else {
                 
                 weakSelf.runningRequestDataOperation = nil;
+                weakSelf.numPagesLoaded++;
                 
                 if (!weakSelf.users.count) {
                     
@@ -234,21 +229,43 @@
                 }
                 else {
                     
-                    weakSelf.users = [weakSelf.users arrayByAddingObjectsFromArray:users];
-                    
-                    [weakSelf.tableView beginUpdates];
-                    
-                    NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:users.count];
-                    for (NSInteger i=0; i<users.count; i++) {
-                        [indexPaths addObject:[NSIndexPath indexPathForRow:weakSelf.users.count-users.count+i inSection:0]];
+                    BOOL usersAlreadyLoaded = NO;
+                    UserEntity* firstNewUser = users.firstObject;
+                    for (UserEntity* testedUser in weakSelf.users) {
+                        
+                        if ([firstNewUser.userId isEqualToString:testedUser.userId]) {
+                            usersAlreadyLoaded = YES;
+                            break;
+                        }
                     }
                     
-                    [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
-                    
-                    [weakSelf.tableView endUpdates];
+                    if (usersAlreadyLoaded) {
+                        
+                        weakSelf.allUsersLoaded = YES;
+                        
+                        [weakSelf.tableView beginUpdates];
+                        NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
+                        [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                        [weakSelf.tableView endUpdates];
+                        
+                        [NotificationView showInView:self.notificationViewPlaceholderView message:@"All users loaded"];
+                    }
+                    else {
+                        
+                        weakSelf.users = [weakSelf.users arrayByAddingObjectsFromArray:users];
+                        
+                        [weakSelf.tableView beginUpdates];
+                        
+                        NSMutableArray* indexPaths = [[NSMutableArray alloc] initWithCapacity:users.count];
+                        for (NSInteger i=0; i<users.count; i++) {
+                            [indexPaths addObject:[NSIndexPath indexPathForRow:weakSelf.users.count-users.count+i inSection:0]];
+                        }
+                        
+                        [weakSelf.tableView insertRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+                        
+                        [weakSelf.tableView endUpdates];
+                    }
                 }
-                
-                weakSelf.numPagesLoaded++;
             }
         }
     }];

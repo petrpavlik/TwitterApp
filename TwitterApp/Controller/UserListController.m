@@ -71,7 +71,6 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     [self setEdgesForExtendedLayout:UIRectEdgeBottom];
-    self.automaticallyAdjustsScrollViewInsets = YES; //default YES
     
     [self willBeginRefreshing];
     

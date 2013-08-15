@@ -34,6 +34,8 @@
     _textField.clearButtonMode = UITextFieldViewModeAlways;
     _textField.returnKeyType = UIReturnKeySearch;
     _textField.delegate = self;
+    _textField.autocapitalizationType = UITextAutocapitalizationTypeNone;
+    _textField.autocorrectionType = UITextAutocorrectionTypeNo;
     [_textField addTarget:self action:@selector(textFIeldDidChangeEditing) forControlEvents:UIControlEventEditingChanged];
     [contentView addSubview:_textField];
     
