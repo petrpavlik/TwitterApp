@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "UIImage+TwitterApp.h"
 #import "UserCell.h"
+#import "PersistentBackgroundColorView.h"
 
 @interface UserCell ()
 
@@ -65,10 +66,11 @@
     _usernameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
-    _usernameLabel.textColor = [UIColor colorWithRed:0.498 green:0.549 blue:0.553 alpha:1];
+    _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
     
-    UIImageView* separatorView = [[UIImageView alloc] initWithImage:skin.separatorImage];
+    PersistentBackgroundColorView* separatorView = [[PersistentBackgroundColorView alloc] init];
+    [separatorView setPersistentBackgroundColor:[UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [contentView addSubview:separatorView];
     
@@ -93,29 +95,9 @@
                                                               multiplier:1.0
                                                                 constant:-1]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:_usernameLabel
-                                                                 attribute:NSLayoutAttributeLeading
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeTrailing
-                                                                multiplier:1.0
-                                                                  constant:0]];
-    
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:separatorView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                 relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeBottom
-                                                                multiplier:1.0
-                                                                  constant:0]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-64-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]-0.5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+
 
     
     [contentView addConstraints:superviewConstraints];
