@@ -225,6 +225,8 @@
 		4BB78921179AD926008C1DCC /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB7891F179AD926008C1DCC /* LoginController.m */; };
 		4BB78924179AE041008C1DCC /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB78923179AE041008C1DCC /* TabBarController.m */; };
 		4BB78925179AE041008C1DCC /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB78923179AE041008C1DCC /* TabBarController.m */; };
+		4BBBF93517BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
+		4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
@@ -458,6 +460,8 @@
 		4BB7891F179AD926008C1DCC /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Controller/LoginController.m; sourceTree = "<group>"; };
 		4BB78922179AE041008C1DCC /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabBarController.h; path = Controller/TabBarController.h; sourceTree = "<group>"; };
 		4BB78923179AE041008C1DCC /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = Controller/TabBarController.m; sourceTree = "<group>"; };
+		4BBBF93317BBE63900B7A169 /* ComposeTweetTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetTextStorage.h; path = View/TextStorage/ComposeTweetTextStorage.h; sourceTree = "<group>"; };
+		4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetTextStorage.m; path = View/TextStorage/ComposeTweetTextStorage.m; sourceTree = "<group>"; };
 		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
 		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
 		4BC63C201759133200F7E0C3 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
@@ -755,6 +759,7 @@
 		4B7428C51742DA3500AEB85C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4BBBF93217BBE60800B7A169 /* TextStorage */,
 				4B6EA1A917AD3276000CEC49 /* Transition */,
 				4BF9B6B7174A898700DA3318 /* Label */,
 				4BBDA6EB174912EE00E849FD /* Image */,
@@ -1001,6 +1006,15 @@
 				4BDFDB691754DF2800075F7D /* UserListController.m */,
 			);
 			name = Base;
+			sourceTree = "<group>";
+		};
+		4BBBF93217BBE60800B7A169 /* TextStorage */ = {
+			isa = PBXGroup;
+			children = (
+				4BBBF93317BBE63900B7A169 /* ComposeTweetTextStorage.h */,
+				4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */,
+			);
+			name = TextStorage;
 			sourceTree = "<group>";
 		};
 		4BBDA6EB174912EE00E849FD /* Image */ = {
@@ -1421,6 +1435,7 @@
 				4B662993177387FA00FA146A /* TweetCell.m in Sources */,
 				4B662994177387FA00FA146A /* TweetEntity.m in Sources */,
 				4B662995177387FA00FA146A /* UserEntity.m in Sources */,
+				4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */,
 				4B662996177387FA00FA146A /* BaseEntity.m in Sources */,
 				4B662997177387FA00FA146A /* AFTwitterClient.m in Sources */,
 				4B662998177387FA00FA146A /* AFTwitterJSONRequestOperation.m in Sources */,
@@ -1491,6 +1506,7 @@
 				4B7428D41742DED500AEB85C /* TweetCell.m in Sources */,
 				4B7428D91742DFF200AEB85C /* TweetEntity.m in Sources */,
 				4B7428DC1742E4E900AEB85C /* UserEntity.m in Sources */,
+				4BBBF93517BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */,
 				4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */,
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,

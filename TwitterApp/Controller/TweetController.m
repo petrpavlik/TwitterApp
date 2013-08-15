@@ -16,6 +16,7 @@
 #import "TweetInputAccessoryView.h"
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+ImageEffects.h"
+#import "ComposeTweetTextStorage.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
@@ -31,6 +32,7 @@
 @property(nonatomic, strong) TweetEntity* tweetToReplyTo;
 @property(nonatomic, strong) TweetInputAccessoryView* tweetInputAccessoryView;
 @property(nonatomic, strong) UITextView* tweetTextView;
+@property(nonatomic, strong) ComposeTweetTextStorage* textStorage;
 
 @end
 
@@ -130,8 +132,17 @@
     self.backgroundImageView = [UIImageView new];
     [self.view addSubview:self.backgroundImageView];
     [self.backgroundImageView stretchInSuperview];
+    
+    
+    ComposeTweetTextStorage* textStorage = [ComposeTweetTextStorage new];
+    NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
+    NSTextContainer *container = [[NSTextContainer alloc] initWithSize:CGSizeZero];
+    container.widthTracksTextView = YES;
+    [layoutManager addTextContainer:container];
+    [textStorage addLayoutManager:layoutManager];
+    self.textStorage = textStorage;
 
-    _tweetTextView = [[UITextView alloc] init];
+    _tweetTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:container];
     _tweetTextView.delegate = self;
     _tweetTextView.restorationIdentifier = @"TweetTextTextView";
     _tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -171,11 +182,16 @@
     
     if (self.tweetToReplyTo) {
         NSString* content = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
-        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
+        
+        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]}];
+        
+        /*[self.textStorage beginEditing];
+        [self.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [skin fontOfSize:16]}]];
+        [self.textStorage endEditing];*/
     }
     else if (self.initialText) {
         
-        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:self.initialText attributes:@{NSFontAttributeName: [skin fontOfSize:16]}];
+        _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:self.initialText attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]}];
     }
     
     [self registerForKeyboardNotifications];
@@ -282,8 +298,7 @@
         NSRange matchRange = [match range];
         numberOfAvailableCharacters += matchRange.length;
         numberOfAvailableCharacters -= linkLength;
-        
-        NSLog(@"detected link %@", [self.tweetTextView.text substringWithRange:matchRange]);
+        //NSLog(@"detected link %@", [self.tweetTextView.text substringWithRange:matchRange]);
     }
     
     self.title = [NSString stringWithFormat:@"%d", numberOfAvailableCharacters];
