@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import "Flurry.h"
+#import "GAI.h"
 #import "LogService.h"
 
 @implementation LogService
@@ -28,13 +28,18 @@
     
     if (self) {
         
-        [Flurry startSession:@"4KXXWFQNX9MYSFD52TJ5"];
+        [GAI sharedInstance].trackUncaughtExceptions = NO;
+        //[GAI sharedInstance].dispatchInterval = 20;
         
-        #ifdef DEBUG
-        [Flurry setDebugLogEnabled:YES];
-        #endif
+#ifdef DEBUG
+        [GAI sharedInstance].debug = YES;
+#endif
+        // Create tracker instance.
+        id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-YOUR-TRACKING-ID"];
         
-        [Flurry logEvent:@"test event"];
+        
+        
+        [[GAI sharedInstance] defaultTracker] sendEventWithCategory:<#(NSString *)#> withAction:<#(NSString *)#> withLabel:<#(NSString *)#> withValue:<#(NSNumber *)#>
     }
     
     return self;

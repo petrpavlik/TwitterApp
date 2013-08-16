@@ -173,6 +173,11 @@
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
+		4BA3064817BE763A00733D56 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064617BE763A00733D56 /* libGoogleAnalytics_debug.a */; };
+		4BA3064917BE763A00733D56 /* libGoogleAnalytics_debug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064617BE763A00733D56 /* libGoogleAnalytics_debug.a */; };
+		4BA3064A17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */; };
+		4BA3064B17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */; };
+		4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064C17BE76F400733D56 /* CoreData.framework */; };
 		4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
 		4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
 		4BA84597176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */; };
@@ -414,6 +419,14 @@
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
+		4BA3064117BE763A00733D56 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Vendor/GoogleAnalytics/GAI.h; sourceTree = SOURCE_ROOT; };
+		4BA3064217BE763A00733D56 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Vendor/GoogleAnalytics/GAITrackedViewController.h; sourceTree = SOURCE_ROOT; };
+		4BA3064317BE763A00733D56 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Vendor/GoogleAnalytics/GAITracker.h; sourceTree = SOURCE_ROOT; };
+		4BA3064417BE763A00733D56 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = Vendor/GoogleAnalytics/GAITransaction.h; sourceTree = SOURCE_ROOT; };
+		4BA3064517BE763A00733D56 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = Vendor/GoogleAnalytics/GAITransactionItem.h; sourceTree = SOURCE_ROOT; };
+		4BA3064617BE763A00733D56 /* libGoogleAnalytics_debug.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics_debug.a; path = Vendor/GoogleAnalytics/libGoogleAnalytics_debug.a; sourceTree = SOURCE_ROOT; };
+		4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = Vendor/GoogleAnalytics/libGoogleAnalytics.a; sourceTree = SOURCE_ROOT; };
+		4BA3064C17BE76F400733D56 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BA3CAF61782EB470029586E /* TweetsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetsDataSource.h; path = Model/DataSource/TweetsDataSource.h; sourceTree = "<group>"; };
 		4BA3CAF71782EB470029586E /* TweetsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetsDataSource.m; path = Model/DataSource/TweetsDataSource.m; sourceTree = "<group>"; };
 		4BA8458F176E4D0C007A531D /* Btn-Tweet-Detail-Favorite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Tweet-Detail-Favorite.png"; path = "Image/Btn-Tweet-Detail-Favorite.png"; sourceTree = "<group>"; };
@@ -557,8 +570,10 @@
 				4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */,
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
+				4BA3064917BE763A00733D56 /* libGoogleAnalytics_debug.a in Frameworks */,
 				4B6629C0177387FA00FA146A /* HockeySDK.framework in Frameworks */,
 				4B39302817BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */,
+				4BA3064B17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,7 +581,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */,
 				4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */,
+				4BA3064A17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */,
 				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
 				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
@@ -581,6 +598,7 @@
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
+				4BA3064817BE763A00733D56 /* libGoogleAnalytics_debug.a in Frameworks */,
 				4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
@@ -683,6 +701,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4BA3064C17BE76F400733D56 /* CoreData.framework */,
 				4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */,
 				4BEBAC04178372C1004B99FC /* Accelerate.framework */,
 				4BEBAC0217837298004B99FC /* CoreImage.framework */,
@@ -885,6 +904,20 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		4BA3063417BE74DF00733D56 /* GoogleAnalytics */ = {
+			isa = PBXGroup;
+			children = (
+				4BA3064117BE763A00733D56 /* GAI.h */,
+				4BA3064217BE763A00733D56 /* GAITrackedViewController.h */,
+				4BA3064317BE763A00733D56 /* GAITracker.h */,
+				4BA3064417BE763A00733D56 /* GAITransaction.h */,
+				4BA3064517BE763A00733D56 /* GAITransactionItem.h */,
+				4BA3064617BE763A00733D56 /* libGoogleAnalytics_debug.a */,
+				4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */,
+			);
+			name = GoogleAnalytics;
+			sourceTree = "<group>";
+		};
 		4BA3CAF51782E7610029586E /* DataSource */ = {
 			isa = PBXGroup;
 			children = (
@@ -1059,6 +1092,7 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4BA3063417BE74DF00733D56 /* GoogleAnalytics */,
 				4B0DA1D117A693E00021DBBD /* Base64 */,
 				4B132D5717949BE500EFA90C /* Flurry */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
@@ -1625,6 +1659,7 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1668,6 +1703,7 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1767,6 +1803,7 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1809,6 +1846,7 @@
 					"$(SRCROOT)/Vendor/Localytics.bin",
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
