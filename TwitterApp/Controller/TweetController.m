@@ -17,6 +17,7 @@
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+ImageEffects.h"
 #import "ComposeTweetTextStorage.h"
+#import "TwitterAppWindow.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
@@ -212,6 +213,10 @@
         } completion:NULL];
         
     }
+    
+    //temporary
+    //TwitterAppWindow* window = (TwitterAppWindow*)[UIApplication sharedApplication].keyWindow;
+    //[window presentStatusBarNotificationWithText:@"test"];
     
 }
 

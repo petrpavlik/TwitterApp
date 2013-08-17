@@ -14,6 +14,8 @@
 - (NSString*)stateRestorationIdentifier;
 - (NSString*)tweetsPersistenceIdentifier;
 
+@property(nonatomic) BOOL loadNewTweetsWhenGoingForeground;
+
 - (void)fetchNewTweetsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
 @end

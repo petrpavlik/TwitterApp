@@ -23,6 +23,8 @@
     
     self.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Mentions"];
     self.tabBarItem.title = @"Mentions";
+    
+    self.loadNewTweetsWhenGoingForeground = YES;
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

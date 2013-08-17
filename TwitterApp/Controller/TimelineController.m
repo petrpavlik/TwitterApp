@@ -23,6 +23,8 @@
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Navbar-Compose"] style:UIBarButtonItemStyleBordered target:self action:@selector(composeTweet)];
     [self.navigationItem.rightBarButtonItem setImageInsets:UIEdgeInsetsMake(-1, 0, 0, -3)];
+    
+    self.loadNewTweetsWhenGoingForeground = YES;
 }
 
 - (NSString*)tweetsPersistenceIdentifier {
