@@ -81,6 +81,12 @@
     _descriptionLabel.numberOfLines = 0;
     [contentView addSubview:_descriptionLabel];
     
+    _lastTweetDateLabel = [UILabel new];
+    _lastTweetDateLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _lastTweetDateLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
+    _lastTweetDateLabel.textAlignment = NSTextAlignmentRight;
+    [contentView addSubview:_lastTweetDateLabel];
+    
     _websiteButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _websiteButton.translatesAutoresizingMaskIntoConstraints = NO;
     _websiteButton.titleLabel.font = [skin fontOfSize:16];
@@ -123,7 +129,7 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_descriptionLabel]-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_followingLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_followingLabel]-[_lastTweetDateLabel]-|" options:NSLayoutFormatAlignAllBottom metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel, _lastTweetDateLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton(>=44)][_locationButton(>=44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
     
@@ -192,6 +198,7 @@
     _websiteButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _locationButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _followingLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    _lastTweetDateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
 + (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width {
