@@ -9,6 +9,12 @@
 #import "GAI.h"
 #import "LogService.h"
 
+@interface LogService ()
+
+@property(nonatomic, strong) id <GAITracker> tracker;
+
+@end
+
 @implementation LogService
 
 + (LogService*)sharedInstance {
@@ -29,17 +35,15 @@
     if (self) {
         
         [GAI sharedInstance].trackUncaughtExceptions = NO;
-        //[GAI sharedInstance].dispatchInterval = 20;
+        [GAI sharedInstance].dispatchInterval = 0;
         
 #ifdef DEBUG
         [GAI sharedInstance].debug = YES;
 #endif
         // Create tracker instance.
-        id<GAITracker> tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-YOUR-TRACKING-ID"];
+        self.tracker = [[GAI sharedInstance] trackerWithTrackingId:@"UA-43284408-1"];
         
-        
-        
-        [[GAI sharedInstance] defaultTracker] sendEventWithCategory:<#(NSString *)#> withAction:<#(NSString *)#> withLabel:<#(NSString *)#> withValue:<#(NSNumber *)#>
+        [self.tracker sendEventWithCategory:@"Tweetilus for iPhone" withAction:@"app launched" withLabel:Nil withValue:Nil];
     }
     
     return self;
@@ -48,18 +52,15 @@
 - (void)logError:(NSError*)error {
     
     NSParameterAssert(error);
-    [Flurry logError:@"App Error" message:Nil error:error];
+    //[Flurry logError:@"App Error" message:Nil error:error];
+    [self.tracker sendException:NO withNSError:error];
 }
 
 - (void)logEvent:(NSString *)event userInfo:(NSDictionary *)userInfo {
     
     NSParameterAssert(event.length);
-    if (userInfo) {
-        [Flurry logEvent:event withParameters:userInfo];
-    }
-    else {
-        [Flurry logEvent:event];
-    }
+    
+    [self.tracker sendEventWithCategory:@"Tweetilus for iPhone" withAction:event withLabel:userInfo.description withValue:Nil];
 }
 
 + (void)instatiate {
@@ -68,7 +69,8 @@
 
 - (void)setUserId:(NSString*)userId {
     
-    [Flurry setUserID:userId];
+    [self.tracker set:@"userId" value:userId];
+    //[Flurry setUserID:userId];
 }
 
 @end
