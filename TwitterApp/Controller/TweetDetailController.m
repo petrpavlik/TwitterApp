@@ -103,13 +103,38 @@
     }
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+/*- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [UIView new];
+}*/
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return [UIView new];
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+/*- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
     if (section==2) {
+        
+        CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+        
+        for (NSInteger i=0; i<self.olderRelatedTweets.count; i++) {
+            heightOfContent += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+        }
+        
+        heightOfContent += self.tabBarController.tabBar.frame.size.height;
+        
+        CGFloat padding = MAX(0, self.tableView.bounds.size.height - heightOfContent);
+        
+        return padding;
+    }
+    else {
+        return 0;
+    }
+}*/
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    if (section==3) {
         
         CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
         
@@ -212,11 +237,11 @@
                 weakSelf.olderRelatedTweets = [weakSelf.olderRelatedTweets arrayByAddingObject:tweet];
             }
             
-            /*[weakSelf.tableView beginUpdates];
+            [weakSelf.tableView beginUpdates];
             [weakSelf.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:weakSelf.olderRelatedTweets.count-1 inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
-            [weakSelf.tableView endUpdates];*/
+            [weakSelf.tableView endUpdates];
             
-            [weakSelf.tableView reloadData];
+            //[weakSelf.tableView reloadData];
             
             if (tweet.inReplyToStatusId && ![tweet.inReplyToStatusId isEqualToString:tweet.tweetId]) { //second condition should never be YES, but I rather added it
                 [weakSelf requestOlderRelatedTweetToTweetId:tweet.inReplyToStatusId];
@@ -245,7 +270,10 @@
                 weakSelf.olderRelatedTweets = [weakSelf.olderRelatedTweets arrayByAddingObjectsFromArray:tweets];
             }
             
-            [self.tableView reloadData];
+            //[self.tableView reloadData];
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
             
             if ([weakSelf.olderRelatedTweets.lastObject inReplyToStatusId]) {
                 
