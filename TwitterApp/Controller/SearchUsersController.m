@@ -202,6 +202,7 @@
         
         if (error) {
             
+            [[LogService sharedInstance] logError:error];
             weakSelf.errorMessage = error.description;
             [weakSelf didEndRefreshing];
         }

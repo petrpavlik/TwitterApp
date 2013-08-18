@@ -85,6 +85,10 @@
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
+                if (error) {
+                    [[LogService sharedInstance] logError:error];
+                }
+                
                 [[[UIAlertView alloc] initWithTitle:@"Tweetilus failed to access your Twitter account" message:@"Please make sure you have an account set up in the settings and you haven't disabled access for Tweetilus." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
             });
         }

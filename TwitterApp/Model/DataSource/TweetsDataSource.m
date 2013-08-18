@@ -103,6 +103,7 @@
             
             if (error) {
                 
+                [[LogService sharedInstance] logError:error];
                 [weakSelf.delegate tweetDataSource:weakSelf didFailToLoadNewTweetsWithError:error];
             }
             else {
@@ -175,6 +176,7 @@
         
         if (error) {
             
+            [[LogService sharedInstance] logError:error];
             [weakSelf.delegate tweetDataSource:weakSelf didFailToLoadOldTweetsWithError:error];
         }
         else {
@@ -199,6 +201,7 @@
         
         if (error) {
             
+            [[LogService sharedInstance] logError:error];
             [weakSelf.delegate tweetDataSource:weakSelf didFailToDeleteTweetWithError:error];
             return;
         }
@@ -252,6 +255,7 @@
         
         if (error) {
             
+            [[LogService sharedInstance] logError:error];
             [weakSelf.delegate tweetDataSource:weakSelf didFailToFillGap:gap error:error];
         }
         else {

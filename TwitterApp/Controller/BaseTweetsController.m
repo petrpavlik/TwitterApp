@@ -574,6 +574,7 @@
            
             if (error) {
                 
+                [[LogService sharedInstance] logError:error];
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not un-retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
                 return;
             }
@@ -595,6 +596,8 @@
             [weakSelf.runningRetweetOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
+                
+                [[LogService sharedInstance] logError:error];
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not retweet '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
                 return;
             }
@@ -633,6 +636,8 @@
             [weakSelf.runningFavoriteOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
+                
+                [[LogService sharedInstance] logError:error];
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not un-favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
                 return;
             }
@@ -653,6 +658,8 @@
             [weakSelf.runningFavoriteOperationsDictionary removeObjectForKey:tweet.tweetId];
             
             if (error) {
+                
+                [[LogService sharedInstance] logError:error];
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not favorite '%@'", [tweet.text stringByStrippingHTMLTags]] style:NotificationViewStyleError];
                 return;
             }
@@ -803,6 +810,8 @@
             [TweetEntity requestDeletionOfTweetWithId:tweet.tweetId completionBlock:^(NSError *error) {
                 
                 if (error) {
+                    
+                    [[LogService sharedInstance] logError:error];
                     [[[UIAlertView alloc] initWithTitle:Nil message:error.localizedRecoverySuggestion delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                 }
                 
@@ -818,7 +827,7 @@
         }
         else {
             
-            TweetController* tweetController = [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"%@\" ", tweet.text]];
+            [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"%@\" ", tweet.text]];
         }
     }
     else if (actionSheet.userInfo[@"url"]) {
@@ -836,6 +845,8 @@
                 if (!weakSelf) {
                     
                     if (error) {
+                        
+                        [[LogService sharedInstance] logError:error];
                         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
@@ -846,6 +857,7 @@
                 
                 if (error) {
                     
+                    [[LogService sharedInstance] logError:error];
                     [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
                 } else {
                     

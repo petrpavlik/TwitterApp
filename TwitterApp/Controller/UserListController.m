@@ -216,6 +216,8 @@
     self.runningRequestDataOperation = [self dataRequestOperationWithCursor:self.cursor completionBlock:^(NSArray *users, NSString *nextCursor, NSError *error) {
         
         if (error) {
+            
+            [[LogService sharedInstance] logError:error];
             weakSelf.errorMessage = error.description;
         }
         else if (!users.count) {

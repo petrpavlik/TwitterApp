@@ -148,6 +148,8 @@
                 if (!weakSelf) {
                     
                     if (error) {
+                        
+                        [[LogService sharedInstance] logError:error];
                         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];

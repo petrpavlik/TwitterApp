@@ -258,6 +258,8 @@
     [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId media:media completionBlock:^(TweetEntity *tweet, NSError *error) {
         
         if (error) {
+            
+            [[LogService sharedInstance] logError:error];
             [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
         }
         else {
@@ -494,8 +496,7 @@
     
     [manager stopUpdatingLocation];
     
-    NSLog(@"did fail to update location: %@", error);
-    
+    [[LogService sharedInstance] logError:error];
     [NotificationView showInView:self.view message:@"Location services seem to be disabled." style:NotificationViewStyleError];
     
     [self.tweetInputAccessoryView disableLocation];
@@ -518,6 +519,7 @@
         
         if (error) {
             
+            [[LogService sharedInstance] logError:error];
             [NotificationView showInView:weakSelf.view message:@"Could not load nearby places" style:NotificationViewStyleError];
             [weakSelf.tweetInputAccessoryView disableLocation];
         }
