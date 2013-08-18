@@ -23,8 +23,11 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 @property(nonatomic, strong) NSArray* tweets;
 @property(nonatomic, strong) id didGainAccessObserver;
 @property(nonatomic, strong) id didPostTweetObserver;
+@property(nonatomic, strong) id foregroundNotificationObserver;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
 @property(nonatomic, strong) BackgroundFetchCompletionBlock backgroundFetchCompletionBlock;
+@property(nonatomic, strong) NSString* idOfMostRecentReadTweet;
+@property(nonatomic) NSInteger numUnreadTweets;
 
 @end
 
@@ -38,10 +41,26 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     return nil;
 }
 
+- (void)setNumUnreadTweets:(NSInteger)numUnreadTweets {
+    
+    _numUnreadTweets = numUnreadTweets;
+    
+    if (self.displayUnreadTweetIndicator) {
+        
+        if (numUnreadTweets > 0) {
+            self.tabBarItem.badgeValue = @(numUnreadTweets).description;
+        }
+        else {
+            self.tabBarItem.badgeValue = nil;
+        }
+    }
+}
+
 - (void)dealloc {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.didPostTweetObserver];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.foregroundNotificationObserver];
 }
 
 - (void)viewDidLoad
@@ -73,6 +92,13 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     self.didPostTweetObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kUserDidPostTweetNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         
         [weakSelf.dataSource loadNewTweets];
+    }];
+    
+    self.foregroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        if (self.loadNewTweetsWhenGoingForeground) {
+            [weakSelf.dataSource loadNewTweets];
+        }
     }];
 }
 
@@ -147,7 +173,9 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         
         if (tweets.count==0) {
             
-            [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            if (!self.displayUnreadTweetIndicator) {
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            }
             
             if (self.backgroundFetchCompletionBlock) {
                 
@@ -163,6 +191,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
             self.tweets = [tweets arrayByAddingObjectsFromArray:self.tweets];
+            self.numUnreadTweets += tweets.count;
             
             CGFloat contentOffsetY = self.tableView.contentOffset.y;
             
@@ -181,13 +210,17 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
                 numOfNewTweets--;
             }
             
-            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
+            if (!self.displayUnreadTweetIndicator) {
+                [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
+            }
             
             if (self.backgroundFetchCompletionBlock) {
                 
                 self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNewData);
                 self.backgroundFetchCompletionBlock = nil;
             }
+            
+            [self.tableView flashScrollIndicators];
         });
     }
 }
@@ -320,6 +353,13 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     if (indexPath.section==0) {
         
         TweetEntity* tweet = self.tweets[indexPath.row];
+        
+        if (tweet.tweetId.longLongValue > self.idOfMostRecentReadTweet.longLongValue) {
+            
+            self.numUnreadTweets = indexPath.row;
+            self.idOfMostRecentReadTweet = tweet.tweetId;
+        }
+        
         return [self cellForTweet:tweet atIndexPath:indexPath];
     }
     else {
@@ -403,6 +443,19 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 }
 
 #pragma mark - state restoration
+
+- (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
+    
+    [coder encodeObject:self.idOfMostRecentReadTweet forKey:@"idOfMostRecentReadTweet"];
+    
+    [super encodeRestorableStateWithCoder:coder];
+}
+
+- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
+    [super decodeRestorableStateWithCoder:coder];
+    
+    self.idOfMostRecentReadTweet = [coder decodeObjectForKey:@"idOfMostRecentReadTweet"];
+}
 
 + (UIViewController*)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
     

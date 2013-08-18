@@ -10,6 +10,7 @@
 #import "AFTwitterClient.h"
 #import "NSString+TwitterApp.h"
 #import "UserEntity.h"
+#import "TweetEntity.h"
 
 static UserEntity* currentUser;
 
@@ -30,6 +31,9 @@ static UserEntity* currentUser;
     
     if ([key isEqualToString:@"Description"]) {
         self.userDescription = value;
+    }
+    else if ([key isEqualToString:@"Status"]) {
+        self.status = [[TweetEntity alloc] initWithDictionary:value];
     }
     else {
         [super setValue:value forKey:key];

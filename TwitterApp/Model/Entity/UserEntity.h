@@ -9,6 +9,8 @@
 #import "BaseEntity.h"
 #import <Foundation/Foundation.h>
 
+@class TweetEntity;
+
 @interface UserEntity : BaseEntity
 
 @property(nonatomic, strong) NSNumber* contributorsEnabled;
@@ -31,6 +33,7 @@
 @property(nonatomic, strong) NSString* profileImageUrl;
 @property(nonatomic, strong) NSNumber* protectedTweets;
 @property(nonatomic, strong) NSString* screenName;
+@property(nonatomic, strong) TweetEntity* status;
 @property(nonatomic, strong) NSNumber* showAllInlineMedia;
 @property(nonatomic, strong) NSNumber* statusesCount;
 @property(nonatomic, strong) NSString* timeZone;

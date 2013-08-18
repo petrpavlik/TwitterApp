@@ -40,6 +40,7 @@ typedef enum {
 @property(nonatomic, strong) UILabel* nameLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
 @property(nonatomic, strong) UIButton* websiteButton;
+@property(nonatomic, strong) UILabel* lastTweetDateLabel;
 
 - (void)setFollowedByStatus:(FollowedByStatus)status;
 

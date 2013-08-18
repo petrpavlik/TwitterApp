@@ -251,9 +251,11 @@
                 if (weakSelf.allUsersLoaded) {
                     
                     NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
-                    [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                    [weakSelf.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
                     
-                    [NotificationView showInView:self.notificationViewPlaceholderView message:@"All users loaded"];
+                    if (weakSelf.tableView.contentOffset.y > 0) {
+                        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"All users loaded"];
+                    }
                 }
                 
                 [weakSelf.tableView endUpdates];

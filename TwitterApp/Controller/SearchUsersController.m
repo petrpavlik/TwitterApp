@@ -248,7 +248,9 @@
                         [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
                         [weakSelf.tableView endUpdates];
                         
-                        [NotificationView showInView:self.notificationViewPlaceholderView message:@"All users loaded"];
+                        if (weakSelf.tableView.contentOffset.y > 0) {
+                            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"All users loaded"];
+                        }
                     }
                     else {
                         

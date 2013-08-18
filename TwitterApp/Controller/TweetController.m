@@ -17,6 +17,7 @@
 #import "UIActionSheet+TwitterApp.h"
 #import "UIImage+ImageEffects.h"
 #import "ComposeTweetTextStorage.h"
+#import "TwitterAppWindow.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
@@ -148,7 +149,7 @@
     _tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
     _tweetTextView.backgroundColor = [UIColor clearColor];
     _tweetTextView.tintColor = skin.linkColor;
-    //_tweetTextView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, -44, 0); //does nothing
+    _tweetTextView.alwaysBounceVertical = YES;
     [self.view addSubview:_tweetTextView];
     [_tweetTextView stretchInSuperview];
     
@@ -188,6 +189,16 @@
         /*[self.textStorage beginEditing];
         [self.textStorage setAttributedString:[[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [skin fontOfSize:16]}]];
         [self.textStorage endEditing];*/
+        
+        UILabel* originalTweetLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, -44, self.view.bounds.size.width - 12, 44)];
+        originalTweetLabel.text = [NSString stringWithFormat:@"@%@: %@", self.tweetToReplyTo.user.screenName, self.tweetToReplyTo.text];
+        originalTweetLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+        originalTweetLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
+        originalTweetLabel.numberOfLines = 2;
+        [self.tweetTextView addSubview:originalTweetLabel];
+        
+        UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
+        self.tweetTextView.contentInset = contentInsets;
     }
     else if (self.initialText) {
         
@@ -212,6 +223,10 @@
         } completion:NULL];
         
     }
+    
+    //temporary
+    //TwitterAppWindow* window = (TwitterAppWindow*)[UIApplication sharedApplication].keyWindow;
+    //[window presentStatusBarNotificationWithText:@"test"];
     
 }
 
@@ -586,8 +601,17 @@
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    
+    static BOOL originalTweetAlreadyShown = NO;
+    if (self.tweetToReplyTo && !originalTweetAlreadyShown) {
+        
+        contentInsets.top = 44;
+        originalTweetAlreadyShown = YES;
+    }
+    
     self.tweetTextView.contentInset = contentInsets;
     self.tweetTextView.scrollIndicatorInsets = contentInsets;
+    //self.tweetTextView.contentSize = CGSizeMake(_tweetTextView.bounds.size.width, _tweetTextView.bounds.size.height-kbSize.height + 1000);
 }
 
 // Called when the UIKeyboardWillHideNotification is sent

@@ -10,4 +10,6 @@
 
 @interface TwitterAppWindow : UIWindow
 
+- (void)presentStatusBarNotificationWithText:(NSString*)text;
+
 @end

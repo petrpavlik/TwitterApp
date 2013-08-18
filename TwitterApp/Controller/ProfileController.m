@@ -132,6 +132,17 @@
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
         cell.descriptionLabel.text = user.expandedUserDescription;
         
+        
+        if (user.status) {
+            
+            NSDateFormatter* dateFormatter = [[NSDateFormatter alloc] init];
+            dateFormatter.doesRelativeDateFormatting = YES;
+            [dateFormatter setTimeStyle:NSDateFormatterNoStyle];
+            [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
+            
+            cell.lastTweetDateLabel.text = [NSString stringWithFormat:@"Tweeted %@", [dateFormatter stringForObjectValue:user.status.createdAt]];
+        }
+        
         if (self.following) {
             
             cell.followButton.hidden = NO;
