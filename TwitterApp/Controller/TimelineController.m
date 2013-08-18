@@ -25,6 +25,7 @@
     [self.navigationItem.rightBarButtonItem setImageInsets:UIEdgeInsetsMake(-1, 0, 0, -3)];
     
     self.loadNewTweetsWhenGoingForeground = YES;
+    self.displayUnreadTweetIndicator = YES;
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

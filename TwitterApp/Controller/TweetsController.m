@@ -45,11 +45,14 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     _numUnreadTweets = numUnreadTweets;
     
-    if (numUnreadTweets > 0) {
-        self.tabBarItem.badgeValue = @(numUnreadTweets).description;
-    }
-    else {
-        self.tabBarItem.badgeValue = nil;
+    if (self.displayUnreadTweetIndicator) {
+        
+        if (numUnreadTweets > 0) {
+            self.tabBarItem.badgeValue = @(numUnreadTweets).description;
+        }
+        else {
+            self.tabBarItem.badgeValue = nil;
+        }
     }
 }
 
@@ -170,7 +173,9 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         
         if (tweets.count==0) {
             
-            [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            if (!self.displayUnreadTweetIndicator) {
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"0 new tweets"];
+            }
             
             if (self.backgroundFetchCompletionBlock) {
                 
@@ -205,13 +210,17 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
                 numOfNewTweets--;
             }
             
-            [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
+            if (!self.displayUnreadTweetIndicator) {
+                [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
+            }
             
             if (self.backgroundFetchCompletionBlock) {
                 
                 self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNewData);
                 self.backgroundFetchCompletionBlock = nil;
             }
+            
+            [self.tableView flashScrollIndicators];
         });
     }
 }

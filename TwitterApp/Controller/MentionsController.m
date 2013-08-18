@@ -25,6 +25,7 @@
     self.tabBarItem.title = @"Mentions";
     
     self.loadNewTweetsWhenGoingForeground = YES;
+    self.displayUnreadTweetIndicator = YES;
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

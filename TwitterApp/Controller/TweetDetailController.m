@@ -80,7 +80,10 @@
     
     if (indexPath.section==1) {
         //return [self cellForTweetDetail:tweet atIndexPath:indexPath];
-        return [self cellForTweet:tweet atIndexPath:indexPath];
+        UITableViewCell* cell =  [self cellForTweet:tweet atIndexPath:indexPath];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        return cell;
     }
     else {
         return [self cellForTweet:tweet atIndexPath:indexPath];
@@ -114,6 +117,8 @@
             heightOfContent += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
         }
         
+        heightOfContent += self.tabBarController.tabBar.frame.size.height;
+        
         CGFloat padding = MAX(0, self.tableView.bounds.size.height - heightOfContent);
         
         return padding;
@@ -124,6 +129,33 @@
 }
 
 #pragma mark - Table view delegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:indexPath];
+    if (cell.selectionStyle == UITableViewCellSelectionStyleNone) {
+        return;
+    }
+    
+    TweetEntity* tweet = Nil;
+    if (indexPath.section == 0) {
+        tweet = self.replies[indexPath.row];
+    }
+    else if (indexPath.section == 2) {
+        tweet = self.olderRelatedTweets[indexPath.row];
+    }
+    
+    NSParameterAssert(tweet);
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }
+    
+    TweetDetailController* tweetDetailController = [[TweetDetailController alloc] initWithStyle:UITableViewStylePlain];
+    tweetDetailController.tweet = tweet;
+    
+    [self.navigationController pushViewController:tweetDetailController animated:YES];
+}
 
 
 #pragma mark -
@@ -154,7 +186,12 @@
         
         [weakSelf.tableView reloadData];
         
-        [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
+        if (tweets.count) {
+            
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
+        }
+        
+        [weakSelf.tableView flashScrollIndicators];
     }];
 }
 

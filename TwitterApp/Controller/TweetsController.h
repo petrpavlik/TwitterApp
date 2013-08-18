@@ -15,6 +15,7 @@
 - (NSString*)tweetsPersistenceIdentifier;
 
 @property(nonatomic) BOOL loadNewTweetsWhenGoingForeground;
+@property(nonatomic) BOOL displayUnreadTweetIndicator;
 
 - (void)fetchNewTweetsWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 
