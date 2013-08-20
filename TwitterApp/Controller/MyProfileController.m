@@ -21,6 +21,7 @@
 #import "PhotoController.h"
 #import "ImageTransition.h"
 #import "NotificationView.h"
+#import "PushNotificationSettingsController.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -62,6 +63,8 @@
     
     self.tableView.tableFooterView = [UIView new];
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:Nil];
@@ -329,6 +332,14 @@
             [[LogService sharedInstance] logError:[NSError errorWithDomain:@"Tweetilus" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open location %@", url]}]];
         }
     }
+}
+
+#pragma mark -
+
+- (void)settingsSelected {
+    
+    PushNotificationSettingsController* pushNotificationsSettingsController = [[PushNotificationSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:pushNotificationsSettingsController animated:YES];
 }
 
 @end

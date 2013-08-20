@@ -29,6 +29,7 @@
     UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
     [activityIndicator startAnimating];
+    activityIndicator.hidesWhenStopped = NO;
     [contentView addSubview:activityIndicator];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];

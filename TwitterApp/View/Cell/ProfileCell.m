@@ -43,6 +43,7 @@
     
     _avatarImageView = [[NetImageView alloc] init];
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
     [contentView addSubview:_avatarImageView];
     
     _avatarImageView.userInteractionEnabled = YES;

@@ -26,6 +26,7 @@
 #import "UserEntity.h"
 #import <WindowsAzureMessaging/WindowsAzureMessaging.h>
 #import "Base64.h"
+#import "AFOAuth1Client.h"
 
 @interface AppDelegate () <BITUpdateManagerDelegate>
 
@@ -209,7 +210,12 @@
         return YES;
     } else {
         
-        return NO;
+        NSNotification *notification = [NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification object:nil userInfo:[NSDictionary dictionaryWithObject:url forKey:kAFApplicationLaunchOptionsURLKey]];
+        [[NSNotificationCenter defaultCenter] postNotification:notification];
+        
+        return YES;
+        
+        //return NO;
     }
 }
 
@@ -320,9 +326,8 @@
 
 - (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
     
-#ifdef DEBUG
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
-#endif
+    [[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
 }
 
 #pragma mark - BITUpdateManagerDelegate

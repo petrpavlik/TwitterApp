@@ -167,6 +167,14 @@
 		4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
+		4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
+		4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
+		4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
+		4B8D9F4F17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
+		4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
+		4B8D9F5417C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
+		4B8D9F5717C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
+		4B8D9F5817C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
 		4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
 		4B93D80B17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
@@ -409,6 +417,13 @@
 		4B81BA3E174538DC00005607 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		4B81BA4017453CD800005607 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
+		4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSettingsController.h; path = Controller/PushNotificationSettingsController.h; sourceTree = "<group>"; };
+		4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationSettingsController.m; path = Controller/PushNotificationSettingsController.m; sourceTree = "<group>"; };
+		4B8D9F5117C3A84400CEEF07 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
+		4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
+		4B8D9F5517C3B7CF00CEEF07 /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchCell.h; path = View/Cell/SwitchCell.h; sourceTree = "<group>"; };
+		4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchCell.m; path = View/Cell/SwitchCell.m; sourceTree = "<group>"; };
 		4B9348A317457A3F00AAE017 /* AFTwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterClient.h; path = Model/API/AFTwitterClient.h; sourceTree = "<group>"; };
 		4B9348A417457A3F00AAE017 /* AFTwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterClient.m; path = Model/API/AFTwitterClient.m; sourceTree = "<group>"; };
 		4B93D80917823069005BE43C /* MentionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsController.h; path = Controller/MentionsController.h; sourceTree = "<group>"; };
@@ -565,6 +580,7 @@
 				4B6629BC177387FA00FA146A /* UIKit.framework in Frameworks */,
 				4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 				4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */,
+				4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
 				4B6629C0177387FA00FA146A /* HockeySDK.framework in Frameworks */,
@@ -591,6 +607,7 @@
 				4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */,
 				4B81BA4117453CD800005607 /* Social.framework in Frameworks */,
 				4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */,
+				4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
@@ -696,6 +713,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */,
 				4BA3064C17BE76F400733D56 /* CoreData.framework */,
 				4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */,
 				4BEBAC04178372C1004B99FC /* Accelerate.framework */,
@@ -846,6 +864,8 @@
 				4BDFDB661754DEC400075F7D /* UserCell.m */,
 				4B39302217BA735A006ECB65 /* TableViewCell.h */,
 				4B39302317BA735A006ECB65 /* TableViewCell.m */,
+				4B8D9F5517C3B7CF00CEEF07 /* SwitchCell.h */,
+				4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -898,6 +918,25 @@
 			);
 			path = Resources;
 			sourceTree = "<group>";
+		};
+		4B8D9F4B17C3979100CEEF07 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */,
+				4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
+		4B8D9F5017C3A84400CEEF07 /* AFOAuth1Client */ = {
+			isa = PBXGroup;
+			children = (
+				4B8D9F5117C3A84400CEEF07 /* AFOAuth1Client.h */,
+				4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */,
+			);
+			name = AFOAuth1Client;
+			path = Vendor/AFOAuth1Client;
+			sourceTree = SOURCE_ROOT;
 		};
 		4BA3063417BE74DF00733D56 /* GoogleAnalytics */ = {
 			isa = PBXGroup;
@@ -1056,6 +1095,7 @@
 		4BDB0F371748CD8F004980EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4B8D9F4B17C3979100CEEF07 /* Settings */,
 				4BB78928179B1517008C1DCC /* Base */,
 				4BB78927179B14D2008C1DCC /* Users */,
 				4BB78926179B149C008C1DCC /* Timelines */,
@@ -1086,6 +1126,7 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4B8D9F5017C3A84400CEEF07 /* AFOAuth1Client */,
 				4BA3063417BE74DF00733D56 /* GoogleAnalytics */,
 				4B0DA1D117A693E00021DBBD /* Base64 */,
 				4B132D5717949BE500EFA90C /* Flurry */,
@@ -1494,6 +1535,7 @@
 				4B6629A5177387FA00FA146A /* LoadMoreCell.m in Sources */,
 				4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */,
 				4BF2DCED178F4CEA0007C343 /* UserTweetsController.m in Sources */,
+				4B8D9F4F17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */,
 				4B6629A6177387FA00FA146A /* GapTweetEntity.m in Sources */,
 				4B6629A7177387FA00FA146A /* NotificationView.m in Sources */,
 				4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */,
@@ -1507,11 +1549,13 @@
 				4B6629AD177387FA00FA146A /* UIActionSheet+TwitterApp.m in Sources */,
 				4BB3456E17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */,
+				4B8D9F5817C3B7CF00CEEF07 /* SwitchCell.m in Sources */,
 				4BB78921179AD926008C1DCC /* LoginController.m in Sources */,
 				4B6629AE177387FA00FA146A /* BasementCell.m in Sources */,
 				4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
 				4BF2DCE9178F45B50007C343 /* TweetsController.m in Sources */,
+				4B8D9F5417C3A84400CEEF07 /* AFOAuth1Client.m in Sources */,
 				4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */,
 				4B6629B1177387FA00FA146A /* TweetDetailCell.m in Sources */,
 			);
@@ -1565,6 +1609,7 @@
 				4BB42C05175794F900311FF5 /* LoadMoreCell.m in Sources */,
 				4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */,
 				4BF2DCEC178F4CEA0007C343 /* UserTweetsController.m in Sources */,
+				4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */,
 				4BB42C081757A1CC00311FF5 /* GapTweetEntity.m in Sources */,
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
 				4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */,
@@ -1578,11 +1623,13 @@
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
 				4BB3456D17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,
+				4B8D9F5717C3B7CF00CEEF07 /* SwitchCell.m in Sources */,
 				4BB78920179AD926008C1DCC /* LoginController.m in Sources */,
 				4BF0DBFC17649598002578FF /* BasementCell.m in Sources */,
 				4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
 				4BF2DCE8178F45B50007C343 /* TweetsController.m in Sources */,
+				4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
 				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
 			);
@@ -1643,6 +1690,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
 					"$(SRCROOT)/Vendor",
+					/Users/petr/Documents/development/xcode/TwitterApp,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1687,6 +1735,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
 					"$(SRCROOT)/Vendor",
+					/Users/petr/Documents/development/xcode/TwitterApp,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1787,6 +1836,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
 					"$(SRCROOT)/Vendor",
+					/Users/petr/Documents/development/xcode/TwitterApp,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
@@ -1830,6 +1880,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/Vendor/HockeySDK.embeddedframework",
 					"$(SRCROOT)/Vendor",
+					/Users/petr/Documents/development/xcode/TwitterApp,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";

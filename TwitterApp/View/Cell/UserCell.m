@@ -50,6 +50,7 @@
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
+    _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
     [contentView addSubview:_avatarImageView];
     
     UIView* credentialsPlaceholder = [[UIView alloc] init];
