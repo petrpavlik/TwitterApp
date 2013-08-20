@@ -827,7 +827,7 @@
         }
         else {
             
-            [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"%@\" ", tweet.text]];
+            [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"@%@: %@\" ", tweet.user.screenName, tweet.text]];
         }
     }
     else if (actionSheet.userInfo[@"url"]) {

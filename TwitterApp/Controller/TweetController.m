@@ -206,6 +206,7 @@
     }
     
     [self registerForKeyboardNotifications];
+    [self contentLengthDidChange];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
