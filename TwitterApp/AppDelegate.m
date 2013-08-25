@@ -68,7 +68,11 @@
     
     //self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=X+WP16MQoASStF+zs1pu6gnwVO2LjC0pO2+7cBZwa0M=" notificationHubPath: @"https://tweetilus.servicebus.windows.net/tweetilus"];
     
+#ifdef DEBUG
+    self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus-ns-dev.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=BKbOwEn+JWYTfvmglhiELQQ2C3cf4TD9mDGb8LSLpvg=" notificationHubPath: @"tweetilus"];
+#else
     self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus-ns.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=d0+tn3/xILWOJE+7uyv3zbvco1BGiNME4yOGUa40jkM=" notificationHubPath: @"tweetilus"];
+#endif
     
     [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
     [[BITHockeyManager sharedHockeyManager] startManager];
