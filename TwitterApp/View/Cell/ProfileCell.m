@@ -9,8 +9,49 @@
 #import "AppDelegate.h"
 #import "ProfileCell.h"
 #import "UIImage+TwitterApp.h"
+#import "PPLabel.h"
+
+@interface ProfileCell () <PPLabelDelegate>
+
+@property(nonatomic, strong) NSArray* websiteAndLocationConstrains;
+@property(nonatomic, strong) NSArray* websiteNoLocationConstraints;
+@property(nonatomic, strong) NSArray* locationNoWebsiteConstraints;
+@property(nonatomic, strong) NSArray* noWebsiteNoLocationConstraints;
+
+@property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
+@property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
+@property(nonatomic, strong) NSMutableDictionary* mentionsDictonary;
+
+@end
 
 @implementation ProfileCell
+
+- (NSMutableDictionary*)urlsDictonary {
+    
+    if (!_urlsDictonary) {
+        _urlsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _urlsDictonary;
+}
+
+- (NSMutableDictionary*)hashtagsDictonary {
+    
+    if (!_hashtagsDictonary) {
+        _hashtagsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _hashtagsDictonary;
+}
+
+- (NSMutableDictionary*)mentionsDictonary {
+    
+    if (!_mentionsDictonary) {
+        _mentionsDictonary = [NSMutableDictionary new];
+    }
+    
+    return _mentionsDictonary;
+}
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -73,14 +114,16 @@
     [_followButton addTarget:self action:@selector(friendshipButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_followButton];
     
-    _descriptionLabel = [UILabel new];
+    _descriptionLabel = [PPLabel new];
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
-    //_descriptionLabel.font = [skin fontOfSize:15];
     _descriptionLabel.text = @"description";
     _descriptionLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     _descriptionLabel.textAlignment = NSTextAlignmentCenter;
     _descriptionLabel.numberOfLines = 0;
     [contentView addSubview:_descriptionLabel];
+    
+    PPLabel* descriptionLabel = (PPLabel*)_descriptionLabel;
+    descriptionLabel.delegate = self;
     
     _lastTweetDateLabel = [UILabel new];
     _lastTweetDateLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -132,7 +175,10 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[_followingLabel]-[_lastTweetDateLabel]-|" options:NSLayoutFormatAlignAllBottom metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel, _lastTweetDateLabel)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton(>=44)][_locationButton(>=44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)]];
+    self.websiteAndLocationConstrains = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton(44)][_locationButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)];
+    self.websiteNoLocationConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_websiteButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)];
+    self.locationNoWebsiteConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]-20-[_locationButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)];
+    self.noWebsiteNoLocationConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_avatarImageView]-20-[_descriptionLabel]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_descriptionLabel, _avatarImageView, _websiteButton, _locationButton)];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_followingLabel]-8-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_followingLabel)]];
     
@@ -175,6 +221,10 @@
     self.avatarImageView.image = nil;
     self.followButton.hidden = YES;
     self.followButton.selected = NO;
+    
+    [self.urlsDictonary removeAllObjects];
+    [self.hashtagsDictonary removeAllObjects];
+    [self.mentionsDictonary removeAllObjects];
 }
 
 - (void)friendshipButtonSelected {
@@ -202,11 +252,19 @@
     _lastTweetDateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
-+ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width {
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable {
     
     CGFloat textHeight = [description boundingRectWithSize:CGSizeMake(width-20-20, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
     CGFloat height = 170 + textHeight + 20 + 15 + 15;
+    
+    if (!websiteAvailable) {
+        height -= 44;
+    }
+    
+    if (!locationAvailable) {
+        height -= 44;
+    }
     
     return height;
 }
@@ -228,6 +286,190 @@
 
 - (void)avatarSelected {
     [self.delegate profileCellDidSelectAvatarImage:self];
+}
+
+- (void)configureWithWebsiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable {
+    
+    [self.contentView removeConstraints:self.websiteAndLocationConstrains];
+    [self.contentView removeConstraints:self.websiteNoLocationConstraints];
+    [self.contentView removeConstraints:self.locationNoWebsiteConstraints];
+    [self.contentView removeConstraints:self.noWebsiteNoLocationConstraints];
+    
+    if (websiteAvailable && locationAvailable) {
+        [self.contentView addConstraints:self.websiteAndLocationConstrains];
+    }
+    else if (websiteAvailable && !locationAvailable) {
+        [self.contentView addConstraints:self.websiteNoLocationConstraints];
+    }
+    else if (!websiteAvailable && locationAvailable) {
+        [self.contentView addConstraints:self.locationNoWebsiteConstraints];
+    }
+    else if (!websiteAvailable && !locationAvailable) {
+        [self.contentView addConstraints:self.noWebsiteNoLocationConstraints];
+    }
+}
+
+#pragma mark -
+
+- (void)addURL:(NSURL*)url atRange:(NSRange)range {
+    
+    NSParameterAssert(url);
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
+    
+    self.descriptionLabel.attributedText = attributedString;
+    
+    self.urlsDictonary[[NSValue valueWithRange:range]] = url;
+}
+
+- (void)addHashtag:(NSString*)hashtag atRange:(NSRange)range {
+    
+    NSParameterAssert(hashtag);
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
+    
+    self.descriptionLabel.attributedText = attributedString;
+    
+    self.hashtagsDictonary[[NSValue valueWithRange:range]] = hashtag;
+    
+}
+
+- (void)addMention:(NSString*)mention atRange:(NSRange)range {
+    
+    NSParameterAssert(mention);
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    AbstractSkin* skin = appDelegate.skin;
+    
+    NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+    [attributedString addAttribute:NSForegroundColorAttributeName value:skin.linkColor range:range];
+    
+    self.descriptionLabel.attributedText = attributedString;
+    
+    self.mentionsDictonary[[NSValue valueWithRange:range]] = mention;
+    
+}
+
+#pragma mark -
+
+- (BOOL)label:(PPLabel *)label didBeginTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+    for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString addAttribute:NSUnderlineStyleAttributeName value:
+             [NSNumber numberWithInt:NSUnderlineStyleSingle] range:range];
+            
+            self.descriptionLabel.attributedText = attributedString;
+            
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.hashtagsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.descriptionLabel.attributedText = attributedString;
+            
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.mentionsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.descriptionLabel.attributedText = attributedString;
+            
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (BOOL)label:(PPLabel *)label didMoveTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    return NO;
+}
+
+- (BOOL)label:(PPLabel *)label didEndTouch:(UITouch *)touch onCharacterAtIndex:(CFIndex)charIndex {
+    
+    for (NSValue* rangeValue in self.urlsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.descriptionLabel.attributedText = attributedString;
+            
+            [self.delegate profileCell:self didSelectURL:self.urlsDictonary[rangeValue]];
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.hashtagsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.descriptionLabel.attributedText = attributedString;
+            
+            [self.delegate profileCell:self didSelectHashtag:self.hashtagsDictonary[rangeValue]];
+            return YES;
+        }
+    }
+    
+    for (NSValue* rangeValue in self.mentionsDictonary.allKeys) {
+        
+        NSRange range = [rangeValue rangeValue];
+        
+        if (charIndex >= range.location && charIndex <= range.location+range.length) {
+            
+            NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+            [attributedString removeAttribute:NSUnderlineStyleAttributeName range:range];
+            self.descriptionLabel.attributedText = attributedString;
+            
+            [self.delegate profileCell:self didSelectMention:self.mentionsDictonary[rangeValue]];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+- (BOOL)label:(PPLabel *)label didCancelTouch:(UITouch *)touch {
+    
+    NSMutableAttributedString* attributedString = [self.descriptionLabel.attributedText mutableCopy];
+    [attributedString removeAttribute:NSUnderlineStyleAttributeName range:NSMakeRange(0, attributedString.length)];
+    self.descriptionLabel.attributedText = attributedString;
+    
+    return NO;
 }
 
 @end

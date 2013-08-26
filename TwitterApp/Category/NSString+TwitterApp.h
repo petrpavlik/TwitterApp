@@ -13,4 +13,7 @@
 - (NSString*)stringByStrippingHTMLTags;
 - (NSString*)stringByRemovingEmoji;
 
+- (NSDictionary*)hashtags;
+- (NSDictionary*)mentions;
+
 @end

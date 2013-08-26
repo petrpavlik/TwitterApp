@@ -22,6 +22,8 @@
 #import "ImageTransition.h"
 #import "NotificationView.h"
 #import "PushNotificationSettingsController.h"
+#import "ProfileController.h"
+#import "NSString+TwitterApp.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -71,6 +73,14 @@
         
         self.user = [UserEntity currentUser];
         [self setupProfileBanner];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView indexPathForSelectedRow]) {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     }
 }
 
@@ -144,12 +154,32 @@
             cell.locationButton.hidden = YES;
         }
         
+        NSArray* descriptionUrls = user.entities[@"description"][@"urls"];
+        for (NSDictionary* urlDictionary in descriptionUrls) {
+            
+            NSString* expandedUrlString = urlDictionary[@"expanded_url"];
+            NSString* displayUrlString = urlDictionary[@"display_url"];
+            [cell addURL:[NSURL URLWithString:expandedUrlString] atRange:[user.expandedUserDescription rangeOfString:displayUrlString]];
+        }
+        
+        NSDictionary* hashtags = user.expandedUserDescription.hashtags;
+        for (NSString* hashtag in hashtags.allKeys) {
+            [cell addHashtag:hashtag atRange:[hashtags[hashtag] rangeValue]];
+        }
+        
+        NSDictionary* mentions = user.expandedUserDescription.mentions;
+        for (NSString* mention in mentions.allKeys) {
+            [cell addMention:mention atRange:[mentions[mention] rangeValue]];
+        }
+        
         UIImage* placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:placeholderImage imageProcessingBlock:^UIImage*(UIImage* image) {
             
             return [image imageWithRoundCornersWithRadius:23.5 size:CGSizeMake(48, 48)];
         }];
+        
+        [cell configureWithWebsiteAvailable:[user.entities[@"url"][@"urls"] count] locationAvailable:user.location.length];
         
         return cell;
     }
@@ -189,7 +219,10 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width];
+        
+        
+        
+        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width websiteAvailable:[self.user.entities[@"url"][@"urls"] count] locationAvailable:self.user.location.length];
     }
     else {
         return 44;
@@ -333,6 +366,23 @@
         }
     }
 }
+
+- (void)profileCell:(ProfileCell *)cell didSelectHashtag:(NSString *)hashtag {
+    
+    SearchTweetsController* searchController = [SearchTweetsController new];
+    searchController.searchExpression = hashtag;
+    
+    [self.navigationController pushViewController:searchController animated:YES];
+}
+
+- (void)profileCell:(ProfileCell *)cell didSelectMention:(NSString *)mention {
+    
+    ProfileController* profileController = [ProfileController new];
+    profileController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    
+    [self.navigationController pushViewController:profileController animated:YES];
+}
+
 
 #pragma mark -
 

@@ -23,6 +23,9 @@ typedef enum {
 - (void)profileCellDidSelectLocation:(ProfileCell*)cell;
 - (void)profileCellDidSelectAvatarImage:(ProfileCell *)cell;
 
+- (void)profileCell:(ProfileCell *)cell didSelectHashtag:(NSString*)hashtag;
+- (void)profileCell:(ProfileCell *)cell didSelectMention:(NSString*)mention;
+
 @optional
 
 - (void)profileCellDidRequestChengeOfFriendship:(ProfileCell*)cell;
@@ -43,7 +46,12 @@ typedef enum {
 @property(nonatomic, strong) UILabel* lastTweetDateLabel;
 
 - (void)setFollowedByStatus:(FollowedByStatus)status;
+- (void)configureWithWebsiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable;
 
-+ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width;
+- (void)addHashtag:(NSString*)hashtag atRange:(NSRange)range;
+- (void)addMention:(NSString*)mention atRange:(NSRange)range;
+- (void)addURL:(NSURL*)url atRange:(NSRange)range;
+
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable;
 
 @end

@@ -22,6 +22,7 @@
 #import "PhotoController.h"
 #import "ImageTransition.h"
 #import "TableViewCell.h"
+#import "NSString+TwitterApp.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -30,6 +31,7 @@
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, weak) NSOperation* runningUserOperation;
 @property(nonatomic, weak) NSOperation* runningRelationshipOperation;
+@property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 
 @end
 
@@ -72,13 +74,6 @@
         self.title = [NSString stringWithFormat:@"@%@", self.screenName];
     }
     
-    UIButton* spamOrReportButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    spamOrReportButton.frame = CGRectMake(0, 0, 0, 70);
-    [spamOrReportButton setTitle:@"Block or Report" forState:UIControlStateNormal];
-    spamOrReportButton.tintColor = [UIColor colorWithRed:0.827 green:0.361 blue:0.310 alpha:1];
-    [spamOrReportButton addTarget:self action:@selector(spamOrReportSelected) forControlEvents:UIControlEventTouchUpInside];
-    self.tableView.tableFooterView = spamOrReportButton;
-    
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Button-NavigationBar-Reply"] style:UIBarButtonItemStyleBordered target:self action:@selector(replySelected)];
     
     if (self.user) {
@@ -89,7 +84,16 @@
     else {
         
         NSParameterAssert(self.screenName.length);
+        [self willBeginRefreshing];
         [self requestUserData];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if ([self.tableView indexPathForSelectedRow]) {
+        [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
     }
 }
 
@@ -143,31 +147,38 @@
             cell.lastTweetDateLabel.text = [NSString stringWithFormat:@"Tweeted %@", [dateFormatter stringForObjectValue:user.status.createdAt]];
         }
         
-        if (self.following) {
+        if (![[UserEntity currentUser].userId isEqualToString:self.user.userId]) {
             
-            cell.followButton.hidden = NO;
+            if (self.following) {
+                
+                cell.followButton.hidden = NO;
+                
+                if (self.following.boolValue==YES) {
+                    [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
+                    cell.followButton.selected = YES;
+                }
+                else {
+                    [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
+                }
+            }
             
-            if (self.following.boolValue==YES) {
-                [cell.followButton setTitle:@"Following" forState:UIControlStateNormal];
-                cell.followButton.selected = YES;
+            if (self.followedBy) {
+                
+                if (self.followedBy.boolValue) {
+                    [cell setFollowedByStatus:kFollowedByStatusYes];
+                }
+                else {
+                    [cell setFollowedByStatus:kFollowedByStatusNo];
+                }
             }
             else {
-                [cell.followButton setTitle:@"Follow" forState:UIControlStateNormal];
-            }
-        }
-        
-        if (self.followedBy) {
-            
-            if (self.followedBy.boolValue) {
-                [cell setFollowedByStatus:kFollowedByStatusYes];
-            }
-            else {
-                [cell setFollowedByStatus:kFollowedByStatusNo];
+                [cell setFollowedByStatus:kFollowedByStatusUnknown];
             }
         }
         else {
             [cell setFollowedByStatus:kFollowedByStatusUnknown];
         }
+        
         
         NSArray* urls = user.entities[@"url"][@"urls"];
         if (urls.count) {
@@ -186,6 +197,24 @@
             cell.locationButton.hidden = YES;
         }
         
+        NSArray* descriptionUrls = user.entities[@"description"][@"urls"];
+        for (NSDictionary* urlDictionary in descriptionUrls) {
+            
+            NSString* expandedUrlString = urlDictionary[@"expanded_url"];
+            NSString* displayUrlString = urlDictionary[@"display_url"];
+            [cell addURL:[NSURL URLWithString:expandedUrlString] atRange:[user.expandedUserDescription rangeOfString:displayUrlString]];
+        }
+        
+        NSDictionary* hashtags = user.expandedUserDescription.hashtags;
+        for (NSString* hashtag in hashtags.allKeys) {
+            [cell addHashtag:hashtag atRange:[hashtags[hashtag] rangeValue]];
+        }
+        
+        NSDictionary* mentions = user.expandedUserDescription.mentions;
+        for (NSString* mention in mentions.allKeys) {
+            [cell addMention:mention atRange:[mentions[mention] rangeValue]];
+        }
+        
         UIImage* placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
         [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:placeholderImage imageProcessingBlock:^UIImage*(UIImage* image) {
@@ -194,6 +223,8 @@
         }];
         
         //[cell.avatarImageView setupImageViewer];
+        
+        [cell configureWithWebsiteAvailable:[user.entities[@"url"][@"urls"] count] locationAvailable:user.location.length];
         
         return cell;
     }
@@ -229,7 +260,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width];
+        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width websiteAvailable:[self.user.entities[@"url"][@"urls"] count] locationAvailable:self.user.location.length];
     }
     else {
         return 44;
@@ -276,6 +307,10 @@
 
 - (void)requestDataRelationshitData {
     
+    if ([[UserEntity currentUser].userId isEqualToString:self.user.userId]) {
+        return;
+    }
+    
     NSParameterAssert(self.user);
     
     __weak typeof(self)weakSelf = self;
@@ -311,6 +346,8 @@
             [weakSelf.tableView reloadData];
             [weakSelf requestDataRelationshitData];
             [weakSelf setupProfileBanner];
+            
+            [weakSelf didEndRefreshing];
         }
     }];
 }
@@ -391,6 +428,22 @@
     }
 }
 
+- (void)profileCell:(ProfileCell *)cell didSelectHashtag:(NSString *)hashtag {
+ 
+    SearchTweetsController* searchController = [SearchTweetsController new];
+    searchController.searchExpression = hashtag;
+    
+    [self.navigationController pushViewController:searchController animated:YES];
+}
+
+- (void)profileCell:(ProfileCell *)cell didSelectMention:(NSString *)mention {
+    
+    ProfileController* profileController = [ProfileController new];
+    profileController.screenName = [mention stringByReplacingOccurrencesOfString:@"@" withString:@""];
+    
+    [self.navigationController pushViewController:profileController animated:YES];
+}
+
 #pragma mark -
 
 - (void)replySelected {
@@ -425,9 +478,42 @@
     [imageView setImageWithURL:[NSURL URLWithString:bannetURLString] placeholderImage:nil];
 }
 
-- (void)spamOrReportSelected {
+#pragma mark -
+
+- (void)willBeginRefreshing {
     
+    self.tableView.contentInset = UIEdgeInsetsMake(self.tableView.bounds.size.height, 0, 0, 0);
+    self.tableView.contentOffset = CGPointMake(self.tableView.contentOffset.x, -self.tableView.bounds.size.height);
+    self.tableView.scrollEnabled = NO;
     
+    UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicator.center = CGPointMake(self.tableView.bounds.size.width/2, 25 - self.tableView.bounds.size.height);
+    [activityIndicator startAnimating];
+    [self.view addSubview:activityIndicator];
+    self.activityIndicatorView = activityIndicator;
+}
+
+- (void)didEndRefreshing {
+    
+    [self.tableView reloadData];
+    
+    if (self.tableView.contentInset.top == 0) {
+        return;
+    }
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        
+        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, self.tabBarController.tabBar.frame.size.height, 0);
+        
+        self.activityIndicatorView.center = CGPointMake(self.tableView.bounds.size.width/2, 25);
+        self.activityIndicatorView.alpha = 0;
+        
+    } completion:^(BOOL finished) {
+        
+        self.tableView.scrollEnabled = YES;
+        [self.activityIndicatorView removeFromSuperview];
+        self.activityIndicatorView = nil;
+    }];
 }
 
 @end

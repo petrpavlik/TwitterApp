@@ -8,6 +8,9 @@
 
 #import "NSString+TwitterApp.h"
 
+#define kUserRegex @"((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,15})"
+#define kHashtagRegex @"((?:^|\\s)(?:#){1}[\\w\\d]{1,140})"
+
 @implementation NSString (TwitterApp)
 
 - (NSString*)stringByStrippingHTMLTags {
@@ -60,6 +63,37 @@
     
     return temp;
 }
+
+- (NSDictionary*)hashtags {
+    
+    NSError *error = nil;
+    NSMutableDictionary* hashtags = [NSMutableDictionary new];
+    
+    NSRegularExpression *hashtagRegex = [NSRegularExpression regularExpressionWithPattern:kHashtagRegex options:0 error:&error];
+    for (NSTextCheckingResult *match in [hashtagRegex matchesInString:self options:0 range:NSMakeRange(0, self.length)]) {
+        
+        NSRange wordRange = [match rangeAtIndex:0];
+        hashtags[[self substringWithRange:wordRange]] = [NSValue valueWithRange:wordRange];
+    }
+    
+    return [hashtags copy];
+}
+
+- (NSDictionary*)mentions {
+    
+    NSError *error = nil;
+    NSMutableDictionary* mentions = [NSMutableDictionary new];
+    
+    NSRegularExpression *mentionRegex = [NSRegularExpression regularExpressionWithPattern:kUserRegex options:0 error:&error];
+    for (NSTextCheckingResult *match in [mentionRegex matchesInString:self options:0 range:NSMakeRange(0, self.length)]) {
+        
+        NSRange wordRange = [match rangeAtIndex:0];
+        mentions[[self substringWithRange:wordRange]] = [NSValue valueWithRange:wordRange];
+    }
+    
+    return [mentions copy];
+}
+
 
 
 @end
