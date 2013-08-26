@@ -12,6 +12,7 @@
 #import "SwitchCell.h"
 #import "UserEntity.h"
 #import "AppDelegate.h"
+#import <AFNetworkActivityIndicatorManager.h>
 
 #define TwitterAccessToken @"TwitterAccessToken"
 
@@ -22,6 +23,7 @@
 @property(nonatomic, strong) MSTable* dataTable;
 @property(nonatomic, strong) NSNumber* rowId;
 @property(nonatomic, strong) NSNumber* notificationsEnabled;
+@property(nonatomic) BOOL requestRunning;
 
 //@property(nonatomic) BOOL notificationsEnabled;
 
@@ -95,7 +97,7 @@
     SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.delegate = self;
     
-    if (!self.notificationsEnabled) {
+    if (!self.notificationsEnabled || self.requestRunning) {
         cell.valueSwitch.enabled = NO;
     }
     else {
@@ -189,6 +191,8 @@
 
 - (void)switchCellDidToggleSwitch:(SwitchCell *)cell {
     
+    self.notificationsEnabled = @(!self.notificationsEnabled.boolValue);
+    
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     
     if (indexPath.section == 0 && indexPath.row == 0) {
@@ -203,7 +207,11 @@
                 mutableItem[@"id"] = self.rowId;
                 item = mutableItem;
                 
+                [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+                
                 [self.dataTable update:item completion:^(NSDictionary *item, NSError *error) {
+                    
+                    [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                     
                     if (error) {
                         
@@ -214,8 +222,11 @@
             else {
                 
                 __weak typeof(self) weakSelf = self;
+                [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
                 
                 [self.dataTable insert:item completion:^(NSDictionary *insertedItem, NSError *error) {
+                    
+                    [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                     
                     if (error) {
                         
@@ -231,8 +242,11 @@
         else {
             
             __weak typeof(self) weakSelf = self;
+            [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             
             [self.dataTable deleteWithId:self.rowId completion:^(NSNumber *itemId, NSError *error) {
+                
+                [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                 
                 if (error) {
                     [[[UIAlertView alloc] initWithTitle:@"Request failed" message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
@@ -256,7 +270,11 @@
     
     __weak typeof(self) weakSelf = self;
     
+    [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+    
     [self.dataTable readWithQueryString:[NSString stringWithFormat:@"userId=%@", currentUser.userId] completion:^(NSArray *items, NSInteger totalCount, NSError *error) {
+        
+        [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
        
         if (error) {
             [[LogService sharedInstance] logError:error];
