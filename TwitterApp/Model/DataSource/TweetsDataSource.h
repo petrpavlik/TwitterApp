@@ -22,7 +22,7 @@
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFillGap:(GapTweetEntity*)gap withTweets:(NSArray*)tweets;
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToFillGap:(GapTweetEntity*)gap error:(NSError*)error;
 
-- (void)tweetDataSource:(TweetsDataSource*)dataSource didDeleteTweet:(TweetEntity*)tweet;
+- (void)tweetDataSource:(TweetsDataSource*)dataSource didDeleteTweets:(NSArray*)tweet;
 - (void)tweetDataSource:(TweetsDataSource*)dataSource didFailToDeleteTweetWithError:(NSError*)error;
 
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock;

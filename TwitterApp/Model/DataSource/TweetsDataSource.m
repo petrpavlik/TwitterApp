@@ -133,6 +133,10 @@
                         [mutableNewTweets addObject:[GapTweetEntity new]];
                     }
                     
+                    if ([mutableNewTweets.firstObject isKindOfClass:[GapTweetEntity class]]) {
+                        [mutableNewTweets removeObjectAtIndex:0];
+                    }
+                    
                     tweets = mutableNewTweets;
                 }
                 else {
@@ -206,6 +210,7 @@
             return;
         }
         
+        NSMutableArray* deletedTweets = [@[tweet] mutableCopy];
         TweetEntity* deletedTweet = tweet;
         
         NSInteger index = 0;
@@ -214,16 +219,28 @@
             if ([tweet.tweetId isEqualToString:deletedTweet.tweetId]) {
                 
                 NSMutableArray* mutableTimeline = [weakSelf.tweets mutableCopy];
+                
                 [mutableTimeline removeObjectAtIndex:index];
+                
+                if (mutableTimeline.count && [mutableTimeline.firstObject isKindOfClass:[GapTweetEntity class]]) {
+                    [mutableTimeline removeObjectAtIndex:0];
+                }
+                
+                if (mutableTimeline.count && [mutableTimeline.lastObject isKindOfClass:[GapTweetEntity class]]) {
+                    [mutableTimeline removeLastObject];
+                }
+                
                 weakSelf.tweets = [mutableTimeline copy];
                         
                 [weakSelf.document persistTimeline:weakSelf.tweets];
                 
                 break;
             }
+            
+            index++;
         }
         
-        [weakSelf.delegate tweetDataSource:self didDeleteTweet:tweet];
+        [weakSelf.delegate tweetDataSource:self didDeleteTweets:deletedTweets];
         [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
     }];
 }

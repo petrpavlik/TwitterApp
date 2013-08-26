@@ -312,6 +312,49 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not load tweets" style:NotificationViewStyleError];
 }
 
+- (void)tweetDataSource:(TweetsDataSource *)dataSource didDeleteTweets:(NSArray *)tweets {
+    
+    NSMutableArray* indexPaths = [NSMutableArray new];
+    
+    NSInteger index = 0;
+    for (TweetEntity* tweet in self.tweets) {
+        
+        for (TweetEntity* tweetToDelete in tweets) {
+            
+            if ([tweetToDelete.tweetId isEqualToString:tweet.tweetId]) {
+                
+                [indexPaths addObject:[NSIndexPath indexPathForRow:index inSection:0]];
+            }
+        }
+        
+        if (indexPaths.count == tweets.count) {
+            break;
+        }
+        
+        index++;
+    }
+    
+    if (indexPaths.count) {
+        
+        [self.tableView beginUpdates];
+        [self.tableView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.tableView endUpdates];
+        
+        NSMutableArray* mutableTweets = [self.tweets mutableCopy];
+        
+        for (NSIndexPath* indexPath in indexPaths) {
+            [mutableTweets removeObjectAtIndex:indexPath.row];
+        }
+        
+        self.tweets = [mutableTweets copy];
+    }
+}
+
+- (void)tweetDataSource:(TweetsDataSource *)dataSource didFailToDeleteTweetWithError:(NSError *)error {
+    
+    [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not delete tweet" style:NotificationViewStyleError];
+}
+
 - (NSOperation*)tweetDataSource:(TweetsDataSource *)dataSource requestForTweetsSinceId:(NSString*)sinceId withMaxId:(NSString*)maxId completionBlock:(void (^)(NSArray* tweets, NSError* error))completionBlock {
     
     @throw [NSException exceptionWithName:@"MustOverloadedException" reason:@"this method muse be overloaded" userInfo:nil];
