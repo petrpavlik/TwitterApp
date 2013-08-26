@@ -64,8 +64,6 @@
     self.tableView.tableFooterView = [UIView new];
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
-    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:Nil];
     
@@ -262,6 +260,8 @@
     
     [self.tableView reloadData];
     [self setupProfileBanner];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
 }
 
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {

@@ -28,7 +28,7 @@
 #import "Base64.h"
 #import "AFOAuth1Client.h"
 
-@interface AppDelegate () <BITUpdateManagerDelegate>
+@interface AppDelegate () <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
 
 @property (strong, nonatomic) SBNotificationHub* hub;
 
@@ -74,7 +74,7 @@
     self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus-ns.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=d0+tn3/xILWOJE+7uyv3zbvco1BGiNME4yOGUa40jkM=" notificationHubPath: @"tweetilus"];
 #endif
     
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:Nil];
+    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:self];
     [[BITHockeyManager sharedHockeyManager] startManager];
     [[[BITHockeyManager sharedHockeyManager] updateManager] setDelegate:self];
     
@@ -193,6 +193,23 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+    
+    ACAccount* account = [AFTwitterClient sharedClient].account;
+    if (!account) {
+        return;
+    }
+    
+    [UserEntity requestUserWithScreenName:account.username completionBlock:^(UserEntity *user, NSError *error) {
+        
+        if (error) {
+            //report error
+            return;
+        }
+        
+        [UserEntity registerCurrentUser:user];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
+        
+    }];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -289,7 +306,9 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"did receive remote notification");
     
-    [[[UIAlertView alloc] initWithTitle:@"Remote Notification" message:userInfo.description delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    NSString* notificationText = userInfo[@"aps"][@"alert"];
+    
+    [[[UIAlertView alloc] initWithTitle:@"Notification" message:notificationText delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
 }
 
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
@@ -314,6 +333,7 @@
     }
     
     ACAccount* account = [AFTwitterClient sharedClient].account;
+    NSParameterAssert(account);
     
     [UserEntity requestUserWithScreenName:account.username completionBlock:^(UserEntity *user, NSError *error) {
         
@@ -332,6 +352,46 @@
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     [[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
+}
+
+#pragma mark -
+
+- (NSString *)userIDForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager {
+    
+    UserEntity* currentUser = [UserEntity currentUser];
+    
+    if (currentUser) {
+        return currentUser.screenName;
+    }
+    else {
+        return nil;
+    }
+}
+
+- (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager {
+    
+    UserEntity* currentUser = [UserEntity currentUser];
+    
+    if (currentUser) {
+        return currentUser.screenName;
+    }
+    else {
+        return nil;
+    }
+}
+
+/*- (BOOL)shouldUseLiveIdentifierForHockeyManager:(BITHockeyManager *)hockeyManager {
+    return YES;
+}*/
+
+- (void)crashManager:(BITCrashManager *)crashManager didFailWithError:(NSError *)error {
+    
+    [[[UIAlertView alloc] initWithTitle:@"Crash Report Sent" message:@"Thank you for your assistance, it will be fixed ASAP." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+}
+
+- (void)crashManagerDidFinishSendingCrashReport:(BITCrashManager *)crashManager {
+    
+    [[[UIAlertView alloc] initWithTitle:@"Crash Report Was Not Sent" message:@"Please let me know about it. petrpavlik@me.com or @ptrpavlik" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
 }
 
 #pragma mark - BITUpdateManagerDelegate
