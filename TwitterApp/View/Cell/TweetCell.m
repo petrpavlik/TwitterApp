@@ -12,7 +12,7 @@
 #import "UIImage+TwitterApp.h"
 #import "PersistentBackgroundColorView.h"
 
-@interface TweetCell () <PPLabelDelegate, UIScrollViewDelegate>
+@interface TweetCell () <UIScrollViewDelegate>
 
 @property(nonatomic, strong) UIGestureRecognizer* cellLongPressGestureRecognizer;
 @property(nonatomic, strong) NSMutableDictionary* urlsDictonary;
@@ -27,9 +27,6 @@
 @property(nonatomic, strong) UIView* panDetectView;
 
 @property(nonatomic, strong) id textSizeChangedObserver;
-
-@property(nonatomic, strong) UIButton* favoriteButton;
-@property(nonatomic, strong) UIButton* retweetButton;
 
 @end
 
@@ -92,14 +89,6 @@
 }
 
 - (void)commonSetup {
-    
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
-    
-    /*UIView *bgColorView = [[UIView alloc] init];
-    [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
-    [self setSelectedBackgroundView:bgColorView];*/
     
     _dummyScrollView = [UIScrollView new];
     _dummyScrollView.pagingEnabled = YES;

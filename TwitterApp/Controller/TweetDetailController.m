@@ -11,6 +11,7 @@
 #import "TweetCell.h"
 #import "TweetDetailController.h"
 #import "TweetEntity.h"
+#import "LoadingCell.h"
 
 @interface TweetDetailController ()
 
@@ -43,9 +44,10 @@
     [self requestReplies];
     
     if (self.tweet.inReplyToStatusId) {
-        
-        //[self requestOlderRelatedTweetToTweetId:self.tweet.inReplyToStatusId];
         [self requestOlderRelatedTweets];
+    }
+    else {
+        self.olderRelatedTweets = [NSArray new];
     }
 }
 
@@ -62,13 +64,26 @@
     // Return the number of rows in the section.
     
     if (section == 0) {
-        return self.replies.count;
+        
+        if (self.replies == nil) {
+            return 1;
+        }
+        else {
+            NSLog(@"num replies %d", self.replies.count);
+            return self.replies.count;
+        }
     }
     else if (section == 1) {
         return 1;
     }
     else if (section == 2) {
-        return self.olderRelatedTweets.count;
+        
+        if (self.olderRelatedTweets == nil && self.tweet.inReplyToStatusId) {
+            return 1;
+        }
+        else {
+            return self.olderRelatedTweets.count;
+        }
     }
     
     return 0;
@@ -76,42 +91,106 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    
     if (indexPath.section==1) {
-        //return [self cellForTweetDetail:tweet atIndexPath:indexPath];
-        UITableViewCell* cell =  [self cellForTweet:tweet atIndexPath:indexPath];
+        
+        TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+        UITableViewCell* cell = [self cellForTweetDetail:tweet atIndexPath:indexPath];
+        //UITableViewCell* cell =  [self cellForTweet:tweet atIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
     }
-    else {
-        return [self cellForTweet:tweet atIndexPath:indexPath];
+    else if (indexPath.section == 2) {
+        
+        if (self.olderRelatedTweets == Nil) {
+            return [tableView dequeueReusableCellWithIdentifier:@"LoadingCell" forIndexPath:indexPath];
+        }
+        else {
+            TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+            return [self cellForTweet:tweet atIndexPath:indexPath];
+        }
     }
+    else if (indexPath.section == 0) {
+        
+        if (self.replies == Nil) {
+            return [tableView dequeueReusableCellWithIdentifier:@"LoadingCell" forIndexPath:indexPath];
+        }
+        else {
+            TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+            return [self cellForTweet:tweet atIndexPath:indexPath];
+        }
+    }
+    
+    return nil;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    
     if (indexPath.section==1) {
-        //return [self heightForTweetDetail:tweet];
-        return [self heightForTweet:tweet];
+        
+        TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+        return [self heightForTweetDetail:tweet];
     }
-    else {
-        return [self heightForTweet:tweet];
+    else if (indexPath.section == 2) {
+        
+        if (self.olderRelatedTweets == Nil) {
+            return 44;
+        }
+        else {
+            
+            TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+            return [self heightForTweet:tweet];
+        }
     }
+    else if (indexPath.section == 0) {
+        
+        if (self.replies == Nil) {
+            return 44;
+        }
+        else {
+            
+            TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+            return [self heightForTweet:tweet];
+        }
+    }
+
+    return 0;
 }
 
 /*- (UIView*)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     return [UIView new];
-}*/
+}
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return [UIView new];
 }
 
-/*- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    
+    if (section==2) {
+        
+        CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+        
+        for (NSInteger i=0; i<self.olderRelatedTweets.count; i++) {
+            heightOfContent += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
+        }
+        
+        heightOfContent += self.tabBarController.tabBar.frame.size.height;
+        
+        CGFloat padding = MAX(0, self.tableView.bounds.size.height - heightOfContent);
+        
+        if (self.olderRelatedTweets == nil) {
+            padding -= 44;
+        }
+        
+        return padding;
+    }
+    else {
+        return 0;
+    }
+}*/
+
+/*- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
     if (section==2) {
         
@@ -131,27 +210,6 @@
         return 0;
     }
 }*/
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    
-    if (section==3) {
-        
-        CGFloat heightOfContent = [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
-        
-        for (NSInteger i=0; i<self.olderRelatedTweets.count; i++) {
-            heightOfContent += [self tableView:self.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:2]];
-        }
-        
-        heightOfContent += self.tabBarController.tabBar.frame.size.height;
-        
-        CGFloat padding = MAX(0, self.tableView.bounds.size.height - heightOfContent);
-        
-        return padding;
-    }
-    else {
-        return 0;
-    }
-}
 
 #pragma mark - Table view delegate
 
@@ -193,6 +251,7 @@
         
         if (error) {
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not load replies" style:NotificationViewStyleError];
+            weakSelf.replies = [NSArray new];
             return;
         }
         
@@ -209,14 +268,12 @@
         [weakSelf.tableView reloadData];
         weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
         
-        [weakSelf.tableView reloadData];
-        
         if (tweets.count) {
             
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
         }
         
-        [weakSelf.tableView flashScrollIndicators];
+        //[weakSelf.tableView flashScrollIndicators];
     }];
 }
 
@@ -257,7 +314,13 @@
     self.runningOlderRelatedTweetsRequest = [TweetEntity requestSearchOlderRelatedTweetsWithTweet:self.tweet screenName:self.tweet.user.screenName completionBlock:^(NSArray *tweets, NSError *error) {
         
         if (error) {
-            //TODO: handle error
+            
+            weakSelf.olderRelatedTweets = [NSArray new];
+            
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
+            
             return;
         }
         
@@ -281,7 +344,13 @@
             }
         }
         else {
-           
+            
+            weakSelf.olderRelatedTweets = [NSArray new];
+            
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
+            
             [weakSelf requestOlderRelatedTweetToTweetId:[weakSelf.tweet inReplyToStatusId]];
         }
     }];

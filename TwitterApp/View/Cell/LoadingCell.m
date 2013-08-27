@@ -8,6 +8,12 @@
 
 #import "LoadingCell.h"
 
+@interface LoadingCell ()
+
+@property(nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
+
+@end
+
 @implementation LoadingCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -28,9 +34,10 @@
     
     UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
-    [activityIndicator startAnimating];
     activityIndicator.hidesWhenStopped = NO;
     [contentView addSubview:activityIndicator];
+    [activityIndicator startAnimating];
+    self.activityIndicatorView = activityIndicator;
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
@@ -53,6 +60,12 @@
                                                                   constant:0]];
 
     [contentView addConstraints:superviewConstraints];
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    
+    [self.activityIndicatorView startAnimating];
 }
 
 

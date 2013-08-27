@@ -8,6 +8,7 @@
 
 #import "NetImageView.h"
 #import <UIKit/UIKit.h>
+#import "PPLabel.h"
 
 @class TweetCell;
 
@@ -29,7 +30,7 @@
 
 @end
 
-@interface TweetCell : UITableViewCell
+@interface TweetCell : UITableViewCell <PPLabelDelegate>
 
 @property(nonatomic, strong) UILabel* actionLabel;
 @property(nonatomic, strong) NetImageView* avatarImageView;
@@ -41,6 +42,9 @@
 @property(nonatomic, strong) UILabel* tweetTextLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
 
+@property(nonatomic, strong) UIButton* favoriteButton;
+@property(nonatomic, strong) UIButton* retweetButton;
+
 @property(nonatomic) BOOL favoritedByUser;
 @property(nonatomic) BOOL retweetedByUser;
 
@@ -50,5 +54,7 @@
 + (CGFloat)requiredHeightForTweetText:(NSString*)text;
 
 - (void)cancelAccessViewAnimated;
+
+- (void)setupFonts;
 
 @end

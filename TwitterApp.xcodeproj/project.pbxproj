@@ -98,7 +98,6 @@
 		4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A01742D9CE00AEB85C /* Default-568h@2x.png */; };
 		4B6629C6177387FA00FA146A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */; };
 		4B6629C7177387FA00FA146A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
-		4B6629C8177387FA00FA146A /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9417733833002A577D /* HockeySDK.xcconfig */; };
 		4B6629C9177387FA00FA146A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
 		4B6629CA177387FA00FA146A /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
 		4B6629CB177387FA00FA146A /* Icon-Retweet-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3D717522B950027A0D1 /* Icon-Retweet-Highlighted.png */; };
@@ -158,7 +157,6 @@
 		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
 		4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
 		4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D9217733833002A577D /* HockeySDK.framework */; };
-		4B755D9717733833002A577D /* HockeySDK.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9417733833002A577D /* HockeySDK.xcconfig */; };
 		4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9517733833002A577D /* HockeySDKResources.bundle */; };
 		4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D991773386A002A577D /* QuartzCore.framework */; };
 		4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */; };
@@ -1230,7 +1228,7 @@
 		4B74287F1742D9CE00AEB85C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Petr Pavlik";
 				TargetAttributes = {
 					4B7428861742D9CE00AEB85C = {
@@ -1274,7 +1272,6 @@
 				4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */,
 				4B6629C6177387FA00FA146A /* MainStoryboard.storyboard in Resources */,
 				4B6629C7177387FA00FA146A /* Icon.png in Resources */,
-				4B6629C8177387FA00FA146A /* HockeySDK.xcconfig in Resources */,
 				4B6629C9177387FA00FA146A /* Icon@2x.png in Resources */,
 				4B6629CA177387FA00FA146A /* Image-Separator.png in Resources */,
 				4B6629CB177387FA00FA146A /* Icon-Retweet-Highlighted.png in Resources */,
@@ -1345,7 +1342,6 @@
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
 				4B81BA3D174538D900005607 /* Icon.png in Resources */,
-				4B755D9717733833002A577D /* HockeySDK.xcconfig in Resources */,
 				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
 				4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */,
 				4BAEB3DB17522B950027A0D1 /* Icon-Retweet-Highlighted.png in Resources */,

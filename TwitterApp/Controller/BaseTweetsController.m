@@ -234,14 +234,6 @@
 
 - (CGFloat)heightForTweetDetail:(TweetEntity*)tweet {
     
-    TweetEntity* retweet = nil;
-    
-    if (tweet.retweetedStatus) {
-        
-        retweet = tweet;
-        tweet = tweet.retweetedStatus;
-    }
-    
     NSString* tweetText = [tweet.text stringByStrippingHTMLTags];
     
     NSArray* urls = tweet.entities[@"urls"];
@@ -261,10 +253,13 @@
     if (media.count) {
         
         mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
+        if (mediaHeight > 300) {
+            mediaHeight = 300;
+        }
     }
     
-    
     return [TweetDetailCell requiredHeightForTweetText:tweetText] + mediaHeight;
+
 }
 
 - (UITableViewCell*)cellForTweet:(TweetEntity *)tweet atIndexPath:(NSIndexPath*)indexPath {
@@ -411,6 +406,7 @@
     
     static NSString *CellIdentifier = @"TweetDetailCell";
     TweetDetailCell *cell = [self.tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.delegate = self;
     
     // Configure the cell...
     cell.nameLabel.text = tweet.user.name;
@@ -421,8 +417,6 @@
     }];
     
     cell.createdWithLabel.text = [NSString stringWithFormat:@"via %@", [tweet.source stringByStrippingHTMLTags]];
-    
-    cell.tweetTextLabel.text = tweet.text;
     
     if (tweet.place[@"name"]) {
         cell.locationLabel.text = [NSString stringWithFormat:@"from %@", tweet.place[@"name"]];
