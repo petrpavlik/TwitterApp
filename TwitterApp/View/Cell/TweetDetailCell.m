@@ -176,7 +176,7 @@
 
 + (CGFloat)requiredHeightForTweetText:(NSString *)text {
     
-    return [TweetCell requiredHeightForTweetText:text] + [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize + 5 + (44+8);
+    return [TweetCell requiredHeightForTweetText:text] + [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline].pointSize + 5 + (44+8*3);
 }
 
 #pragma mark -
