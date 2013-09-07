@@ -173,6 +173,8 @@
 		4B8D9F5417C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
 		4B8D9F5717C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
 		4B8D9F5817C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
+		4B91B65617DB30DE0062FD30 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B91B65517DB30DE0062FD30 /* ImageScrollView.m */; };
+		4B91B65717DB30DE0062FD30 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B91B65517DB30DE0062FD30 /* ImageScrollView.m */; };
 		4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
 		4B93D80B17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
@@ -422,6 +424,8 @@
 		4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		4B8D9F5517C3B7CF00CEEF07 /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchCell.h; path = View/Cell/SwitchCell.h; sourceTree = "<group>"; };
 		4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchCell.m; path = View/Cell/SwitchCell.m; sourceTree = "<group>"; };
+		4B91B65417DB30DE0062FD30 /* ImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageScrollView.h; path = View/ScrollView/ImageScrollView.h; sourceTree = "<group>"; };
+		4B91B65517DB30DE0062FD30 /* ImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageScrollView.m; path = View/ScrollView/ImageScrollView.m; sourceTree = "<group>"; };
 		4B9348A317457A3F00AAE017 /* AFTwitterClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterClient.h; path = Model/API/AFTwitterClient.h; sourceTree = "<group>"; };
 		4B9348A417457A3F00AAE017 /* AFTwitterClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterClient.m; path = Model/API/AFTwitterClient.m; sourceTree = "<group>"; };
 		4B93D80917823069005BE43C /* MentionsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MentionsController.h; path = Controller/MentionsController.h; sourceTree = "<group>"; };
@@ -789,6 +793,7 @@
 		4B7428C51742DA3500AEB85C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4B91B65317DB30400062FD30 /* ScrollView */,
 				4BBBF93217BBE60800B7A169 /* TextStorage */,
 				4B6EA1A917AD3276000CEC49 /* Transition */,
 				4BF9B6B7174A898700DA3318 /* Label */,
@@ -935,6 +940,15 @@
 			name = AFOAuth1Client;
 			path = Vendor/AFOAuth1Client;
 			sourceTree = SOURCE_ROOT;
+		};
+		4B91B65317DB30400062FD30 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				4B91B65417DB30DE0062FD30 /* ImageScrollView.h */,
+				4B91B65517DB30DE0062FD30 /* ImageScrollView.m */,
+			);
+			name = ScrollView;
+			sourceTree = "<group>";
 		};
 		4BA3063417BE74DF00733D56 /* GoogleAnalytics */ = {
 			isa = PBXGroup;
@@ -1536,6 +1550,7 @@
 				4B6629A7177387FA00FA146A /* NotificationView.m in Sources */,
 				4BB3AD33177CE01200CA0F8B /* FollowersController.m in Sources */,
 				4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */,
+				4B91B65717DB30DE0062FD30 /* ImageScrollView.m in Sources */,
 				4B6629A9177387FA00FA146A /* NavigationController.m in Sources */,
 				4B6629AA177387FA00FA146A /* TimelineDocument.m in Sources */,
 				4B39302517BA735A006ECB65 /* TableViewCell.m in Sources */,
@@ -1610,6 +1625,7 @@
 				4BE5557C1758F87400A214FC /* NotificationView.m in Sources */,
 				4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */,
 				4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */,
+				4B91B65617DB30DE0062FD30 /* ImageScrollView.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
 				4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */,

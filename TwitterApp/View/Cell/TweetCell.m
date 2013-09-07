@@ -171,6 +171,11 @@
     _mediaImageView.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [contentView addSubview:_mediaImageView];
     
+    UITapGestureRecognizer* mediaTapGestureRecongnizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(mediaSelected)];
+    [_mediaImageView addGestureRecognizer:mediaTapGestureRecongnizer];
+    _mediaImageView.userInteractionEnabled = YES;
+
+    
     _quickAccessView = [self createQuickAccessView];
     [self.contentView addSubview:_quickAccessView];
     
@@ -502,6 +507,13 @@
 
 - (void)avatarSelected {
     [self.delegate tweetCellDidSelectAvatarImage:self];
+}
+
+- (void)mediaSelected {
+    
+    if (self.mediaImageView.image) {
+        [self.delegate tweetCell:self didSelectImage:self.mediaImageView.image];
+    }
 }
 
 - (void)linkLongPressTimerDidFire:(NSTimer*)timer {

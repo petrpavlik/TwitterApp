@@ -20,6 +20,7 @@
 - (void)tweetCell:(TweetCell*)cell didLongPressURL:(NSURL*)url;
 - (void)tweetCellDidLongPress:(TweetCell*)cell;
 - (void)tweetCellDidSelectAvatarImage:(TweetCell*)cell;
+- (void)tweetCell:(TweetCell*)cell didSelectImage:(UIImage*)image;
 
 - (void)tweetCellDidRequestFavorite:(TweetCell*)cell;
 - (void)tweetCellDidRequestOtherAction:(TweetCell*)cell;

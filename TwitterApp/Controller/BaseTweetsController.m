@@ -12,7 +12,7 @@
 #import "GapTweetEntity.h"
 #import "LoadingCell.h"
 #import "LoadMoreCell.h"
-#import "MHFacebookImageViewer.h"
+//#import "MHFacebookImageViewer.h"
 #import "NotificationView.h"
 #import "NSString+TwitterApp.h"
 #import <PocketAPI.h>
@@ -29,6 +29,8 @@
 #import "TweetDetailController.h"
 #import "UserTweetsController.h"
 #import "SearchTweetsController.h"
+#import "PhotoController.h"
+#import "ImageTransition.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -383,7 +385,7 @@
                 return image;
             }];
             cell.mediaImageView.hidden = NO;
-            [cell.mediaImageView  setupImageViewer];
+            //[cell.mediaImageView  setupImageViewer];
         }
         
         for (NSDictionary* item in hashtags) {
@@ -471,7 +473,7 @@
             return image;
         }];
         cell.mediaImageView.hidden = NO;
-        [cell.mediaImageView  setupImageViewer];
+        //[cell.mediaImageView  setupImageViewer];
     }
     
     for (NSDictionary* item in hashtags) {
@@ -497,6 +499,31 @@
 - (void)tweetCell:(TweetCell *)cell didSelectURL:(NSURL *)url {
     
     [WebController presentWithUrl:url viewController:self];
+}
+
+- (void)tweetCell:(TweetCell *)cell didSelectImage:(UIImage *)image {
+    
+    /*NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    if (!indexPath) {
+        return;
+    }
+    
+    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
+    
+    if (tweet.retweetedStatus) {
+        tweet = tweet.retweetedStatus;
+    }*/
+    
+    PhotoController* photoController = [PhotoController new];
+    
+    photoController.placeholderImage = image;
+    
+    ImageTransition* imageTransition = [ImageTransition new];
+    
+    photoController.transitioningDelegate = imageTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    
+    [self presentViewController:photoController animated:YES completion:NULL];
 }
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {

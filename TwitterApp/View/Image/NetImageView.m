@@ -64,6 +64,10 @@ static NSOperationQueue* operationQueue = nil;
         UIImage* cachedImage = [[NetImageView sharedImageCache] objectForKey:cachedImageUrl];        
         self.image = cachedImage;
 
+        if (completionBlock) {
+            completionBlock(self, Nil);
+        }
+        
         return;
     }
     
