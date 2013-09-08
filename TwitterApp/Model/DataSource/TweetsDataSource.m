@@ -66,9 +66,11 @@
     
     if (self.persistenceIdentifier && !self.document) {
         
+        NSString* username = [UserEntity currentUser].screenName;
+        
         NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docsDir = [dirPaths objectAtIndex:0];
-        NSString *dataFile = [docsDir stringByAppendingPathComponent:self.persistenceIdentifier];
+        NSString *dataFile = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", self.persistenceIdentifier, username]];
         NSURL* documentUrl = [NSURL fileURLWithPath:dataFile];
         
         self.document = [[TimelineDocument alloc] initWithFileURL:documentUrl];

@@ -24,6 +24,7 @@
 #import "PushNotificationSettingsController.h"
 #import "ProfileController.h"
 #import "NSString+TwitterApp.h"
+#import "LoginController.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -388,8 +389,11 @@
 
 - (void)settingsSelected {
     
-    PushNotificationSettingsController* pushNotificationsSettingsController = [[PushNotificationSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:pushNotificationsSettingsController animated:YES];
+    /*PushNotificationSettingsController* pushNotificationsSettingsController = [[PushNotificationSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:pushNotificationsSettingsController animated:YES];*/
+    
+    LoginController* loginController = [LoginController new];
+    [self presentViewController:loginController animated:YES completion:NULL];
 }
 
 @end

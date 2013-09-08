@@ -9,6 +9,7 @@
 #import <Accounts/Accounts.h>
 #import "LoginController.h"
 #import "TabBarController.h"
+#import "AppDelegate.h"
 
 @interface TabBarController ()
 
@@ -35,20 +36,44 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    ACAccountStore* accountStore = [[ACAccountStore alloc] init];
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    ACAccountStore* accountStore = appDelegate.accountStore;
     ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
     
+    BOOL showLoginScreen = NO;
+    
     if (!accounts.count) {
+        showLoginScreen = YES;
+    }
+    else {
+        
+        NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString* username = [userDefaults objectForKey:kUserDefaultsKeyUsername];
+        
+        if (!username.length) {
+            showLoginScreen = YES;
+        }
+        else {
+            
+            showLoginScreen = YES;
+            
+            for (ACAccount* account in accounts) {
+                
+                if ([account.username isEqualToString:username]) {
+
+                    showLoginScreen = NO;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (showLoginScreen) {
         
         LoginController* loginController = [LoginController new];
-        
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-        navigationController.viewControllers = @[loginController];
-        navigationController.restorationIdentifier = nil; //we don't want this to be restored
-        
-        [self presentViewController:navigationController animated:YES completion:NULL];
+        [self presentViewController:loginController animated:YES completion:NULL];
     }
 }
 

@@ -26,3 +26,4 @@
 #define kLogEventError @"Error"
 
 #define kUserDefaultsKeyTweetLocationEnabled @"UserDefaultsKeyTweetLocationEnabled"
+#define kUserDefaultsKeyUsername @"UserDefaultsKeyUsername"
