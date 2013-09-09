@@ -19,6 +19,8 @@
 @property(nonatomic, strong) UIButton* locationButton;
 @property(nonatomic, strong) UIButton* mediaButton;
 @property(nonatomic, strong) UIButton* placeButton;
+@property(nonatomic, strong) UIButton* hashtagButton;
+@property(nonatomic, strong) UIButton* mentionButton;
 
 @end
 
@@ -60,6 +62,7 @@
     _placeButton.alpha = 0;
     _placeButton.titleLabel.lineBreakMode = UILineBreakModeTailTruncation; //TODO: switch to TextKit after dropping iOS 6;
     [_placeButton addTarget:self action:@selector(placeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [_placeButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
     [self addSubview:_placeButton];
     
     _mediaButton = [UIButton buttonWithType:UIButtonTypeSystem];
@@ -68,12 +71,29 @@
     [_mediaButton addTarget:self action:@selector(mediaButtonPressed) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_mediaButton];
     
+    _hashtagButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_hashtagButton setTitle:@"#" forState:UIControlStateNormal];
+    _hashtagButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    [_hashtagButton addTarget:self action:@selector(hashtagSelected) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_hashtagButton];
+    
+    _mentionButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _mentionButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_mentionButton setTitle:@"@" forState:UIControlStateNormal];
+    _mentionButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    [_mentionButton addTarget:self action:@selector(mentionSelected) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:_mentionButton];
+    
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
-    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]->=0-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton)];
+    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
     
-    self.locationDisabledConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-[_mediaButton(>=44)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton)];
+    self.locationDisabledConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
     self.locationDisabledConstraints = [self.locationDisabledConstraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_locationButton]-4-[_placeButton]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _placeButton)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_hashtagButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_hashtagButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_mentionButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mentionButton)]];
     
     [superviewConstraints addObjectsFromArray:self.locationDisabledConstraints];
     
@@ -110,6 +130,14 @@
 - (void)placeButtonPressed {
     
     [self.delegate tweetInputAccessoryViewDidRequestPlaceQuery:self];
+}
+
+- (void)hashtagSelected {
+    [self.delegate tweetInputAccessoryView:self didSelectQuickAccessString:@"#"];
+}
+
+- (void)mentionSelected {
+    [self.delegate tweetInputAccessoryView:self didSelectQuickAccessString:@"@"];
 }
 
 #pragma mark -

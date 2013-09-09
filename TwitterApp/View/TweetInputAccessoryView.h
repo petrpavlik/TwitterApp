@@ -16,6 +16,7 @@
 - (void)tweetInputAccessoryViewDidEnableLocation:(TweetInputAccessoryView*)view;
 - (void)tweetInputAccessoryViewDidDisableLocation:(TweetInputAccessoryView*)view;
 - (void)tweetInputAccessoryViewDidRequestPlaceQuery:(TweetInputAccessoryView*)view;
+- (void)tweetInputAccessoryView:(TweetInputAccessoryView*)view didSelectQuickAccessString:(NSString*)string;
 
 @end
 

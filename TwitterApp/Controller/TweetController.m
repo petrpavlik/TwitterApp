@@ -470,6 +470,11 @@
     [_locationManager stopUpdatingLocation];
 }
 
+- (void)tweetInputAccessoryView:(TweetInputAccessoryView *)view didSelectQuickAccessString:(NSString *)string {
+    
+    self.tweetTextView.text = [self.tweetTextView.text stringByAppendingString:string];
+}
+
 #pragma mark -
 
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
