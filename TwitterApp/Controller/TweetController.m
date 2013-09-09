@@ -18,6 +18,7 @@
 #import "UIImage+ImageEffects.h"
 #import "ComposeTweetTextStorage.h"
 #import "TwitterAppWindow.h"
+#import "TweetService.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
@@ -256,18 +257,7 @@
     
     [[LogService sharedInstance] logEvent:@"tweet composed" userInfo:@{@"location enabled": @(placeId!=nil), @"media attached": @(media.count!=0)}];
     
-    [TweetEntity requestStatusUpdateWithText:self.tweetTextView.text asReplyToTweet:self.tweetToReplyTo.tweetId location:location placeId:placeId media:media completionBlock:^(TweetEntity *tweet, NSError *error) {
-        
-        if (error) {
-            
-            [[LogService sharedInstance] logError:error];
-            [[[UIAlertView alloc] initWithTitle:nil message:error.description delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-        }
-        else {
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:kUserDidPostTweetNotification object:Nil];
-        }
-    }];
+    [[TweetService sharedInstance] postTweetWithText:self.tweetTextView.text asReplyToTweetId:self.tweetToReplyTo.tweetId location:location placeId:placeId media:media];
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }

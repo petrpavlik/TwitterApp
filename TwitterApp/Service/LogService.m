@@ -52,6 +52,8 @@
 - (void)logError:(NSError*)error {
     
     NSParameterAssert(error);
+    
+    NSLog(@"%@", error);
     //[Flurry logError:@"App Error" message:Nil error:error];
     [self.tracker sendException:NO withNSError:error];
 }
