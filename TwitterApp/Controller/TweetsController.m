@@ -429,6 +429,18 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }
 }
 
+/*- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section==0) {
+        
+        return 100;
+    }
+    else {
+        
+        return 44;
+    }
+}*/
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

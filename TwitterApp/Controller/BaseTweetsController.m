@@ -219,10 +219,12 @@
         
         if (media.count) {
             
-            mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
+            mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2;
             if (mediaHeight > 300) {
                 mediaHeight = 300;
             }
+            
+            mediaHeight += 10;
         }
         
         CGFloat retweetInformationHeight = 0;
@@ -254,10 +256,12 @@
     
     if (media.count) {
         
-        mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2 + 10;
+        mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2;
         if (mediaHeight > 300) {
             mediaHeight = 300;
         }
+        
+        mediaHeight += 10;
     }
     
     return [TweetDetailCell requiredHeightForTweetText:tweetText] + mediaHeight;

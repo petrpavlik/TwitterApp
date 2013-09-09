@@ -74,14 +74,14 @@
     _hashtagButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_hashtagButton setTitle:@"#" forState:UIControlStateNormal];
-    _hashtagButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _hashtagButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
     [_hashtagButton addTarget:self action:@selector(hashtagSelected) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_hashtagButton];
     
     _mentionButton = [UIButton buttonWithType:UIButtonTypeSystem];
     _mentionButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_mentionButton setTitle:@"@" forState:UIControlStateNormal];
-    _mentionButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+    _mentionButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
     [_mentionButton addTarget:self action:@selector(mentionSelected) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_mentionButton];
     

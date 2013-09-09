@@ -68,6 +68,16 @@
     self.accountStore = appDelegate.accountStore;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+}
+
 - (void)didSelectConnectButton {
     
     ACAccountStore *accountStore = self.accountStore;
@@ -120,6 +130,8 @@
         }
     }];
 }
+
+
 
 #pragma mark -
 
