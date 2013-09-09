@@ -2,8 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>6ECC81F5-BA65-4395-8D84-50993CAE6999</string>
+	<string>5F7A0476-B6F1-4F2F-88DA-17AC16C0B8D7</string>
 	<key>IDESourceControlProjectName</key>
 	<string>TwitterApp</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>

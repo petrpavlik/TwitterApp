@@ -24,6 +24,8 @@
 		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
+		4B1572F417DE5E1400170D7F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1572F317DE5E1400170D7F /* Crashlytics.framework */; };
+		4B1572F517DE5E1400170D7F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1572F317DE5E1400170D7F /* Crashlytics.framework */; };
 		4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
 		4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
@@ -342,6 +344,7 @@
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		4B132D5817949BE500EFA90C /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
+		4B1572F317DE5E1400170D7F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4B165EE71771D874004A09BC /* Image-Separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator.png"; path = "Image/Image-Separator.png"; sourceTree = "<group>"; };
 		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
 		4B16B2C1177503E1000FEFDD /* ErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorCell.h; path = View/Cell/ErrorCell.h; sourceTree = "<group>"; };
@@ -580,6 +583,7 @@
 			files = (
 				4BFDA4591775FC2F007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B6629B3177387FA00FA146A /* QuartzCore.framework in Frameworks */,
+				4B1572F517DE5E1400170D7F /* Crashlytics.framework in Frameworks */,
 				4B6629B5177387FA00FA146A /* libsqlite3.dylib in Frameworks */,
 				4B6629B6177387FA00FA146A /* libz.dylib in Frameworks */,
 				4B6629B7177387FA00FA146A /* SystemConfiguration.framework in Frameworks */,
@@ -616,6 +620,7 @@
 				4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */,
 				4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */,
 				4B81BA4117453CD800005607 /* Social.framework in Frameworks */,
+				4B1572F417DE5E1400170D7F /* Crashlytics.framework in Frameworks */,
 				4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */,
 				4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
@@ -725,6 +730,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B1572F317DE5E1400170D7F /* Crashlytics.framework */,
 				4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */,
 				4BA3064C17BE76F400733D56 /* CoreData.framework */,
 				4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */,
@@ -1219,6 +1225,7 @@
 				4B7428841742D9CE00AEB85C /* Frameworks */,
 				4B7428851742D9CE00AEB85C /* Resources */,
 				2EFB7C3C016D43F5B56593E8 /* Copy Pods Resources */,
+				4BBB27A917DE5D82006AA85A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1491,6 +1498,19 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+		4BBB27A917DE5D82006AA85A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run c8411cf93fbcb20e8dd6336cd727e16241dd5c68";
 		};
 		B004820B922D4644983F00B4 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

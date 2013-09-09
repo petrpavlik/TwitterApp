@@ -12,7 +12,6 @@
 #import "AppDelegate.h"
 #import "BaseEntity.h"
 #import <ECSlidingViewController.h>
-#import <HockeySDK/HockeySDK.h>
 #import "LoginController.h"
 #import "MentionsController.h"
 #import "ModernSkin.h"
@@ -27,8 +26,9 @@
 #import <WindowsAzureMessaging/WindowsAzureMessaging.h>
 #import "Base64.h"
 #import "AFOAuth1Client.h"
+#import <Crashlytics/Crashlytics.h>
 
-@interface AppDelegate () <BITHockeyManagerDelegate, BITUpdateManagerDelegate, BITCrashManagerDelegate>
+@interface AppDelegate ()
 
 @property (strong, nonatomic) SBNotificationHub* hub;
 
@@ -84,13 +84,7 @@
     self.hub = [[SBNotificationHub alloc] initWithConnectionString: @"Endpoint=sb://tweetilus-ns.servicebus.windows.net/;SharedSecretIssuer=owner;SharedSecretValue=d0+tn3/xILWOJE+7uyv3zbvco1BGiNME4yOGUa40jkM=" notificationHubPath: @"tweetilus"];
 #endif
     
-    [[BITHockeyManager sharedHockeyManager] configureWithIdentifier:@"02ad5ad768997eb7c7878cb9791dad4b" delegate:self];
-    [[BITHockeyManager sharedHockeyManager] startManager];
-    [[[BITHockeyManager sharedHockeyManager] updateManager] setDelegate:self];
-    
-#ifdef DEBUG
-    //[[BITHockeyManager sharedHockeyManager] setDebugLogEnabled:YES];
-#endif
+    [Crashlytics startWithAPIKey:@"c8411cf93fbcb20e8dd6336cd727e16241dd5c68"];
     
     NSURLCache *URLCache = [[NSURLCache alloc] initWithMemoryCapacity:4 * 1024 * 1024
                                                          diskCapacity:20 * 1024 * 1024
@@ -375,55 +369,5 @@
     [[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
 }
 
-#pragma mark -
-
-- (NSString *)userIDForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager {
-    
-    UserEntity* currentUser = [UserEntity currentUser];
-    
-    if (currentUser) {
-        return currentUser.screenName;
-    }
-    else {
-        return nil;
-    }
-}
-
-- (NSString *)userNameForHockeyManager:(BITHockeyManager *)hockeyManager componentManager:(BITHockeyBaseManager *)componentManager {
-    
-    UserEntity* currentUser = [UserEntity currentUser];
-    
-    if (currentUser) {
-        return currentUser.screenName;
-    }
-    else {
-        return nil;
-    }
-}
-
-/*- (BOOL)shouldUseLiveIdentifierForHockeyManager:(BITHockeyManager *)hockeyManager {
-    return YES;
-}*/
-
-- (void)crashManager:(BITCrashManager *)crashManager didFailWithError:(NSError *)error {
-    
-    [[[UIAlertView alloc] initWithTitle:@"Crash Report Sent" message:@"Thank you for your assistance, it will be fixed ASAP." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-}
-
-- (void)crashManagerDidFinishSendingCrashReport:(BITCrashManager *)crashManager {
-    
-    [[[UIAlertView alloc] initWithTitle:@"Crash Report Was Not Sent" message:@"Please let me know about it. petrpavlik@me.com or @ptrpavlik" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-}
-
-#pragma mark - BITUpdateManagerDelegate
-
-- (NSString *)customDeviceIdentifierForUpdateManager:(BITUpdateManager *)updateManager {
-    
-#ifndef CONFIGURATION_AppStore
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(uniqueIdentifier)])
-        return [[UIDevice currentDevice] performSelector:@selector(uniqueIdentifier)];
-#endif
-    return nil;
-}
 
 @end
