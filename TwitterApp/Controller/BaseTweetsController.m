@@ -858,7 +858,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
             }];
         }
-        else if (buttonIndex==0) {
+        else if ((buttonIndex==0 && actionSheet.destructiveButtonIndex < 0) || buttonIndex == 1) {
          
             RetweetersController* retweetersController = [[RetweetersController alloc] initWithStyle:UITableViewStylePlain];
             
