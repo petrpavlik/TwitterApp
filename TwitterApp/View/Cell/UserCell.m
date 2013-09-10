@@ -38,7 +38,6 @@
 - (void)commonSetup {
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
     
     UIView *bgColorView = [[UIView alloc] init];
     [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
@@ -70,6 +69,15 @@
     _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     [credentialsPlaceholder addSubview:_usernameLabel];
     
+    _verifiedImageView = [[UIImageView alloc] init];
+    _verifiedImageView.translatesAutoresizingMaskIntoConstraints = NO;
+    _verifiedImageView.tintColor = appDelegate.skin.linkColor;
+    _verifiedImageView.hidden = YES;
+    [credentialsPlaceholder addSubview:_verifiedImageView];
+    
+    UIImage* verifiedImage = [[UIImage imageNamed:@"Icon-Verified"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    _verifiedImageView.image = verifiedImage;
+    
     PersistentBackgroundColorView* separatorView = [[PersistentBackgroundColorView alloc] init];
     [separatorView setPersistentBackgroundColor:[UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1]];
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -78,7 +86,7 @@
     NSMutableArray* credentialsPlaceholderConstraints = [NSMutableArray new];
     
     [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_nameLabel][_usernameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel, _usernameLabel)]];
-    [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_nameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel)]];
+    [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_nameLabel]-4-[_verifiedImageView]->=15-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel, _verifiedImageView)]];
     [credentialsPlaceholderConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_usernameLabel]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_usernameLabel)]];
     
     [credentialsPlaceholder addConstraints:credentialsPlaceholderConstraints];
@@ -125,6 +133,7 @@
     [super prepareForReuse];
     
     self.avatarImageView.image = nil;
+    self.verifiedImageView.hidden = YES;
 }
 
 @end

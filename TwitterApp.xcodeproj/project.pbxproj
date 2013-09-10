@@ -238,6 +238,8 @@
 		4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4BC2C03817DF1F5E004ABF54 /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */; };
+		4BC2C03B17DF5C82004ABF54 /* Icon-Verified.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */; };
+		4BC2C03C17DF5C82004ABF54 /* Icon-Verified@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */; };
 		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
@@ -487,6 +489,8 @@
 		4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLocalyticsAMP.a; path = Vendor/Localytics/libLocalyticsAMP.a; sourceTree = SOURCE_ROOT; };
 		4BC2C03617DF1F5E004ABF54 /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalyticsAmpSession.h; path = Vendor/Localytics/LocalyticsAmpSession.h; sourceTree = SOURCE_ROOT; };
 		4BC2C03717DF1F5E004ABF54 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
+		4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Verified.png"; path = "Image/Icon-Verified.png"; sourceTree = "<group>"; };
+		4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Verified@2x.png"; path = "Image/Icon-Verified@2x.png"; sourceTree = "<group>"; };
 		4BC63C201759133200F7E0C3 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
 		4BC63C211759133200F7E0C3 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationController.m; path = Controller/NavigationController.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
@@ -930,6 +934,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */,
+				4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */,
 				4B00B7CC17B822B400606C4C /* 731-cloud-download.png */,
 				4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */,
 				4B00B7C017B80F5400606C4C /* Icon-Retweeted-By.png */,
@@ -1333,6 +1339,7 @@
 				4B00B7CA17B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png in Resources */,
 				4BAEB3DE17522B950027A0D1 /* Icon-Retweet-Normal@2x.png in Resources */,
 				4BD506CA17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */,
+				4BC2C03C17DF5C82004ABF54 /* Icon-Verified@2x.png in Resources */,
 				4B00B7C617B80F5400606C4C /* Icon-Retweeted-By@2x.png in Resources */,
 				4BFDA46917762C7A007EFBC4 /* Btn-Add-Image@2x.png in Resources */,
 				4BAEB3E31752417A0027A0D1 /* Icon-Reply-Highlighted.png in Resources */,
@@ -1372,6 +1379,7 @@
 				4BA8459C176E4D0C007A531D /* Btn-Tweet-Detail-Reply@2x.png in Resources */,
 				4BD506C217AA793D00D386F1 /* Btn-Web.png in Resources */,
 				4BA8459D176E4D0C007A531D /* Btn-Tweet-Detail-Retweet.png in Resources */,
+				4BC2C03B17DF5C82004ABF54 /* Icon-Verified.png in Resources */,
 				4BA8459E176E4D0C007A531D /* Btn-Tweet-Detail-Retweet@2x.png in Resources */,
 				4BB48464178C948100A30BC4 /* Icon-TabBar-Profile@2x.png in Resources */,
 			);

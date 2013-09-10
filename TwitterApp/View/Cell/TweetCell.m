@@ -28,6 +28,8 @@
 
 @property(nonatomic, strong) id textSizeChangedObserver;
 
+@property(nonatomic, strong) NSArray* mediaImageHeightConstraints;
+
 @end
 
 @implementation TweetCell
@@ -206,7 +208,10 @@
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_mediaImageView]-10-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)]];
     
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel]-[_mediaImageView(<=300)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_tweetTextLabel]-[_mediaImageView]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView, _tweetTextLabel)]];
+    
+    self.mediaImageHeightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[_mediaImageView(0)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)];
+    [superviewConstraints addObjectsFromArray:self.mediaImageHeightConstraints];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_retweetedButton]-5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_retweetedButton)]];
     
@@ -635,6 +640,17 @@
         self.dummyScrollView.contentOffset = CGPointMake(0, self.dummyScrollView.contentOffset.y);
         self.dummyScrollView.panGestureRecognizer.enabled = YES;
     }];
+}
+
+- (void)setMediaImageHeight:(CGFloat)height {
+    
+    UIView* contentView = _slidingContentView;
+    
+    [contentView removeConstraints:self.mediaImageHeightConstraints];
+    
+    self.mediaImageHeightConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:[_mediaImageView(%f)]", height] options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mediaImageView)];
+    
+    [contentView addConstraints:self.mediaImageHeightConstraints];
 }
 
 @end

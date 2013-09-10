@@ -14,5 +14,6 @@
 @property(nonatomic, strong) NetImageView* avatarImageView;
 @property(nonatomic, strong) UILabel* nameLabel;
 @property(nonatomic, strong) UILabel* usernameLabel;
+@property(nonatomic, strong) UIImageView* verifiedImageView;
 
 @end

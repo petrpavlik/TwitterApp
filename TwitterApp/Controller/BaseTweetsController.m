@@ -379,6 +379,13 @@
         
         if (media.count) {
             
+            CGFloat mediaHeight = 0;
+            mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2;
+            if (mediaHeight > 300) {
+                mediaHeight = 300;
+            }
+            [cell setMediaImageHeight:mediaHeight];
+            
             [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:[[UIImage imageNamed:@"731-cloud-download"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] imageProcessingBlock:^UIImage *(UIImage *image) {
                 
                 UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);
@@ -390,6 +397,10 @@
             }];
             cell.mediaImageView.hidden = NO;
             //[cell.mediaImageView  setupImageViewer];
+        }
+        else {
+            
+            [cell setMediaImageHeight:0];
         }
         
         for (NSDictionary* item in hashtags) {

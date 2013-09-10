@@ -40,7 +40,7 @@
 @property(nonatomic, strong) NSString* userDescription;
 @property(nonatomic, strong) NSString* url;
 @property(nonatomic, strong) NSNumber* utcOffset;
-@property(nonatomic, readonly) NSNumber* verified;
+@property(nonatomic, strong) NSNumber* verified;
 
 @property(nonatomic, strong) NSString* expandedUserDescription;
 

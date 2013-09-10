@@ -56,6 +56,8 @@
 
 - (void)cancelAccessViewAnimated;
 
+- (void)setMediaImageHeight:(CGFloat)height;
+
 - (void)setupFonts;
 
 @end

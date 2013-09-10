@@ -114,6 +114,10 @@
             cell.nameLabel.text = user.name;
             cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
             
+            if (user.verified.boolValue) {
+                cell.verifiedImageView.hidden = NO;
+            }
+            
             UIImage* placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
             
             [cell.avatarImageView setImageWithURL:[NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]] placeholderImage:placeholderImage imageProcessingBlock:^UIImage*(UIImage* image) {
