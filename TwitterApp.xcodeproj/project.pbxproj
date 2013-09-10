@@ -35,8 +35,6 @@
 		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
 		4B39302517BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
-		4B39302717BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */; };
-		4B39302817BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */; };
 		4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4B8F9D17677C3400E427DE /* ModernSkin.m */; };
 		4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
 		4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
@@ -93,7 +91,6 @@
 		4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288C1742D9CE00AEB85C /* Foundation.framework */; };
 		4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74288E1742D9CE00AEB85C /* CoreGraphics.framework */; };
 		4B6629BF177387FA00FA146A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 247C6CFBE31346CFAFA5B8FE /* libPods.a */; };
-		4B6629C0177387FA00FA146A /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D9217733833002A577D /* HockeySDK.framework */; };
 		4B6629C2177387FA00FA146A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428931742D9CE00AEB85C /* InfoPlist.strings */; };
 		4B6629C3177387FA00FA146A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B74289C1742D9CE00AEB85C /* Default.png */; };
 		4B6629C4177387FA00FA146A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B74289E1742D9CE00AEB85C /* Default@2x.png */; };
@@ -110,7 +107,6 @@
 		4B6629D0177387FA00FA146A /* Icon-Reply-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3E01752417A0027A0D1 /* Icon-Reply-Highlighted@2x.png */; };
 		4B6629D1177387FA00FA146A /* Icon-Reply-Normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3E11752417A0027A0D1 /* Icon-Reply-Normal.png */; };
 		4B6629D2177387FA00FA146A /* Icon-Reply-Normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3E21752417A0027A0D1 /* Icon-Reply-Normal@2x.png */; };
-		4B6629D8177387FA00FA146A /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9517733833002A577D /* HockeySDKResources.bundle */; };
 		4B6629DB177387FA00FA146A /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B6629DF177387FA00FA146A /* Icon-Navbar-Compose.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC021764F1A1002578FF /* Icon-Navbar-Compose.png */; };
 		4B6629E0177387FA00FA146A /* Icon-Navbar-Compose@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BF0DC031764F1A1002578FF /* Icon-Navbar-Compose@2x.png */; };
@@ -158,8 +154,6 @@
 		4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8A17732E8D002A577D /* SystemConfiguration.framework */; };
 		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
 		4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
-		4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D9217733833002A577D /* HockeySDK.framework */; };
-		4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4B755D9517733833002A577D /* HockeySDKResources.bundle */; };
 		4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D991773386A002A577D /* QuartzCore.framework */; };
 		4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */; };
 		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
@@ -187,8 +181,6 @@
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
-		4BA3064A17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */; };
-		4BA3064B17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */; };
 		4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064C17BE76F400733D56 /* CoreData.framework */; };
 		4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
 		4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
@@ -245,6 +237,7 @@
 		4BBBF93517BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
+		4BC2C03817DF1F5E004ABF54 /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */; };
 		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
@@ -343,7 +336,6 @@
 		4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = Vendor/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
-		4B132D5817949BE500EFA90C /* Flurry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flurry.h; sourceTree = "<group>"; };
 		4B1572F317DE5E1400170D7F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		4B165EE71771D874004A09BC /* Image-Separator.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator.png"; path = "Image/Image-Separator.png"; sourceTree = "<group>"; };
 		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
@@ -355,7 +347,6 @@
 		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
 		4B39302217BA735A006ECB65 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCell.h; path = View/Cell/TableViewCell.h; sourceTree = "<group>"; };
 		4B39302317BA735A006ECB65 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewCell.m; path = View/Cell/TableViewCell.m; sourceTree = "<group>"; };
-		4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libFlurry_4.2.3.a; sourceTree = "<group>"; };
 		4B4B8F9C17677C3400E427DE /* ModernSkin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModernSkin.h; path = View/Skin/ModernSkin.h; sourceTree = "<group>"; };
 		4B4B8F9D17677C3400E427DE /* ModernSkin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModernSkin.m; path = View/Skin/ModernSkin.m; sourceTree = "<group>"; };
 		4B4E80A4177A2B6A005358A5 /* ProfileCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileCell.h; path = View/Cell/ProfileCell.h; sourceTree = "<group>"; };
@@ -412,9 +403,6 @@
 		4B755D8A17732E8D002A577D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4B755D8C17732E95002A577D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		4B755D8E17732EA6002A577D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
-		4B755D9217733833002A577D /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		4B755D9417733833002A577D /* HockeySDK.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = HockeySDK.xcconfig; sourceTree = "<group>"; };
-		4B755D9517733833002A577D /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		4B755D991773386A002A577D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		4B7C2880175685FD003FDCBB /* TwitterAppWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterAppWindow.h; path = View/TwitterAppWindow.h; sourceTree = "<group>"; };
 		4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterAppWindow.m; path = View/TwitterAppWindow.m; sourceTree = "<group>"; };
@@ -445,12 +433,6 @@
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
-		4BA3064117BE763A00733D56 /* GAI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAI.h; path = Vendor/GoogleAnalytics/GAI.h; sourceTree = SOURCE_ROOT; };
-		4BA3064217BE763A00733D56 /* GAITrackedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITrackedViewController.h; path = Vendor/GoogleAnalytics/GAITrackedViewController.h; sourceTree = SOURCE_ROOT; };
-		4BA3064317BE763A00733D56 /* GAITracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITracker.h; path = Vendor/GoogleAnalytics/GAITracker.h; sourceTree = SOURCE_ROOT; };
-		4BA3064417BE763A00733D56 /* GAITransaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransaction.h; path = Vendor/GoogleAnalytics/GAITransaction.h; sourceTree = SOURCE_ROOT; };
-		4BA3064517BE763A00733D56 /* GAITransactionItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GAITransactionItem.h; path = Vendor/GoogleAnalytics/GAITransactionItem.h; sourceTree = SOURCE_ROOT; };
-		4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleAnalytics.a; path = Vendor/GoogleAnalytics/libGoogleAnalytics.a; sourceTree = SOURCE_ROOT; };
 		4BA3064C17BE76F400733D56 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BA3CAF61782EB470029586E /* TweetsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetsDataSource.h; path = Model/DataSource/TweetsDataSource.h; sourceTree = "<group>"; };
 		4BA3CAF71782EB470029586E /* TweetsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetsDataSource.m; path = Model/DataSource/TweetsDataSource.m; sourceTree = "<group>"; };
@@ -502,6 +484,9 @@
 		4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetTextStorage.m; path = View/TextStorage/ComposeTweetTextStorage.m; sourceTree = "<group>"; };
 		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
 		4BBDA6ED1749130B00E849FD /* NetImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetImageView.m; path = View/Image/NetImageView.m; sourceTree = "<group>"; };
+		4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libLocalyticsAMP.a; path = Vendor/Localytics/libLocalyticsAMP.a; sourceTree = SOURCE_ROOT; };
+		4BC2C03617DF1F5E004ABF54 /* LocalyticsAmpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalyticsAmpSession.h; path = Vendor/Localytics/LocalyticsAmpSession.h; sourceTree = SOURCE_ROOT; };
+		4BC2C03717DF1F5E004ABF54 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
 		4BC63C201759133200F7E0C3 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
 		4BC63C211759133200F7E0C3 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationController.m; path = Controller/NavigationController.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
@@ -597,9 +582,6 @@
 				4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
-				4B6629C0177387FA00FA146A /* HockeySDK.framework in Frameworks */,
-				4B39302817BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */,
-				4BA3064B17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -609,12 +591,10 @@
 			files = (
 				4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */,
 				4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */,
-				4BA3064A17BE763A00733D56 /* libGoogleAnalytics.a in Frameworks */,
 				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
 				4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */,
 				4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */,
 				4B755D8D17732E95002A577D /* libz.dylib in Frameworks */,
-				4B39302717BA8BE5006ECB65 /* libFlurry_4.2.3.a in Frameworks */,
 				4B755D8B17732E8D002A577D /* SystemConfiguration.framework in Frameworks */,
 				4B755D8917732E7A002A577D /* AdSupport.framework in Frameworks */,
 				4BF9B6BC174A8C2E00DA3318 /* CoreText.framework in Frameworks */,
@@ -626,8 +606,8 @@
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
+				4BC2C03817DF1F5E004ABF54 /* libLocalyticsAMP.a in Frameworks */,
 				4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
-				4B755D9617733833002A577D /* HockeySDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,16 +632,6 @@
 			);
 			name = Base64;
 			path = Vendor/Base64;
-			sourceTree = SOURCE_ROOT;
-		};
-		4B132D5717949BE500EFA90C /* Flurry */ = {
-			isa = PBXGroup;
-			children = (
-				4B39302617BA8BE5006ECB65 /* libFlurry_4.2.3.a */,
-				4B132D5817949BE500EFA90C /* Flurry.h */,
-			);
-			name = Flurry;
-			path = Vendor/Flurry;
 			sourceTree = SOURCE_ROOT;
 		};
 		4B2A884B174576DF00CCE953 /* API */ = {
@@ -738,7 +708,6 @@
 				4BEBAC0217837298004B99FC /* CoreImage.framework */,
 				4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */,
 				4B755D991773386A002A577D /* QuartzCore.framework */,
-				4B755D9117733833002A577D /* HockeySDK.embeddedframework */,
 				4B755D8E17732EA6002A577D /* libsqlite3.dylib */,
 				4B755D8C17732E95002A577D /* libz.dylib */,
 				4B755D8A17732E8D002A577D /* SystemConfiguration.framework */,
@@ -921,25 +890,6 @@
 			name = Entity;
 			sourceTree = "<group>";
 		};
-		4B755D9117733833002A577D /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				4B755D9217733833002A577D /* HockeySDK.framework */,
-				4B755D9317733833002A577D /* Resources */,
-			);
-			name = HockeySDK.embeddedframework;
-			path = Vendor/HockeySDK.embeddedframework;
-			sourceTree = "<group>";
-		};
-		4B755D9317733833002A577D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				4B755D9417733833002A577D /* HockeySDK.xcconfig */,
-				4B755D9517733833002A577D /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
 		4B8D9F4B17C3979100CEEF07 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -966,19 +916,6 @@
 				4B91B65517DB30DE0062FD30 /* ImageScrollView.m */,
 			);
 			name = ScrollView;
-			sourceTree = "<group>";
-		};
-		4BA3063417BE74DF00733D56 /* GoogleAnalytics */ = {
-			isa = PBXGroup;
-			children = (
-				4BA3064117BE763A00733D56 /* GAI.h */,
-				4BA3064217BE763A00733D56 /* GAITrackedViewController.h */,
-				4BA3064317BE763A00733D56 /* GAITracker.h */,
-				4BA3064417BE763A00733D56 /* GAITransaction.h */,
-				4BA3064517BE763A00733D56 /* GAITransactionItem.h */,
-				4BA3064717BE763A00733D56 /* libGoogleAnalytics.a */,
-			);
-			name = GoogleAnalytics;
 			sourceTree = "<group>";
 		};
 		4BA3CAF51782E7610029586E /* DataSource */ = {
@@ -1122,6 +1059,16 @@
 			name = Image;
 			sourceTree = "<group>";
 		};
+		4BC2C03417DF1D41004ABF54 /* Localytics */ = {
+			isa = PBXGroup;
+			children = (
+				4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */,
+				4BC2C03617DF1F5E004ABF54 /* LocalyticsAmpSession.h */,
+				4BC2C03717DF1F5E004ABF54 /* LocalyticsSession.h */,
+			);
+			name = Localytics;
+			sourceTree = "<group>";
+		};
 		4BDB0F371748CD8F004980EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -1156,10 +1103,9 @@
 		4BF0DC0A176518AF002578FF /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				4BC2C03417DF1D41004ABF54 /* Localytics */,
 				4B8D9F5017C3A84400CEEF07 /* AFOAuth1Client */,
-				4BA3063417BE74DF00733D56 /* GoogleAnalytics */,
 				4B0DA1D117A693E00021DBBD /* Base64 */,
-				4B132D5717949BE500EFA90C /* Flurry */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
 			);
 			name = Vendor;
@@ -1331,7 +1277,6 @@
 				4B6629D2177387FA00FA146A /* Icon-Reply-Normal@2x.png in Resources */,
 				4BB48461178C948100A30BC4 /* Icon-TabBar-Mentions@2x.png in Resources */,
 				4BCBC92817969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */,
-				4B6629D8177387FA00FA146A /* HockeySDKResources.bundle in Resources */,
 				4B6629DB177387FA00FA146A /* Image-Separator@2x.png in Resources */,
 				4BFDA46C17762C7A007EFBC4 /* Slice 1.png in Resources */,
 				4BAF3FF117A02145006528F5 /* Button-Toolbar-Back.png in Resources */,
@@ -1401,7 +1346,6 @@
 				4BAEB3E61752417A0027A0D1 /* Icon-Reply-Normal@2x.png in Resources */,
 				4BB48460178C948100A30BC4 /* Icon-TabBar-Mentions@2x.png in Resources */,
 				4BCBC92717969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */,
-				4B755D9817733833002A577D /* HockeySDKResources.bundle in Resources */,
 				4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */,
 				4BFDA46B17762C7A007EFBC4 /* Slice 1.png in Resources */,
 				4BAF3FF017A02145006528F5 /* Button-Toolbar-Back.png in Resources */,
@@ -1896,6 +1840,7 @@
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Localytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
@@ -1940,6 +1885,7 @@
 					"$(SRCROOT)/Vendor/Flurry",
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Flurry,
 					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/GoogleAnalytics,
+					/Users/petr/Documents/development/xcode/TwitterApp/Vendor/Localytics,
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
