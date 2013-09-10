@@ -31,6 +31,7 @@
 @property(nonatomic, strong) NSNumber* following;
 @property(nonatomic, strong) UserEntity* user;
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
+@property(nonatomic, strong) UIView* headerView;
 
 @end
 
@@ -282,6 +283,24 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
+    if (self.headerView) {
+        
+        if (scrollView.contentOffset.y < 0) {
+            
+            CGRect headerViewFrame = self.headerView.frame;
+            headerViewFrame.size.height = 160 + (-scrollView.contentOffset.y);
+            headerViewFrame.origin.y = scrollView.contentOffset.y;
+            self.headerView.frame = headerViewFrame;
+        }
+        else {
+            
+            CGRect headerViewFrame = self.headerView.frame;
+            headerViewFrame.size.height = 160;
+            headerViewFrame.origin.y = 0;
+            self.headerView.frame = headerViewFrame;
+        }
+    }
+    
     self.notificationViewPlaceholderView.center = CGPointMake(self.notificationViewPlaceholderView.center.x, scrollView.contentOffset.y+self.notificationViewPlaceholderView.frame.size.height/2);
 }
 
@@ -314,8 +333,15 @@
     }
     
     NetImageView* imageView = [NetImageView new];
-    imageView.frame = CGRectMake(0, 0, 0, 160);
-    self.tableView.tableHeaderView = imageView;
+    imageView.frame = CGRectMake(0, 0, self.view.bounds.size.width, 160);
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    //self.tableView.tableHeaderView = imageView;
+    imageView.clipsToBounds = YES;
+    
+    UIView* headerPlaceholder = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 160)];
+    [headerPlaceholder addSubview:imageView];
+    self.headerView = imageView;
+    self.tableView.tableHeaderView = headerPlaceholder;
     
     NSString* bannetURLString = nil;
     if ([UIScreen mainScreen].scale > 1) {

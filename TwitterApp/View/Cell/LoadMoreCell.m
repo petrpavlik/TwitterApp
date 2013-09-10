@@ -31,11 +31,13 @@
     if (_loading) {
         
         _loadMoreLabel.hidden = YES;
+        _loadingIndicator.hidden = NO;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     else {
         
         _loadMoreLabel.hidden = NO;
+        _loadingIndicator.hidden = YES;
         self.selectionStyle = UITableViewCellSelectionStyleGray;
     }
 }
