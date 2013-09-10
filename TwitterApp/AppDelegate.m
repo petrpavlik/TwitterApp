@@ -27,6 +27,7 @@
 #import "Base64.h"
 #import "AFOAuth1Client.h"
 #import <Crashlytics/Crashlytics.h>
+#import "FollowTweetilusService.h"
 
 @interface AppDelegate ()
 
@@ -364,6 +365,8 @@
 }
 
 - (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
+    
+    [[FollowTweetilusService sharedInstance] offerFollowingIfAppropriate];
     
     [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     [[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];

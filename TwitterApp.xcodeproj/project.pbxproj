@@ -240,6 +240,7 @@
 		4BC2C03817DF1F5E004ABF54 /* libLocalyticsAMP.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BC2C03517DF1F5E004ABF54 /* libLocalyticsAMP.a */; };
 		4BC2C03B17DF5C82004ABF54 /* Icon-Verified.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */; };
 		4BC2C03C17DF5C82004ABF54 /* Icon-Verified@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */; };
+		4BC2C03F17DFB4A2004ABF54 /* FollowTweetilusService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC2C03E17DFB4A2004ABF54 /* FollowTweetilusService.m */; };
 		4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BC63C211759133200F7E0C3 /* NavigationController.m */; };
 		4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCB2287174D1078006602AA /* NSString+TwitterApp.m */; };
 		4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCBBF6C174E534F0004B1F4 /* LoadingCell.m */; };
@@ -491,6 +492,8 @@
 		4BC2C03717DF1F5E004ABF54 /* LocalyticsSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LocalyticsSession.h; path = Vendor/Localytics/LocalyticsSession.h; sourceTree = SOURCE_ROOT; };
 		4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Verified.png"; path = "Image/Icon-Verified.png"; sourceTree = "<group>"; };
 		4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Verified@2x.png"; path = "Image/Icon-Verified@2x.png"; sourceTree = "<group>"; };
+		4BC2C03D17DFB4A2004ABF54 /* FollowTweetilusService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FollowTweetilusService.h; path = Service/FollowTweetilusService.h; sourceTree = "<group>"; };
+		4BC2C03E17DFB4A2004ABF54 /* FollowTweetilusService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FollowTweetilusService.m; path = Service/FollowTweetilusService.m; sourceTree = "<group>"; };
 		4BC63C201759133200F7E0C3 /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NavigationController.h; path = Controller/NavigationController.h; sourceTree = "<group>"; };
 		4BC63C211759133200F7E0C3 /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavigationController.m; path = Controller/NavigationController.m; sourceTree = "<group>"; };
 		4BCB2286174D1078006602AA /* NSString+TwitterApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+TwitterApp.h"; path = "Category/NSString+TwitterApp.h"; sourceTree = "<group>"; };
@@ -656,6 +659,8 @@
 				4B349FC41779C0FA007D035D /* LogService.m */,
 				4B91B65B17DCA4EB0062FD30 /* TweetService.h */,
 				4B91B65C17DCA4EB0062FD30 /* TweetService.m */,
+				4BC2C03D17DFB4A2004ABF54 /* FollowTweetilusService.h */,
+				4BC2C03E17DFB4A2004ABF54 /* FollowTweetilusService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1590,6 +1595,7 @@
 				4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6C91792BAB8005FCC90 /* SearchUsersController.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
+				4BC2C03F17DFB4A2004ABF54 /* FollowTweetilusService.m in Sources */,
 				4B6EA1AC17AD329E000CEC49 /* ImageTransition.m in Sources */,
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
