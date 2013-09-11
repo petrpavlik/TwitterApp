@@ -314,7 +314,7 @@
     [self.tableView reloadData];
     [self setupProfileBanner];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
+    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
 }
 
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {

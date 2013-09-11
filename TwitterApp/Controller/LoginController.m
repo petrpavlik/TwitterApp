@@ -16,6 +16,8 @@
 @property(nonatomic, strong) ACAccountStore* accountStore;
 @property(nonatomic, strong) NSArray* accounts;
 
+@property(nonatomic, strong) UIButton* connectButton;
+
 @end
 
 @implementation LoginController
@@ -52,6 +54,7 @@
     connectButton.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     [connectButton addTarget:self action:@selector(didSelectConnectButton) forControlEvents:UIControlEventTouchUpInside];
     [contentPlaceholderView addSubview:connectButton];
+    self.connectButton = connectButton;
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     connectButton.tintColor = appDelegate.skin.linkColor;
@@ -80,6 +83,8 @@
 
 - (void)didSelectConnectButton {
     
+    self.connectButton.enabled = NO;
+    
     ACAccountStore *accountStore = self.accountStore;
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
@@ -98,6 +103,8 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
+                    self.connectButton.enabled = YES;
+                    
                     self.accounts = accounts;
                 
                     UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"Select Account" delegate:self cancelButtonTitle:Nil destructiveButtonTitle:Nil otherButtonTitles:nil];
@@ -114,12 +121,19 @@
             }
             else {
                 
-                [[[UIAlertView alloc] initWithTitle:@"Tweetilus could not find any account" message:@"Please make sure you have an account set up in the settings." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    self.connectButton.enabled = YES;
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Tweetilus could not find any Twitter account" message:@"Please make sure you have an account set up in the settings." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                });
             }
             
         } else {
             
             dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.connectButton.enabled = YES;
                 
                 if (error) {
                     [[LogService sharedInstance] logError:error];

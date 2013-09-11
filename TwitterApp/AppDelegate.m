@@ -268,20 +268,16 @@
     return YES;
 }
 
-- (UIViewController*)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
+/*- (UIViewController*)application:(UIApplication *)application viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
 
     NSLog(@"AppDelegate: %@", identifierComponents);
-    
-    /*if ([identifierComponents.lastObject isEqual:@"UINavigationController"]) {
-        return [[UINavigationController alloc] init];
-    }*/
     
     return nil;
 }
 
 - (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
     NSLog(@"%s", __PRETTY_FUNCTION__);
-}
+}*/
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
@@ -302,7 +298,7 @@
     [timelineDocument fetchNewTweetsWithCompletionHandler:completionHandler];
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+/*- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
  
     NSLog(@"did obtain notification token");
     
@@ -317,9 +313,9 @@
             NSLog(@"token registered for azure");
         }
     }];
-}
+}*/
 
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+/*- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     NSLog(@"did receive remote notification");
     
     NSString* notificationText = userInfo[@"aps"][@"alert"];
@@ -330,7 +326,7 @@
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
     
     NSLog(@"did fail to obtain a notification token: %@", error);
-}
+}*/
 
 #pragma mark -
 
@@ -368,8 +364,8 @@
     
     [[FollowTweetilusService sharedInstance] offerFollowingIfAppropriate];
     
-    [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
-    [[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
+    //[[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
+    //[[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
 }
 
 
