@@ -255,23 +255,40 @@
             return;
         }
         
-        weakSelf.replies = tweets;
+        weakSelf.replies = [NSArray new];
         
-        CGFloat heightOfContent = 0;
-        for (NSInteger i=0; i<tweets.count; i++) {
-            heightOfContent += [weakSelf tableView:weakSelf.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
-        }
+        [weakSelf.tableView beginUpdates];
+        [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakSelf.tableView endUpdates];
         
-        CGFloat contentOffset = weakSelf.tableView.contentOffset.y;
-        contentOffset += heightOfContent;
-        
-        [weakSelf.tableView reloadData];
-        weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
-        
-        if (tweets.count) {
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
-            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
-        }
+            weakSelf.replies = tweets;
+            
+            CGFloat heightOfContent = 0;
+            for (NSInteger i=0; i<tweets.count; i++) {
+                heightOfContent += [weakSelf tableView:weakSelf.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0]];
+            }
+            
+            CGFloat contentOffset = weakSelf.tableView.contentOffset.y;
+            contentOffset += heightOfContent;
+            
+            [weakSelf.tableView reloadData];
+            weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
+            
+            if (weakSelf.replies.count) {
+                
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
+                [weakSelf.tableView flashScrollIndicators];
+            }
+        });
+        
+        /*[weakSelf.tableView beginUpdates];
+        [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [weakSelf.tableView endUpdates];
+        [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];*/
         
         //[weakSelf.tableView flashScrollIndicators];
     }];
@@ -297,6 +314,7 @@
             [weakSelf.tableView beginUpdates];
             [weakSelf.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:weakSelf.olderRelatedTweets.count-1 inSection:2]] withRowAnimation:UITableViewRowAnimationAutomatic];
             [weakSelf.tableView endUpdates];
+            //[weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
             
             //[weakSelf.tableView reloadData];
             
@@ -337,6 +355,7 @@
             [weakSelf.tableView beginUpdates];
             [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:2] withRowAnimation:UITableViewRowAnimationAutomatic];
             [weakSelf.tableView endUpdates];
+            //[weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1] atScrollPosition:UITableViewScrollPositionTop animated:YES];
             
             if ([weakSelf.olderRelatedTweets.lastObject inReplyToStatusId]) {
                 
