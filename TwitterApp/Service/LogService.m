@@ -33,7 +33,8 @@
     
     if (self) {
         
-        [[LocalyticsSession shared] startSession:@"3048d2b4028b670f856d4fc-f57032a8-d91f-11e2-0f5b-004a77f8b47f"];
+        //[[LocalyticsSession shared] startSession:@"3048d2b4028b670f856d4fc-f57032a8-d91f-11e2-0f5b-004a77f8b47f"]; //development
+        [[LocalyticsSession shared] startSession:@"a0dc225f0915b20687092d2-d6416024-1bf9-11e3-3b4e-00a426b17dd8"]; //production
         
 #ifdef DEBUG
         [[LocalyticsSession shared] setLoggingEnabled:YES];
