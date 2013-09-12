@@ -127,7 +127,7 @@
 
 - (void)bookmarksSelected {
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:Nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:Nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", @"Save to Reading List", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:Nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:Nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", nil];
     [actionSheet showInView:self.view];
 }
 
@@ -175,10 +175,6 @@
         if (self.webView.request.URL) {
             [[UIApplication sharedApplication] openURL:self.webView.request.URL];
         }
-    }
-    else if (buttonIndex==2) {
-        
-        [[[UIAlertView alloc] initWithTitle:Nil message:@"TODO" delegate:Nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
     }
 }
 

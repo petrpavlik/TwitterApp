@@ -288,14 +288,22 @@
             if (heightOfTweetDetailCell < weakSelf.tableView.bounds.size.height) {
                 
                 CGFloat difference = weakSelf.tableView.bounds.size.height - heightOfTweetDetailCell - weakSelf.tableView.contentInset.bottom;
-                [weakSelf.tableView setContentOffset:CGPointMake(weakSelf.tableView.contentOffset.x, weakSelf.tableView.contentOffset.y - difference) animated:YES];
+                
+                if (heightOfContent > 0) {
+                    
+                    if (heightOfContent < difference) {
+                        difference = heightOfContent;
+                    }
+                    
+                    [weakSelf.tableView setContentOffset:CGPointMake(weakSelf.tableView.contentOffset.x, weakSelf.tableView.contentOffset.y - difference) animated:YES];
+                }
             }
             
-            if (weakSelf.replies.count) {
+            /*if (weakSelf.replies.count) {
                 
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d replies", tweets.count] style:NotificationViewStyleInformation];
                 [weakSelf.tableView flashScrollIndicators];
-            }
+            }*/
         });
         
         /*[weakSelf.tableView beginUpdates];

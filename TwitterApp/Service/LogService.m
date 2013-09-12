@@ -8,6 +8,7 @@
 
 #import "LocalyticsSession.h"
 #import "LogService.h"
+#import "UserEntity.h"
 
 @interface LogService ()
 
@@ -56,12 +57,34 @@
     NSParameterAssert(error);
     
     NSLog(@"error: %@", error);
-    [[LocalyticsSession shared] tagEvent:@"error" attributes:@{@"error": error}];
+    
+    UserEntity* currentUser = [UserEntity currentUser];
+    if (currentUser) {
+        
+        [[LocalyticsSession shared] tagEvent:@"error" attributes:@{@"error": error, @"currentUser": currentUser.screenName}];
+    }
+    else {
+     
+        [[LocalyticsSession shared] tagEvent:@"error" attributes:@{@"error": error}];
+    }
 }
 
 - (void)logEvent:(NSString *)event userInfo:(NSDictionary *)userInfo {
     
     NSParameterAssert(event.length);
+    
+    UserEntity* currentUser = [UserEntity currentUser];
+    if (currentUser) {
+        
+        NSMutableDictionary* mutableUserInfo = [userInfo mutableCopy];
+        if (!mutableUserInfo) {
+            mutableUserInfo = [NSMutableDictionary new];
+        }
+        
+        mutableUserInfo[@"currentUser"] = currentUser.screenName;
+        
+        userInfo = mutableUserInfo;
+    }
     
     NSLog(@"event: %@ userInfo: %@", event, userInfo);
     
