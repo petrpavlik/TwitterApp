@@ -255,15 +255,19 @@
             return;
         }
         
+        weakSelf.tableView.userInteractionEnabled = NO;
+        
         weakSelf.replies = [NSArray new];
         
         [weakSelf.tableView beginUpdates];
         [weakSelf.tableView reloadSections:[NSIndexSet indexSetWithIndex:0] withRowAnimation:UITableViewRowAnimationAutomatic];
         [weakSelf.tableView endUpdates];
         
-        double delayInSeconds = 1.0;
+        double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            
+            weakSelf.tableView.userInteractionEnabled = YES;
             
             weakSelf.replies = tweets;
             
@@ -277,6 +281,15 @@
             
             [weakSelf.tableView reloadData];
             weakSelf.tableView.contentOffset = CGPointMake(weakSelf.tableView.contentOffset.x, contentOffset);
+            
+            //NSLog(@"%f %f", self.tableView.contentOffset.y, self.tableView.contentSize.height);
+            
+            CGFloat heightOfTweetDetailCell = [weakSelf tableView:weakSelf.tableView heightForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]];
+            if (heightOfTweetDetailCell < weakSelf.tableView.bounds.size.height) {
+                
+                CGFloat difference = weakSelf.tableView.bounds.size.height - heightOfTweetDetailCell - weakSelf.tableView.contentInset.bottom;
+                [weakSelf.tableView setContentOffset:CGPointMake(weakSelf.tableView.contentOffset.x, weakSelf.tableView.contentOffset.y - difference) animated:YES];
+            }
             
             if (weakSelf.replies.count) {
                 
