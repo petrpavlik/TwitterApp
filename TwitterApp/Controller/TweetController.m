@@ -35,6 +35,7 @@
 @property(nonatomic, strong) TweetInputAccessoryView* tweetInputAccessoryView;
 @property(nonatomic, strong) UITextView* tweetTextView;
 @property(nonatomic, strong) ComposeTweetTextStorage* textStorage;
+@property(nonatomic, strong) id textSizeChangedObserver;
 
 @end
 
@@ -84,6 +85,8 @@
     
     [self.locationManager stopUpdatingLocation];
     self.locationManager.delegate = nil;
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 + (TweetController*)presentAsReplyToTweet:(TweetEntity*)tweet inViewController:(UIViewController*)viewController {
@@ -208,6 +211,12 @@
     
     [self registerForKeyboardNotifications];
     [self contentLengthDidChange];
+    
+    __weak typeof(self) weakSelf = self;
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        weakSelf.tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    }];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
