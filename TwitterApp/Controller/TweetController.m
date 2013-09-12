@@ -224,7 +224,7 @@
     
     if (self.backgroundImage) {
         
-        self.backgroundImageView.image = [self.backgroundImage applyLightEffect];
+        self.backgroundImageView.image = [self.backgroundImage applyExtraLightEffect];
         self.backgroundImageView.alpha = 0;
         
         [UIView animateWithDuration:0.5 delay:0 options:0 animations:^{
