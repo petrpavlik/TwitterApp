@@ -153,6 +153,7 @@
                         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
                     }
                     
                     return;
@@ -164,6 +165,7 @@
                 } else {
                     
                     [NotificationView showInView:self.view message:@"Link saved to Pocket"];
+                    [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
                 }
             }];
         }

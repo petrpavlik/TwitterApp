@@ -126,6 +126,8 @@
                     self.connectButton.enabled = YES;
                     
                     [[[UIAlertView alloc] initWithTitle:@"Tweetilus could not find any Twitter account" message:@"Please make sure you have an account set up in the settings." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    
+                    [[LogService sharedInstance] logEvent:@"no accounts found" userInfo:Nil];
                 });
             }
             
@@ -140,6 +142,8 @@
                 }
                 
                 [[[UIAlertView alloc] initWithTitle:@"Tweetilus failed to access your Twitter account" message:@"Please make sure you have an account set up in the settings and you haven't disabled access for Tweetilus." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                
+                [[LogService sharedInstance] logEvent:@"access to Twitter account probably disabled" userInfo:Nil];
             });
         }
     }];
@@ -156,6 +160,8 @@
     }
     
     ACAccount* account = self.accounts[buttonIndex];
+    
+    [[LogService sharedInstance] logEvent:@"user logged in" userInfo:@{@"user": account.username}];
     
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];

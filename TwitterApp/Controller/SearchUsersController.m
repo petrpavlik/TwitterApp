@@ -46,6 +46,8 @@
 
 - (void)dealloc {
     
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     [self.runningRequestDataOperation cancel];
 }
 

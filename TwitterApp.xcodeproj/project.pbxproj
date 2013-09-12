@@ -96,8 +96,6 @@
 		4B6629C4177387FA00FA146A /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B74289E1742D9CE00AEB85C /* Default@2x.png */; };
 		4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A01742D9CE00AEB85C /* Default-568h@2x.png */; };
 		4B6629C6177387FA00FA146A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */; };
-		4B6629C7177387FA00FA146A /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
-		4B6629C9177387FA00FA146A /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
 		4B6629CA177387FA00FA146A /* Image-Separator.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE71771D874004A09BC /* Image-Separator.png */; };
 		4B6629CB177387FA00FA146A /* Icon-Retweet-Highlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3D717522B950027A0D1 /* Icon-Retweet-Highlighted.png */; };
 		4B6629CC177387FA00FA146A /* Icon-Retweet-Highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BAEB3D817522B950027A0D1 /* Icon-Retweet-Highlighted@2x.png */; };
@@ -155,10 +153,9 @@
 		4B755D8D17732E95002A577D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8C17732E95002A577D /* libz.dylib */; };
 		4B755D8F17732EA6002A577D /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D8E17732EA6002A577D /* libsqlite3.dylib */; };
 		4B755D9A1773386A002A577D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B755D991773386A002A577D /* QuartzCore.framework */; };
+		4B75770617E1EA9500B11721 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4B75770517E1EA9500B11721 /* Images.xcassets */; };
 		4B7C2882175685FD003FDCBB /* TwitterAppWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */; };
 		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
-		4B81BA3D174538D900005607 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3C174538D900005607 /* Icon.png */; };
-		4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B81BA3E174538DC00005607 /* Icon@2x.png */; };
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
 		4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
@@ -407,12 +404,11 @@
 		4B755D8C17732E95002A577D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		4B755D8E17732EA6002A577D /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4B755D991773386A002A577D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		4B75770517E1EA9500B11721 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4B7C2880175685FD003FDCBB /* TwitterAppWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TwitterAppWindow.h; path = View/TwitterAppWindow.h; sourceTree = "<group>"; };
 		4B7C2881175685FD003FDCBB /* TwitterAppWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TwitterAppWindow.m; path = View/TwitterAppWindow.m; sourceTree = "<group>"; };
 		4B7C288B1756ADDC003FDCBB /* UserTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserTitleView.h; path = View/UserTitleView.h; sourceTree = "<group>"; };
 		4B7C288C1756ADDC003FDCBB /* UserTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTitleView.m; path = View/UserTitleView.m; sourceTree = "<group>"; };
-		4B81BA3C174538D900005607 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		4B81BA3E174538DC00005607 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
 		4B81BA4017453CD800005607 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
@@ -685,8 +681,6 @@
 			isa = PBXGroup;
 			children = (
 				4B662A16177387FB00FA146A /* Resources-iPad */,
-				4B81BA3E174538DC00005607 /* Icon@2x.png */,
-				4B81BA3C174538D900005607 /* Icon.png */,
 				4B7428901742D9CE00AEB85C /* TwitterApp */,
 				4B7428B41742D9CE00AEB85C /* TwitterAppTests */,
 				4B7428891742D9CE00AEB85C /* Frameworks */,
@@ -745,6 +739,7 @@
 				4B7428991742D9CE00AEB85C /* AppDelegate.h */,
 				4B74289A1742D9CE00AEB85C /* AppDelegate.m */,
 				4B7428A21742D9CE00AEB85C /* MainStoryboard.storyboard */,
+				4B75770517E1EA9500B11721 /* Images.xcassets */,
 				4B7428911742D9CE00AEB85C /* Supporting Files */,
 			);
 			path = TwitterApp;
@@ -1261,8 +1256,6 @@
 				4B6629C4177387FA00FA146A /* Default@2x.png in Resources */,
 				4B6629C5177387FA00FA146A /* Default-568h@2x.png in Resources */,
 				4B6629C6177387FA00FA146A /* MainStoryboard.storyboard in Resources */,
-				4B6629C7177387FA00FA146A /* Icon.png in Resources */,
-				4B6629C9177387FA00FA146A /* Icon@2x.png in Resources */,
 				4B6629CA177387FA00FA146A /* Image-Separator.png in Resources */,
 				4B6629CB177387FA00FA146A /* Icon-Retweet-Highlighted.png in Resources */,
 				4BD506C117AA793D00D386F1 /* Btn-Image@2x.png in Resources */,
@@ -1330,8 +1323,6 @@
 				4B74289F1742D9CE00AEB85C /* Default@2x.png in Resources */,
 				4B7428A11742D9CE00AEB85C /* Default-568h@2x.png in Resources */,
 				4B7428A41742D9CE00AEB85C /* MainStoryboard.storyboard in Resources */,
-				4B81BA3D174538D900005607 /* Icon.png in Resources */,
-				4B81BA3F174538DC00005607 /* Icon@2x.png in Resources */,
 				4B165EE91771D96C004A09BC /* Image-Separator.png in Resources */,
 				4BAEB3DB17522B950027A0D1 /* Icon-Retweet-Highlighted.png in Resources */,
 				4BD506C017AA793D00D386F1 /* Btn-Image@2x.png in Resources */,
@@ -1339,6 +1330,7 @@
 				4BAEB3DC17522B950027A0D1 /* Icon-Retweet-Highlighted@2x.png in Resources */,
 				4BD506BE17AA793D00D386F1 /* Btn-Image.png in Resources */,
 				4BAEB3DD17522B950027A0D1 /* Icon-Retweet-Normal.png in Resources */,
+				4B75770617E1EA9500B11721 /* Images.xcassets in Resources */,
 				4BFDA462177624A8007EFBC4 /* Btn-Location@2x.png in Resources */,
 				4BEEA6CF17933E2D005FCC90 /* Icon-TabBar-Search@2x.png in Resources */,
 				4B00B7CA17B80F5400606C4C /* Img-Geek-UserPlaceholder%402x.png in Resources */,
@@ -1838,6 +1830,8 @@
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1884,6 +1878,8 @@
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

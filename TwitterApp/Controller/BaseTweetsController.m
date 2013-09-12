@@ -87,6 +87,7 @@
 - (void)dealloc {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
     
@@ -140,8 +141,11 @@
     }
     
     [self updateTweetAge];
-    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
-    [self.updateTweetAgeTimer fire];
+    
+    if (!self.updateTweetAgeTimer) {
+        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+        [self.updateTweetAgeTimer fire];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -819,8 +823,12 @@
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
     
     [self updateTweetAge];
-    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
-    [self.updateTweetAgeTimer fire];
+    
+    if (!self.updateTweetAgeTimer) {
+        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+        [self.updateTweetAgeTimer fire];
+    }
+    
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 

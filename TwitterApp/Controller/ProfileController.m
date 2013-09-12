@@ -53,6 +53,8 @@
 
 - (void)dealloc {
     
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    
     [self.runningUserOperation cancel];
     [self.runningRelationshipOperation cancel];
 }
