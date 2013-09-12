@@ -1217,6 +1217,7 @@
 				ORGANIZATIONNAME = "Petr Pavlik";
 				TargetAttributes = {
 					4B7428861742D9CE00AEB85C = {
+						DevelopmentTeam = JL8TC3L46B;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1917,6 +1918,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

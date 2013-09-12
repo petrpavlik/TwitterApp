@@ -22,6 +22,8 @@
 @property(nonatomic, strong) NSMutableDictionary* hashtagsDictonary;
 @property(nonatomic, strong) NSMutableDictionary* mentionsDictonary;
 
+@property(nonatomic, strong) id textSizeChangedObserver;
+
 @end
 
 @implementation ProfileCell
@@ -61,6 +63,11 @@
         [self commonSetup];
     }
     return self;
+}
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 - (void)commonSetup {
@@ -212,6 +219,14 @@
     [self prepareForReuse];
     
     [self setupFonts];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf setupFonts];
+    }];
+
     
 }
 

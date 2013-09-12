@@ -33,6 +33,7 @@
 @property(nonatomic, weak) NSOperation* runningRelationshipOperation;
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic, strong) UIView* headerView;
+@property(nonatomic, strong) id textSizeChangedObserver;
 
 @end
 
@@ -57,6 +58,7 @@
     
     [self.runningUserOperation cancel];
     [self.runningRelationshipOperation cancel];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
 }
 
 - (void)viewDidLoad
@@ -90,6 +92,12 @@
         [self willBeginRefreshing];
         [self requestUserData];
     }
+    
+    __weak typeof(self) weakSelf = self;
+    self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+        
+        [weakSelf.tableView reloadData];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
