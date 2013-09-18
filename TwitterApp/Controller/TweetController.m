@@ -389,7 +389,7 @@
     if (selectedImage) {
         
         self.attachedImage = selectedImage;
-        [self.tweetInputAccessoryView displaySelectedImae:selectedImage];
+        [self.tweetInputAccessoryView displaySelectedImage:selectedImage];
         [self contentLengthDidChange];
     }
     else {
@@ -397,6 +397,7 @@
     }
     
     [picker dismissViewControllerAnimated:YES completion:NULL];
+    [self.tweetTextView becomeFirstResponder];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
@@ -559,8 +560,9 @@
         
         if (buttonIndex == actionSheet.destructiveButtonIndex) {
             
-            [self.tweetInputAccessoryView displaySelectedImae:nil];
+            [self.tweetInputAccessoryView displaySelectedImage:nil];
             self.attachedImage = nil;
+            [self.tweetTextView becomeFirstResponder];
             return;
         }
         

@@ -25,7 +25,7 @@
 - (void)disableLocation;
 - (void)enableLocation;
 - (void)displayLocationPlace:(NSString*)placeName;
-- (void)displaySelectedImae:(UIImage*)image;
+- (void)displaySelectedImage:(UIImage*)image;
 
 @property(nonatomic, weak) id <TweetInputAccessoryViewDelegate> delegate;
 @property(nonatomic, readonly) BOOL locationEnabled;
