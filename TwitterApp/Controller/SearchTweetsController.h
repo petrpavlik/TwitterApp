@@ -14,5 +14,6 @@
 @interface SearchTweetsController : TweetsController
 
 @property(nonatomic, strong) NSString* searchExpression;
+@property(nonatomic) BOOL saveDisabled;
 
 @end

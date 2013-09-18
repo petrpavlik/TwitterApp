@@ -160,6 +160,7 @@
         
         SearchTweetsController* searchTweetsController = [SearchTweetsController new];
         searchTweetsController.searchExpression = savedSearch.query;
+        searchTweetsController.saveDisabled = YES;
         [self.navigationController pushViewController:searchTweetsController animated:YES];
     }
 }
@@ -300,6 +301,18 @@
     
     SearchTweetsController* searchTweetsController = [SearchTweetsController new];
     searchTweetsController.searchExpression = self.searchExpression;
+    
+    if (self.savedSearches) {
+        
+        for (SavedSearchEntity* savedSearch in self.savedSearches) {
+            
+            if ([savedSearch.query isEqualToString:self.searchExpression]) {
+                searchTweetsController.saveDisabled = YES;
+                break;
+            }
+        }
+    }
+    
     [self.navigationController pushViewController:searchTweetsController animated:YES];
 }
 
