@@ -39,10 +39,20 @@
 @property(nonatomic, strong) id textSizeChangedObserver;
 @property(nonatomic, strong) NSMutableDictionary* runningRetweetOperationsDictionary;
 @property(nonatomic, strong) NSMutableDictionary* runningFavoriteOperationsDictionary;
+@property(nonatomic, strong) NSMutableDictionary* cachedImagesToPersist;
 
 @end
 
 @implementation BaseTweetsController
+
+- (NSMutableDictionary*)cachedImagesToPersist {
+    
+    if (!_cachedImagesToPersist) {
+        _cachedImagesToPersist = [NSMutableDictionary new];
+    }
+    
+    return _cachedImagesToPersist;
+}
 
 - (UIView*)notificationViewPlaceholderView {
     
@@ -815,12 +825,50 @@
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
     
+    [self.cachedImagesToPersist removeAllObjects];
+    
+    for (UITableViewCell* cell in self.tableView.visibleCells) {
+        
+        if ([cell isKindOfClass:[TweetCell class]]) {
+            
+            TweetEntity* tweet = [self tweetForIndexPath:[self.tableView indexPathForCell:cell]];
+            if (tweet.retweetedStatus) {
+                tweet = tweet.retweetedStatus;
+            }
+            
+            NSURL* avatarUrl = [NSURL URLWithString:[tweet.user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]];
+            UIImage* cachedAvatarImageToPersist = [[NetImageView sharedImageCache] objectForKey:avatarUrl];
+            
+            if (cachedAvatarImageToPersist) {
+                self.cachedImagesToPersist[avatarUrl] = cachedAvatarImageToPersist;
+            }
+            
+            NSArray* media = tweet.entities[@"media"];
+            for (NSDictionary* medium in media) {
+                
+                NSURL* mediumUrl = [NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", medium[@"media_url"]]];
+                UIImage* cachedMediumImageToPersist = [[NetImageView sharedImageCache] objectForKey:mediumUrl];
+                
+                if (cachedMediumImageToPersist) {
+                    self.cachedImagesToPersist[mediumUrl] = cachedMediumImageToPersist;
+                }
+            }
+        }
+    }
+    
     [self.updateTweetAgeTimer invalidate];
     self.updateTweetAgeTimer = nil;
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
+    
+    for (NSURL* url in [self.cachedImagesToPersist allKeys]) {
+        
+        UIImage* persistedImage = self.cachedImagesToPersist[url];
+        [[NetImageView sharedImageCache] setObject:persistedImage forKey:url];
+    }
+    [self.cachedImagesToPersist removeAllObjects];
     
     [self updateTweetAge];
     
@@ -955,7 +1003,7 @@
 
 - (void)didDeleteTweet:(TweetEntity *)tweet {
     
-    @throw [NSException exceptionWithName:@"MethodMustBeOverloadedException" reason:[NSString stringWithFormat:@"%s must be overloaded", __PRETTY_FUNCTION__] userInfo:Nil];
+    //@throw [NSException exceptionWithName:@"MethodMustBeOverloadedException" reason:[NSString stringWithFormat:@"%s must be overloaded", __PRETTY_FUNCTION__] userInfo:Nil];
 }
 
 #pragma mark -

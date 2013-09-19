@@ -262,8 +262,8 @@
     }
     
     if (location) {
-        params[@"lat"] = @(location.coordinate.latitude);
-        params[@"long"] = @(location.coordinate.longitude);
+        params[@"lat"] = @(location.coordinate.latitude).description;
+        params[@"long"] = @(location.coordinate.longitude).description;
     }
     
     NSMutableURLRequest *request = nil;

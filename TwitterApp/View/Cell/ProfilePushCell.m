@@ -26,9 +26,6 @@
     
     self.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = appDelegate.skin;
-    
     UIView *bgColorView = [[UIView alloc] init];
     [bgColorView setBackgroundColor:[UIColor colorWithRed:0.925 green:0.941 blue:0.945 alpha:1]];
     [self setSelectedBackgroundView:bgColorView];

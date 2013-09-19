@@ -33,10 +33,21 @@
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, strong) UIView* headerView;
 @property(nonatomic, strong) id textSizeChangedObserver;
+@property(nonatomic, strong) NSMutableDictionary* cachedImagesToPersist;
 
 @end
 
 @implementation MyProfileController
+
+
+- (NSMutableDictionary*)cachedImagesToPersist {
+    
+    if (!_cachedImagesToPersist) {
+        _cachedImagesToPersist = [NSMutableDictionary new];
+    }
+    
+    return _cachedImagesToPersist;
+}
 
 - (UIView*)notificationViewPlaceholderView {
     
@@ -72,6 +83,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:Nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:Nil];
     
     if ([UserEntity currentUser]) {
         
@@ -327,7 +339,46 @@
 
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
     
+    for (NSURL* url in [self.cachedImagesToPersist allKeys]) {
+        
+        UIImage* persistedImage = self.cachedImagesToPersist[url];
+        [[NetImageView sharedImageCache] setObject:persistedImage forKey:url];
+    }
+    [self.cachedImagesToPersist removeAllObjects];
+}
+
+- (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
     
+    UserEntity* user = self.user;
+    
+    if (!self.user) {
+        return;
+    }
+    
+    NSURL* avatarUrl = [NSURL URLWithString:[user.profileImageUrl stringByReplacingOccurrencesOfString:@"normal" withString:@"bigger"]];
+    UIImage* cachedAvatarImageToPersist = [[NetImageView sharedImageCache] objectForKey:avatarUrl];
+    
+    if (cachedAvatarImageToPersist) {
+        self.cachedImagesToPersist[avatarUrl] = cachedAvatarImageToPersist;
+    }
+    
+    if (self.user.profileBannerUrl.length) {
+        
+        NSString* bannetURLString = nil;
+        if ([UIScreen mainScreen].scale > 1) {
+            bannetURLString = [self.user.profileBannerUrl stringByAppendingString:@"/mobile_retina"];
+        }
+        else {
+            bannetURLString = [self.user.profileBannerUrl stringByAppendingString:@"/mobile"];
+        }
+        
+        NSURL* bannetUrl = [NSURL URLWithString:bannetURLString];
+        UIImage* cachedBannerImage = [[NetImageView sharedImageCache] objectForKey:bannetUrl];
+        
+        if (cachedBannerImage) {
+            self.cachedImagesToPersist[bannetUrl] = cachedBannerImage;
+        }
+    }
 }
 
 #pragma mark - profile banner
