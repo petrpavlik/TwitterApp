@@ -31,6 +31,7 @@
 @property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 @property(nonatomic, weak) NSOperation* runningUserOperation;
 @property(nonatomic, weak) NSOperation* runningRelationshipOperation;
+@property(nonatomic, weak) NSOperation* runningFollowUnfollowOperation;
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic, strong) UIView* headerView;
 @property(nonatomic, strong) id textSizeChangedObserver;
@@ -190,6 +191,12 @@
             [cell setFollowedByStatus:kFollowedByStatusUnknown];
         }
         
+        if (self.runningUserOperation || self.runningRelationshipOperation || self.runningFollowUnfollowOperation) {
+            
+            cell.followButton.hidden = YES;
+            [cell.activityIndicator startAnimating];
+        }
+        
         
         NSArray* urls = user.entities[@"url"][@"urls"];
         if (urls.count) {
@@ -347,6 +354,8 @@
     self.runningRelationshipOperation = [[UserEntity currentUser] requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
         
         if (error) {
+            
+            [[LogService sharedInstance] logError:error];
             [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not detect following status" style:NotificationViewStyleError];
             return;
         }
@@ -367,7 +376,9 @@
        
         if (error) {
             
-            
+            [[LogService sharedInstance] logError:error];
+            [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not load the user" style:NotificationViewStyleError];
+            return;
         }
         else {
             
@@ -392,30 +403,44 @@
     
     if (self.following.boolValue) {
         
-        [self.user requestUnfollowingWithCompletionBlock:^(NSError *error) {
+        self.runningFollowUnfollowOperation = [self.user requestUnfollowingWithCompletionBlock:^(NSError *error) {
+            
+            weakSelf.runningFollowUnfollowOperation = nil;
             
             if (error) {
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not unfollow @%@", weakSelf.user.screenName] style:NotificationViewStyleError];
-                return;
+            }
+            else {
+                weakSelf.following = [NSNumber numberWithBool:NO];
             }
             
-            weakSelf.following = [NSNumber numberWithBool:NO];
-            [weakSelf.tableView reloadData];
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
         }];
     }
     else {
         
-        [self.user requestFollowingWithCompletionBlock:^(NSError *error) {
+        self.runningFollowUnfollowOperation = [self.user requestFollowingWithCompletionBlock:^(NSError *error) {
+            
+            weakSelf.runningFollowUnfollowOperation = nil;
             
             if (error) {
                 [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:[NSString stringWithFormat:@"Could not start following @%@", weakSelf.user.screenName] style:NotificationViewStyleError];
-                return;
+            }
+            else {
+                weakSelf.following = [NSNumber numberWithBool:YES];
             }
             
-            weakSelf.following = [NSNumber numberWithBool:YES];
-            [weakSelf.tableView reloadData];
+            [weakSelf.tableView beginUpdates];
+            [weakSelf.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            [weakSelf.tableView endUpdates];
         }];
     }
+    
+    [self.tableView beginUpdates];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.tableView endUpdates];
 }
 
 - (void)profileCell:(ProfileCell*)cell didSelectURL:(NSURL*)url {

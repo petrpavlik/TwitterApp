@@ -44,6 +44,7 @@ typedef enum {
 @property(nonatomic, strong) UILabel* usernameLabel;
 @property(nonatomic, strong) UIButton* websiteButton;
 @property(nonatomic, strong) UILabel* lastTweetDateLabel;
+@property(nonatomic, strong) UIActivityIndicatorView* activityIndicator;
 
 - (void)setFollowedByStatus:(FollowedByStatus)status;
 - (void)configureWithWebsiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable;

@@ -121,6 +121,12 @@
     [_followButton addTarget:self action:@selector(friendshipButtonSelected) forControlEvents:UIControlEventTouchUpInside];
     [contentView addSubview:_followButton];
     
+    _activityIndicator = [UIActivityIndicatorView new];
+    _activityIndicator.translatesAutoresizingMaskIntoConstraints = NO;
+    _activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    //_activityIndicator.tintColor = [UIColor blackColor];
+    [contentView addSubview:_activityIndicator];
+    
     _descriptionLabel = [PPLabel new];
     _descriptionLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _descriptionLabel.text = @"description";
@@ -194,21 +200,21 @@
     
     
     
-    /*[superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_websiteButton
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activityIndicator
                                                                  attribute:NSLayoutAttributeCenterX
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
+                                                                    toItem:_followButton
                                                                  attribute:NSLayoutAttributeCenterX
                                                                 multiplier:1.0
                                                                   constant:0]];
     
-    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_locationButton
-                                                                 attribute:NSLayoutAttributeCenterX
+    [superviewConstraints addObject:[NSLayoutConstraint constraintWithItem:_activityIndicator
+                                                                 attribute:NSLayoutAttributeCenterY
                                                                  relatedBy:NSLayoutRelationEqual
-                                                                    toItem:contentView
-                                                                 attribute:NSLayoutAttributeCenterX
+                                                                    toItem:_followButton
+                                                                 attribute:NSLayoutAttributeCenterY
                                                                 multiplier:1.0
-                                                                  constant:0]];*/
+                                                                  constant:0]];
     
     /*[self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];*/
@@ -240,6 +246,8 @@
     [self.urlsDictonary removeAllObjects];
     [self.hashtagsDictonary removeAllObjects];
     [self.mentionsDictonary removeAllObjects];
+    
+    [self.activityIndicator stopAnimating];
 }
 
 - (void)friendshipButtonSelected {
