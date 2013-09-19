@@ -275,7 +275,7 @@
     _lastTweetDateLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
 }
 
-+ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable {
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable isMyProfile:(BOOL)isMyProfile {
     
     CGFloat textHeight = [description boundingRectWithSize:CGSizeMake(width-20-20, FLT_MAX) options:NSStringDrawingUsesLineFragmentOrigin  attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]} context:nil].size.height;
     
@@ -287,6 +287,10 @@
     
     if (!locationAvailable) {
         height -= 44;
+    }
+    
+    if (!isMyProfile) {
+        height += 22;
     }
     
     return height;

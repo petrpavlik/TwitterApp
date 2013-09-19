@@ -278,7 +278,14 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
-        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width websiteAvailable:[self.user.entities[@"url"][@"urls"] count] locationAvailable:self.user.location.length];
+        
+        BOOL isMyProfile = NO;
+        
+        if (self.user && [self.user.userId isEqualToString:[UserEntity currentUser].userId]) {
+            isMyProfile = YES;
+        }
+        
+        return [ProfileCell requiredHeightWithDescription:self.user.expandedUserDescription width:self.view.bounds.size.width websiteAvailable:[self.user.entities[@"url"][@"urls"] count] locationAvailable:self.user.location.length isMyProfile:isMyProfile];
     }
     else {
         return 44;

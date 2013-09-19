@@ -186,7 +186,12 @@
     self.navigationItem.rightBarButtonItem.enabled = NO;
     
     if (self.tweetToReplyTo) {
+        
         NSString* content = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
+        NSArray* mentions = self.tweetToReplyTo.entities[@"user_mentions"];
+        for (NSDictionary* item in mentions) {
+            content = [content stringByAppendingString:[NSString stringWithFormat:@"@%@ ", item[@"screen_name"]]];
+        }
         
         _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]}];
         
@@ -201,8 +206,9 @@
         originalTweetLabel.numberOfLines = 2;
         [self.tweetTextView addSubview:originalTweetLabel];
         
-        UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
+        /*UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
         self.tweetTextView.contentInset = contentInsets;
+        self.tweetTextView.scrollIndicatorInsets = contentInsets;*/
     }
     else if (self.initialText) {
         
@@ -611,12 +617,12 @@
     
     UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
     
-    static BOOL originalTweetAlreadyShown = NO;
+    /*static BOOL originalTweetAlreadyShown = NO;
     if (self.tweetToReplyTo && !originalTweetAlreadyShown) {
         
         contentInsets.top = 44;
         originalTweetAlreadyShown = YES;
-    }
+    }*/
     
     self.tweetTextView.contentInset = contentInsets;
     self.tweetTextView.scrollIndicatorInsets = contentInsets;

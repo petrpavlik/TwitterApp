@@ -175,7 +175,7 @@
             return 68; //user cell
         }
         else {
-            return self.tableView.frame.size.height; //error cell
+            return self.tableView.frame.size.height - self.tableView.contentInset.top - self.tableView.contentInset.bottom; //error cell
         }
     }
     else {

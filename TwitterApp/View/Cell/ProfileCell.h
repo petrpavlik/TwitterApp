@@ -53,6 +53,6 @@ typedef enum {
 - (void)addMention:(NSString*)mention atRange:(NSRange)range;
 - (void)addURL:(NSURL*)url atRange:(NSRange)range;
 
-+ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable;
++ (CGFloat)requiredHeightWithDescription:(NSString*)description width:(CGFloat)width websiteAvailable:(BOOL)websiteAvailable locationAvailable:(BOOL)locationAvailable isMyProfile:(BOOL)isMyProfile;
 
 @end
