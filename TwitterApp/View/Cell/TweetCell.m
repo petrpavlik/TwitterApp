@@ -120,6 +120,7 @@
     
     _nameLabel = [[UILabel alloc] init];
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    [_nameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow+1 forAxis:UILayoutConstraintAxisHorizontal];
     //_nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
     [contentView addSubview:_nameLabel];
@@ -200,7 +201,7 @@
     NSMutableArray* superviewConstraints = [NSMutableArray new];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|-10-[_avatarImageView(48)]-[_nameLabel]" options:NSLayoutFormatAlignAllTop metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView, _nameLabel)]];
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_nameLabel]-[_usernameLabel]->=8-[_tweetAgeLabel]-10-|" options:NSLayoutFormatAlignAllBaseline metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel, _usernameLabel, _tweetAgeLabel)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[_nameLabel(>=50)]-[_usernameLabel(>=50)]->=8-[_tweetAgeLabel]-10-|" options:NSLayoutFormatAlignAllBaseline metrics:nil views:NSDictionaryOfVariableBindings(_nameLabel, _usernameLabel, _tweetAgeLabel)]];
     
     [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-10-[_avatarImageView(48)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_avatarImageView)]];
     

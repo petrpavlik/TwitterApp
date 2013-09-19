@@ -532,16 +532,9 @@
 
 - (void)tweetCell:(TweetCell *)cell didSelectImage:(UIImage *)image {
     
-    /*NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
-    if (!indexPath) {
-        return;
+    if (image.renderingMode == UIImageRenderingModeAlwaysTemplate) {
+        return; //TODO: find more sophisticated way to handle this
     }
-    
-    TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-    
-    if (tweet.retweetedStatus) {
-        tweet = tweet.retweetedStatus;
-    }*/
     
     PhotoController* photoController = [PhotoController new];
     
@@ -914,7 +907,7 @@
                 [[NSNotificationCenter defaultCenter] postNotificationName:kTweetDeletedNotification object:Nil userInfo:@{@"tweet": tweet}];
             }];
         }
-        else if ((buttonIndex==0 && actionSheet.destructiveButtonIndex < 0) || buttonIndex == 1) {
+        else if ((buttonIndex==0 && actionSheet.destructiveButtonIndex < 0) || (buttonIndex==1 && actionSheet.destructiveButtonIndex >= 0)) {
          
             RetweetersController* retweetersController = [[RetweetersController alloc] initWithStyle:UITableViewStylePlain];
             
