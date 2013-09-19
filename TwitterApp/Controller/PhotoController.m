@@ -46,13 +46,24 @@
         scrollView.image = self.placeholderImage;
     }
     
-    [self.scrollView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageSelected)]];
+    UITapGestureRecognizer* doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageDoubleTapped)];
+    doubleTapRecognizer.numberOfTapsRequired = 2;
+    
+    UITapGestureRecognizer* singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(imageSelected)];
+    [singleTapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
+    
+    [self.scrollView addGestureRecognizer:singleTapRecognizer];
+    [self.scrollView addGestureRecognizer:doubleTapRecognizer];
 }
 
 - (void)imageSelected {
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+}
+
+- (void)imageDoubleTapped {
+    [self.scrollView handleDoubleTap];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

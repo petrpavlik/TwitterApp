@@ -204,5 +204,15 @@
     return CGPointZero;
 }
 
+- (void)handleDoubleTap {
+    
+    if(self.zoomScale > self.minimumZoomScale) {
+        [self setZoomScale:self.minimumZoomScale animated:YES];
+    }
+    else {
+        [self setZoomScale:self.maximumZoomScale animated:YES];
+    }
+}
+
 @end
 
