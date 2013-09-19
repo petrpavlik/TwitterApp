@@ -10,6 +10,7 @@
 #import "AFTwitterClient.h"
 #import "LoginController.h"
 #import "AppDelegate.h"
+#import <Social/Social.h>
 
 @interface LoginController () <UIActionSheetDelegate>
 
@@ -17,6 +18,7 @@
 @property(nonatomic, strong) NSArray* accounts;
 
 @property(nonatomic, strong) UIButton* connectButton;
+@property(nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
 
 @end
 
@@ -56,13 +58,20 @@
     [contentPlaceholderView addSubview:connectButton];
     self.connectButton = connectButton;
     
+    UIActivityIndicatorView* activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    activityIndicatorView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.activityIndicatorView = activityIndicatorView;
+    [contentPlaceholderView addSubview:activityIndicatorView];
+    
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     connectButton.tintColor = appDelegate.skin.linkColor;
     
-    [contentPlaceholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[helloLabel]-10-[infoLabel]-20-[connectButton(>=44)]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(infoLabel, connectButton, helloLabel)]];
+    [contentPlaceholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[helloLabel]-10-[infoLabel]-20-[connectButton(>=44)][activityIndicatorView]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(infoLabel, connectButton, helloLabel, activityIndicatorView)]];
     [contentPlaceholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[infoLabel]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(infoLabel, connectButton)]];
     [contentPlaceholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[helloLabel]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(helloLabel)]];
     [contentPlaceholderView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|[connectButton]|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(infoLabel, connectButton)]];
+    [contentPlaceholderView addConstraint:[NSLayoutConstraint constraintWithItem:activityIndicatorView attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:contentPlaceholderView attribute:NSLayoutAttributeCenterX multiplier:1 constant:0]];
+    
     
     [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[contentPlaceholderView]-|" options:0 metrics:Nil views:NSDictionaryOfVariableBindings(contentPlaceholderView)]];
     
@@ -84,6 +93,7 @@
 - (void)didSelectConnectButton {
     
     self.connectButton.enabled = NO;
+    [self.activityIndicatorView startAnimating];
     
     ACAccountStore *accountStore = self.accountStore;
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
@@ -102,8 +112,6 @@
                 //twitterAccount.accountType = accountTypeTwitter;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    self.connectButton.enabled = YES;
                     
                     self.accounts = accounts;
                 
@@ -124,6 +132,7 @@
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
                     self.connectButton.enabled = YES;
+                    [self.activityIndicatorView stopAnimating];
                     
                     [[[UIAlertView alloc] initWithTitle:@"Tweetilus could not find any Twitter account" message:@"Please make sure you have an account set up in the settings." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     
@@ -136,6 +145,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 self.connectButton.enabled = YES;
+                [self.activityIndicatorView stopAnimating];
                 
                 if (error) {
                     [[LogService sharedInstance] logError:error];
@@ -156,20 +166,69 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     
     if (buttonIndex == actionSheet.cancelButtonIndex) {
+
+        self.connectButton.enabled = YES;
+        [self.activityIndicatorView stopAnimating];
         return;
     }
     
     ACAccount* account = self.accounts[buttonIndex];
-    
-    [[LogService sharedInstance] logEvent:@"user logged in" userInfo:@{@"user": account.username}];
-    
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-    [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];
-    
-    [AFTwitterClient sharedClient].account = account;
-    [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self validateAccountAndDismissIfOk:account];
 }
 
+#pragma mark -
+
+- (void)validateAccountAndDismissIfOk:(ACAccount*)account {
+    
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com"
+                  @"/1.1/statuses/user_timeline.json"];
+    NSDictionary *params = @{@"screen_name" : account.username,
+                             @"include_rts" : @"0",
+                             @"trim_user" : @"1",
+                             @"count" : @"1"};
+    SLRequest *request =
+    [SLRequest requestForServiceType:SLServiceTypeTwitter
+                       requestMethod:SLRequestMethodGET
+                                 URL:url
+                          parameters:params];
+    
+    //  Attach an account to the request
+    [request setAccount:account];
+    
+    //  Step 3:  Execute the request
+    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            self.connectButton.enabled = YES;
+            [self.activityIndicatorView stopAnimating];
+           
+            if (error) {
+                
+                [[LogService sharedInstance] logError:error];
+                [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                
+                return;
+            }
+            
+            if (urlResponse.statusCode >= 200 && urlResponse.statusCode < 300) {
+                
+                [[LogService sharedInstance] logEvent:@"user logged in" userInfo:@{@"user": account.username}];
+                
+                NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+                [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];
+                
+                [AFTwitterClient sharedClient].account = account;
+                [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
+                [self dismissViewControllerAnimated:YES completion:NULL];
+            }
+            else {
+                
+                [[LogService sharedInstance] logEvent:@"account validation failed" userInfo:@{@"user": account.username}];
+                [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:@"Please check that your Twitter account has a password set." delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+            }
+        });
+    }];
+}
 
 @end
