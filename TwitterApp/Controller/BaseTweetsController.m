@@ -818,6 +818,9 @@
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
     
+    [self.updateTweetAgeTimer invalidate];
+    self.updateTweetAgeTimer = nil;
+    
     [self.cachedImagesToPersist removeAllObjects];
     
     for (UITableViewCell* cell in self.tableView.visibleCells) {
@@ -849,8 +852,6 @@
         }
     }
     
-    [self.updateTweetAgeTimer invalidate];
-    self.updateTweetAgeTimer = nil;
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 

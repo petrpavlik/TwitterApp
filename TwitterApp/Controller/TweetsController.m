@@ -294,10 +294,14 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     else {
         
         self.allTweetsLoaded = YES;
-        [self.tableView beginUpdates];
-        NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
-        [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-        [self.tableView endUpdates];
+        
+        if (self.tableView.numberOfSections > 1) {
+            
+            [self.tableView beginUpdates];
+            NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:1];
+            [self.tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+            [self.tableView endUpdates];
+        }
         
         [NotificationView showInView:self.notificationViewPlaceholderView message:@"All tweets loaded"];
     }
