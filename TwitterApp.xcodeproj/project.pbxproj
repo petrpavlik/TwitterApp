@@ -264,6 +264,9 @@
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
 		4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB691754DF2800075F7D /* UserListController.m */; };
 		4BE5557C1758F87400A214FC /* NotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE5557B1758F87400A214FC /* NotificationView.m */; };
+		4BE9BC2617EF5A8600A18EB0 /* WebControllerTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE9BC2517EF5A8600A18EB0 /* WebControllerTransition.m */; };
+		4BE9BC2917EFB44C00A18EB0 /* Icon-Back.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE9BC2717EFB44C00A18EB0 /* Icon-Back.png */; };
+		4BE9BC2A17EFB44C00A18EB0 /* Icon-Back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BE9BC2817EFB44C00A18EB0 /* Icon-Back@2x.png */; };
 		4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */; };
 		4BEBAC01178371D9004B99FC /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */; };
 		4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BEBAC04178372C1004B99FC /* Accelerate.framework */; };
@@ -516,6 +519,10 @@
 		4BDFDB691754DF2800075F7D /* UserListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserListController.m; path = Controller/UserListController.m; sourceTree = "<group>"; };
 		4BE5557A1758F87400A214FC /* NotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NotificationView.h; path = View/NotificationView.h; sourceTree = "<group>"; };
 		4BE5557B1758F87400A214FC /* NotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NotificationView.m; path = View/NotificationView.m; sourceTree = "<group>"; };
+		4BE9BC2417EF5A8600A18EB0 /* WebControllerTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WebControllerTransition.h; path = Controller/WebControllerTransition.h; sourceTree = "<group>"; };
+		4BE9BC2517EF5A8600A18EB0 /* WebControllerTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WebControllerTransition.m; path = Controller/WebControllerTransition.m; sourceTree = "<group>"; };
+		4BE9BC2717EFB44C00A18EB0 /* Icon-Back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Back.png"; path = "Image/Icon-Back.png"; sourceTree = "<group>"; };
+		4BE9BC2817EFB44C00A18EB0 /* Icon-Back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Back@2x.png"; path = "Image/Icon-Back@2x.png"; sourceTree = "<group>"; };
 		4BEBABFE178371D9004B99FC /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+ImageEffects.h"; path = "Category/UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		4BEBABFF178371D9004B99FC /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+ImageEffects.m"; path = "Category/UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		4BEBAC0217837298004B99FC /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
@@ -673,6 +680,8 @@
 			children = (
 				4B6EA1AA17AD329E000CEC49 /* ImageTransition.h */,
 				4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */,
+				4BE9BC2417EF5A8600A18EB0 /* WebControllerTransition.h */,
+				4BE9BC2517EF5A8600A18EB0 /* WebControllerTransition.m */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -934,6 +943,8 @@
 		4BAEB3D617522B800027A0D1 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				4BE9BC2717EFB44C00A18EB0 /* Icon-Back.png */,
+				4BE9BC2817EFB44C00A18EB0 /* Icon-Back@2x.png */,
 				4BC2C03917DF5C82004ABF54 /* Icon-Verified.png */,
 				4BC2C03A17DF5C82004ABF54 /* Icon-Verified@2x.png */,
 				4B00B7CC17B822B400606C4C /* 731-cloud-download.png */,
@@ -1356,8 +1367,10 @@
 				4BAF3FF017A02145006528F5 /* Button-Toolbar-Back.png in Resources */,
 				4BD506C417AA793D00D386F1 /* Btn-Web@2x.png in Resources */,
 				4BF0DC061764F1A1002578FF /* Icon-Navbar-Compose.png in Resources */,
+				4BE9BC2917EFB44C00A18EB0 /* Icon-Back.png in Resources */,
 				4BD506C817AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */,
 				4BF0DC071764F1A1002578FF /* Icon-Navbar-Compose@2x.png in Resources */,
+				4BE9BC2A17EFB44C00A18EB0 /* Icon-Back@2x.png in Resources */,
 				4BB4845C178C948100A30BC4 /* Icon-TabBar-Home@2x.png in Resources */,
 				4BFDA460177624A8007EFBC4 /* Btn-Location.png in Resources */,
 				4BAF3FF217A02145006528F5 /* Button-Toolbar-Back@2x.png in Resources */,
@@ -1593,6 +1606,7 @@
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
 				4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */,
+				4BE9BC2617EF5A8600A18EB0 /* WebControllerTransition.m in Sources */,
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
 				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
 				4BAEB3D41752280E0027A0D1 /* TweetController.m in Sources */,

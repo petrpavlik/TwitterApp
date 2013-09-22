@@ -11,8 +11,9 @@
 #import "NotificationView.h"
 #import "WebController.h"
 #import "UIActionSheet+TwitterApp.h"
+#import "WebControllerTransition.h"
 
-@interface WebController () <UIWebViewDelegate, UIActionSheetDelegate>
+@interface WebController () <UIWebViewDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate>
 
 @property(nonatomic, strong) UIWebView* webView;
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicator;
@@ -39,9 +40,10 @@
     UIActivityIndicatorView* activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     self.activityIndicator = activityIndicator;
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:activityIndicator];
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleDone target:self action:@selector(closeSelected)];
+    //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleDone target:self action:@selector(closeSelected)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Icon-Back"] style:UIBarButtonItemStyleDone target:self action:@selector(closeSelected)];
     
     self.title = @"Loading...";
     
@@ -63,6 +65,13 @@
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reloadSelected)],
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:Nil action:Nil],
                           [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(bookmarksSelected)]];
+    
+    UISwipeGestureRecognizer* popSwipeRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(popRequestedWithRecognizer:)];
+    popSwipeRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    popSwipeRecognizer.delegate = self;
+    
+    [self.parentViewController.view addGestureRecognizer:popSwipeRecognizer];
+    [_webView.scrollView.panGestureRecognizer requireGestureRecognizerToFail:popSwipeRecognizer];
 
 }
 
@@ -82,6 +91,10 @@
     navigationController.navigationBar.translucent = YES;
     navigationController.toolbarHidden = NO;
     navigationController.toolbar.tintColor = [UIColor whiteColor];
+    
+    WebControllerTransition* webTransition = [WebControllerTransition new];
+    navigationController.transitioningDelegate = webTransition;
+    viewController.modalPresentationStyle = UIModalPresentationCustom;
     
     [viewController presentViewController:navigationController animated:YES completion:NULL];
     
@@ -176,6 +189,23 @@
             [[UIApplication sharedApplication] openURL:self.webView.request.URL];
         }
     }
+}
+
+#pragma mark -
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    
+    if ([gestureRecognizer locationInView:self.view].x < 10) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)popRequestedWithRecognizer:(UIGestureRecognizer*)recognizer {
+    
+    NSLog(@"pop requested");
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end
