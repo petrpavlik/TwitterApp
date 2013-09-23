@@ -195,7 +195,7 @@
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
     
-    if ([gestureRecognizer locationInView:self.view].x < 10) {
+    if ([gestureRecognizer locationInView:self.view].x < 20) {
         return YES;
     }
     

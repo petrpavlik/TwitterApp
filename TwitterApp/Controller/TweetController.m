@@ -190,7 +190,10 @@
         NSString* content = [NSString stringWithFormat:@"@%@ ", self.tweetToReplyTo.user.screenName];
         NSArray* mentions = self.tweetToReplyTo.entities[@"user_mentions"];
         for (NSDictionary* item in mentions) {
-            content = [content stringByAppendingString:[NSString stringWithFormat:@"@%@ ", item[@"screen_name"]]];
+            
+            if (![item[@"screen_name"] isEqualToString:[UserEntity currentUser].screenName]) {
+                content = [content stringByAppendingString:[NSString stringWithFormat:@"@%@ ", item[@"screen_name"]]];
+            }
         }
         
         _tweetTextView.attributedText = [[NSAttributedString alloc] initWithString:content attributes:@{NSFontAttributeName: [UIFont preferredFontForTextStyle:UIFontTextStyleBody]}];
