@@ -21,7 +21,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 @property(nonatomic) BOOL allTweetsLoaded;
 @property(nonatomic, strong) TweetsDataSource* dataSource;
 @property(nonatomic, strong) NSArray* tweets;
-@property(nonatomic, strong) id didGainAccessObserver;
+//@property(nonatomic, strong) id didGainAccessObserver;
 @property(nonatomic, strong) id didPostTweetObserver;
 @property(nonatomic, strong) id foregroundNotificationObserver;
 @property(nonatomic, strong) NSString* restoredIndexPathIdentifier;
@@ -58,7 +58,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
 - (void)dealloc {
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.didPostTweetObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.foregroundNotificationObserver];
 }
@@ -82,12 +82,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     __weak typeof(self) weakSelf = self;
     
-    self.didGainAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kDidGainAccessToAccountNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+    /*self.didGainAccessObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kDidGainAccessToAccountNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
        
         if (!weakSelf.tweets.count) {
             [weakSelf loadNewTweets];
         }
-    }];
+    }];*/
     
     self.didPostTweetObserver = [[NSNotificationCenter defaultCenter] addObserverForName:kUserDidPostTweetNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         

@@ -66,7 +66,8 @@
     
     if (self.persistenceIdentifier && !self.document) {
         
-        NSString* username = [UserEntity currentUser].screenName;
+        NSString* username = [[NSUserDefaults standardUserDefaults] objectForKey:kUserDefaultsKeyUsername];
+        NSParameterAssert(username);
         
         NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *docsDir = [dirPaths objectAtIndex:0];
