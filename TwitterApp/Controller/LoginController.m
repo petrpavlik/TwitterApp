@@ -217,6 +217,7 @@
                 
                 NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
                 [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];
+                [userDefaults synchronize];
                 
                 [AFTwitterClient sharedClient].account = account;
                 [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];

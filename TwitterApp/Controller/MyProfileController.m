@@ -25,6 +25,7 @@
 #import "ProfileController.h"
 #import "NSString+TwitterApp.h"
 #import "LoginController.h"
+#import "TabBarController.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -96,6 +97,8 @@
         
         [weakSelf.tableView reloadData];
     }];
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Btn-Accounts"] style:UIBarButtonItemStyleBordered target:self action:@selector(accountsSelected)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -477,6 +480,12 @@
     
     LoginController* loginController = [LoginController new];
     [self presentViewController:loginController animated:YES completion:NULL];
+}
+
+- (void)accountsSelected {
+    
+    TabBarController* tabBarController = (TabBarController*)self.tabBarController;
+    [tabBarController displayListOfAccounts];
 }
 
 @end

@@ -28,6 +28,7 @@
 #import "AFOAuth1Client.h"
 #import <Crashlytics/Crashlytics.h>
 #import "FollowTweetilusService.h"
+#import "TwitterAccountsController.h"
 
 @interface AppDelegate ()
 
@@ -123,7 +124,7 @@
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidReceiveNotification:) name:nil object:nil];
 #endif
     
-    UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
+    /*UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
     rootTabBarController.tabBar.tintColor = [UIColor whiteColor];
     
     TimelineController* timelineController = [[TimelineController alloc] init];
@@ -155,7 +156,7 @@
     profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
     profileNavigationController.viewControllers = @[profileController];
     
-    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];
+    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];*/
     
     return YES;
 }
@@ -167,7 +168,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGainAccessToTwitterNotification:) name:kDidGainAccessToAccountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:nil];
     
-    ACAccountStore* accountStore = self.accountStore;
+    /*ACAccountStore* accountStore = self.accountStore;
     ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
     
@@ -187,7 +188,7 @@
                 break;
             }
         }
-    }
+    }*/
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     

@@ -26,6 +26,14 @@
     
     self.loadNewTweetsWhenGoingForeground = YES;
     self.displayUnreadTweetIndicator = YES;
+    
+    /*UISearchBar* searchBar =  [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    searchBar.placeholder = @"Search timeline";
+    searchBar.barStyle = UIBarStyleBlack;
+    searchBar.barTintColor = [UIColor whiteColor];
+    
+    self.tableView.tableHeaderView = searchBar;*/
 }
 
 - (NSString*)tweetsPersistenceIdentifier {

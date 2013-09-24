@@ -10,8 +10,15 @@
 #import "LoginController.h"
 #import "TabBarController.h"
 #import "AppDelegate.h"
+#import "AFTwitterClient.h"
+#import "TimelineController.h"
+#import "MentionsController.h"
+#import "SearchController.h"
+#import "MyProfileController.h"
 
 @interface TabBarController ()
+
+@property(nonatomic) BOOL shouldBeDismissed;
 
 @end
 
@@ -26,6 +33,58 @@
     return self;
 }
 
+- (void)loadView {
+    [super loadView];
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    ACAccountStore* accountStore = appDelegate.accountStore;
+    ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
+    
+    BOOL dismiss = NO;
+    ACAccount* activeAccount = nil;
+    
+    if (!accounts.count) {
+        dismiss = YES;
+    }
+    else {
+        
+        NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString* username = [userDefaults objectForKey:kUserDefaultsKeyUsername];
+        
+        if (!username.length) {
+            dismiss = YES;
+        }
+        else {
+            
+            dismiss = YES;
+            
+            for (ACAccount* account in accounts) {
+                
+                if ([account.username isEqualToString:username]) {
+                    
+                    dismiss = NO;
+                    activeAccount = account;
+                    break;
+                }
+            }
+        }
+    }
+    
+    if (dismiss) {
+        
+        self.shouldBeDismissed = YES;
+    }
+    else {
+        
+        [self constructTabs];
+        
+        [AFTwitterClient sharedClient].account = activeAccount;
+        [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
+    }
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -36,49 +95,55 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    
-    ACAccountStore* accountStore = appDelegate.accountStore;
-    ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
-    
-    BOOL showLoginScreen = NO;
-    
-    if (!accounts.count) {
-        showLoginScreen = YES;
+    if (self.shouldBeDismissed) {
+        
+        [self dismissViewControllerAnimated:YES completion:NULL];
     }
-    else {
-        
-        NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
-        NSString* username = [userDefaults objectForKey:kUserDefaultsKeyUsername];
-        
-        if (!username.length) {
-            showLoginScreen = YES;
-        }
-        else {
-            
-            showLoginScreen = YES;
-            
-            for (ACAccount* account in accounts) {
-                
-                if ([account.username isEqualToString:username]) {
+}
 
-                    showLoginScreen = NO;
-                    break;
-                }
-            }
-        }
-    }
+- (void)displayListOfAccounts {
     
-    if (showLoginScreen) {
-        
-        LoginController* loginController = [LoginController new];
-        [self presentViewController:loginController animated:YES completion:NULL];
-    }
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (NSUInteger)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+- (void)constructTabs {
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    
+    TimelineController* timelineController = [[TimelineController alloc] init];
+    timelineController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];
+    timelineController.tabBarItem.title = @"Timeline";
+    UINavigationController* timelineNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    timelineNavigationController.restorationIdentifier = @"TimelineNavigationController";
+    timelineNavigationController.viewControllers = @[timelineController];
+    
+    MentionsController* mentionsController = [MentionsController new];
+    mentionsController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Mentions"];
+    mentionsController.tabBarItem.title = @"Mentions";
+    UINavigationController* mentionsNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    mentionsNavigationController.restorationIdentifier = @"MentionsNavigationController";
+    mentionsNavigationController.viewControllers = @[mentionsController];
+    
+    SearchController* searchController = [SearchController new];
+    searchController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Search"];
+    searchController.tabBarItem.title = @"Search";
+    UINavigationController* searchNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    searchNavigationController.restorationIdentifier = @"SearchNavigationController";
+    searchNavigationController.viewControllers = @[searchController];
+    
+    
+    MyProfileController* profileController = [MyProfileController new];
+    profileController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Profile"];
+    profileController.tabBarItem.title = @"Profile";
+    UINavigationController* profileNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
+    profileNavigationController.viewControllers = @[profileController];
+    
+    self.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];
 }
 
 @end
