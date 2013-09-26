@@ -17,6 +17,8 @@
 #import "MyProfileController.h"
 #import "AFTwitterClient.h"
 
+#import "WebControllerTransition.h"
+
 @interface TwitterAccountsController ()
 
 @property(nonatomic, strong) NSArray* accounts;
@@ -131,6 +133,11 @@
     profileNavigationController.viewControllers = @[profileController];
     
     rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];
+    
+    WebControllerTransition* webTransition = [WebControllerTransition new];
+    rootTabBarController.transitioningDelegate = webTransition;
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    
     [self presentViewController:rootTabBarController animated:YES completion:NULL];
 
 }

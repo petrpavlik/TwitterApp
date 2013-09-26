@@ -96,7 +96,7 @@
 
 - (void)dealloc {
     
-    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSLog(@"%s - %@", __PRETTY_FUNCTION__, [self class]);
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];

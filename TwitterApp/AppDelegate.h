@@ -9,11 +9,14 @@
 #import "AbstractSkin.h"
 #import <UIKit/UIKit.h>
 #import <Accounts/Accounts.h>
+#import "TweetsController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, readonly) AbstractSkin* skin;
 @property (nonatomic, strong, readonly) ACAccountStore* accountStore;
+
+@property (nonatomic, weak) TweetsController* tweetsControllerForBackgroundFetching;
 
 @end

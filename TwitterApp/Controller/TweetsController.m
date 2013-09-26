@@ -15,7 +15,7 @@
 
 typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
-@interface TweetsController () <UIDataSourceModelAssociation, UIViewControllerRestoration>
+@interface TweetsController () <UIViewControllerRestoration>
 
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicatorView;
 @property(nonatomic) BOOL allTweetsLoaded;
@@ -78,7 +78,9 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     self.restorationClass = [self class];
     self.restorationIdentifier = self.stateRestorationIdentifier;
-    self.tableView.restorationIdentifier = @"TableView";
+    //self.tableView.restorationIdentifier = @"TableView";
+    
+    [self loadPersistedTimelinePosition];
     
     __weak typeof(self) weakSelf = self;
     
@@ -113,6 +115,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
             [self.dataSource loadNewTweets];
         }
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self persistTimelinePosition];
 }
 
 #pragma mark -
@@ -506,6 +514,11 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 - (void)encodeRestorableStateWithCoder:(NSCoder *)coder {
     
     [coder encodeObject:self.idOfMostRecentReadTweet forKey:@"idOfMostRecentReadTweet"];
+    /*NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    if (self.idOfMostRecentReadTweet.length) {
+        [userDefaults setValue:self.idOfMostRecentReadTweet forKey:kUserDefaultsKeyIdOfMostRecentTweet];
+    }
+    [userDefaults synchronize];*/
     
     [super encodeRestorableStateWithCoder:coder];
 }
@@ -514,40 +527,14 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     [super decodeRestorableStateWithCoder:coder];
     
     self.idOfMostRecentReadTweet = [coder decodeObjectForKey:@"idOfMostRecentReadTweet"];
+    /*NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    self.idOfMostRecentReadTweet = [userDefaults objectForKey:kUserDefaultsKeyIdOfMostRecentTweet];*/
 }
 
 + (UIViewController*)viewControllerWithRestorationIdentifierPath:(NSArray *)identifierComponents coder:(NSCoder *)coder {
     
     UIViewController* tweetsController = [[[self class] alloc] init];
     return tweetsController;
-}
-
-- (NSString*)modelIdentifierForElementAtIndexPath:(NSIndexPath*)idx inView:(UIView*)view {
-    
-    TweetEntity* tweet = self.tweets[idx.row];
-    return tweet.tweetId;
-}
-
-- (NSIndexPath*)indexPathForElementWithModelIdentifier:(NSString*)identifier inView:(UIView*)view {
-    
-    if (!self.tweets) {
-        
-        //model has not been loaded yet
-        self.restoredIndexPathIdentifier = [identifier copy];
-        return nil;
-    }
-    
-    NSInteger index = 0;
-    for (TweetEntity* tweet in self.tweets) {
-        
-        if ([tweet.tweetId isEqual:identifier]) {
-            return [NSIndexPath indexPathForRow:index inSection:0];
-        }
-        
-        index++;
-    }
-    
-    return nil;
 }
 
 #pragma mark -
@@ -600,5 +587,49 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }];
 }
 
+#pragma mark -
+
+- (void)persistTimelinePosition {
+    
+    if (!self.stateRestorationIdentifier.length) {
+        return;
+    }
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSArray* visibleRows = self.tableView.indexPathsForVisibleRows;
+    for (NSIndexPath* indexPath in visibleRows) {
+        
+        TweetEntity* tweet = self.tweets[indexPath.row];
+        if (![tweet isKindOfClass:[GapTweetEntity class]]) {
+            
+            NSString* username = [userDefaults objectForKey:kUserDefaultsKeyUsername];
+            NSParameterAssert(username);
+            [userDefaults setObject:tweet.tweetId forKey:[NSString stringWithFormat:@"%@-%@-%@", kUserDefaultsKeyTimelineRestorationIdentifier, self.stateRestorationIdentifier, username]];
+            
+            break;
+        }
+    }
+    [userDefaults synchronize];
+
+}
+
+- (void)loadPersistedTimelinePosition {
+    
+    if (!self.stateRestorationIdentifier.length) {
+        return;
+    }
+    
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString* username = [userDefaults objectForKey:kUserDefaultsKeyUsername];
+    NSParameterAssert(username);
+    
+    self.restoredIndexPathIdentifier = [userDefaults objectForKey:[NSString stringWithFormat:@"%@-%@-%@", kUserDefaultsKeyTimelineRestorationIdentifier, self.stateRestorationIdentifier, username]];
+}
+
+- (void)applicationDidEnterBackgroundNotification:(NSNotification *)notification {
+    [super applicationDidEnterBackgroundNotification:notification];
+    
+    [self persistTimelinePosition];
+}
 
 @end

@@ -266,6 +266,14 @@
 - (BOOL)application:(UIApplication *)application shouldRestoreApplicationState:(NSCoder *)coder {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    
+    NSString *restorationBundleVersion = [coder decodeObjectForKey:UIApplicationStateRestorationBundleVersionKey];
+    restorationBundleVersion = [restorationBundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
+    if ([restorationBundleVersion integerValue] < 104)
+    {
+        NSLog(@"Ignoring restoration data for bundle version: %@",restorationBundleVersion);
+        return NO;
+    }
     return YES;
 }
 
@@ -293,10 +301,14 @@
     
     [[LogService sharedInstance] logEvent:@"background fetch requested" userInfo:@{@"Timestamp": [NSDate date].description, @"State": @(application.applicationState)}];
     
-    UITabBarController* rootTabBarController = (UITabBarController*)self.window.rootViewController;
-    TweetsController* timelineDocument = [rootTabBarController.viewControllers[0] viewControllers][0];
-    
-    [timelineDocument fetchNewTweetsWithCompletionHandler:completionHandler];
+    if (self.tweetsControllerForBackgroundFetching) {
+        
+        TweetsController* timelineController = self.tweetsControllerForBackgroundFetching;
+        [timelineController fetchNewTweetsWithCompletionHandler:completionHandler];
+    }
+    else {
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
 }
 
 /*- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {

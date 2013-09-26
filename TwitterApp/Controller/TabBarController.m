@@ -24,6 +24,11 @@
 
 @implementation TabBarController
 
+- (void)dealloc {
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

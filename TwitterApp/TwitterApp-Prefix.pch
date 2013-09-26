@@ -27,3 +27,5 @@
 
 #define kUserDefaultsKeyTweetLocationEnabled @"UserDefaultsKeyTweetLocationEnabled"
 #define kUserDefaultsKeyUsername @"UserDefaultsKeyUsername"
+#define kUserDefaultsKeyIdOfMostRecentTweet @"UserDefaultsKeyIdOfMostRecentTweet"
+#define kUserDefaultsKeyTimelineRestorationIdentifier @"UserDefaultsKeyTimelineRestorationIdentifier"

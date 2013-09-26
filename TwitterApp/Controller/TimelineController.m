@@ -8,6 +8,7 @@
 
 #import "TimelineController.h"
 #import "TweetController.h"
+#import "AppDelegate.h"
 
 @implementation TimelineController
 
@@ -34,6 +35,9 @@
     searchBar.barTintColor = [UIColor whiteColor];
     
     self.tableView.tableHeaderView = searchBar;*/
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    appDelegate.tweetsControllerForBackgroundFetching = self;
 }
 
 - (NSString*)tweetsPersistenceIdentifier {
