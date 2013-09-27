@@ -23,6 +23,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [UIColor blackColor];
+    
     ImageScrollView *scrollView = [[ImageScrollView alloc] initWithFrame:self.view.bounds];
     //scrollView.image = [UIImage imageNamed:@"CuriousFrog.jpg"];
     scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
