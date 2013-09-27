@@ -19,6 +19,12 @@
 
 - (void)openAsync {
     
+    if (self.documentState != UIDocumentStateClosed) {
+        
+        [[LogService sharedInstance] logError:[NSError errorWithDomain:@"tweetilus.model" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open document in state %d", self.documentState]}]];
+        return;
+    }
+    
     NSFileManager *filemgr = [NSFileManager defaultManager];
     
     if ([filemgr fileExistsAtPath:self.fileURL.path]) {

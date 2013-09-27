@@ -41,6 +41,10 @@
         return;
     }
     
+    if ([user.userId isEqualToString:@"1611498181"]) {
+        return; //tweetilus cannot follow tweetilus
+    }
+    
     [user requestFriendshipStatusWithUser:@"1611498181" completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
        
         if (error) {
