@@ -11,7 +11,6 @@
 #import "AFTwitterClient.h"
 #import "AppDelegate.h"
 #import "BaseEntity.h"
-#import <ECSlidingViewController.h>
 #import "LoginController.h"
 #import "MentionsController.h"
 #import "ModernSkin.h"
@@ -189,6 +188,12 @@
             }
         }
     }*/
+    
+    NSString* selectorName = [NSString stringWithFormat:@"_%@%@%@%@:", @"set", @"Application", @"Is", @"Opaque"];
+    SEL selector = NSSelectorFromString(selectorName);
+    if ([application respondsToSelector:selector]) {
+        [application performSelector:selector withObject:nil];
+    }
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     

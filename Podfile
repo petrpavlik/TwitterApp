@@ -1,7 +1,5 @@
-platform :ios, '6.0'
+platform :ios, '7.0'
 
-pod 'AFNetworking'
+pod "AFNetworking", "~> 1.0"
 pod 'MBProgressHUD'
-pod 'ECSlidingViewController'
 pod 'PocketAPI'
-pod 'FlatUIKit'

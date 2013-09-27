@@ -41,6 +41,12 @@
     [super viewDidLoad];
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    //self.navigationController.navigationBar.translucent = YES;
+    
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -51,6 +57,8 @@
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [accountStore accountsWithAccountType:accountType];
     self.accounts = accounts;
+    
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -61,6 +69,10 @@
         LoginController* loginController = [LoginController new];
         [self presentViewController:loginController animated:YES completion:NULL];
     }
+    
+    [UIView animateWithDuration:0.7 delay:0.5 options:0 animations:^{
+        self.view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
+    } completion:NULL];
 }
 
 #pragma mark - Table view data source
@@ -82,6 +94,7 @@
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    cell.backgroundColor = [UIColor clearColor];
     
     // Configure the cell...
     ACAccount* account = self.accounts[indexPath.row];
@@ -92,18 +105,18 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    ACAccount* account = self.accounts[indexPath.row];
+    /*ACAccount* account = self.accounts[indexPath.row];
     
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];
-    [userDefaults synchronize];
+    [userDefaults synchronize];*/
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     UITabBarController* rootTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
     rootTabBarController.tabBar.tintColor = [UIColor whiteColor];
     
-    TimelineController* timelineController = [[TimelineController alloc] init];
+    /*TimelineController* timelineController = [[TimelineController alloc] init];
     timelineController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];
     timelineController.tabBarItem.title = @"Timeline";
     UINavigationController* timelineNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
@@ -132,7 +145,7 @@
     profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
     profileNavigationController.viewControllers = @[profileController];
     
-    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];
+    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];*/
     
     WebControllerTransition* webTransition = [WebControllerTransition new];
     rootTabBarController.transitioningDelegate = webTransition;

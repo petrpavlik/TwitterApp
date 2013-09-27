@@ -98,7 +98,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     self.foregroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         
-        if (self.loadNewTweetsWhenGoingForeground) {
+        if (weakSelf.loadNewTweetsWhenGoingForeground) {
             [weakSelf.dataSource loadNewTweets];
         }
     }];

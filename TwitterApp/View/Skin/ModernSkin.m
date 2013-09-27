@@ -10,7 +10,6 @@
 #import <CoreText/CoreText.h>
 #import "ModernSkin.h"
 #import "UIImage+TwitterApp.h"
-#import <UINavigationBar+FlatUI.h>
 
 @implementation ModernSkin
 
