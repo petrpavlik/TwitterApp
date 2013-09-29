@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^ControllerDismissedBlock) (void);
+
 @interface ImageTransition : NSObject <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
-@property(nonatomic) CGRect initialRect;
+@property(nonatomic) CGRect initialImageRect;
+@property(nonatomic, strong) UIImage* image;
+@property(nonatomic, copy) ControllerDismissedBlock controllerDismissedBlock;
 
 @end

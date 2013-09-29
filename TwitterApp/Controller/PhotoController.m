@@ -9,6 +9,7 @@
 #import "NetImageView.h"
 #import "PhotoController.h"
 #import "ImageScrollView.h"
+#import "ImageTransition.h"
 
 @interface PhotoController ()
 
@@ -59,6 +60,13 @@
 }
 
 - (void)imageSelected {
+    
+    if ([self.transitioningDelegate isKindOfClass:[ImageTransition class]]) {
+
+        ImageTransition* imageTransition = (ImageTransition*)self.transitioningDelegate;
+        imageTransition.initialImageRect = [self.view.window convertRect:self.scrollView.frameOfZoomView fromView:self.scrollView];
+    }
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];

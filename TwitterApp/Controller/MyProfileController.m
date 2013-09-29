@@ -19,7 +19,7 @@
 #import "UserTweetsController.h"
 #import "WebController.h"
 #import "PhotoController.h"
-#import "ImageTransition.h"
+#import "AvatarTransition.h"
 #import "NotificationView.h"
 #import "PushNotificationSettingsController.h"
 #import "ProfileController.h"
@@ -427,7 +427,7 @@
     photoController.placeholderImage = [[UIImage imageNamed:@"Img-Avatar-Placeholder"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];;
     photoController.fullImageURL = [NSURL URLWithString:[self.user.profileImageUrl stringByReplacingOccurrencesOfString:@"_normal" withString:@""]];
     
-    ImageTransition* imageTransition = [ImageTransition new];
+    AvatarTransition* imageTransition = [AvatarTransition new];
     
     photoController.transitioningDelegate = imageTransition;
     self.modalPresentationStyle = UIModalPresentationCustom;

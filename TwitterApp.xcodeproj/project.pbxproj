@@ -31,6 +31,7 @@
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
+		4B25C24B17F6349400CF9756 /* AvatarTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B25C24A17F6349400CF9756 /* AvatarTransition.m */; };
 		4B349FC51779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
@@ -349,6 +350,8 @@
 		4B16B2C2177503E1000FEFDD /* ErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorCell.m; path = View/Cell/ErrorCell.m; sourceTree = "<group>"; };
 		4B1D0136175B6A5A00B04036 /* TweetDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailController.h; path = Controller/TweetDetailController.h; sourceTree = "<group>"; };
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
+		4B25C24917F6349400CF9756 /* AvatarTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvatarTransition.h; path = View/Transition/AvatarTransition.h; sourceTree = "<group>"; };
+		4B25C24A17F6349400CF9756 /* AvatarTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvatarTransition.m; path = View/Transition/AvatarTransition.m; sourceTree = "<group>"; };
 		4B349FC31779C0FA007D035D /* LogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogService.h; path = Service/LogService.h; sourceTree = "<group>"; };
 		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
 		4B39302217BA735A006ECB65 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCell.h; path = View/Cell/TableViewCell.h; sourceTree = "<group>"; };
@@ -689,6 +692,8 @@
 				4B6EA1AB17AD329E000CEC49 /* ImageTransition.m */,
 				4BE9BC2417EF5A8600A18EB0 /* WebControllerTransition.h */,
 				4BE9BC2517EF5A8600A18EB0 /* WebControllerTransition.m */,
+				4B25C24917F6349400CF9756 /* AvatarTransition.h */,
+				4B25C24A17F6349400CF9756 /* AvatarTransition.m */,
 			);
 			name = Transition;
 			sourceTree = "<group>";
@@ -1613,6 +1618,7 @@
 				4B0DA1D417A693E00021DBBD /* Base64.m in Sources */,
 				4BFDA4551775C1DF007EFBC4 /* TweetInputAccessoryView.m in Sources */,
 				4BEEA6C91792BAB8005FCC90 /* SearchUsersController.m in Sources */,
+				4B25C24B17F6349400CF9756 /* AvatarTransition.m in Sources */,
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4BC2C03F17DFB4A2004ABF54 /* FollowTweetilusService.m in Sources */,
 				4B6EA1AC17AD329E000CEC49 /* ImageTransition.m in Sources */,

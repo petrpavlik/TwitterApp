@@ -214,5 +214,9 @@
     }
 }
 
+- (CGRect)frameOfZoomView {
+    return _zoomView.frame;
+}
+
 @end
 

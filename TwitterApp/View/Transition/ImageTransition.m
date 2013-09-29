@@ -8,6 +8,13 @@
 
 #import "ImageTransition.h"
 
+@interface ImageTransition ()
+
+@property(nonatomic) BOOL isDismissing;
+@property(nonatomic) CGRect finalFrameWhenDismissing;
+
+@end
+
 @implementation ImageTransition
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -24,35 +31,65 @@
     
     toView.frame = [transitionContext finalFrameForViewController:toVC];
     
-    // Take a snapshot of the new view being presented
-    /*UIGraphicsBeginImageContextWithOptions(toView.bounds.size, NO, 0);
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [toView.layer renderInContext:ctx];
-    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();*/
+    if (self.isDismissing) {
+        
+        UIGraphicsBeginImageContextWithOptions(toView.bounds.size, YES, [UIScreen mainScreen].scale);
+        [toView drawViewHierarchyInRect:toView.bounds afterScreenUpdates:YES];
+        UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        
+        UIImageView* toViewBackground = [[UIImageView alloc] initWithImage:snapshot];
+        [inView addSubview:toViewBackground];
+    }
     
-    UIGraphicsBeginImageContextWithOptions(toView.bounds.size, YES, [UIScreen mainScreen].scale);
-    [toView drawViewHierarchyInRect:toView.bounds afterScreenUpdates:YES];
-    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-
+    UIView* backgroundView = [[UIView alloc] initWithFrame:inView.bounds];
+    backgroundView.backgroundColor = [UIColor blackColor];
+    if (!self.isDismissing) {
+        backgroundView.alpha = 0;
+    }
+    [inView addSubview:backgroundView];
     
-    // Add the snapshot view and animate its appearance
-    UIImageView *intermediateView = [[UIImageView alloc] initWithImage:snapshot];
-    [inView addSubview:intermediateView];
-    inView.alpha = 0;
-    inView.layer.shouldRasterize = YES;
-    inView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    CGRect initialImageRect = self.initialImageRect;
     
-    //intermediateView.frame = CGRectMake(50, 100, 48, 48);
-    //intermediateView.frame = self.initialRect;
+    if (!self.isDismissing) {
+        
+        if (self.image.size.width < initialImageRect.size.width) {
+            
+            initialImageRect.origin.x += (initialImageRect.size.width - self.image.size.width)/2;
+            initialImageRect.size.width = self.image.size.width;
+        }
+        
+        self.finalFrameWhenDismissing = initialImageRect;
+    }
+    
+    CGFloat finalRectHeight = self.image.size.height * (inView.bounds.size.width / self.image.size.width);
+    CGRect finalImageRect = CGRectMake(0, (inView.bounds.size.height-finalRectHeight)/2, inView.bounds.size.width, finalRectHeight);
+    
+    if (self.isDismissing) {
+        finalImageRect = self.finalFrameWhenDismissing;
+    }
+    
+    UIImageView* imageView = [[UIImageView alloc] initWithFrame:initialImageRect];
+    imageView.image = self.image;
+    imageView.clipsToBounds = YES;
+    imageView.contentMode = UIViewContentModeScaleAspectFill;
+    [inView addSubview:imageView];
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
-                         
-        inView.alpha = 1;
+        
+        if (!self.isDismissing) {
+            backgroundView.alpha = 1;
+        }
+        else {
+            backgroundView.alpha = 0;
+        }
+        imageView.frame = finalImageRect;
      
     } completion:^(BOOL finished) {
-         [intermediateView removeFromSuperview];
+        
+        [backgroundView removeFromSuperview];
+        [imageView removeFromSuperview];
+        
          if ([transitionContext transitionWasCancelled]) {
              [transitionContext completeTransition:NO];
          }
@@ -61,6 +98,12 @@
              [fromView removeFromSuperview];
              [transitionContext completeTransition:YES];
          }
+        
+        if (self.isDismissing && self.controllerDismissedBlock) {
+            self.controllerDismissedBlock();
+        }
+        
+        self.isDismissing = YES;
      }];
 }
 

@@ -11,6 +11,7 @@
 @interface ImageScrollView : UIScrollView
 
 @property(nonatomic, strong) UIImage* image;
+- (CGRect)frameOfZoomView;
 
 - (void)handleDoubleTap;
 

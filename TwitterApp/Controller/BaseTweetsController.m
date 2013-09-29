@@ -536,11 +536,19 @@
         return; //TODO: find more sophisticated way to handle this
     }
     
-    PhotoController* photoController = [PhotoController new];
+    cell.mediaImageView.hidden = YES;
     
+    PhotoController* photoController = [PhotoController new];
     photoController.placeholderImage = image;
     
     ImageTransition* imageTransition = [ImageTransition new];
+    
+    CGRect initialRect = [self.view.window convertRect:cell.mediaImageView.frame fromView:cell];
+    imageTransition.initialImageRect = initialRect;
+    imageTransition.image = image;
+    imageTransition.controllerDismissedBlock = ^{
+        cell.mediaImageView.hidden = NO;
+    };
     
     photoController.transitioningDelegate = imageTransition;
     self.modalPresentationStyle = UIModalPresentationCustom;
