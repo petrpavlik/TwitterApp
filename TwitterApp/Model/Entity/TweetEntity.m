@@ -292,30 +292,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSString* recoverySuggestion = error.localizedRecoverySuggestion;
-        NSError* jsonError = nil;
-        NSDictionary* twitterErrorDictionary = nil;
-        
-        if (recoverySuggestion) {
-            twitterErrorDictionary = [NSJSONSerialization JSONObjectWithData:[recoverySuggestion dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-        }
-        
-        if (twitterErrorDictionary && !jsonError) {
-            
-            NSBundle *bundle = [NSBundle mainBundle];
-            NSDictionary *info = [bundle infoDictionary];
-            NSString *prodName = [info objectForKey:@"CFBundleDisplayName"];
-            
-            NSString* domain = [prodName stringByAppendingString:@".TwitterAPI"];
-            
-            NSNumber* code = twitterErrorDictionary[@"errors"][0][@"code"];
-            NSString* message = twitterErrorDictionary[@"errors"][0][@"message"];
-            
-            block(nil, [NSError errorWithDomain:domain code:[code integerValue] userInfo:@{NSLocalizedDescriptionKey: message}]);
-        }
-        else {
-            block(nil, error);
-        }
+        block(nil, error);
     }];
     
     [operation setShouldExecuteAsBackgroundTaskWithExpirationHandler:^{

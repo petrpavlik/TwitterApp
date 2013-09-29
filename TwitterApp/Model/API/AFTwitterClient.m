@@ -14,6 +14,37 @@
 
 static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1.1/";
 
+#pragma mark - utilities
+
+- (NSError*)sanitizedError:(NSError*)error {
+    
+    NSString* recoverySuggestion = error.localizedRecoverySuggestion;
+    NSError* jsonError = nil;
+    NSDictionary* twitterErrorDictionary = nil;
+    
+    if (recoverySuggestion) {
+        twitterErrorDictionary = [NSJSONSerialization JSONObjectWithData:[recoverySuggestion dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
+    }
+    
+    if (twitterErrorDictionary && !jsonError) {
+        
+        NSBundle *bundle = [NSBundle mainBundle];
+        NSDictionary *info = [bundle infoDictionary];
+        NSString *prodName = [info objectForKey:@"CFBundleDisplayName"];
+        
+        NSString* domain = [prodName stringByAppendingString:@".TwitterAPI"];
+        
+        NSNumber* code = twitterErrorDictionary[@"errors"][0][@"code"];
+        NSString* message = twitterErrorDictionary[@"errors"][0][@"message"];
+        
+        return [NSError errorWithDomain:domain code:[code integerValue] userInfo:@{NSLocalizedDescriptionKey: message}];
+    }
+    
+    return error;
+}
+
+#pragma mark -
+
 + (AFTwitterClient*)sharedClient {
     static AFTwitterClient *_sharedClient = nil;
     static dispatch_once_t onceToken;
@@ -138,6 +169,18 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     mutableSignedRequest.allHTTPHeaderFields = headerFields;
     
     return mutableSignedRequest;
+}
+
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest
+                                                    success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                                                    failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
+{
+    
+    return [super HTTPRequestOperationWithRequest:urlRequest success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        
+        NSError* sanitizedError = [self sanitizedError:error];
+        failure(operation, sanitizedError);
+    }];
 }
 
 
