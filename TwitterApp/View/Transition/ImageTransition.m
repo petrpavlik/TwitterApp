@@ -18,7 +18,7 @@
 @implementation ImageTransition
 
 - (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return 0.35;
+    return 0.5;
 }
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
@@ -75,7 +75,38 @@
     imageView.contentMode = UIViewContentModeScaleAspectFill;
     [inView addSubview:imageView];
     
-    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
+    [UIView animateWithDuration:[self transitionDuration:transitionContext] delay:0 usingSpringWithDamping:0.7 initialSpringVelocity:10 options:0 animations:^{
+        
+        if (!self.isDismissing) {
+            backgroundView.alpha = 1;
+        }
+        else {
+            backgroundView.alpha = 0;
+        }
+        imageView.frame = finalImageRect;
+        
+    } completion:^(BOOL finished) {
+        
+        [backgroundView removeFromSuperview];
+        [imageView removeFromSuperview];
+        
+        if ([transitionContext transitionWasCancelled]) {
+            [transitionContext completeTransition:NO];
+        }
+        else {
+            [inView addSubview:toView];
+            [fromView removeFromSuperview];
+            [transitionContext completeTransition:YES];
+        }
+        
+        if (self.isDismissing && self.controllerDismissedBlock) {
+            self.controllerDismissedBlock();
+        }
+        
+        self.isDismissing = YES;
+    }];
+    
+    /*[UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^{
         
         if (!self.isDismissing) {
             backgroundView.alpha = 1;
@@ -104,7 +135,7 @@
         }
         
         self.isDismissing = YES;
-     }];
+     }];*/
 }
 
 #pragma mark - Transitioning Delegate
