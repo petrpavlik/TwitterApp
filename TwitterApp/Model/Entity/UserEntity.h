@@ -44,9 +44,6 @@
 
 @property(nonatomic, strong) NSString* expandedUserDescription;
 
-+ (UserEntity*)currentUser;
-+ (void)registerCurrentUser:(UserEntity*)user;
-
 + (NSOperation*)requestUserWithId:(NSString*)userId completionBlock:(void (^)(UserEntity* user, NSError* error))block;
 + (NSOperation*)requestUserWithScreenName:(NSString*)screenName completionBlock:(void (^)(UserEntity* user, NSError* error))block;
 + (NSOperation*)requestFollowersOfUser:(NSString*)userId cursor:(NSString*)cursor completionBlock:(void (^)(NSArray* followers, NSString* nextCursor, NSError* error))block;

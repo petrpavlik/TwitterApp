@@ -42,17 +42,6 @@ static UserEntity* currentUser;
 
 #pragma mark -
 
-+ (void)registerCurrentUser:(UserEntity *)user {
-    
-    [[LogService sharedInstance] setUserId:user.screenName];
-    
-    currentUser = user;
-}
-
-+ (UserEntity*)currentUser {
-    return currentUser;
-}
-
 - (NSString*)expandedUserDescription {
     
     if (!self.userDescription.length) {

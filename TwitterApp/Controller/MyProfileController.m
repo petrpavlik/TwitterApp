@@ -26,6 +26,7 @@
 #import "NSString+TwitterApp.h"
 #import "LoginController.h"
 #import "TabBarController.h"
+#import "UserService.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -35,6 +36,7 @@
 @property(nonatomic, strong) UIView* headerView;
 @property(nonatomic, strong) id textSizeChangedObserver;
 @property(nonatomic, strong) NSMutableDictionary* cachedImagesToPersist;
+@property(nonatomic, weak) NSOperation* runningUserOperation;
 
 @end
 
@@ -67,6 +69,8 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
+    
+    [self.runningUserOperation cancel];
 }
 
 - (void)viewDidLoad
@@ -82,15 +86,10 @@
     self.tableView.tableFooterView = [UIView new];
     //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:Nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:Nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:Nil];
     
-    if ([UserEntity currentUser]) {
-        
-        self.user = [UserEntity currentUser];
-        [self setupProfileBanner];
-    }
+    [self loadUser];
     
     __weak typeof(self) weakSelf = self;
     self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
@@ -327,17 +326,6 @@
 
 #pragma mark -
 
-- (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
-    
-    self.user = notification.userInfo[@"user"];
-    NSParameterAssert(self.user);
-    
-    [self.tableView reloadData];
-    [self setupProfileBanner];
-    
-    //self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(settingsSelected)];
-}
-
 - (void)applicationWillEnterForegroundNotification:(NSNotification*)notification {
     
     for (NSURL* url in [self.cachedImagesToPersist allKeys]) {
@@ -346,6 +334,8 @@
         [[NetImageView sharedImageCache] setObject:persistedImage forKey:url];
     }
     [self.cachedImagesToPersist removeAllObjects];
+    
+    [self loadUser];
 }
 
 - (void)applicationDidEnterBackgroundNotification:(NSNotification*)notification {
@@ -383,6 +373,25 @@
 }
 
 #pragma mark - profile banner
+
+- (void)loadUser {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    self.runningUserOperation = [UserEntity requestUserWithId:[UserService sharedInstance].userId completionBlock:^(UserEntity *user, NSError *error) {
+        
+        if (error) {
+            
+            [[LogService sharedInstance] logError:error];
+            return;
+        }
+        
+        weakSelf.user = user;
+        [weakSelf.tableView reloadData];
+        
+        [weakSelf setupProfileBanner];
+    }];
+}
 
 - (void)setupProfileBanner {
     

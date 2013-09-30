@@ -197,6 +197,8 @@
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
+    [[LogService sharedInstance] logEvent:@"DidFinishLaunching" userInfo:nil];
+    
     return YES;
 }
 
@@ -216,22 +218,7 @@
 {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     
-    ACAccount* account = [AFTwitterClient sharedClient].account;
-    if (!account) {
-        return;
-    }
-    
-    [UserEntity requestUserWithScreenName:account.username completionBlock:^(UserEntity *user, NSError *error) {
-        
-        if (error) {
-            //report error
-            return;
-        }
-        
-        [UserEntity registerCurrentUser:user];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
-        
-    }];
+    [[LogService sharedInstance] logEvent:@"WillEnterForeground" userInfo:nil];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
@@ -297,14 +284,14 @@
     
     NSLog(@"should perform fetch");
     
-    ACAccount* account = [AFTwitterClient sharedClient].account;
+    /*ACAccount* account = [AFTwitterClient sharedClient].account;
     
     NSString* accountName = @"unknown";
     if (account.username) {
         accountName = account.username;
     }
     
-    [[LogService sharedInstance] logEvent:@"background fetch requested" userInfo:@{@"Timestamp": [NSDate date].description, @"State": @(application.applicationState)}];
+    [[LogService sharedInstance] logEvent:@"background fetch requested" userInfo:@{@"Timestamp": [NSDate date].description, @"State": @(application.applicationState)}];*/
     
     if (self.tweetsControllerForBackgroundFetching) {
         
@@ -357,30 +344,11 @@
 
 - (void)didGainAccessToTwitterNotification:(NSNotification*)notification {
     
-    if(![[NSThread currentThread] isMainThread]) {
-        
-        return;
-    }
-    
-    ACAccount* account = [AFTwitterClient sharedClient].account;
-    NSParameterAssert(account);
-    
-    [UserEntity requestUserWithScreenName:account.username completionBlock:^(UserEntity *user, NSError *error) {
-        
-        if (error) {
-            //report error
-            return;
-        }
-        
-        [UserEntity registerCurrentUser:user];
-        [[NSNotificationCenter defaultCenter] postNotificationName:kAuthenticatedUserDidLoadNotification object:Nil userInfo:@{@"user": user}];
-         
-    }];
 }
 
 - (void)authenticatedUserDidLoadNotification:(NSNotification*)notification {
     
-    [[FollowTweetilusService sharedInstance] offerFollowingIfAppropriate];
+    
     
     //[[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     //[[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];

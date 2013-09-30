@@ -105,47 +105,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    /*ACAccount* account = self.accounts[indexPath.row];
+    ACAccount* account = self.accounts[indexPath.row];
     
     NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:account.username forKey:kUserDefaultsKeyUsername];
-    [userDefaults synchronize];*/
+    [userDefaults synchronize];
     
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     UITabBarController* rootTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
     rootTabBarController.tabBar.tintColor = [UIColor whiteColor];
     
-    /*TimelineController* timelineController = [[TimelineController alloc] init];
-    timelineController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Home"];
-    timelineController.tabBarItem.title = @"Timeline";
-    UINavigationController* timelineNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-    timelineNavigationController.restorationIdentifier = @"TimelineNavigationController";
-    timelineNavigationController.viewControllers = @[timelineController];
-    
-    MentionsController* mentionsController = [MentionsController new];
-    mentionsController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Mentions"];
-    mentionsController.tabBarItem.title = @"Mentions";
-    UINavigationController* mentionsNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-    mentionsNavigationController.restorationIdentifier = @"MentionsNavigationController";
-    mentionsNavigationController.viewControllers = @[mentionsController];
-    
-    SearchController* searchController = [SearchController new];
-    searchController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Search"];
-    searchController.tabBarItem.title = @"Search";
-    UINavigationController* searchNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-    searchNavigationController.restorationIdentifier = @"SearchNavigationController";
-    searchNavigationController.viewControllers = @[searchController];
-    
-    
-    MyProfileController* profileController = [MyProfileController new];
-    profileController.tabBarItem.image = [UIImage imageNamed:@"Icon-TabBar-Profile"];
-    profileController.tabBarItem.title = @"Profile";
-    UINavigationController* profileNavigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-    profileNavigationController.restorationIdentifier = @"ProfileNavigationController";
-    profileNavigationController.viewControllers = @[profileController];
-    
-    rootTabBarController.viewControllers = @[timelineNavigationController, mentionsNavigationController, searchNavigationController, profileNavigationController];*/
     
     WebControllerTransition* webTransition = [WebControllerTransition new];
     rootTabBarController.transitioningDelegate = webTransition;

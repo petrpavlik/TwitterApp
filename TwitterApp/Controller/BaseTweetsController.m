@@ -31,6 +31,7 @@
 #import "SearchTweetsController.h"
 #import "PhotoController.h"
 #import "ImageTransition.h"
+#import "UserService.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -774,9 +775,8 @@
     }
     
     NSString* destructiveButtonTitle = nil;
-    UserEntity* currentUser = [UserEntity currentUser];
     
-    if (currentUser && [tweet.user.userId isEqualToString:currentUser.userId]) {
+    if ([tweet.user.userId isEqualToString:[UserService sharedInstance].userId]) {
         destructiveButtonTitle = @"Delete";
     }
     

@@ -32,6 +32,7 @@
 		4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B25C24B17F6349400CF9756 /* AvatarTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B25C24A17F6349400CF9756 /* AvatarTransition.m */; };
+		4B25C24D17F89AC200CF9756 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B25C24C17F89AC200CF9756 /* CoreTelephony.framework */; };
 		4B349FC51779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B349FC61779C0FA007D035D /* LogService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B349FC41779C0FA007D035D /* LogService.m */; };
 		4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B39302317BA735A006ECB65 /* TableViewCell.m */; };
@@ -41,6 +42,7 @@
 		4B4E80A7177A2B6A005358A5 /* ProfileCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A5177A2B6A005358A5 /* ProfileCell.m */; };
 		4B4E80AA177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
 		4B4E80AB177A341F005358A5 /* ProfileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B4E80A9177A341F005358A5 /* ProfileController.m */; };
+		4B5162B117F9BF4B00AB8F1E /* UserService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B5162B017F9BF4B00AB8F1E /* UserService.m */; };
 		4B55C6CC17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */; };
 		4B55C6CD17AF03C300266FAA /* PersistentBackgroundColorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */; };
 		4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B573FA5176B695200166461 /* TweetDetailCell.m */; };
@@ -352,6 +354,7 @@
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B25C24917F6349400CF9756 /* AvatarTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvatarTransition.h; path = View/Transition/AvatarTransition.h; sourceTree = "<group>"; };
 		4B25C24A17F6349400CF9756 /* AvatarTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AvatarTransition.m; path = View/Transition/AvatarTransition.m; sourceTree = "<group>"; };
+		4B25C24C17F89AC200CF9756 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		4B349FC31779C0FA007D035D /* LogService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogService.h; path = Service/LogService.h; sourceTree = "<group>"; };
 		4B349FC41779C0FA007D035D /* LogService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LogService.m; path = Service/LogService.m; sourceTree = "<group>"; };
 		4B39302217BA735A006ECB65 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewCell.h; path = View/Cell/TableViewCell.h; sourceTree = "<group>"; };
@@ -362,6 +365,8 @@
 		4B4E80A5177A2B6A005358A5 /* ProfileCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileCell.m; path = View/Cell/ProfileCell.m; sourceTree = "<group>"; };
 		4B4E80A8177A341F005358A5 /* ProfileController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProfileController.h; path = Controller/ProfileController.h; sourceTree = "<group>"; };
 		4B4E80A9177A341F005358A5 /* ProfileController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProfileController.m; path = Controller/ProfileController.m; sourceTree = "<group>"; };
+		4B5162AF17F9BF4B00AB8F1E /* UserService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserService.h; path = Service/UserService.h; sourceTree = "<group>"; };
+		4B5162B017F9BF4B00AB8F1E /* UserService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserService.m; path = Service/UserService.m; sourceTree = "<group>"; };
 		4B55C6CA17AF03C300266FAA /* PersistentBackgroundColorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PersistentBackgroundColorView.h; path = View/PersistentBackgroundColorView.h; sourceTree = "<group>"; };
 		4B55C6CB17AF03C300266FAA /* PersistentBackgroundColorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PersistentBackgroundColorView.m; path = View/PersistentBackgroundColorView.m; sourceTree = "<group>"; };
 		4B573FA4176B695200166461 /* TweetDetailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailCell.h; path = View/Cell/TweetDetailCell.h; sourceTree = "<group>"; };
@@ -609,6 +614,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4B25C24D17F89AC200CF9756 /* CoreTelephony.framework in Frameworks */,
 				4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */,
 				4BEBAC05178372C1004B99FC /* Accelerate.framework in Frameworks */,
 				4BFDA4581775FC27007EFBC4 /* CoreLocation.framework in Frameworks */,
@@ -674,6 +680,8 @@
 				4B91B65C17DCA4EB0062FD30 /* TweetService.m */,
 				4BC2C03D17DFB4A2004ABF54 /* FollowTweetilusService.h */,
 				4BC2C03E17DFB4A2004ABF54 /* FollowTweetilusService.m */,
+				4B5162AF17F9BF4B00AB8F1E /* UserService.h */,
+				4B5162B017F9BF4B00AB8F1E /* UserService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -724,6 +732,7 @@
 		4B7428891742D9CE00AEB85C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4B25C24C17F89AC200CF9756 /* CoreTelephony.framework */,
 				4B1572F317DE5E1400170D7F /* Crashlytics.framework */,
 				4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */,
 				4BA3064C17BE76F400733D56 /* CoreData.framework */,
@@ -1664,6 +1673,7 @@
 				4BF2DCE8178F45B50007C343 /* TweetsController.m in Sources */,
 				4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
+				4B5162B117F9BF4B00AB8F1E /* UserService.m in Sources */,
 				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1876,6 +1886,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TwitterApp/TwitterApp-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"MIXPANEL_DEBUG=1",
+					"MIXPANEL_LOG=1",
+				);
 				INFOPLIST_FILE = "TwitterApp/TwitterApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = (

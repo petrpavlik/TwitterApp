@@ -19,6 +19,7 @@
 #import "ComposeTweetTextStorage.h"
 #import "TwitterAppWindow.h"
 #import "TweetService.h"
+#import "UserService.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
 
@@ -191,7 +192,9 @@
         NSArray* mentions = self.tweetToReplyTo.entities[@"user_mentions"];
         for (NSDictionary* item in mentions) {
             
-            if (![item[@"screen_name"] isEqualToString:[UserEntity currentUser].screenName]) {
+            
+            
+            if (![item[@"screen_name"] isEqualToString:[UserService sharedInstance].username]) {
                 content = [content stringByAppendingString:[NSString stringWithFormat:@"@%@ ", item[@"screen_name"]]];
             }
         }

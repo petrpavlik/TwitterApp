@@ -8,6 +8,7 @@
 
 #import "FollowTweetilusService.h"
 #import "UserEntity.h"
+#import "UserService.h"
 
 #define kFollowTweetilusOffered @"FollowTweetilusOffered"
 
@@ -35,11 +36,8 @@
         return; //user already accepted or declined the offer
     }
     
-    UserEntity* user = [UserEntity currentUser];
-    
-    if (!user) {
-        return;
-    }
+    UserEntity* user = [UserEntity new];
+    user.userId = [UserService sharedInstance].userId;
     
     if ([user.userId isEqualToString:@"1611498181"]) {
         return; //tweetilus cannot follow tweetilus

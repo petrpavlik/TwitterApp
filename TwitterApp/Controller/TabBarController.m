@@ -15,6 +15,8 @@
 #import "MentionsController.h"
 #import "SearchController.h"
 #import "MyProfileController.h"
+#import "UserService.h"
+#import "FollowTweetilusService.h"
 
 @interface TabBarController ()
 
@@ -86,6 +88,10 @@
         [self constructTabs];
         
         [AFTwitterClient sharedClient].account = activeAccount;
+        
+        [UserService sharedInstance].username = activeAccount.username;
+        [UserService sharedInstance].userId = [[[activeAccount valueForKey:@"properties"] valueForKey:@"user_id"] description];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
     }
 }
@@ -103,7 +109,10 @@
     if (self.shouldBeDismissed) {
         
         [self dismissViewControllerAnimated:YES completion:NULL];
+        return;
     }
+    
+    [[FollowTweetilusService sharedInstance] offerFollowingIfAppropriate];
 }
 
 - (void)displayListOfAccounts {

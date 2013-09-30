@@ -191,7 +191,7 @@
 
 - (void)switchCellDidToggleSwitch:(SwitchCell *)cell {
     
-    self.notificationsEnabled = @(!self.notificationsEnabled.boolValue);
+    /*self.notificationsEnabled = @(!self.notificationsEnabled.boolValue);
     
     NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
     
@@ -258,14 +258,14 @@
             }];
         }
         
-    }
+    }*/
 }
 
 #pragma mark -
 
 - (void)requestData {
     
-    self.dataTable = [self.msClient tableWithName:@"PushUsers"];
+    /*self.dataTable = [self.msClient tableWithName:@"PushUsers"];
     UserEntity* currentUser = [UserEntity currentUser];
     
     __weak typeof(self) weakSelf = self;
@@ -295,7 +295,7 @@
             }
             [weakSelf.tableView reloadData];
         }
-    }];
+    }];*/
 }
 
 #pragma mark -

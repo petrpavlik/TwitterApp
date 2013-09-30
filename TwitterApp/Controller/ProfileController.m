@@ -23,6 +23,7 @@
 #import "AvatarTransition.h"
 #import "TableViewCell.h"
 #import "NSString+TwitterApp.h"
+#import "UserService.h"
 
 @interface ProfileController () <ProfileCellDelegate>
 
@@ -159,7 +160,7 @@
             cell.lastTweetDateLabel.text = [NSString stringWithFormat:@"Tweeted %@", [dateFormatter stringForObjectValue:user.status.createdAt]];
         }
         
-        if (![[UserEntity currentUser].userId isEqualToString:self.user.userId]) {
+        if (![[UserService sharedInstance].userId isEqualToString:self.user.userId]) {
             
             if (self.following) {
                 
@@ -281,7 +282,7 @@
         
         BOOL isMyProfile = NO;
         
-        if (self.user && [self.user.userId isEqualToString:[UserEntity currentUser].userId]) {
+        if (self.user && [self.user.userId isEqualToString:[UserService sharedInstance].userId]) {
             isMyProfile = YES;
         }
         
@@ -350,7 +351,7 @@
 
 - (void)requestDataRelationshitData {
     
-    if ([[UserEntity currentUser].userId isEqualToString:self.user.userId]) {
+    if ([[UserService sharedInstance].userId isEqualToString:self.user.userId]) {
         return;
     }
     
@@ -358,7 +359,10 @@
     
     __weak typeof(self)weakSelf = self;
     
-    self.runningRelationshipOperation = [[UserEntity currentUser] requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
+    UserEntity* user = [UserEntity new];
+    user.userId = [UserService sharedInstance].userId;
+    
+    self.runningRelationshipOperation = [user requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
         
         if (error) {
             
