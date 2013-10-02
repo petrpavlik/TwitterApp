@@ -40,14 +40,14 @@
 @synthesize skin = _skin;
 @synthesize accountStore = _accountStore;
 
-- (UIWindow*)window {
+/*- (UIWindow*)window {
     
     if (!_window) {
         _window = [[TwitterAppWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     }
     
     return _window;
-}
+}*/
 
 - (AbstractSkin*)skin {
     
@@ -167,6 +167,20 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGainAccessToTwitterNotification:) name:kDidGainAccessToAccountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:nil];
     
+    /*double delayInSeconds = 2.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        UIView* rootControllerView = [UIApplication sharedApplication].keyWindow.rootViewController.view;
+        if (![self isView:rootControllerView containedInHiearchyOfView:[UIApplication sharedApplication].keyWindow]) {
+            
+            [[[UIAlertView alloc] initWithTitle:@"Hierachy is broken" message:@"restoring default state" delegate:Nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+            
+            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:Nil];
+            self.window.rootViewController = [storyboard instantiateInitialViewController];
+        }
+    });*/
+    
     /*ACAccountStore* accountStore = self.accountStore;
     ACAccountType* twitterAccountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray* accounts = [accountStore accountsWithAccountType:twitterAccountType];
@@ -189,11 +203,11 @@
         }
     }*/
     
-    NSString* selectorName = [NSString stringWithFormat:@"_%@%@%@%@:", @"set", @"Application", @"Is", @"Opaque"];
+    /*NSString* selectorName = [NSString stringWithFormat:@"_%@%@%@%@:", @"set", @"Application", @"Is", @"Opaque"];
     SEL selector = NSSelectorFromString(selectorName);
     if ([application respondsToSelector:selector]) {
         [application performSelector:selector withObject:nil];
-    }
+    }*/
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
@@ -274,9 +288,9 @@
     NSLog(@"AppDelegate: %@", identifierComponents);
     
     return nil;
-}
+}*/
 
-- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
+/*- (void)application:(UIApplication *)application didDecodeRestorableStateWithCoder:(NSCoder *)coder {
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }*/
 
@@ -352,6 +366,23 @@
     
     //[[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     //[[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
+}
+
+#pragma mark -
+
+- (BOOL)isView:(UIView*)containedView containedInHiearchyOfView:(UIView*)containerView {
+
+    for (UIView* view in containerView.subviews) {
+        
+        if (view == containedView) {
+            return YES;
+        }
+        else {
+            return [self isView:containedView containedInHiearchyOfView:view];
+        }
+    }
+    
+    return NO;
 }
 
 

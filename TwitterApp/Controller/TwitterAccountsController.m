@@ -27,13 +27,9 @@
 
 @implementation TwitterAccountsController
 
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+- (void)dealloc {
+    
+    NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
 - (void)viewDidLoad
@@ -58,7 +54,7 @@
     NSArray *accounts = [accountStore accountsWithAccountType:accountType];
     self.accounts = accounts;
     
-    self.view.backgroundColor = [UIColor whiteColor];
+    //self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -70,9 +66,9 @@
         [self presentViewController:loginController animated:YES completion:NULL];
     }
     
-    [UIView animateWithDuration:0.7 delay:0.5 options:0 animations:^{
+    /*[UIView animateWithDuration:0.7 delay:0.5 options:0 animations:^{
         self.view.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-    } completion:NULL];
+    } completion:NULL];*/
 }
 
 #pragma mark - Table view data source

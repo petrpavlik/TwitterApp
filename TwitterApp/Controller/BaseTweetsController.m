@@ -99,6 +99,8 @@
     
     NSLog(@"%s - %@", __PRETTY_FUNCTION__, [self class]);
     
+    [self.updateTweetAgeTimer invalidate];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [[NSNotificationCenter defaultCenter] removeObserver:self.textSizeChangedObserver];
     

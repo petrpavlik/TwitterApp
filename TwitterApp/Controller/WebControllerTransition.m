@@ -29,11 +29,6 @@
     UIView *fromView = [fromVC view];
     UIView *toView = [toVC view];
     
-    CGRect fromRect = fromView.bounds;
-    CGRect toRect = toView.bounds;
-    
-    //toView.frame = [transitionContext finalFrameForViewController:toVC];
-    
     UIGraphicsBeginImageContextWithOptions(toView.bounds.size, YES, [UIScreen mainScreen].scale);
     [toView drawViewHierarchyInRect:toView.bounds afterScreenUpdates:YES];
     UIImage *toViewSnapshot = UIGraphicsGetImageFromCurrentImageContext();
@@ -79,12 +74,17 @@
         [inView addSubview:[[UIImageView alloc] initWithImage:toViewSnapshot]];
     }
     
+    intermediateView.layer.shadowOffset = CGSizeMake(-1, 0);
+    intermediateView.layer.shadowRadius = 5.0;
+    intermediateView.layer.shadowColor = [UIColor blackColor].CGColor;
+    intermediateView.layer.shadowOpacity = 0.5;
+    
     //CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_2);
     //intermediateView.transform = transform;
     
     [inView addSubview:intermediateView];
-    inView.layer.shouldRasterize = YES;
-    inView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
+    //inView.layer.shouldRasterize = YES;
+    //inView.layer.rasterizationScale = [[UIScreen mainScreen] scale];
 
     CGRect finalFrame = intermediateView.frame;
     CGRect initialFrame = intermediateView.frame;
@@ -93,10 +93,8 @@
         initialFrame.origin.x = initialFrame.size.width;
     }
     else {
-        finalFrame.origin.x = initialFrame.size.width;
+        finalFrame.origin.x = initialFrame.size.width + 5; // + shadow
     }
-    
-    self.alreadyTransitioned = YES;
     
     intermediateView.frame = initialFrame;
     
@@ -106,7 +104,10 @@
         
     } completion:^(BOOL finished) {
         
+        self.alreadyTransitioned = YES;
+        
         [intermediateView removeFromSuperview];
+        
         if ([transitionContext transitionWasCancelled]) {
             [transitionContext completeTransition:NO];
         }

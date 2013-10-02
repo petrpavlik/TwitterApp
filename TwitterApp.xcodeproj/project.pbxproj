@@ -161,6 +161,7 @@
 		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
+		4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */; };
 		4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
 		4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
 		4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
@@ -425,6 +426,8 @@
 		4B7C288C1756ADDC003FDCBB /* UserTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTitleView.m; path = View/UserTitleView.m; sourceTree = "<group>"; };
 		4B81BA4017453CD800005607 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		4B89806B17FC53B400BC43C0 /* NSTimer+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+Block.h"; path = "Category/NSTimer+Block.h"; sourceTree = "<group>"; };
+		4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Block.m"; path = "Category/NSTimer+Block.m"; sourceTree = "<group>"; };
 		4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSettingsController.h; path = Controller/PushNotificationSettingsController.h; sourceTree = "<group>"; };
 		4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationSettingsController.m; path = Controller/PushNotificationSettingsController.m; sourceTree = "<group>"; };
@@ -760,6 +763,7 @@
 		4B7428901742D9CE00AEB85C /* TwitterApp */ = {
 			isa = PBXGroup;
 			children = (
+				4B89806717FC526A00BC43C0 /* Util */,
 				4B349FC21779C06C007D035D /* Service */,
 				4BF0DC0A176518AF002578FF /* Vendor */,
 				4BDB0F371748CD8F004980EB /* Controller */,
@@ -859,6 +863,8 @@
 				4BF0DBF817648A62002578FF /* UIActionSheet+TwitterApp.m */,
 				4B91B65F17DCA7EC0062FD30 /* UIAlertView+TwitterApp.h */,
 				4B91B66017DCA7EC0062FD30 /* UIAlertView+TwitterApp.m */,
+				4B89806B17FC53B400BC43C0 /* NSTimer+Block.h */,
+				4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -922,6 +928,13 @@
 				4BB3456C17955C0700A6408A /* SavedSearchEntity.m */,
 			);
 			name = Entity;
+			sourceTree = "<group>";
+		};
+		4B89806717FC526A00BC43C0 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Util;
 			sourceTree = "<group>";
 		};
 		4B8D9F4B17C3979100CEEF07 /* Settings */ = {
@@ -1606,6 +1619,7 @@
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4BCBC921179691C100232B7E /* PhotoController.m in Sources */,
+				4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */,
 				4B7428C91742DB4800AEB85C /* AbstractSkin.m in Sources */,
 				4BEBAC00178371D9004B99FC /* UIImage+ImageEffects.m in Sources */,
 				4B75431B177C829A005AF691 /* ProfilePushCell.m in Sources */,
