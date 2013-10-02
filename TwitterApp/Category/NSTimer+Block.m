@@ -20,8 +20,15 @@ typedef void (^TimerBlock) (NSTimer* timer);
 
 @implementation TimerTarger
 
+- (void)dealloc {
+#ifdef DEBUG
+    NSLog(@"timer deallocated");
+#endif
+}
+
 - (void)timerFired:(NSTimer*)timer {
     
+    //NSLog(@"timer fired");
     self.block(timer);
 }
 

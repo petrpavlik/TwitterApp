@@ -32,6 +32,7 @@
 #import "PhotoController.h"
 #import "ImageTransition.h"
 #import "UserService.h"
+#import "NSTimer+Block.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -135,9 +136,11 @@
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.tableFooterView = [UIView new];
     
-    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
+    __weak typeof(self)weakSelf = self;
+    self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+        [weakSelf updateTweetAge];
+    } userInfo:Nil repeats:YES];
     
-    __weak typeof(self) weakSelf = self;
     self.textSizeChangedObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIContentSizeCategoryDidChangeNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         
         NSIndexPath* topmostIndexPath = [weakSelf.tableView indexPathsForVisibleRows].firstObject;
@@ -156,8 +159,11 @@
     [self updateTweetAge];
     
     if (!self.updateTweetAgeTimer) {
-        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
-        [self.updateTweetAgeTimer fire];
+
+        __weak typeof(self)weakSelf = self;
+        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+            [weakSelf updateTweetAge];
+        } userInfo:Nil repeats:YES];
     }
 }
 
@@ -877,8 +883,11 @@
     [self updateTweetAge];
     
     if (!self.updateTweetAgeTimer) {
-        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTweetAge) userInfo:nil repeats:YES];
-        [self.updateTweetAgeTimer fire];
+        
+        __weak typeof(self)weakSelf = self;
+        self.updateTweetAgeTimer = [NSTimer scheduledTimerWithTimeInterval:1 block:^(NSTimer *timer) {
+            [weakSelf updateTweetAge];
+        } userInfo:Nil repeats:YES];
     }
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
