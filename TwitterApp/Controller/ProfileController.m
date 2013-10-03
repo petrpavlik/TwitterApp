@@ -364,6 +364,8 @@
     
     self.runningRelationshipOperation = [user requestFriendshipStatusWithUser:self.user.userId completionBlock:^(NSNumber *following, NSNumber *followedBy, NSError *error) {
         
+        weakSelf.runningRelationshipOperation = nil;
+        
         if (error) {
             
             [[LogService sharedInstance] logError:error];
@@ -385,6 +387,8 @@
     
     self.runningUserOperation = [UserEntity requestUserWithScreenName:self.screenName completionBlock:^(UserEntity *user, NSError *error) {
        
+        weakSelf.runningUserOperation = nil;
+        
         if (error) {
             
             [[LogService sharedInstance] logError:error];

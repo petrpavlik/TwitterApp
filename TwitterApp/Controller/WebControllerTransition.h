@@ -10,5 +10,6 @@
 
 @interface WebControllerTransition : NSObject <UIViewControllerTransitioningDelegate, UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
 
+@property(nonatomic) BOOL alreadyTransitioned;
 
 @end

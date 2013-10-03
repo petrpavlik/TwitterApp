@@ -97,7 +97,7 @@
         [weakSelf.tableView reloadData];
     }];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Btn-Accounts"] style:UIBarButtonItemStyleBordered target:self action:@selector(accountsSelected)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Accounts" style:UIBarButtonItemStyleBordered target:self action:@selector(accountsSelected)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

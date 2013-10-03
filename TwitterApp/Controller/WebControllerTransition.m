@@ -10,8 +10,6 @@
 
 @interface WebControllerTransition ()
 
-@property(nonatomic) BOOL alreadyTransitioned;
-
 @end
 
 @implementation WebControllerTransition

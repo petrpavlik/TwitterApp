@@ -17,6 +17,7 @@
 #import "MyProfileController.h"
 #import "UserService.h"
 #import "FollowTweetilusService.h"
+#import "WebControllerTransition.h"
 
 @interface TabBarController ()
 
@@ -101,6 +102,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -113,9 +116,18 @@
     }
     
     [[FollowTweetilusService sharedInstance] offerFollowingIfAppropriate];
+    
+    for (UIViewController* tabViewController in self.viewControllers) {
+        [tabViewController view];
+    }
 }
 
 - (void)displayListOfAccounts {
+    
+    WebControllerTransition* webTransition = [WebControllerTransition new];
+    webTransition.alreadyTransitioned = YES;
+    self.transitioningDelegate = webTransition;
+    self.presentingViewController.modalPresentationStyle = UIModalPresentationCustom;
     
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
