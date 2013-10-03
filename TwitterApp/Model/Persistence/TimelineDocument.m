@@ -21,7 +21,7 @@
     
     if (self.documentState != UIDocumentStateClosed) {
         
-        [[LogService sharedInstance] logError:[NSError errorWithDomain:@"tweetilus.model" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open document in state %d", self.documentState]}]];
+        [[LogService sharedInstance] logError:[NSError errorWithDomain:@"tweetilus.model" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open document in state %lu", self.documentState]}]];
         return;
     }
     

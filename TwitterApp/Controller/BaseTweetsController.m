@@ -190,22 +190,22 @@
     NSDateComponents *difference = [calendar components:NSSecondCalendarUnit|NSMinuteCalendarUnit|NSHourCalendarUnit|NSDayCalendarUnit|NSMonthCalendarUnit|NSYearCalendarUnit fromDate:date toDate:[NSDate date] options:0];
     
     if (difference.year) {
-        return [NSString stringWithFormat:@"%dy", difference.year];
+        return [NSString stringWithFormat:@"%ldy", (long)difference.year];
     }
     else if (difference.month) {
-        return [NSString stringWithFormat:@"%dm", difference.month];
+        return [NSString stringWithFormat:@"%ldm", (long)difference.month];
     }
     else if (difference.day) {
-        return [NSString stringWithFormat:@"%dd", difference.day];
+        return [NSString stringWithFormat:@"%ldd", (long)difference.day];
     }
     else if (difference.hour) {
-        return [NSString stringWithFormat:@"%dh", difference.hour];
+        return [NSString stringWithFormat:@"%ldh", (long)difference.hour];
     }
     else if (difference.minute) {
-        return [NSString stringWithFormat:@"%dm", difference.minute];
+        return [NSString stringWithFormat:@"%ldm", (long)difference.minute];
     }
     else {
-        return [NSString stringWithFormat:@"%ds", difference.second];
+        return [NSString stringWithFormat:@"%lds", (long)difference.second];
     }
 }
 

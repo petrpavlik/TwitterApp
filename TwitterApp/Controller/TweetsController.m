@@ -219,7 +219,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
             }
             
             if (!self.displayUnreadTweetIndicator) {
-                [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%d new tweets", numOfNewTweets]];
+                [NotificationView showInView:self.notificationViewPlaceholderView message:[NSString stringWithFormat:@"%ld new tweets", (long)numOfNewTweets]];
             }
             
             if (self.backgroundFetchCompletionBlock) {

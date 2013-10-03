@@ -97,6 +97,7 @@
     _dummyScrollView.delegate = self;
     _dummyScrollView.directionalLockEnabled = YES;
     [self.contentView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
+    self.dummyScrollView.panGestureRecognizer.enabled = YES;
     
     _slidingContentView = [UIView new];
     _slidingContentView.frame = CGRectMake(0, 0, 320, 320); //dummy values to prevent crash on iOS 7 beta 2

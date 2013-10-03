@@ -7,7 +7,6 @@
 //
 
 #import "PushNotificationSettingsController.h"
-#import <WindowsAzureMobileServices/WindowsAzureMobileServices.h>
 #import "AFOAuth1Client.h"
 #import "SwitchCell.h"
 #import "UserEntity.h"
@@ -18,9 +17,9 @@
 
 @interface PushNotificationSettingsController () <UIAlertViewDelegate, SwitchCellDelegate>
 
-@property(nonatomic, strong) MSClient* msClient;
+//@property(nonatomic, strong) MSClient* msClient;
 @property(nonatomic, strong) AFOAuth1Token* accessToken;
-@property(nonatomic, strong) MSTable* dataTable;
+//@property(nonatomic, strong) MSTable* dataTable;
 @property(nonatomic, strong) NSNumber* rowId;
 @property(nonatomic, strong) NSNumber* notificationsEnabled;
 @property(nonatomic) BOOL requestRunning;
@@ -37,8 +36,7 @@
 
     [self.tableView registerClass:[SwitchCell class] forCellReuseIdentifier:@"SwitchCell"];
     
-    self.msClient = [MSClient clientWithApplicationURLString:@"https://tweetilus-pus-hmanagement.azure-mobile.net/"
-                                                 applicationKey:@"JtkjmoXlKIrzOOmmbplZzUIPLRukWf73"];
+    //self.msClient = [MSClient clientWithApplicationURLString:@"https://tweetilus-pus-hmanagement.azure-mobile.net/" applicationKey:@"JtkjmoXlKIrzOOmmbplZzUIPLRukWf73"];
     
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;

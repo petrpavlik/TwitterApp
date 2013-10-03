@@ -40,8 +40,6 @@
     
     AbstractSkin* skin = [(AppDelegate*)[UIApplication sharedApplication].delegate skin];
     
-    //self.backgroundColor = [UIColor redColor];
-    
     if ([self respondsToSelector:@selector(setTintColor:)]) {
         self.tintColor = skin.linkColor;
     }
@@ -249,6 +247,34 @@
     }
     
     [self.mediaButton setImage:scaledImage forState:UIControlStateNormal];
+}
+
+- (void)setBackgroundOpaque:(BOOL)isOpaque animated:(BOOL)isAnimated {
+    
+    #define kAlphaWhenOpaque 0.8
+    
+    if (!isAnimated) {
+        
+        if (isOpaque) {
+            self.backgroundColor = [UIColor colorWithWhite:1 alpha:kAlphaWhenOpaque];
+        }
+        else {
+            self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.0];
+        }
+    }
+    else {
+        
+        if (isOpaque) {
+            [UIView animateWithDuration:0.35 animations:^{
+                self.backgroundColor = [UIColor colorWithWhite:1 alpha:kAlphaWhenOpaque];
+            }];
+        }
+        else {
+            [UIView animateWithDuration:0.35 animations:^{
+                self.backgroundColor = [UIColor colorWithWhite:1 alpha:0.0];
+            }];
+        }
+    }
 }
 
 @end

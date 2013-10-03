@@ -122,7 +122,7 @@
         self.backgroundColor = [UIColor colorWithRed:192/255.0 green:57/255.0 blue:43/255.0 alpha:0.95];
     }
     else {
-        @throw [NSException exceptionWithName:@"UnkownStyleException" reason:[NSString stringWithFormat:@"%d is not a valid style", _style] userInfo:nil];
+        @throw [NSException exceptionWithName:@"UnkownStyleException" reason:[NSString stringWithFormat:@"%lu is not a valid style", (unsigned long)_style] userInfo:nil];
     }
 }
 

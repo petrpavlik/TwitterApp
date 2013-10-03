@@ -21,8 +21,6 @@
 		4B00B7D117B822B400606C4C /* 731-cloud-download@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */; };
 		4B0DA1D417A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
 		4B0DA1D517A693E00021DBBD /* Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B0DA1D317A693E00021DBBD /* Base64.m */; };
-		4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
-		4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */; };
 		4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */; };
 		4B1572F417DE5E1400170D7F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1572F317DE5E1400170D7F /* Crashlytics.framework */; };
 		4B1572F517DE5E1400170D7F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B1572F317DE5E1400170D7F /* Crashlytics.framework */; };
@@ -162,8 +160,6 @@
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
 		4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */; };
-		4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
-		4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */; };
 		4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
 		4B8D9F4F17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
 		4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
@@ -343,7 +339,6 @@
 		4B00B7CD17B822B400606C4C /* 731-cloud-download@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "731-cloud-download@2x.png"; path = "Image/731-cloud-download@2x.png"; sourceTree = "<group>"; };
 		4B0DA1D217A693E00021DBBD /* Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64.h; sourceTree = "<group>"; };
 		4B0DA1D317A693E00021DBBD /* Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Base64.m; sourceTree = "<group>"; };
-		4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WindowsAzureMessaging.framework; path = Vendor/WindowsAzureMessaging.framework; sourceTree = "<group>"; };
 		4B126A7E174EC14B008FEAD6 /* UIView+AutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+AutoLayout.h"; path = "Category/UIView+AutoLayout.h"; sourceTree = "<group>"; };
 		4B126A7F174EC14B008FEAD6 /* UIView+AutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+AutoLayout.m"; path = "Category/UIView+AutoLayout.m"; sourceTree = "<group>"; };
 		4B1572F317DE5E1400170D7F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
@@ -428,7 +423,6 @@
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
 		4B89806B17FC53B400BC43C0 /* NSTimer+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+Block.h"; path = "Category/NSTimer+Block.h"; sourceTree = "<group>"; };
 		4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Block.m"; path = "Category/NSTimer+Block.m"; sourceTree = "<group>"; };
-		4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WindowsAzureMobileServices.framework; sourceTree = "<group>"; };
 		4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSettingsController.h; path = Controller/PushNotificationSettingsController.h; sourceTree = "<group>"; };
 		4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationSettingsController.m; path = Controller/PushNotificationSettingsController.m; sourceTree = "<group>"; };
 		4B8D9F5117C3A84400CEEF07 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
@@ -605,9 +599,7 @@
 				4B6629BA177387FA00FA146A /* Accounts.framework in Frameworks */,
 				4B6629BB177387FA00FA146A /* Social.framework in Frameworks */,
 				4B6629BC177387FA00FA146A /* UIKit.framework in Frameworks */,
-				4B0EFD8017A5C42A00CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 				4B6629BD177387FA00FA146A /* Foundation.framework in Frameworks */,
-				4B8D9F4A17C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B6629BE177387FA00FA146A /* CoreGraphics.framework in Frameworks */,
 				4B6629BF177387FA00FA146A /* libPods.a in Frameworks */,
 			);
@@ -631,12 +623,10 @@
 				4B81BA4117453CD800005607 /* Social.framework in Frameworks */,
 				4B1572F417DE5E1400170D7F /* Crashlytics.framework in Frameworks */,
 				4B74288B1742D9CE00AEB85C /* UIKit.framework in Frameworks */,
-				4B8D9F4917C396D900CEEF07 /* WindowsAzureMobileServices.framework in Frameworks */,
 				4B74288D1742D9CE00AEB85C /* Foundation.framework in Frameworks */,
 				4B74288F1742D9CE00AEB85C /* CoreGraphics.framework in Frameworks */,
 				84C5EB084BED4343A290A1CF /* libPods.a in Frameworks */,
 				4BC2C03817DF1F5E004ABF54 /* libLocalyticsAMP.a in Frameworks */,
-				4B0EFD7F17A5C42900CB9A37 /* WindowsAzureMessaging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,9 +727,7 @@
 			children = (
 				4B25C24C17F89AC200CF9756 /* CoreTelephony.framework */,
 				4B1572F317DE5E1400170D7F /* Crashlytics.framework */,
-				4B8D9F4817C396D900CEEF07 /* WindowsAzureMobileServices.framework */,
 				4BA3064C17BE76F400733D56 /* CoreData.framework */,
-				4B0EFD7E17A5C42900CB9A37 /* WindowsAzureMessaging.framework */,
 				4BEBAC04178372C1004B99FC /* Accelerate.framework */,
 				4BEBAC0217837298004B99FC /* CoreImage.framework */,
 				4BFDA4571775FC27007EFBC4 /* CoreLocation.framework */,
@@ -1888,7 +1876,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1942,7 +1930,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -1982,7 +1970,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

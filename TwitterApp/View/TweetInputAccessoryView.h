@@ -27,6 +27,8 @@
 - (void)displayLocationPlace:(NSString*)placeName;
 - (void)displaySelectedImage:(UIImage*)image;
 
+- (void)setBackgroundOpaque:(BOOL)isOpaque animated:(BOOL)isAnimated;
+
 @property(nonatomic, weak) id <TweetInputAccessoryViewDelegate> delegate;
 @property(nonatomic, readonly) BOOL locationEnabled;
 

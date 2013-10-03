@@ -140,7 +140,7 @@
     [self.backgroundImageView stretchInSuperview];
     
     
-    ComposeTweetTextStorage* textStorage = [ComposeTweetTextStorage new];
+    /*ComposeTweetTextStorage* textStorage = [ComposeTweetTextStorage new];
     NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
     NSTextContainer *container = [[NSTextContainer alloc] initWithSize:CGSizeZero];
     container.widthTracksTextView = YES;
@@ -148,7 +148,8 @@
     [textStorage addLayoutManager:layoutManager];
     self.textStorage = textStorage;
 
-    _tweetTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:container];
+    _tweetTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:container];*/
+    _tweetTextView = [[UITextView alloc] initWithFrame:CGRectZero textContainer:nil];
     _tweetTextView.delegate = self;
     _tweetTextView.restorationIdentifier = @"TweetTextTextView";
     _tweetTextView.font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
@@ -192,8 +193,6 @@
         NSArray* mentions = self.tweetToReplyTo.entities[@"user_mentions"];
         for (NSDictionary* item in mentions) {
             
-            
-            
             if (![item[@"screen_name"] isEqualToString:[UserService sharedInstance].username]) {
                 content = [content stringByAppendingString:[NSString stringWithFormat:@"@%@ ", item[@"screen_name"]]];
             }
@@ -210,6 +209,7 @@
         originalTweetLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
         originalTweetLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
         originalTweetLabel.numberOfLines = 2;
+        //originalTweetLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.tweetTextView addSubview:originalTweetLabel];
         
         /*UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
@@ -293,18 +293,7 @@
     
     [self contentLengthDidChange];
     
-    NSLog(@"%f", self.tweetTextView.contentSize.height);
-    CGPoint contentOffset =  self.tweetTextView.contentOffset;
-    contentOffset.y = self.tweetTextView.contentSize.height - (self.tweetTextView.bounds.size.height - self.tweetTextView.contentInset.bottom);
-    NSLog(@"%f", contentOffset.y);
-    
-    if (contentOffset.y < 0) {
-        contentOffset.y = 0;
-    }
-    
-    [UIView animateWithDuration:0.35 animations:^{
-        self.tweetTextView.contentOffset = contentOffset;
-    }];
+    [self handleContentOrOffsetUpdate];
 }
 
 #pragma mark -
@@ -330,7 +319,7 @@
         //NSLog(@"detected link %@", [self.tweetTextView.text substringWithRange:matchRange]);
     }
     
-    self.title = [NSString stringWithFormat:@"%d", numberOfAvailableCharacters];
+    self.title = [NSString stringWithFormat:@"%ld", (long)numberOfAvailableCharacters];
     
     if (_tweetTextView.text.length > 0 && _tweetTextView.text.length <= 140) {
         self.navigationItem.rightBarButtonItem.enabled = YES;
@@ -621,18 +610,18 @@
     NSDictionary* info = [aNotification userInfo];
     CGSize kbSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
     
-    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, kbSize.height, 0.0);
+    CGFloat height = 0;
+    if (UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) {
+        height = kbSize.width;
+    }
+    else {
+        height = kbSize.height;
+    }
     
-    /*static BOOL originalTweetAlreadyShown = NO;
-    if (self.tweetToReplyTo && !originalTweetAlreadyShown) {
-        
-        contentInsets.top = 44;
-        originalTweetAlreadyShown = YES;
-    }*/
+    UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, height, 0.0);
     
     self.tweetTextView.contentInset = contentInsets;
     self.tweetTextView.scrollIndicatorInsets = contentInsets;
-    //self.tweetTextView.contentSize = CGSizeMake(_tweetTextView.bounds.size.width, _tweetTextView.bounds.size.height-kbSize.height + 1000);
 }
 
 // Called when the UIKeyboardWillHideNotification is sent
@@ -641,6 +630,30 @@
     UIEdgeInsets contentInsets = UIEdgeInsetsZero;
     self.tweetTextView.contentInset = contentInsets;
     self.tweetTextView.scrollIndicatorInsets = contentInsets;
+}
+
+#pragma mark -
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    //NSLog(@"content offset %@", NSStringFromCGPoint(scrollView.contentOffset));
+    [self handleContentOrOffsetUpdate];
+}
+
+#pragma mark -
+
+- (void)handleContentOrOffsetUpdate {
+    
+    CGFloat contentHeight = self.tweetTextView.contentSize.height;
+    contentHeight -= self.tweetTextView.contentOffset.y;
+    CGFloat availableHeight = (self.tweetTextView.bounds.size.height - self.tweetTextView.contentInset.bottom);
+    
+    if (contentHeight > availableHeight) {
+        [self.tweetInputAccessoryView setBackgroundOpaque:YES animated:YES];
+    }
+    else {
+        [self.tweetInputAccessoryView setBackgroundOpaque:NO animated:YES];
+    }
 }
 
 @end

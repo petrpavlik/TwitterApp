@@ -69,7 +69,7 @@
             return 1;
         }
         else {
-            NSLog(@"num replies %d", self.replies.count);
+            NSLog(@"num replies %lu", (unsigned long)self.replies.count);
             return self.replies.count;
         }
     }
