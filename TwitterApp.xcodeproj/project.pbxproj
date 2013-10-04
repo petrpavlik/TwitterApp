@@ -176,6 +176,7 @@
 		4B93D80B17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
+		4B97941C17FF29900009C40A /* TweetRichTextProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064C17BE76F400733D56 /* CoreData.framework */; };
@@ -441,6 +442,8 @@
 		4B93D80A17823069005BE43C /* MentionsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MentionsController.m; path = Controller/MentionsController.m; sourceTree = "<group>"; };
 		4B93FE381743E5CA0053FCD7 /* BaseEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseEntity.h; path = Model/Entity/BaseEntity.h; sourceTree = "<group>"; };
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
+		4B97941A17FF29900009C40A /* TweetRichTextProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetRichTextProcessor.h; path = Util/TweetRichTextProcessor.h; sourceTree = "<group>"; };
+		4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetRichTextProcessor.m; path = Util/TweetRichTextProcessor.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
 		4BA3064C17BE76F400733D56 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -921,6 +924,8 @@
 		4B89806717FC526A00BC43C0 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				4B97941A17FF29900009C40A /* TweetRichTextProcessor.h */,
+				4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -1656,6 +1661,7 @@
 				4BB3AD32177CE01200CA0F8B /* FollowersController.m in Sources */,
 				4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */,
 				4B91B65617DB30DE0062FD30 /* ImageScrollView.m in Sources */,
+				4B97941C17FF29900009C40A /* TweetRichTextProcessor.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
 				4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */,

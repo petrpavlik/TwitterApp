@@ -22,6 +22,8 @@
 @property(nonatomic, strong) UIButton* hashtagButton;
 @property(nonatomic, strong) UIButton* mentionButton;
 
+//@property
+
 @end
 
 @implementation TweetInputAccessoryView

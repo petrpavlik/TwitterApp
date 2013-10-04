@@ -29,6 +29,8 @@
 
 - (void)setBackgroundOpaque:(BOOL)isOpaque animated:(BOOL)isAnimated;
 
+- (void)displayMentions:(NSString*)mentions; //pass nil to hide it again
+
 @property(nonatomic, weak) id <TweetInputAccessoryViewDelegate> delegate;
 @property(nonatomic, readonly) BOOL locationEnabled;
 

@@ -156,17 +156,32 @@ static UserEntity* currentUser;
 }
 
 + (NSOperation*)requestFriendsOfUser:(NSString*)userId cursor:(NSString*)cursor completionBlock:(void (^)(NSArray* friends, NSString* nextCursor,  NSError* error))block {
+
+    return [self requestFriendsOfUser:userId cursor:cursor count:0 skipStatus:NO includeEntities:YES completionBlock:block];
+}
+
++ (NSOperation*)requestFriendsOfUser:(NSString*)userId cursor:(NSString*)cursor count:(NSInteger)count skipStatus:(BOOL)shouldSkipStatus includeEntities:(BOOL)shouldIncludeEntities completionBlock:(void (^)(NSArray* friends, NSString* nextCursor,  NSError* error))block {
+        
     
     NSParameterAssert(userId);
     
     AFTwitterClient* apiClient = [AFTwitterClient sharedClient];
     
     NSDictionary* params = @{@"user_id": userId};
+    NSMutableDictionary* mutableParams = [params mutableCopy];
+    
     if (cursor) {
-        NSMutableDictionary* mutableParams = [params mutableCopy];
         mutableParams[@"cursor"] = cursor;
-        params = mutableParams;
     }
+    
+    if (count > 0) {
+        mutableParams[@"count"] = @(count);
+    }
+    
+    mutableParams[@"include_user_entities"] = @(shouldIncludeEntities);
+    mutableParams[@"skip_status"] = @(shouldSkipStatus);
+    
+    params = mutableParams;
     
     NSMutableURLRequest *request = [apiClient signedRequestWithMethod:@"GET" path:@"friends/list.json" parameters:params];
     

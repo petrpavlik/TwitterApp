@@ -20,8 +20,10 @@
 #import "TwitterAppWindow.h"
 #import "TweetService.h"
 #import "UserService.h"
+#import "TweetRichTextProcessor.h"
+#import "UserService.h"
 
-@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate>
+@interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, TweetRichTextProcessorDelegate>
 
 @property(nonatomic, strong) UIImage* attachedImage;
 @property(nonatomic, strong) UIImageView* backgroundImageView;
@@ -38,6 +40,8 @@
 @property(nonatomic, strong) ComposeTweetTextStorage* textStorage;
 @property(nonatomic, strong) id textSizeChangedObserver;
 @property(nonatomic, strong) UILabel* originalTweetLabel;
+@property(nonatomic, strong) NSArray* following;
+@property(nonatomic, weak) NSOperation* runningFollowingOperation;
 
 @end
 
@@ -291,6 +295,12 @@
     [self contentLengthDidChange];
     
     [self handleContentOrOffsetUpdate];
+    
+    //textView.text = textView.text;
+    NSMutableAttributedString* mutableText = [textView.attributedText mutableCopy];
+    [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
+    
+    textView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:self];
 }
 
 #pragma mark -
@@ -661,5 +671,49 @@
         self.originalTweetLabel.frame = CGRectMake(6, -44, self.view.bounds.size.width - 12, 44);
     }
 }
+
+#pragma mark -
+
+- (void)tweetRichTextProcessorDidDetectMention:(NSString *)mention atRange:(NSRange)range {
+    
+    NSRange selectedRange = self.tweetTextView.selectedRange;
+    
+    if (selectedRange.location >= range.location && selectedRange.location <= range.location+range.length) {
+        
+        NSLog(@"currently writing mention %@", mention);
+        
+        __weak typeof(self)weakSelf = self;
+        
+        if (!self.following && !self.runningFollowingOperation) {
+            
+            self.runningFollowingOperation = [UserEntity requestFriendsOfUser:[UserService sharedInstance].userId cursor:Nil count:200 skipStatus:YES includeEntities:NO completionBlock:^(NSArray *friends, NSString *nextCursor, NSError *error) {
+                
+                if (error) {
+                    
+                    [[LogService sharedInstance] logError:error];
+                    return;
+                }
+                
+                weakSelf.following = friends;
+            }];
+        }
+        
+        if (self.following.count) {
+            
+            for (UserEntity* user in self.following) {
+                
+                NSString* fullUsername = [NSString stringWithFormat:@"@%@", user.screenName];
+                if ([fullUsername rangeOfString:mention options:NSCaseInsensitiveSearch].location != NSNotFound) {
+                    NSLog(@"%@", fullUsername);
+                }
+            }
+        }
+    }
+}
+
+
+
+
+
 
 @end
