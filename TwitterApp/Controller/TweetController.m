@@ -37,6 +37,7 @@
 @property(nonatomic, strong) UITextView* tweetTextView;
 @property(nonatomic, strong) ComposeTweetTextStorage* textStorage;
 @property(nonatomic, strong) id textSizeChangedObserver;
+@property(nonatomic, strong) UILabel* originalTweetLabel;
 
 @end
 
@@ -209,12 +210,8 @@
         originalTweetLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
         originalTweetLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
         originalTweetLabel.numberOfLines = 2;
-        //originalTweetLabel.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         [self.tweetTextView addSubview:originalTweetLabel];
-        
-        /*UIEdgeInsets contentInsets = UIEdgeInsetsMake(44.0, 0.0, 0.0, 0.0);
-        self.tweetTextView.contentInset = contentInsets;
-        self.tweetTextView.scrollIndicatorInsets = contentInsets;*/
+        self.originalTweetLabel = originalTweetLabel;
     }
     else if (self.initialText) {
         
@@ -653,6 +650,15 @@
     }
     else {
         [self.tweetInputAccessoryView setBackgroundOpaque:NO animated:YES];
+    }
+}
+
+#pragma mark -
+
+- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
+    //autoresizing mask was not working
+    if (self.originalTweetLabel) {
+        self.originalTweetLabel.frame = CGRectMake(6, -44, self.view.bounds.size.width - 12, 44);
     }
 }
 
