@@ -226,10 +226,17 @@
         
         NSString* tweetText = [tweet.text stringByStrippingHTMLTags];
         
+        BOOL instagramImageFound = NO;
+        
         NSArray* urls = tweet.entities[@"urls"];
         for (NSDictionary* url in urls) {
             
             tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
+            
+            NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+            if ([expandedUrl.description rangeOfString:@"instagram" options:0].location != NSNotFound) {
+                instagramImageFound = YES;
+            }
         }
         
         NSArray* media = tweet.entities[@"media"];
@@ -240,7 +247,7 @@
         
         CGFloat mediaHeight = 0;
         
-        if (media.count) {
+        if (!instagramImageFound && media.count) {
             
             mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2;
             if (mediaHeight > 300) {
@@ -248,6 +255,10 @@
             }
             
             mediaHeight += 10;
+        }
+        
+        if (instagramImageFound) {
+            mediaHeight = 300 + 10;
         }
         
         CGFloat retweetInformationHeight = 0;
@@ -383,11 +394,23 @@
         
         cell.tweetTextLabel.text = expandedTweet;
         
+        BOOL mediaImageIsPresent = NO;
+        NSURL* mediaImageURL = nil;
+        CGFloat mediaImageHeight = 0;
+        
         for (NSDictionary* url in urls) {
             
             NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
             if (expandedUrl) {
+                
                 [cell addURL:expandedUrl atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
+                
+                if ([expandedUrl.description rangeOfString:@"instagram" options:0].location != NSNotFound && !mediaImageIsPresent) {
+                    
+                    mediaImageIsPresent = YES;
+                    mediaImageHeight = 300;
+                    mediaImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/?size=l", expandedUrl]];
+                }
             }
             else {
                 //TODO: should not happen, log an error
@@ -400,16 +423,24 @@
             [cell addURL:[NSURL URLWithString:url[@"media_url"]] atRange:[expandedTweet rangeOfString:url[@"display_url"]]];
         }
         
-        if (media.count) {
+        if (media.count && !mediaImageIsPresent) {
             
             CGFloat mediaHeight = 0;
             mediaHeight = [media[0][@"sizes"][@"medium"][@"h"] integerValue]/2;
             if (mediaHeight > 300) {
                 mediaHeight = 300;
             }
-            [cell setMediaImageHeight:mediaHeight];
             
-            [cell.mediaImageView setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]] placeholderImage:[[UIImage imageNamed:@"731-cloud-download"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] imageProcessingBlock:^UIImage *(UIImage *image) {
+            mediaImageIsPresent = YES;
+            mediaImageHeight = mediaHeight;
+            mediaImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@:medium", media[0][@"media_url"]]];
+        }
+        
+        if (mediaImageIsPresent) {
+            
+            [cell setMediaImageHeight:mediaImageHeight];
+            
+            [cell.mediaImageView setImageWithURL:mediaImageURL placeholderImage:[[UIImage imageNamed:@"731-cloud-download"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] imageProcessingBlock:^UIImage *(UIImage *image) {
                 
                 UIGraphicsBeginImageContextWithOptions(image.size, YES, 0);
                 [image drawAtPoint:CGPointZero];

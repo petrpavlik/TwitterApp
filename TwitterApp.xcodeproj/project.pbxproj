@@ -177,6 +177,7 @@
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4B97941C17FF29900009C40A /* TweetRichTextProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */; };
+		4B97941F1801B1510009C40A /* ImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941E1801B1510009C40A /* ImageRequestOperation.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064C17BE76F400733D56 /* CoreData.framework */; };
@@ -444,6 +445,8 @@
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
 		4B97941A17FF29900009C40A /* TweetRichTextProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetRichTextProcessor.h; path = Util/TweetRichTextProcessor.h; sourceTree = "<group>"; };
 		4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetRichTextProcessor.m; path = Util/TweetRichTextProcessor.m; sourceTree = "<group>"; };
+		4B97941D1801B1510009C40A /* ImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageRequestOperation.h; path = Model/API/ImageRequestOperation.h; sourceTree = "<group>"; };
+		4B97941E1801B1510009C40A /* ImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageRequestOperation.m; path = Model/API/ImageRequestOperation.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
 		4BA3064C17BE76F400733D56 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
@@ -663,6 +666,8 @@
 				4B9348A417457A3F00AAE017 /* AFTwitterClient.m */,
 				4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */,
 				4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */,
+				4B97941D1801B1510009C40A /* ImageRequestOperation.h */,
+				4B97941E1801B1510009C40A /* ImageRequestOperation.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -1607,6 +1612,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B93D80B17823069005BE43C /* MentionsController.m in Sources */,
+				4B97941F1801B1510009C40A /* ImageRequestOperation.m in Sources */,
 				4B91B66117DCA7EC0062FD30 /* UIAlertView+TwitterApp.m in Sources */,
 				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import <AFImageRequestOperation.h>
 #import "NetImageView.h"
+#import "ImageRequestOperation.h"
 
 static NSOperationQueue* operationQueue = nil;
 

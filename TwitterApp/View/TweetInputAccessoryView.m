@@ -22,7 +22,9 @@
 @property(nonatomic, strong) UIButton* hashtagButton;
 @property(nonatomic, strong) UIButton* mentionButton;
 
-//@property
+@property(nonatomic, strong) UIScrollView* baseScrollView;
+@property(nonatomic, strong) UIView* defaultActionsPlaceholderView;
+@property(nonatomic, strong) UIView* mentionsPlaceholderView;
 
 @end
 
