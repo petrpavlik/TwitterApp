@@ -42,6 +42,8 @@
 @property(nonatomic, strong) UILabel* originalTweetLabel;
 @property(nonatomic, strong) NSArray* following;
 @property(nonatomic, weak) NSOperation* runningFollowingOperation;
+@property(nonatomic) BOOL mentionsDetectedAfterContentUpdate;
+@property(nonatomic, strong) NSString* currentPartialMention;
 
 @end
 
@@ -292,6 +294,8 @@
 
 - (void)textViewDidChange:(UITextView *)textView {
     
+    self.mentionsDetectedAfterContentUpdate = NO;
+    
     [self contentLengthDidChange];
     
     [self handleContentOrOffsetUpdate];
@@ -301,6 +305,10 @@
     [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
     
     textView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:self];
+    
+    if (!self.mentionsDetectedAfterContentUpdate) {
+        [self.tweetInputAccessoryView displayMentions:nil];
+    }
 }
 
 #pragma mark -
@@ -363,6 +371,22 @@
     tweetController.tweetToReplyTo = [coder decodeObjectForKey:@"TweetToReplyTo"];
     
     return tweetController;
+}
+
+#pragma mark -
+
+- (void)textViewDidChangeSelection:(UITextView *)textView {
+    
+    self.mentionsDetectedAfterContentUpdate = NO;
+    
+    NSMutableAttributedString* mutableText = [self.tweetTextView.attributedText mutableCopy];
+    [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
+    
+    self.tweetTextView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:self];
+    
+    if (!self.mentionsDetectedAfterContentUpdate) {
+        [self.tweetInputAccessoryView displayMentions:nil];
+    }
 }
 
 #pragma mark -
@@ -491,6 +515,18 @@
 - (void)tweetInputAccessoryView:(TweetInputAccessoryView *)view didSelectQuickAccessString:(NSString *)string {
     
     self.tweetTextView.text = [self.tweetTextView.text stringByAppendingString:string];
+}
+
+- (void)tweetInputAccessoryView:(TweetInputAccessoryView*)view didSelectMention:(NSString*)mention {
+    
+    NSMutableAttributedString* mutableText = [self.tweetTextView.attributedText mutableCopy];
+    [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
+    
+    [mutableText replaceCharactersInRange:[mutableText.string rangeOfString:self.currentPartialMention] withString:[NSString stringWithFormat:@"%@ ", mention]];
+    
+    self.tweetTextView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:self];
+    
+    [self.tweetInputAccessoryView displayMentions:nil];
 }
 
 #pragma mark -
@@ -678,9 +714,11 @@
     
     NSRange selectedRange = self.tweetTextView.selectedRange;
     
+    self.currentPartialMention = mention;
+    
     if (selectedRange.location >= range.location && selectedRange.location <= range.location+range.length) {
         
-        NSLog(@"currently writing mention %@", mention);
+        //NSLog(@"currently writing mention %@", mention);
         
         __weak typeof(self)weakSelf = self;
         
@@ -695,17 +733,35 @@
                 }
                 
                 weakSelf.following = friends;
+                
+                NSMutableAttributedString* mutableText = [weakSelf.tweetTextView.attributedText mutableCopy];
+                [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
+                
+                weakSelf.tweetTextView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:weakSelf];
             }];
         }
         
         if (self.following.count) {
             
+            NSMutableArray* relevantUsers = [NSMutableArray new];
+            
             for (UserEntity* user in self.following) {
                 
                 NSString* fullUsername = [NSString stringWithFormat:@"@%@", user.screenName];
                 if ([fullUsername rangeOfString:mention options:NSCaseInsensitiveSearch].location != NSNotFound) {
-                    NSLog(@"%@", fullUsername);
+                    
+                    //NSLog(@"%@", fullUsername);
+                    [relevantUsers addObject:user];
                 }
+            }
+            
+            if (relevantUsers.count) {
+                [self.tweetInputAccessoryView displayMentions:relevantUsers];
+                self.mentionsDetectedAfterContentUpdate = YES;
+            }
+            else {
+                [self.tweetInputAccessoryView displayMentions:nil];
+                self.mentionsDetectedAfterContentUpdate = NO;
             }
         }
     }

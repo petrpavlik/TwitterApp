@@ -17,6 +17,7 @@
 - (void)tweetInputAccessoryViewDidDisableLocation:(TweetInputAccessoryView*)view;
 - (void)tweetInputAccessoryViewDidRequestPlaceQuery:(TweetInputAccessoryView*)view;
 - (void)tweetInputAccessoryView:(TweetInputAccessoryView*)view didSelectQuickAccessString:(NSString*)string;
+- (void)tweetInputAccessoryView:(TweetInputAccessoryView*)view didSelectMention:(NSString*)mention;
 
 @end
 
@@ -29,7 +30,7 @@
 
 - (void)setBackgroundOpaque:(BOOL)isOpaque animated:(BOOL)isAnimated;
 
-- (void)displayMentions:(NSString*)mentions; //pass nil to hide it again
+- (void)displayMentions:(NSArray*)mentions; //pass nil to hide it again
 
 @property(nonatomic, weak) id <TweetInputAccessoryViewDelegate> delegate;
 @property(nonatomic, readonly) BOOL locationEnabled;

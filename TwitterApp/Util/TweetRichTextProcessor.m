@@ -33,7 +33,10 @@
         [outText addAttributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1]} range:wordRange];
         
         if (delegate) {
-            [delegate tweetRichTextProcessorDidDetectMention:[text.string substringWithRange:wordRange] atRange:wordRange];
+            
+            NSString* mention = [text.string substringWithRange:wordRange];
+            mention = [mention stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [delegate tweetRichTextProcessorDidDetectMention:mention atRange:wordRange];
         }
     }
     

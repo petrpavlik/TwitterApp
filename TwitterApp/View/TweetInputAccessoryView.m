@@ -24,7 +24,7 @@
 
 @property(nonatomic, strong) UIScrollView* baseScrollView;
 @property(nonatomic, strong) UIView* defaultActionsPlaceholderView;
-@property(nonatomic, strong) UIView* mentionsPlaceholderView;
+@property(nonatomic, strong) UIScrollView* mentionHintsScrollView;
 
 @end
 
@@ -48,67 +48,38 @@
         self.tintColor = skin.linkColor;
     }
     
-    _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    UIImage* locationImage = [[UIImage imageNamed:@"Btn-Location"] imageResizedToSize:CGSizeMake(30, 17)];
-    [_locationButton setImage:locationImage forState:UIControlStateNormal];
-    //_locationButton.imageView.contentMode = UIViewContentModeCenter;
-    _locationButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_locationButton addTarget:self action:@selector(locationButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_locationButton];
+    _baseScrollView = [UIScrollView new];
+    _baseScrollView.frame = CGRectMake(0, 0, 320, 44);
+    _baseScrollView.scrollEnabled = NO;
+    [self addSubview:_baseScrollView];
     
-    _placeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _placeButton.titleLabel.font = [skin fontOfSize:15];
-    [_placeButton setTitle:@"San Francisco" forState:UIControlStateNormal];
-    _placeButton.translatesAutoresizingMaskIntoConstraints = NO;
-    _placeButton.hidden = YES;
-    _placeButton.alpha = 0;
-    _placeButton.titleLabel.lineBreakMode = UILineBreakModeTailTruncation; //TODO: switch to TextKit after dropping iOS 6;
-    [_placeButton addTarget:self action:@selector(placeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [_placeButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
-    [self addSubview:_placeButton];
+    _defaultActionsPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    [_baseScrollView addSubview:_defaultActionsPlaceholderView];
     
-    _mediaButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    [_mediaButton setImage:[UIImage imageNamed:@"Btn-Image"] forState:UIControlStateNormal];
-    _mediaButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_mediaButton addTarget:self action:@selector(mediaButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_mediaButton];
+    _mentionHintsScrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(320, 0, 320, 44)];
+    [_baseScrollView addSubview:_mentionHintsScrollView];
     
-    _hashtagButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_hashtagButton setTitle:@"#" forState:UIControlStateNormal];
-    _hashtagButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
-    [_hashtagButton addTarget:self action:@selector(hashtagSelected) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_hashtagButton];
+    [self constructDefaultActionsPlaceholderViewInView:_defaultActionsPlaceholderView];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
     
-    _mentionButton = [UIButton buttonWithType:UIButtonTypeSystem];
-    _mentionButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_mentionButton setTitle:@"@" forState:UIControlStateNormal];
-    _mentionButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
-    [_mentionButton addTarget:self action:@selector(mentionSelected) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:_mentionButton];
+    _baseScrollView.frame = self.bounds;
+    _defaultActionsPlaceholderView.frame = self.bounds;
     
-    NSMutableArray* superviewConstraints = [NSMutableArray new];
+    CGRect hintsScrollViewFrame = self.bounds;
+    hintsScrollViewFrame.origin.x += self.bounds.size.width;
+    _mentionHintsScrollView.frame = hintsScrollViewFrame;
     
-    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
+    _baseScrollView.contentSize = CGSizeMake(self.bounds.size.width*2, self.bounds.size.height);
     
-    self.locationDisabledConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
-    self.locationDisabledConstraints = [self.locationDisabledConstraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_locationButton]-4-[_placeButton]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _placeButton)]];
-    
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_hashtagButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_hashtagButton)]];
-    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_mentionButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mentionButton)]];
-    
-    [superviewConstraints addObjectsFromArray:self.locationDisabledConstraints];
-    
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:_locationButton
-                                                               attribute:NSLayoutAttributeCenterY
-                                                               relatedBy:NSLayoutRelationEqual
-                                                                  toItem:self
-                                                               attribute:NSLayoutAttributeCenterY
-                                                              multiplier:1.0
-                                                                constant:0]];
-    
-    
-    [self addConstraints:superviewConstraints];
+    if (_mentionHintsScrollView.subviews.count) {
+        [self.baseScrollView setContentOffset:CGPointMake(self.bounds.size.width, 0) animated:YES];
+    }
+    else {
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
 }
 
 - (void)locationButtonPressed {
@@ -279,6 +250,114 @@
             }];
         }
     }
+}
+
+- (void)constructDefaultActionsPlaceholderViewInView:(UIView*)view {
+    
+    AbstractSkin* skin = [(AppDelegate*)[UIApplication sharedApplication].delegate skin];
+    
+    _locationButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    UIImage* locationImage = [[UIImage imageNamed:@"Btn-Location"] imageResizedToSize:CGSizeMake(30, 17)];
+    [_locationButton setImage:locationImage forState:UIControlStateNormal];
+    //_locationButton.imageView.contentMode = UIViewContentModeCenter;
+    _locationButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_locationButton addTarget:self action:@selector(locationButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_locationButton];
+    
+    _placeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _placeButton.titleLabel.font = [skin fontOfSize:15];
+    [_placeButton setTitle:@"San Francisco" forState:UIControlStateNormal];
+    _placeButton.translatesAutoresizingMaskIntoConstraints = NO;
+    _placeButton.hidden = YES;
+    _placeButton.alpha = 0;
+    _placeButton.titleLabel.lineBreakMode = UILineBreakModeTailTruncation; //TODO: switch to TextKit after dropping iOS 6;
+    [_placeButton addTarget:self action:@selector(placeButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [_placeButton setContentCompressionResistancePriority:UILayoutPriorityDefaultLow forAxis:UILayoutConstraintAxisHorizontal];
+    [view addSubview:_placeButton];
+    
+    _mediaButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    [_mediaButton setImage:[UIImage imageNamed:@"Btn-Image"] forState:UIControlStateNormal];
+    _mediaButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_mediaButton addTarget:self action:@selector(mediaButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_mediaButton];
+    
+    _hashtagButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _hashtagButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_hashtagButton setTitle:@"#" forState:UIControlStateNormal];
+    _hashtagButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
+    [_hashtagButton addTarget:self action:@selector(hashtagSelected) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_hashtagButton];
+    
+    _mentionButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    _mentionButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_mentionButton setTitle:@"@" forState:UIControlStateNormal];
+    _mentionButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:22];
+    [_mentionButton addTarget:self action:@selector(mentionSelected) forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:_mentionButton];
+    
+    NSMutableArray* superviewConstraints = [NSMutableArray new];
+    
+    self.locationEnabledCOnstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-4-[_placeButton]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
+    
+    self.locationDisabledConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"|-3-[_locationButton(>=44)]-[_mediaButton(>=44)]->=8-[_hashtagButton(>=44)]-4-[_mentionButton(>=44)]-8-|" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _mediaButton, _placeButton, _hashtagButton, _mentionButton)];
+    self.locationDisabledConstraints = [self.locationDisabledConstraints arrayByAddingObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"[_locationButton]-4-[_placeButton]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:NSDictionaryOfVariableBindings(_locationButton, _placeButton)]];
+    
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_hashtagButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_hashtagButton)]];
+    [superviewConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[_mentionButton(44)]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_mentionButton)]];
+    
+    [superviewConstraints addObjectsFromArray:self.locationDisabledConstraints];
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:_locationButton
+                                                     attribute:NSLayoutAttributeCenterY
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:view
+                                                     attribute:NSLayoutAttributeCenterY
+                                                    multiplier:1.0
+                                                      constant:0]];
+    
+    
+    [view addConstraints:superviewConstraints];
+}
+
+- (void)displayMentions:(NSArray *)mentions {
+    
+    if (mentions.count) {
+        
+        [self setMentionHints:mentions];
+        [self.baseScrollView setContentOffset:CGPointMake(self.bounds.size.width, 0) animated:YES];
+    }
+    else {
+        [self.baseScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+    }
+}
+
+- (void)setMentionHints:(NSArray*)mentionHints {
+    
+    while (_mentionHintsScrollView.subviews.count) {
+        [_mentionHintsScrollView.subviews[0] removeFromSuperview];
+    }
+    
+    CGFloat offset = 10;
+    
+    for (UserEntity* user in mentionHints) {
+        
+        UIButton* hintButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        [hintButton setTitle:[NSString stringWithFormat:@"@%@", user.screenName] forState:UIControlStateNormal];
+        
+        CGSize intrinsicContentSize = hintButton.intrinsicContentSize;
+        hintButton.frame = CGRectMake(offset, (_mentionHintsScrollView.bounds.size.height-intrinsicContentSize.height)/2, intrinsicContentSize.width, intrinsicContentSize.height);
+        [hintButton addTarget:self action:@selector(mentionSelected:) forControlEvents:UIControlEventTouchUpInside];
+        [_mentionHintsScrollView addSubview:hintButton];
+        
+        offset += intrinsicContentSize.width + 10;
+    }
+    
+    _mentionHintsScrollView.contentSize = CGSizeMake(offset+10, _mentionHintsScrollView.bounds.size.height);
+}
+
+- (void)mentionSelected:(UIButton*)sender {
+    
+    [self.delegate tweetInputAccessoryView:self didSelectMention:[sender titleForState:UIControlStateNormal]];
 }
 
 @end
