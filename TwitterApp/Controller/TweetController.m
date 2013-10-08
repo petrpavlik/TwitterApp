@@ -720,25 +720,9 @@
         
         //NSLog(@"currently writing mention %@", mention);
         
-        __weak typeof(self)weakSelf = self;
-        
         if (!self.following && !self.runningFollowingOperation) {
             
-            self.runningFollowingOperation = [UserEntity requestFriendsOfUser:[UserService sharedInstance].userId cursor:Nil count:200 skipStatus:YES includeEntities:NO completionBlock:^(NSArray *friends, NSString *nextCursor, NSError *error) {
-                
-                if (error) {
-                    
-                    [[LogService sharedInstance] logError:error];
-                    return;
-                }
-                
-                weakSelf.following = friends;
-                
-                NSMutableAttributedString* mutableText = [weakSelf.tweetTextView.attributedText mutableCopy];
-                [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
-                
-                weakSelf.tweetTextView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:weakSelf];
-            }];
+            [self requestFriendsWithCursor:Nil];
         }
         
         if (self.following.count) {
@@ -752,6 +736,10 @@
                     
                     //NSLog(@"%@", fullUsername);
                     [relevantUsers addObject:user];
+                    
+                    if (relevantUsers.count > 20) {
+                        break;
+                    }
                 }
             }
             
@@ -767,7 +755,35 @@
     }
 }
 
-
+- (void)requestFriendsWithCursor:(NSString*)cursor {
+    
+    __weak typeof(self)weakSelf = self;
+    
+    self.runningFollowingOperation = [UserEntity requestFriendsOfUser:[UserService sharedInstance].userId cursor:cursor count:200 skipStatus:YES includeEntities:NO completionBlock:^(NSArray *friends, NSString *nextCursor, NSError *error) {
+        
+        if (error) {
+            
+            [[LogService sharedInstance] logError:error];
+            return;
+        }
+        
+        if (!weakSelf.following) {
+            weakSelf.following = friends;
+        }
+        else {
+            weakSelf.following = [weakSelf.following arrayByAddingObjectsFromArray:friends];
+        }
+        
+        NSMutableAttributedString* mutableText = [weakSelf.tweetTextView.attributedText mutableCopy];
+        [mutableText removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, mutableText.string.length)];
+        
+        weakSelf.tweetTextView.attributedText = [TweetRichTextProcessor processAttributedText:mutableText delegate:weakSelf];
+        
+        if (nextCursor.integerValue != 0) {
+            [weakSelf requestFriendsWithCursor:nextCursor];
+        }
+    }];
+}
 
 
 
