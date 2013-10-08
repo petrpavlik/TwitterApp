@@ -27,6 +27,7 @@
 #import <Crashlytics/Crashlytics.h>
 #import "FollowTweetilusService.h"
 #import "TwitterAccountsController.h"
+#import "UserService.h"
 
 @interface AppDelegate ()
 

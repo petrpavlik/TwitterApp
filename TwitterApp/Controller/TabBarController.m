@@ -93,6 +93,10 @@
         [UserService sharedInstance].username = activeAccount.username;
         [UserService sharedInstance].userId = [[[activeAccount valueForKey:@"properties"] valueForKey:@"user_id"] description];
         
+        [[LogService sharedInstance] setUserId:[UserService sharedInstance].username];
+        
+        [[LogService sharedInstance] logEvent:@"account selected" userInfo:nil];
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:kDidGainAccessToAccountNotification object:nil];
     }
 }
