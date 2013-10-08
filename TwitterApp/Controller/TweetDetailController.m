@@ -94,8 +94,8 @@
     if (indexPath.section==1) {
         
         TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-        UITableViewCell* cell = [self cellForTweetDetail:tweet atIndexPath:indexPath];
-        //UITableViewCell* cell =  [self cellForTweet:tweet atIndexPath:indexPath];
+        //UITableViewCell* cell = [self cellForTweetDetail:tweet atIndexPath:indexPath];
+        UITableViewCell* cell =  [self cellForTweet:tweet atIndexPath:indexPath];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         return cell;
@@ -129,7 +129,8 @@
     if (indexPath.section==1) {
         
         TweetEntity* tweet = [self tweetForIndexPath:indexPath];
-        return [self heightForTweetDetail:tweet];
+        //return [self heightForTweetDetail:tweet];
+        return [self heightForTweet:tweet];
     }
     else if (indexPath.section == 2) {
         

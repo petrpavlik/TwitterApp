@@ -178,6 +178,16 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     return [super HTTPRequestOperationWithRequest:urlRequest success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
+        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)operation.response;
+        if (httpResponse) {
+            
+            int responseStatusCode = [httpResponse statusCode];
+            if (responseStatusCode == 400 || responseStatusCode == 401) {
+                
+                [[[UIAlertView alloc] initWithTitle:@"Unauthorized Access" message:@"Please make sure that your Twitter account has a password filled in. You can find out by opening the Settings app and navigating to section Twitter." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            }
+        }
+        
         NSError* sanitizedError = [self sanitizedError:error];
         failure(operation, sanitizedError);
     }];
