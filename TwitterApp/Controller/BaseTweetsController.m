@@ -233,10 +233,10 @@
             
             tweetText = [tweetText stringByReplacingOccurrencesOfString:url[@"url"] withString:url[@"display_url"]];
             
-            NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+            /*NSURL* expandedUrl = [NSURL URLWithString:[url[@"expanded_url"] stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
             if ([expandedUrl.description rangeOfString:@"instagram" options:0].location != NSNotFound) {
                 instagramImageFound = YES;
-            }
+            }*/
         }
         
         NSArray* media = tweet.entities[@"media"];
@@ -407,9 +407,9 @@
                 
                 if ([expandedUrl.description rangeOfString:@"instagram" options:0].location != NSNotFound && !mediaImageIsPresent) {
                     
-                    mediaImageIsPresent = YES;
+                    /*mediaImageIsPresent = YES;
                     mediaImageHeight = 300;
-                    mediaImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/?size=l", expandedUrl]];
+                    mediaImageURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@media/?size=l", expandedUrl]];*/
                 }
             }
             else {
@@ -819,7 +819,7 @@
         destructiveButtonTitle = @"Delete";
     }
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", @"Quote Tweet", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", @"Quote Tweet", @"Save to Pocket", nil];
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
@@ -965,9 +965,48 @@
             retweetersController.tweetId = tweet.tweetId;
             [self.navigationController pushViewController:retweetersController animated:YES];
         }
-        else {
+        else if ((buttonIndex==1 && actionSheet.destructiveButtonIndex < 0) || (buttonIndex==2 && actionSheet.destructiveButtonIndex >= 0)) {
             
             [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"@%@: %@\" ", tweet.user.screenName, tweet.text]];
+        }
+        else {
+            
+            if (tweet.retweetedStatus) {
+                tweet = tweet.retweetedStatus;
+            }
+            
+            __weak typeof(self) weakSelf = self;
+            
+            [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+            
+            NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/MensHumor/statuses/%@", tweet.tweetId]];
+            
+            [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+                
+                [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+                
+                if (!weakSelf) {
+                    
+                    if (error) {
+                        
+                        [[LogService sharedInstance] logError:error];
+                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Tweet saved to Pocket" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    }
+                    
+                    return;
+                }
+                
+                if (error) {
+                    
+                    [[LogService sharedInstance] logError:error];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
+                } else {
+                    
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Tweet saved to Pocket"];
+                }
+            }];
         }
     }
     else if (actionSheet.userInfo[@"url"]) {
@@ -989,7 +1028,7 @@
                         [[LogService sharedInstance] logError:error];
                         [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
-                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved to Pocket" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     }
                     
                     return;
