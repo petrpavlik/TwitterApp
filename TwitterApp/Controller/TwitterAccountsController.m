@@ -22,6 +22,7 @@
 @interface TwitterAccountsController ()
 
 @property(nonatomic, strong) NSArray* accounts;
+@property(nonatomic) BOOL viewDidApplearAtLeastOnce;
 
 @end
 
@@ -43,10 +44,28 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
+    __weak typeof(self) weakSelf = self;
+    double delayInSeconds = 3.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        if (!weakSelf || !weakSelf.viewDidApplearAtLeastOnce) {
+            
+            NSLog(@"god damn black screen situation");
+            [[NSNotificationCenter defaultCenter] postNotificationName:kViewHiearchyIsInvalidNotification object:Nil userInfo:Nil];
+            [[LogService sharedInstance] logEvent:@"view hierarchy is invalid" userInfo:Nil];
+        }
+        else {
+            
+            NSLog(@"view hiearchy seems to be valid");
+        }
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    
+    self.viewDidApplearAtLeastOnce = YES;
     
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     ACAccountStore *accountStore = appDelegate.accountStore;

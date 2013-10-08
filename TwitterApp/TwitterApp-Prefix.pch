@@ -22,6 +22,7 @@
 #define kDidGainAccessToAccountNotification @"kDidGainAccessToAccountNotification"
 #define kSavedSearchesDidUpdateNotification @"kSavedSearchesDidUpdateNotification"
 #define kUserDidPostTweetNotification @"kUserDidPostTweetNotification"
+#define kViewHiearchyIsInvalidNotification @"kViewHiearchyIsInvalidNotification"
 
 #define kLogEventError @"Error"
 

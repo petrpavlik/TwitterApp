@@ -158,6 +158,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didGainAccessToTwitterNotification:) name:kDidGainAccessToAccountNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(authenticatedUserDidLoadNotification:) name:kAuthenticatedUserDidLoadNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewHierarchyIsInvalidNotification:) name:kViewHiearchyIsInvalidNotification object:nil];
     
     /*double delayInSeconds = 2.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -358,6 +359,12 @@
     
     //[[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     //[[LogService sharedInstance] logEvent:@"user registered for remote notifications" userInfo:nil];
+}
+
+- (void)viewHierarchyIsInvalidNotification:(NSNotification*)notificaiton {
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:Nil];
+    self.window.rootViewController = [storyboard instantiateInitialViewController];
 }
 
 #pragma mark -
