@@ -33,8 +33,8 @@
     
     if (self) {
         
-        [Mixpanel sharedInstanceWithToken:@"afb21c928464f8da1fe57a361c717980"]; //development
-        //[Mixpanel sharedInstanceWithToken:@"d27510ad11c0999a393506059a035969"]; //production
+        //[Mixpanel sharedInstanceWithToken:@"afb21c928464f8da1fe57a361c717980"]; //development
+        [Mixpanel sharedInstanceWithToken:@"d27510ad11c0999a393506059a035969"]; //production
     }
     
     return self;
