@@ -28,6 +28,7 @@
 #import "FollowTweetilusService.h"
 #import "TwitterAccountsController.h"
 #import "UserService.h"
+#import "NSTimer+Block.h"
 
 @interface AppDelegate ()
 
@@ -303,8 +304,18 @@
     
     if (self.tweetsControllerForBackgroundFetching) {
         
+        __weak NSTimer* fetchWindowTimeoutTimer = [NSTimer scheduledTimerWithTimeInterval:20 block:^(NSTimer *timer) {
+            
+            completionHandler(UIBackgroundFetchResultFailed);
+            
+        } userInfo:nil repeats:NO];
+        
         TweetsController* timelineController = self.tweetsControllerForBackgroundFetching;
-        [timelineController fetchNewTweetsWithCompletionHandler:completionHandler];
+        [timelineController fetchNewTweetsWithCompletionHandler:^(UIBackgroundFetchResult fetchResult) {
+            
+            [fetchWindowTimeoutTimer invalidate];
+            completionHandler(fetchResult);
+        }];
     }
     else {
         completionHandler(UIBackgroundFetchResultNoData);
