@@ -110,6 +110,7 @@
     _avatarImageView.backgroundColor = [UIColor whiteColor];
     _avatarImageView.opaque = YES;
     _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
+    _avatarImageView.backgroundColor = [UIColor whiteColor];
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
     
@@ -124,6 +125,7 @@
     [_nameLabel setContentCompressionResistancePriority:UILayoutPriorityDefaultLow+1 forAxis:UILayoutConstraintAxisHorizontal];
     //_nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
+    _nameLabel.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
@@ -132,6 +134,7 @@
     //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
     _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
+    _usernameLabel.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:_usernameLabel];
     
     _retweetedButton = [[UIButton alloc] init];
@@ -146,6 +149,7 @@
     _retweetedButton.userInteractionEnabled = NO;
     _retweetedButton.tintColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     _retweetedButton.hidden = YES;
+    _retweetButton.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:_retweetedButton];
     
     _tweetAgeLabel = [[UILabel alloc] init];
@@ -155,12 +159,14 @@
     _tweetAgeLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleSubheadline];
     _tweetAgeLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
     _tweetAgeLabel.text = @"1d";
+    _tweetAgeLabel.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:_tweetAgeLabel];
     
     _tweetTextLabel = [[PPLabel alloc] init];
     _tweetTextLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _tweetTextLabel.numberOfLines = 0;
     _tweetTextLabel.preferredMaxLayoutWidth = 240;
+    _tweetTextLabel.backgroundColor = [UIColor whiteColor];
     //_tweetTextLabel.font = [skin fontOfSize:16];
     _tweetTextLabel.text = @"blah blah";
     [contentView addSubview:_tweetTextLabel];

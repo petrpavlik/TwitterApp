@@ -50,6 +50,7 @@
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
     _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
+    _avatarImageView.backgroundColor = [UIColor whiteColor];
     [contentView addSubview:_avatarImageView];
     
     UIView* credentialsPlaceholder = [[UIView alloc] init];
@@ -60,6 +61,7 @@
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     //_nameLabel.font = [skin boldFontOfSize:16];
     _nameLabel.text = @"name";
+    _nameLabel.backgroundColor = [UIColor whiteColor];
     [credentialsPlaceholder addSubview:_nameLabel];
     
     _usernameLabel = [[UILabel alloc] init];
@@ -67,12 +69,14 @@
     //_usernameLabel.font = [skin fontOfSize:15];
     _usernameLabel.text = @"username";
     _usernameLabel.textColor = [UIColor colorWithRed:0.557 green:0.557 blue:0.557 alpha:1];
+    _usernameLabel.backgroundColor = [UIColor whiteColor];
     [credentialsPlaceholder addSubview:_usernameLabel];
     
     _verifiedImageView = [[UIImageView alloc] init];
     _verifiedImageView.translatesAutoresizingMaskIntoConstraints = NO;
     _verifiedImageView.tintColor = appDelegate.skin.linkColor;
     _verifiedImageView.hidden = YES;
+    _verifiedImageView.backgroundColor = [UIColor whiteColor];
     [credentialsPlaceholder addSubview:_verifiedImageView];
     
     UIImage* verifiedImage = [[UIImage imageNamed:@"Icon-Verified"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

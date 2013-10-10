@@ -28,6 +28,7 @@
 		4B165EEA1771D96F004A09BC /* Image-Separator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4B165EE81771D874004A09BC /* Image-Separator@2x.png */; };
 		4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
 		4B16B2C4177503E1000FEFDD /* ErrorCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B16B2C2177503E1000FEFDD /* ErrorCell.m */; };
+		4B173F8C18070877006B5278 /* ConversationsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B173F8B18070877006B5278 /* ConversationsController.m */; };
 		4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1D0137175B6A5A00B04036 /* TweetDetailController.m */; };
 		4B25C24B17F6349400CF9756 /* AvatarTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B25C24A17F6349400CF9756 /* AvatarTransition.m */; };
 		4B25C24D17F89AC200CF9756 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B25C24C17F89AC200CF9756 /* CoreTelephony.framework */; };
@@ -348,6 +349,8 @@
 		4B165EE81771D874004A09BC /* Image-Separator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Image-Separator@2x.png"; path = "Image/Image-Separator@2x.png"; sourceTree = "<group>"; };
 		4B16B2C1177503E1000FEFDD /* ErrorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ErrorCell.h; path = View/Cell/ErrorCell.h; sourceTree = "<group>"; };
 		4B16B2C2177503E1000FEFDD /* ErrorCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ErrorCell.m; path = View/Cell/ErrorCell.m; sourceTree = "<group>"; };
+		4B173F8A18070877006B5278 /* ConversationsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ConversationsController.h; path = Controller/ConversationsController.h; sourceTree = "<group>"; };
+		4B173F8B18070877006B5278 /* ConversationsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ConversationsController.m; path = Controller/ConversationsController.m; sourceTree = "<group>"; };
 		4B1D0136175B6A5A00B04036 /* TweetDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetDetailController.h; path = Controller/TweetDetailController.h; sourceTree = "<group>"; };
 		4B1D0137175B6A5A00B04036 /* TweetDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetDetailController.m; path = Controller/TweetDetailController.m; sourceTree = "<group>"; };
 		4B25C24917F6349400CF9756 /* AvatarTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AvatarTransition.h; path = View/Transition/AvatarTransition.h; sourceTree = "<group>"; };
@@ -658,6 +661,15 @@
 			name = Base64;
 			path = Vendor/Base64;
 			sourceTree = SOURCE_ROOT;
+		};
+		4B173F8918070848006B5278 /* DirectMessages */ = {
+			isa = PBXGroup;
+			children = (
+				4B173F8A18070877006B5278 /* ConversationsController.h */,
+				4B173F8B18070877006B5278 /* ConversationsController.m */,
+			);
+			name = DirectMessages;
+			sourceTree = "<group>";
 		};
 		4B2A884B174576DF00CCE953 /* API */ = {
 			isa = PBXGroup;
@@ -1123,6 +1135,7 @@
 		4BDB0F371748CD8F004980EB /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4B173F8918070848006B5278 /* DirectMessages */,
 				4B8D9F4B17C3979100CEEF07 /* Settings */,
 				4BB78928179B1517008C1DCC /* Base */,
 				4BB78927179B14D2008C1DCC /* Users */,
@@ -1616,6 +1629,7 @@
 				4B91B66117DCA7EC0062FD30 /* UIAlertView+TwitterApp.m in Sources */,
 				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
+				4B173F8C18070877006B5278 /* ConversationsController.m in Sources */,
 				4B74289B1742D9CE00AEB85C /* AppDelegate.m in Sources */,
 				4BCBC921179691C100232B7E /* PhotoController.m in Sources */,
 				4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */,
