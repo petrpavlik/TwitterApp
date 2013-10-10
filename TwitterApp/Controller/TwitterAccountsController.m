@@ -52,6 +52,9 @@
         if (!weakSelf || !weakSelf.viewDidApplearAtLeastOnce) {
             
             NSLog(@"god damn black screen situation");
+#ifdef DEBUG
+            [[[UIAlertView alloc] initWithTitle:nil message:@"view hierarchy is invalid" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+#endif
             [[NSNotificationCenter defaultCenter] postNotificationName:kViewHiearchyIsInvalidNotification object:Nil userInfo:Nil];
             [[LogService sharedInstance] logEvent:@"view hierarchy is invalid" userInfo:Nil];
         }

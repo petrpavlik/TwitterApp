@@ -269,7 +269,7 @@
     
     NSString *restorationBundleVersion = [coder decodeObjectForKey:UIApplicationStateRestorationBundleVersionKey];
     restorationBundleVersion = [restorationBundleVersion stringByReplacingOccurrencesOfString:@"." withString:@""];
-    if ([restorationBundleVersion integerValue] < 104)
+    if ([restorationBundleVersion integerValue] < 110)
     {
         NSLog(@"Ignoring restoration data for bundle version: %@",restorationBundleVersion);
         return NO;
