@@ -68,6 +68,10 @@
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel identify:userId];
+    
+    if (userId.length) {
+        [mixpanel.people set:@{@"username": userId}];
+    }
 }
 
 @end

@@ -145,6 +145,7 @@
     self.backgroundImageView = [UIImageView new];
     [self.view addSubview:self.backgroundImageView];
     [self.backgroundImageView stretchInSuperview];
+    self.backgroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     
     
     /*ComposeTweetTextStorage* textStorage = [ComposeTweetTextStorage new];

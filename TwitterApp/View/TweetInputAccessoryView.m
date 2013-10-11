@@ -123,8 +123,8 @@
     
     [self.placeButton setTitle:placeName forState:UIControlStateNormal];
     
-    [self removeConstraints:self.locationDisabledConstraints];
-    [self addConstraints:self.locationEnabledCOnstraints];
+    [_defaultActionsPlaceholderView removeConstraints:self.locationDisabledConstraints];
+    [_defaultActionsPlaceholderView addConstraints:self.locationEnabledCOnstraints];
     self.placeButton.hidden = NO;
     
     /*[UIView animateWithDuration:0.25 delay:0 usingSpringWithDamping:0.5 initialSpringVelocity:10 options:0 animations:^{
@@ -152,8 +152,8 @@
     
     self.locationButton.selected = NO;
     
-    [self removeConstraints:self.locationEnabledCOnstraints];
-    [self addConstraints:self.locationDisabledConstraints];
+    [_defaultActionsPlaceholderView removeConstraints:self.locationEnabledCOnstraints];
+    [_defaultActionsPlaceholderView addConstraints:self.locationDisabledConstraints];
     self.placeButton.hidden = YES;
     
     [UIView animateWithDuration:0.25 animations:^{
