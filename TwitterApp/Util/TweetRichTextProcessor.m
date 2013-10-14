@@ -15,6 +15,10 @@
 
 + (NSAttributedString*)processAttributedText:(NSAttributedString*)text delegate:(id <TweetRichTextProcessorDelegate>)delegate {
     
+    if (!text) {
+        return [[NSAttributedString alloc] init];
+    }
+    
     NSMutableAttributedString* outText = [text mutableCopy];
     
     NSError *error = nil;
