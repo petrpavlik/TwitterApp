@@ -160,6 +160,7 @@
 		4B7C288D1756ADDC003FDCBB /* UserTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7C288C1756ADDC003FDCBB /* UserTitleView.m */; };
 		4B81BA4117453CD800005607 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4017453CD800005607 /* Social.framework */; };
 		4B81BA4317453D4900005607 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B81BA4217453D4900005607 /* Accounts.framework */; };
+		4B87F28C180C8655007FDFE5 /* InstapaperService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B87F28B180C8655007FDFE5 /* InstapaperService.m */; };
 		4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */; };
 		4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
 		4B8D9F4F17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
@@ -426,6 +427,8 @@
 		4B7C288C1756ADDC003FDCBB /* UserTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserTitleView.m; path = View/UserTitleView.m; sourceTree = "<group>"; };
 		4B81BA4017453CD800005607 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		4B81BA4217453D4900005607 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
+		4B87F28A180C8655007FDFE5 /* InstapaperService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperService.h; path = Service/InstapaperService.h; sourceTree = "<group>"; };
+		4B87F28B180C8655007FDFE5 /* InstapaperService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperService.m; path = Service/InstapaperService.m; sourceTree = "<group>"; };
 		4B89806B17FC53B400BC43C0 /* NSTimer+Block.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSTimer+Block.h"; path = "Category/NSTimer+Block.h"; sourceTree = "<group>"; };
 		4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Block.m"; path = "Category/NSTimer+Block.m"; sourceTree = "<group>"; };
 		4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSettingsController.h; path = Controller/PushNotificationSettingsController.h; sourceTree = "<group>"; };
@@ -695,6 +698,8 @@
 				4BC2C03E17DFB4A2004ABF54 /* FollowTweetilusService.m */,
 				4B5162AF17F9BF4B00AB8F1E /* UserService.h */,
 				4B5162B017F9BF4B00AB8F1E /* UserService.m */,
+				4B87F28A180C8655007FDFE5 /* InstapaperService.h */,
+				4B87F28B180C8655007FDFE5 /* InstapaperService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1646,6 +1651,7 @@
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
 				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
 				4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
+				4B87F28C180C8655007FDFE5 /* InstapaperService.m in Sources */,
 				4BFDA44C1775A61B007EFBC4 /* RetweetersController.m in Sources */,
 				4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */,
 				4BB78924179AE041008C1DCC /* TabBarController.m in Sources */,

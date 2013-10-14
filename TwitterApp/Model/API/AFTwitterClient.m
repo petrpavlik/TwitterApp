@@ -26,7 +26,7 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
         twitterErrorDictionary = [NSJSONSerialization JSONObjectWithData:[recoverySuggestion dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
     }
     
-    if (twitterErrorDictionary && !jsonError) {
+    if (twitterErrorDictionary && !jsonError && [twitterErrorDictionary isKindOfClass:[NSDictionary class]]) {
         
         NSBundle *bundle = [NSBundle mainBundle];
         NSDictionary *info = [bundle infoDictionary];
