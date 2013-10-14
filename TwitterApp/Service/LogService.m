@@ -34,8 +34,8 @@
     
     if (self) {
         
-        [Mixpanel sharedInstanceWithToken:@"afb21c928464f8da1fe57a361c717980"]; //development
-        //[Mixpanel sharedInstanceWithToken:@"d27510ad11c0999a393506059a035969"]; //production
+        //[Mixpanel sharedInstanceWithToken:@"afb21c928464f8da1fe57a361c717980"]; //development
+        [Mixpanel sharedInstanceWithToken:@"d27510ad11c0999a393506059a035969"]; //production
     }
     
     return self;
@@ -46,6 +46,25 @@
     NSParameterAssert(error);
     
     NSLog(@"error: %@", error);
+    
+    if ([error.domain isEqualToString:NSURLErrorDomain]) {
+        
+        if (error.code == -999) { //the operation could not be completed
+            return;
+        }
+        
+        if (error.code == -1001) { //the request timed out
+            return;
+        }
+        
+        if (error.code == -1004) { //could not connect to the server
+            return;
+        }
+        
+        if (error.code == -1004) { //could not connect to the server
+            return;
+        }
+    }
     
     Mixpanel *mixpanel = [Mixpanel sharedInstance];
     [mixpanel track:@"Error" properties:@{@"error": error.description}];

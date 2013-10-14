@@ -38,7 +38,13 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
         NSString* message = twitterErrorDictionary[@"errors"][0][@"message"];
         
         if (code && message) {
-            return [NSError errorWithDomain:domain code:[code integerValue] userInfo:@{NSLocalizedDescriptionKey: message}];
+            
+            NSMutableDictionary* userInfo = [@{NSLocalizedDescriptionKey: message} mutableCopy];
+            if (error.userInfo[NSURLErrorFailingURLErrorKey]) {
+                userInfo[NSURLErrorFailingURLErrorKey] = error.userInfo[NSURLErrorFailingURLErrorKey];
+            }
+            
+            return [NSError errorWithDomain:domain code:[code integerValue] userInfo:userInfo];
         }
     }
     
