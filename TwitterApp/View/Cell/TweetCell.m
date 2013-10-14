@@ -24,7 +24,6 @@
 
 @property(nonatomic, strong) UIScrollView* dummyScrollView;
 @property(nonatomic, strong) UIView* quickAccessView;
-@property(nonatomic, strong) UIView* panDetectView;
 
 @property(nonatomic, strong) id textSizeChangedObserver;
 
@@ -197,12 +196,6 @@
     separatorView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.contentView addSubview:separatorView];
     
-    _panDetectView = [UIView new];
-    _panDetectView.backgroundColor = [UIColor clearColor];
-    //[_panDetectView addGestureRecognizer:_dummyScrollView.panGestureRecognizer];
-    //_panDetectView.userInteractionEnabled = NO;
-    //[self.contentView addSubview:_panDetectView];
-    
     [self setupFonts];
     
     NSMutableArray* superviewConstraints = [NSMutableArray new];
@@ -289,7 +282,6 @@
     quickAccessViewFrame.origin.x = slidingContentViewFrame.origin.x + slidingContentViewFrame.size.width;
     self.quickAccessView.frame = quickAccessViewFrame;
     
-    self.panDetectView.frame = self.contentView.bounds;
     _dummyScrollView.frame = self.contentView.bounds;
     _dummyScrollView.contentSize = CGSizeMake(_dummyScrollView.frame.size.width*2, _dummyScrollView.frame.size.height-1);
     
