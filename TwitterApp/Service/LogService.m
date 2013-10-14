@@ -9,6 +9,7 @@
 #import <Mixpanel.h>
 #import "LogService.h"
 #import "UserEntity.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface LogService ()
 
@@ -71,6 +72,7 @@
     
     if (userId.length) {
         [mixpanel.people set:@{@"username": userId}];
+        [Crashlytics setUserIdentifier:userId];
     }
 }
 
