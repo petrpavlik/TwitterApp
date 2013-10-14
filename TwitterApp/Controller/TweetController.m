@@ -238,6 +238,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     if (self.backgroundImage) {
         
         self.backgroundImageView.image = [self.backgroundImage applyExtraLightEffect];
