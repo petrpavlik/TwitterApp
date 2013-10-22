@@ -33,6 +33,7 @@
 #import "ImageTransition.h"
 #import "UserService.h"
 #import "NSTimer+Block.h"
+#import "InstapaperService.h"
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -394,6 +395,16 @@
         
         cell.tweetTextLabel.text = expandedTweet;
         
+        NSString *isoLangCode = (__bridge_transfer NSString*)CFStringTokenizerCopyBestStringLanguage((__bridge CFStringRef)expandedTweet, CFRangeMake(0, expandedTweet.length));
+        NSLocaleLanguageDirection direction = [NSLocale characterDirectionForLanguage:isoLangCode];
+        
+        if (direction == NSLocaleLanguageDirectionRightToLeft) {
+            cell.tweetTextLabel.textAlignment = NSTextAlignmentRight;
+        }
+        else {
+            cell.tweetTextLabel.textAlignment = NSTextAlignmentLeft;
+        }
+        
         BOOL mediaImageIsPresent = NO;
         NSURL* mediaImageURL = nil;
         CGFloat mediaImageHeight = 0;
@@ -598,7 +609,7 @@
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save to Pocket", @"Save to Instapaper", @"Open in Safari", nil];
     
     actionSheet.userInfo = @{@"url": url};
     [actionSheet showInView:self.view];
@@ -1045,6 +1056,39 @@
             }];
         }
         else if (buttonIndex==1) {
+            
+            __weak typeof(self) weakSelf = self;
+            
+            //[[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+            
+            [[InstapaperService sharedService] saveURL:actionSheet.userInfo[@"url"] completionHandler:^(NSURL *url, NSError *error) {
+               
+                //[[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+                
+                if (!weakSelf) {
+                    
+                    if (error) {
+                        
+                        [[LogService sharedInstance] logError:error];
+                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    } else {
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                    }
+                    
+                    return;
+                }
+                
+                if (error) {
+                    
+                    [[LogService sharedInstance] logError:error];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
+                } else {
+                    
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Instapaper"];
+                }
+            }];
+        }
+        else {
             
             [[UIApplication sharedApplication] openURL:actionSheet.userInfo[@"url"]];
         }

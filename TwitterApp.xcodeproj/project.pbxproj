@@ -253,6 +253,9 @@
 		4BCBC92617969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */; };
 		4BCBC92717969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
 		4BCBC92817969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
+		4BD25D9D180F0F41004BD08F /* InstapaperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25D9C180F0F41004BD08F /* InstapaperController.m */; };
+		4BD25DA0180F1024004BD08F /* EmailFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25D9F180F1024004BD08F /* EmailFieldCell.m */; };
+		4BD25DA3180F3E8A004BD08F /* PasswordFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25DA2180F3E8A004BD08F /* PasswordFieldCell.m */; };
 		4BD506BE17AA793D00D386F1 /* Btn-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BA17AA793D00D386F1 /* Btn-Image.png */; };
 		4BD506BF17AA793D00D386F1 /* Btn-Image.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BA17AA793D00D386F1 /* Btn-Image.png */; };
 		4BD506C017AA793D00D386F1 /* Btn-Image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506BB17AA793D00D386F1 /* Btn-Image@2x.png */; };
@@ -525,6 +528,12 @@
 		4BCBC920179691C100232B7E /* PhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoController.m; path = Controller/PhotoController.m; sourceTree = "<group>"; };
 		4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply.png"; path = "Image/Button-NavigationBar-Reply.png"; sourceTree = "<group>"; };
 		4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply@2x.png"; path = "Image/Button-NavigationBar-Reply@2x.png"; sourceTree = "<group>"; };
+		4BD25D9B180F0F41004BD08F /* InstapaperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperController.h; path = Controller/InstapaperController.h; sourceTree = "<group>"; };
+		4BD25D9C180F0F41004BD08F /* InstapaperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperController.m; path = Controller/InstapaperController.m; sourceTree = "<group>"; };
+		4BD25D9E180F1024004BD08F /* EmailFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmailFieldCell.h; path = View/Cell/EmailFieldCell.h; sourceTree = "<group>"; };
+		4BD25D9F180F1024004BD08F /* EmailFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EmailFieldCell.m; path = View/Cell/EmailFieldCell.m; sourceTree = "<group>"; };
+		4BD25DA1180F3E8A004BD08F /* PasswordFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PasswordFieldCell.h; path = Controller/PasswordFieldCell.h; sourceTree = "<group>"; };
+		4BD25DA2180F3E8A004BD08F /* PasswordFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PasswordFieldCell.m; path = Controller/PasswordFieldCell.m; sourceTree = "<group>"; };
 		4BD506BA17AA793D00D386F1 /* Btn-Image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Image.png"; path = "Image/Btn-Image.png"; sourceTree = "<group>"; };
 		4BD506BB17AA793D00D386F1 /* Btn-Image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Image@2x.png"; path = "Image/Btn-Image@2x.png"; sourceTree = "<group>"; };
 		4BD506BC17AA793D00D386F1 /* Btn-Web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Web.png"; path = "Image/Btn-Web.png"; sourceTree = "<group>"; };
@@ -909,6 +918,10 @@
 				4B39302317BA735A006ECB65 /* TableViewCell.m */,
 				4B8D9F5517C3B7CF00CEEF07 /* SwitchCell.h */,
 				4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */,
+				4BD25D9E180F1024004BD08F /* EmailFieldCell.h */,
+				4BD25D9F180F1024004BD08F /* EmailFieldCell.m */,
+				4BD25DA1180F3E8A004BD08F /* PasswordFieldCell.h */,
+				4BD25DA2180F3E8A004BD08F /* PasswordFieldCell.m */,
 			);
 			name = Cell;
 			sourceTree = "<group>";
@@ -1167,6 +1180,8 @@
 				4BB78923179AE041008C1DCC /* TabBarController.m */,
 				4BE9BC2B17F1A94000A18EB0 /* TwitterAccountsController.h */,
 				4BE9BC2C17F1A94000A18EB0 /* TwitterAccountsController.m */,
+				4BD25D9B180F0F41004BD08F /* InstapaperController.h */,
+				4BD25D9C180F0F41004BD08F /* InstapaperController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1664,9 +1679,11 @@
 				4BF9B6BA174A89A200DA3318 /* PPLabel.m in Sources */,
 				4BC2C03F17DFB4A2004ABF54 /* FollowTweetilusService.m in Sources */,
 				4B6EA1AC17AD329E000CEC49 /* ImageTransition.m in Sources */,
+				4BD25DA3180F3E8A004BD08F /* PasswordFieldCell.m in Sources */,
 				4B16B2C3177503E1000FEFDD /* ErrorCell.m in Sources */,
 				4BCB2288174D1078006602AA /* NSString+TwitterApp.m in Sources */,
 				4BB3AD36177CE47800CA0F8B /* FollowingController.m in Sources */,
+				4BD25DA0180F1024004BD08F /* EmailFieldCell.m in Sources */,
 				4BE9BC2617EF5A8600A18EB0 /* WebControllerTransition.m in Sources */,
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
 				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
@@ -1694,6 +1711,7 @@
 				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,
 				4BFC4408175B91FB004199C3 /* BaseTweetsController.m in Sources */,
 				4BFDA45C1776024D007EFBC4 /* PlaceEntity.m in Sources */,
+				4BD25D9D180F0F41004BD08F /* InstapaperController.m in Sources */,
 				4BF0DBF917648A62002578FF /* UIActionSheet+TwitterApp.m in Sources */,
 				4BB3456D17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,

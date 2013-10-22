@@ -14,6 +14,8 @@
 
 - (void)saveURL:(NSURL*)url completionHandler:(void (^)(NSURL* url, NSError* error))block;
 
+- (NSOperation*)testUsername:(NSString*)username pasword:(NSString*)password completionHandler:(void (^)(NSError* error))block;
+
 - (void)setUsername:(NSString*)username password:(NSString*)password;
 - (void)flushSavedCredentials;
 
