@@ -141,6 +141,8 @@
             if (weakSelf.signInDidSucceedBlock) {
                 weakSelf.signInDidSucceedBlock();
             }
+            
+            [weakSelf dismissViewControllerAnimated:YES completion:NULL];
         }
     }];
 }
@@ -149,7 +151,7 @@
 
 - (void)constructFooter {
     
-    UILabel* label = [UILabel new];
+    /*UILabel* label = [UILabel new];
     label.textAlignment = NSTextAlignmentCenter;
     label.numberOfLines = 2;
     label.preferredMaxLayoutWidth = 200;
@@ -161,7 +163,7 @@
     UIView* placeholderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, label.frame.size.height)];
     [placeholderView addSubview:label];
     
-    self.tableView.tableFooterView = placeholderView;
+    self.tableView.tableFooterView = placeholderView;*/
 }
 
 - (void)constructSignInButton {

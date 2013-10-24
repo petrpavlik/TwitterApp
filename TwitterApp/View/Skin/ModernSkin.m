@@ -26,7 +26,7 @@
     navigationBar.barTintColor = navigationBarColor;
     navigationBar.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
     
-    tabBar.barTintColor = [UIColor blackColor];
+    tabBar.barTintColor = [UIColor colorWithWhite:0 alpha:0.8];
     toolBar.barTintColor = self.navigationBarColor;
     
     //UIBarButtonItem* barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
@@ -83,7 +83,7 @@
 }
 
 - (UIColor*)navigationBarColor {
-    return [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
+    return [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:0.5];
 }
 
 - (UIImage*)separatorImage {
