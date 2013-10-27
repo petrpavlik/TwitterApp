@@ -19,9 +19,11 @@
 
 - (void)openAsync {
     
+    NSLog(@"start openning document %lf", CACurrentMediaTime());
+    
     if (self.documentState != UIDocumentStateClosed) {
         
-        [[LogService sharedInstance] logError:[NSError errorWithDomain:@"tweetilus.model" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open document in state %lu", self.documentState]}]];
+        [[LogService sharedInstance] logError:[NSError errorWithDomain:@"tweetilus.model" code:0 userInfo:@{NSLocalizedDescriptionKey: [NSString stringWithFormat:@"Cannot open document in state %u", self.documentState]}]];
         return;
     }
     
@@ -31,6 +33,7 @@
         
         [self openWithCompletionHandler:^(BOOL success) {
             
+            NSLog(@"finish openning document %lf", CACurrentMediaTime());
             NSParameterAssert(success);
             [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
         }];
@@ -39,6 +42,7 @@
         
         [self saveToURL:self.fileURL forSaveOperation: UIDocumentSaveForCreating completionHandler:^(BOOL success) {
             
+            NSLog(@"finish creating document %lf", CACurrentMediaTime());
             NSParameterAssert(success);
             [self.delegate timelineDocumentDidLoadPersistedTimeline:@[]];
         }];
@@ -59,6 +63,9 @@
 - (BOOL)loadFromContents:(id)contents ofType:(NSString*)typeName error:(NSError**)outError {
     
     NSLog(@"loading document %@", [NSThread currentThread]);
+    
+    NSLog(@"start loading data %lf", CACurrentMediaTime());
+    
     //NSLog(@"%@", [[NSString alloc] initWithData:contents encoding:NSUTF8StringEncoding]);
     
     if (![contents isKindOfClass:[NSData class]]) {
@@ -74,6 +81,8 @@
     /*dispatch_async(dispatch_get_main_queue(), ^{
         [self.delegate timelineDocumentDidLoadPersistedTimeline:self.timeline];
     });*/
+    
+    NSLog(@"finish loading data %lf", CACurrentMediaTime());
     
     return YES;
 }

@@ -182,6 +182,7 @@
 		4B97941F1801B1510009C40A /* ImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941E1801B1510009C40A /* ImageRequestOperation.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
+		4BA12FAB181C60A200FC8935 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA12FAA181C60A200FC8935 /* SettingsController.m */; };
 		4BA3064D17BE76F400733D56 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA3064C17BE76F400733D56 /* CoreData.framework */; };
 		4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
 		4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA3CAF71782EB470029586E /* TweetsDataSource.m */; };
@@ -458,6 +459,8 @@
 		4B97941E1801B1510009C40A /* ImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageRequestOperation.m; path = Model/API/ImageRequestOperation.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
+		4BA12FA9181C60A200FC8935 /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsController.h; path = Controller/SettingsController.h; sourceTree = "<group>"; };
+		4BA12FAA181C60A200FC8935 /* SettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsController.m; path = Controller/SettingsController.m; sourceTree = "<group>"; };
 		4BA3064C17BE76F400733D56 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4BA3CAF61782EB470029586E /* TweetsDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetsDataSource.h; path = Model/DataSource/TweetsDataSource.h; sourceTree = "<group>"; };
 		4BA3CAF71782EB470029586E /* TweetsDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetsDataSource.m; path = Model/DataSource/TweetsDataSource.m; sourceTree = "<group>"; };
@@ -970,6 +973,8 @@
 			children = (
 				4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */,
 				4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */,
+				4BA12FA9181C60A200FC8935 /* SettingsController.h */,
+				4BA12FAA181C60A200FC8935 /* SettingsController.m */,
 			);
 			name = Settings;
 			sourceTree = "<group>";
@@ -1716,6 +1721,7 @@
 				4BB3456D17955C0700A6408A /* SavedSearchEntity.m in Sources */,
 				4B4E80A6177A2B6A005358A5 /* ProfileCell.m in Sources */,
 				4B8D9F5717C3B7CF00CEEF07 /* SwitchCell.m in Sources */,
+				4BA12FAB181C60A200FC8935 /* SettingsController.m in Sources */,
 				4BE9BC2D17F1A94000A18EB0 /* TwitterAccountsController.m in Sources */,
 				4BB78920179AD926008C1DCC /* LoginController.m in Sources */,
 				4B91B65D17DCA4EB0062FD30 /* TweetService.m in Sources */,
@@ -1872,6 +1878,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -1903,6 +1910,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_EMPTY_BODY = YES;

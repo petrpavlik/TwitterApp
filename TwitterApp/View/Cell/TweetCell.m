@@ -70,6 +70,27 @@
     
     _favoritedByUser = favoritedByUser;
     self.favoriteButton.selected = favoritedByUser;
+    
+    if (favoritedByUser) {
+        
+        //UIColor* favoritedBackgroundColor = [UIColor colorWithRed:1.000 green:0.988 blue:0.937 alpha:1];
+        UIColor* favoritedBackgroundColor = [UIColor colorWithRed:1.000 green:0.973 blue:0.871 alpha:1];
+
+        _tweetTextLabel.backgroundColor = favoritedBackgroundColor;
+        _tweetAgeLabel.backgroundColor = favoritedBackgroundColor;
+        _nameLabel.backgroundColor = favoritedBackgroundColor;
+        _usernameLabel.backgroundColor = favoritedBackgroundColor;
+        
+        self.backgroundColor = favoritedBackgroundColor;
+    }
+    else {
+     
+        _tweetTextLabel.backgroundColor = [UIColor whiteColor];
+        _tweetAgeLabel.backgroundColor = [UIColor whiteColor];
+        _nameLabel.backgroundColor = [UIColor whiteColor];
+        _usernameLabel.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 #pragma mark -
@@ -109,7 +130,7 @@
     _avatarImageView.backgroundColor = [UIColor whiteColor];
     _avatarImageView.opaque = YES;
     _avatarImageView.tintColor = [UIColor colorWithRed:0.784 green:0.784 blue:0.784 alpha:1];
-    _avatarImageView.backgroundColor = [UIColor whiteColor];
+    _avatarImageView.backgroundColor = self.backgroundColor;
     //_avatarImageView.clipsToBounds = YES;
     //_avatarImageView.layer.cornerRadius = 5;
     
@@ -223,7 +244,7 @@
     [contentView addConstraints:superviewConstraints];
     
     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-64-[separatorView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]-0.5-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[separatorView(0.5)]-0.25-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(separatorView)]];
     
     UILongPressGestureRecognizer* longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGestureRecognized:)];
     [contentView addGestureRecognizer:longPressRecognizer];

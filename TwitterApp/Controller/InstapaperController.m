@@ -33,7 +33,7 @@
     [self.tableView registerClass:[EmailFieldCell class] forCellReuseIdentifier:@"EmailFieldCell"];
     [self.tableView registerClass:[PasswordFieldCell class] forCellReuseIdentifier:@"PasswordFieldCell"];
     
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Cancel", nil) style:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
     
     [self constructSignInButton];
     
@@ -106,6 +106,10 @@
 
 - (void)cancel {
     
+    if (self.signInDidFailBlock) {
+        self.signInDidFailBlock();
+    }
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -116,7 +120,7 @@
     
     if (email.length==0 || password.length==0) {
         
-        [[[UIAlertView alloc] initWithTitle:nil message:@"Both email and password is required." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle:nil message:NSLocalizedString(@"Both email and password is required.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         
         return;
     }
@@ -132,7 +136,7 @@
         if (error) {
             
             [[LogService sharedInstance] logError:error];
-            [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:error.localizedDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Login Failed", nil) message:error.localizedDescription delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
         }
         else {
             
@@ -164,11 +168,13 @@
     [placeholderView addSubview:label];
     
     self.tableView.tableFooterView = placeholderView;*/
+    
+    self.tableView.tableFooterView = [UIView new];
 }
 
 - (void)constructSignInButton {
     
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Sign In" style:UIBarButtonSystemItemDone target:self action:@selector(signIn)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Sign In", nil) style:UIBarButtonSystemItemDone target:self action:@selector(signIn)];
     
     UIFont* rightItemFont = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
     

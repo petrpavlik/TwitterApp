@@ -18,6 +18,11 @@
 
 @implementation InstapaperService
 
+- (BOOL)isLoggedIn {
+    
+    return self.username.length && self.password.length;
+}
+
 + (InstapaperService*)sharedService {
     
     static InstapaperService* _sharedClient = nil;
@@ -35,25 +40,15 @@
     
     if (!self.username.length || !self.password.length) {
         
-        InstapaperController* loginController = [[InstapaperController alloc] initWithStyle:UITableViewStylePlain];
-        
-        loginController.signInDidSucceedBlock = ^{
+        [self loginWithCompletionHandler:^(NSError *error) {
             
-            [[InstapaperService sharedService] saveURL:url completionHandler:block];
-        };
-        
-        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-        
-        UIViewController *topViewController = appDelegate.window.rootViewController;
-        while (topViewController.presentedViewController) {
-            topViewController = topViewController.presentedViewController;
-        }
-        
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
-        navigationController.viewControllers = @[loginController];
-        
-        [topViewController presentViewController:navigationController animated:YES completion:NULL];
+            if (error) {
+                block(url, error);
+            }
+            else {
+                [[InstapaperService sharedService] saveURL:url completionHandler:block];
+            }
+        }];
     }
     else {
         
@@ -96,6 +91,34 @@
         
         [apiClient enqueueHTTPRequestOperation:operation];
     }
+}
+
+- (void)loginWithCompletionHandler:(void (^)(NSError* error))block {
+    
+    InstapaperController* loginController = [[InstapaperController alloc] initWithStyle:UITableViewStylePlain];
+    
+    loginController.signInDidSucceedBlock = ^{
+        
+        block(nil);
+    };
+    
+    loginController.signInDidFailBlock = ^{
+        
+        block([NSError errorWithDomain:@"com.instapaper.signin" code:400 userInfo:@{NSLocalizedDescriptionKey: @"Instapaper login was cancelled."}]);
+    };
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    
+    UIViewController *topViewController = appDelegate.window.rootViewController;
+    while (topViewController.presentedViewController) {
+        topViewController = topViewController.presentedViewController;
+    }
+    
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    UINavigationController* navigationController = [storyboard instantiateViewControllerWithIdentifier:@"UINavigationController"];
+    navigationController.viewControllers = @[loginController];
+    
+    [topViewController presentViewController:navigationController animated:YES completion:NULL];
 }
 
 - (NSOperation*)testUsername:(NSString*)username pasword:(NSString*)password completionHandler:(void (^)(NSError* error))block {
@@ -164,6 +187,16 @@
     }
     
     return nil;
+}
+
+- (void)flushSavedCredentials {
+    
+    NSArray* accounts = [SSKeychain accountsForService:kServiceName];
+    if (accounts.count) {
+        
+        NSString* account = accounts.firstObject[@"acct"];
+        [SSKeychain deletePasswordForService:kServiceName account:account];
+    }
 }
 
 @end

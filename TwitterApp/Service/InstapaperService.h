@@ -19,7 +19,10 @@
 - (void)setUsername:(NSString*)username password:(NSString*)password;
 - (void)flushSavedCredentials;
 
+- (void)loginWithCompletionHandler:(void (^)(NSError* error))block;
+
 @property(nonatomic, readonly) NSString* username;
 @property(nonatomic, readonly) NSString* password;
+@property(nonatomic, readonly, getter = isLoggedIn) BOOL loggedIn;
 
 @end

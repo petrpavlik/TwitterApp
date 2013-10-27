@@ -34,6 +34,7 @@
 #import "UserService.h"
 #import "NSTimer+Block.h"
 #import "InstapaperService.h"
+#import <SafariServices/SafariServices.h>
 
 @interface BaseTweetsController () <UIActionSheetDelegate>
 
@@ -609,7 +610,7 @@
 
 - (void)tweetCell:(TweetCell *)cell didLongPressURL:(NSURL *)url {
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save to Pocket", @"Save to Instapaper", @"Open in Safari", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"Link Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Save to Pocket", @"Save to Instapaper", @"Add to Reading List", @"Open in Safari", @"Copy to Clipboard", nil];
     
     actionSheet.userInfo = @{@"url": url};
     [actionSheet showInView:self.view];
@@ -830,7 +831,7 @@
         destructiveButtonTitle = @"Delete";
     }
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", @"Quote Tweet", @"Save to Pocket", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"Tweet Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:@"Show Retweets", @"Quote Tweet", @"Save to Pocket", @"Save to Instapaper", @"Copy Link To Tweet", nil];
     
     actionSheet.userInfo = @{@"tweet": tweet};
     [actionSheet showInView:self.view];
@@ -980,7 +981,7 @@
             
             [TweetController presentInViewController:self prefilledText:[NSString stringWithFormat:@"\"@%@: %@\" ", tweet.user.screenName, tweet.text]];
         }
-        else {
+        else if ((buttonIndex==2 && actionSheet.destructiveButtonIndex < 0) || (buttonIndex==3 && actionSheet.destructiveButtonIndex >= 0)) {
             
             if (tweet.retweetedStatus) {
                 tweet = tweet.retweetedStatus;
@@ -990,7 +991,7 @@
             
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             
-            NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/MensHumor/statuses/%@", tweet.tweetId]];
+            NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@/statuses/%@", tweet.user.screenName, tweet.tweetId]];
             
             [[PocketAPI sharedAPI] saveURL:url handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
                 
@@ -1012,24 +1013,23 @@
                 if (error) {
                     
                     [[LogService sharedInstance] logError:error];
-                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not save the Tweet to Pocket" style:NotificationViewStyleError];
                 } else {
                     
                     [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Tweet saved to Pocket"];
                 }
             }];
         }
-    }
-    else if (actionSheet.userInfo[@"url"]) {
+        else if ((buttonIndex==2 && actionSheet.destructiveButtonIndex < 0) || (buttonIndex==3 && actionSheet.destructiveButtonIndex >= 0)) {
         
-        if (buttonIndex==0) {
-            
             __weak typeof(self) weakSelf = self;
             
             [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             
-            [[PocketAPI sharedAPI] saveURL:actionSheet.userInfo[@"url"] handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+            NSURL* url = [NSURL URLWithString:[NSString stringWithFormat:@"https://twitter.com/%@/statuses/%@", tweet.user.screenName, tweet.tweetId]];
             
+            [[InstapaperService sharedService] saveURL:url completionHandler:^(NSURL *url, NSError *error) {
+                
                 [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                 
                 if (!weakSelf) {
@@ -1037,9 +1037,9 @@
                     if (error) {
                         
                         [[LogService sharedInstance] logError:error];
-                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not save the Tweet to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
-                        [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved to Pocket" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Tweet saved to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     }
                     
                     return;
@@ -1048,29 +1048,78 @@
                 if (error) {
                     
                     [[LogService sharedInstance] logError:error];
-                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not save the link to Instapaper" style:NotificationViewStyleError];
                 } else {
                     
-                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Pocket"];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Instapaper"];
                 }
             }];
+        }
+        else {
+            
+            NSString* URLString = [NSString stringWithFormat:@"https://twitter.com/%@/statuses/%@", tweet.user.screenName, tweet.tweetId];
+            [[UIPasteboard generalPasteboard] setString:URLString];
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"Copied to clipboard"];
+        }
+    }
+    else if (actionSheet.userInfo[@"url"]) {
+        
+        NSURL* URL = actionSheet.userInfo[@"url"];
+        
+        if (buttonIndex==0) {
+            
+            if (URL) {
+                
+                __weak typeof(self) weakSelf = self;
+                
+                [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+                
+                [[PocketAPI sharedAPI] saveURL:URL handler: ^(PocketAPI *API, NSURL *URL, NSError *error) {
+                    
+                    [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+                    
+                    if (!weakSelf) {
+                        
+                        if (error) {
+                            
+                            [[LogService sharedInstance] logError:error];
+                            [[[UIAlertView alloc] initWithTitle:nil message:@"Could not save the link to Pocket" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        } else {
+                            [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                            [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
+                        }
+                        
+                        return;
+                    }
+                    
+                    if (error) {
+                        
+                        [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not save the link to Pocket" style:NotificationViewStyleError];
+                    } else {
+                        
+                        [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link saved to Pocket"];
+                        [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
+                    }
+                }];
+            }
         }
         else if (buttonIndex==1) {
             
             __weak typeof(self) weakSelf = self;
             
-            //[[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+            [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
             
-            [[InstapaperService sharedService] saveURL:actionSheet.userInfo[@"url"] completionHandler:^(NSURL *url, NSError *error) {
-               
-                //[[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+            [[InstapaperService sharedService] saveURL:URL completionHandler:^(NSURL *url, NSError *error) {
+                
+                [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
                 
                 if (!weakSelf) {
                     
                     if (error) {
                         
                         [[LogService sharedInstance] logError:error];
-                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not save the link to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     }
@@ -1081,16 +1130,38 @@
                 if (error) {
                     
                     [[LogService sharedInstance] logError:error];
-                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:error.localizedRecoverySuggestion];
+                    [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not save the link to Instapaper" style:NotificationViewStyleError];
                 } else {
                     
                     [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Instapaper"];
                 }
             }];
         }
-        else {
+        else if (buttonIndex==2) {
             
-            [[UIApplication sharedApplication] openURL:actionSheet.userInfo[@"url"]];
+            NSError* error = nil;
+            if (![[SSReadingList defaultReadingList] addReadingListItemWithURL:URL title:nil previewText:nil error:&error]) {
+                
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link added to Reading List" style:NotificationViewStyleError];
+                [[LogService sharedInstance] logEvent:@"Link added to Reading List" userInfo:Nil];
+            }
+            else {
+                
+                [[LogService sharedInstance] logError:error];
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not add the link to Reading List"];
+            }
+        }
+        else if (buttonIndex==3) {
+            
+            if (URL) {
+                [[UIApplication sharedApplication] openURL:URL];
+            }
+        }
+        else if (buttonIndex==4) {
+            
+            [[UIPasteboard generalPasteboard] setString:URL.description];
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link copied to clipboard"];
         }
     }
 }

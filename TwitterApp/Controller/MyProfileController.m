@@ -27,6 +27,7 @@
 #import "LoginController.h"
 #import "TabBarController.h"
 #import "UserService.h"
+#import "SettingsController.h"
 
 @interface MyProfileController () <ProfileCellDelegate>
 
@@ -98,6 +99,8 @@
     }];
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Accounts" style:UIBarButtonItemStyleBordered target:self action:@selector(accountsSelected)];
+    
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsSelected)];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -484,11 +487,8 @@
 
 - (void)settingsSelected {
     
-    /*PushNotificationSettingsController* pushNotificationsSettingsController = [[PushNotificationSettingsController alloc] initWithStyle:UITableViewStyleGrouped];
-    [self.navigationController pushViewController:pushNotificationsSettingsController animated:YES];*/
-    
-    LoginController* loginController = [LoginController new];
-    [self presentViewController:loginController animated:YES completion:NULL];
+    SettingsController* settingsController = [[SettingsController alloc] initWithStyle:UITableViewStyleGrouped];
+    [self.navigationController pushViewController:settingsController animated:YES];
 }
 
 - (void)accountsSelected {
@@ -496,5 +496,6 @@
     TabBarController* tabBarController = (TabBarController*)self.tabBarController;
     [tabBarController displayListOfAccounts];
 }
+
 
 @end

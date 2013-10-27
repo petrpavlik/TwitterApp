@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 
 typedef void (^InstapaperSignInDidSucceedBlock)(void);
+typedef void (^InstapaperSignInDidFailBlock)(void);
 
 @interface InstapaperController : UITableViewController
 
 @property(nonatomic, strong) NSURL* url;
 @property(nonatomic, copy) InstapaperSignInDidSucceedBlock signInDidSucceedBlock;
+@property(nonatomic, copy) InstapaperSignInDidFailBlock signInDidFailBlock;
 
 @end

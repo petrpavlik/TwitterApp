@@ -12,6 +12,8 @@
 #import "WebController.h"
 #import "UIActionSheet+TwitterApp.h"
 #import "WebControllerTransition.h"
+#import <SafariServices/SafariServices.h>
+#import "InstapaperService.h"
 
 @interface WebController () <UIWebViewDelegate, UIActionSheetDelegate, UIGestureRecognizerDelegate>
 
@@ -19,10 +21,24 @@
 @property(nonatomic, weak) UIActivityIndicatorView* activityIndicator;
 @property(nonatomic, strong) UIBarButtonItem* goBackBarButtonItem;
 @property(nonatomic, strong) UIBarButtonItem* goForwardBarButtonItem;
+@property(nonatomic, strong) UIView* notificationViewPlaceholderView;
 
 @end
 
 @implementation WebController
+
+- (UIView*)notificationViewPlaceholderView {
+    
+    if (!_notificationViewPlaceholderView) {
+        
+        _notificationViewPlaceholderView = [[UIView alloc] initWithFrame:CGRectMake(0, self.topLayoutGuide.length, self.view.bounds.size.width, 0)];
+        _notificationViewPlaceholderView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+        _notificationViewPlaceholderView.backgroundColor = [UIColor clearColor];
+        [self.view addSubview:_notificationViewPlaceholderView];
+    }
+    
+    return _notificationViewPlaceholderView;
+}
 
 - (void)viewDidLoad
 {
@@ -140,7 +156,7 @@
 
 - (void)bookmarksSelected {
     
-    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:Nil delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:Nil otherButtonTitles:@"Save to Pocket", @"Open in Safari", nil];
+    UIActionSheet* actionSheet = [[UIActionSheet alloc] initWithTitle:@"Link Actions" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:Nil otherButtonTitles:@"Save to Pocket", @"Save to Instapaper", @"Add to Reading List", @"Open in Safari", @"Copy to Clipboard", nil];
     [actionSheet showInView:self.view];
 }
 
@@ -163,7 +179,7 @@
                     if (error) {
                         
                         [[LogService sharedInstance] logError:error];
-                        [[[UIAlertView alloc] initWithTitle:nil message:error.localizedRecoverySuggestion delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                        [[[UIAlertView alloc] initWithTitle:nil message:@"Could not save the link to Pocket" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                     } else {
                         [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
                         [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
@@ -174,10 +190,10 @@
                 
                 if (error) {
                     
-                    [NotificationView showInView:self.view message:error.localizedRecoverySuggestion];
+                    [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not save the link to Pocket" style:NotificationViewStyleError];
                 } else {
                     
-                    [NotificationView showInView:self.view message:@"Link saved to Pocket"];
+                    [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link saved to Pocket"];
                     [[LogService sharedInstance] logEvent:@"link saved to Pocket" userInfo:Nil];
                 }
             }];
@@ -185,9 +201,62 @@
     }
     else if (buttonIndex==1) {
         
+        __weak typeof(self) weakSelf = self;
+        
+        [[AFNetworkActivityIndicatorManager sharedManager] incrementActivityCount];
+        
+        [[InstapaperService sharedService] saveURL:actionSheet.userInfo[@"url"] completionHandler:^(NSURL *url, NSError *error) {
+            
+            [[AFNetworkActivityIndicatorManager sharedManager] decrementActivityCount];
+            
+            if (!weakSelf) {
+                
+                if (error) {
+                    
+                    [[LogService sharedInstance] logError:error];
+                    [[[UIAlertView alloc] initWithTitle:nil message:@"Could not save the link to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                } else {
+                    [[[UIAlertView alloc] initWithTitle:nil message:@"Link saved to Instapaper" delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+                }
+                
+                return;
+            }
+            
+            if (error) {
+                
+                [[LogService sharedInstance] logError:error];
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Could not save the link to Instapaper" style:NotificationViewStyleError];
+            } else {
+                
+                [NotificationView showInView:weakSelf.notificationViewPlaceholderView message:@"Link saved to Instapaper"];
+            }
+        }];
+    }
+    else if (buttonIndex==2) {
+        
+        NSError* error = nil;
+        if (![[SSReadingList defaultReadingList] addReadingListItemWithURL:self.webView.request.URL title:nil previewText:nil error:&error]) {
+            
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link added to Reading List" style:NotificationViewStyleError];
+            [[LogService sharedInstance] logEvent:@"Link added to Reading List" userInfo:Nil];
+        }
+        else {
+            
+            [[LogService sharedInstance] logError:error];
+            [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not add the link to Reading List"];
+        }
+    }
+    else if (buttonIndex==3) {
+        
         if (self.webView.request.URL) {
             [[UIApplication sharedApplication] openURL:self.webView.request.URL];
         }
+    }
+    else if (buttonIndex==4) {
+        
+        [[UIPasteboard generalPasteboard] setString:self.webView.request.URL.description];
+        
+        [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link copied to clipboard"];
     }
 }
 
