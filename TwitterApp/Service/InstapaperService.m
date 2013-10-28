@@ -56,7 +56,7 @@
         
         NSDictionary* params = @{@"username": self.username, @"password": self.password, @"url": url};
         
-        NSMutableURLRequest *request = [apiClient requestWithMethod:@"POST" path:@"https://www.instapaper.com/api/add" parameters:params];
+        NSMutableURLRequest *request = [apiClient.requestSerializer requestWithMethod:@"POST" URLString:@"https://www.instapaper.com/api/add" parameters:params];
         [request setValue:@"*/*" forHTTPHeaderField:@"Accept"];
         
         AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {
@@ -127,7 +127,7 @@
     
     NSDictionary* params = @{@"username": username, @"password": password};
     
-    NSMutableURLRequest *request = [apiClient requestWithMethod:@"POST" path:@"https://www.instapaper.com/api/authenticate" parameters:params];
+    NSMutableURLRequest *request = [apiClient.requestSerializer requestWithMethod:@"POST" URLString:@"https://www.instapaper.com/api/authenticate" parameters:params];
     [request setValue:@"*/*" forHTTPHeaderField:@"Accept"];
     
     AFHTTPRequestOperation *operation = [apiClient HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id JSON) {

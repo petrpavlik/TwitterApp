@@ -9,6 +9,7 @@
 #import <AFHTTPRequestOperation.h>
 #import "AFTwitterClient.h"
 #import "PlaceEntity.h"
+#import "AFHTTPRequestOperation+Compatibility.h"
 
 @implementation PlaceEntity
 

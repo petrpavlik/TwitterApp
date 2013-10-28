@@ -9,6 +9,7 @@
 #import <AFHTTPRequestOperation.h>
 #import "AFTwitterClient.h"
 #import "TweetEntity.h"
+#import "AFHTTPRequestOperation+Compatibility.h"
 
 @implementation TweetEntity
 

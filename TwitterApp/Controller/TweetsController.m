@@ -194,7 +194,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
             return;
         }
         
-        double delayInSeconds = 1.0;
+        double delayInSeconds = 0.5;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             
@@ -430,6 +430,8 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    //NSLog(@"height for %@", indexPath);
+    
     if (indexPath.section==0) {
         
         TweetEntity* tweet = self.tweets[indexPath.row];
@@ -441,17 +443,24 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }
 }
 
-/*- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
         
-        return 100;
+        if (indexPath.row < 300) {
+            
+            TweetEntity* tweet = self.tweets[indexPath.row];
+            return [self heightForTweet:tweet];
+        }
+        else {
+            return UITableViewAutomaticDimension;
+        }
     }
     else {
         
         return 44;
     }
-}*/
+}
 
 #pragma mark - Table view delegate
 

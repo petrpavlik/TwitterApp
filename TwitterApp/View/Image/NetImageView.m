@@ -6,9 +6,8 @@
 //  Copyright (c) 2013 Petr Pavlik. All rights reserved.
 //
 
-#import <AFImageRequestOperation.h>
+#import <AFHTTPRequestOperation.h>
 #import "NetImageView.h"
-#import "ImageRequestOperation.h"
 
 static NSOperationQueue* operationQueue = nil;
 
@@ -79,29 +78,43 @@ static NSOperationQueue* operationQueue = nil;
     
     __weak NetImageView* weakSelf = self;
     
-    AFImageRequestOperation* operation = [AFImageRequestOperation imageRequestOperationWithRequest:request imageProcessingBlock:imageProcessingBlock success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+    AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    AFImageResponseSerializer* responseSerializer = [AFImageResponseSerializer serializer];
+    operation.responseSerializer = responseSerializer;
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        UIImage* image = responseObject;
         
         if (image && weakSelf) {
             
-            NSURL* url = request.URL;
-            if (weakSelf.customCacheKey) {
-                url = [url URLByAppendingPathExtension: self.customCacheKey];
+            if (imageProcessingBlock) {
+                image = imageProcessingBlock(image);
             }
             
-            [[NetImageView sharedImageCache] setObject:image forKey:url];
-            weakSelf.image = image;
-            
-            if (completionBlock) {
-                completionBlock(weakSelf, Nil);
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                NSURL* url = operation.request.URL;
+                if (weakSelf.customCacheKey) {
+                    url = [url URLByAppendingPathExtension: self.customCacheKey];
+                }
+                
+                [[NetImageView sharedImageCache] setObject:image forKey:url];
+                weakSelf.image = image;
+                
+                if (completionBlock) {
+                    completionBlock(weakSelf, Nil);
+                }
+            });
         }
         
-    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
         if (completionBlock) {
             completionBlock(Nil, error);
         }
     }];
+    
+    operation.completionQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
     operation.queuePriority = NSOperationQueuePriorityLow;
     

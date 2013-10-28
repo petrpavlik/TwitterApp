@@ -7,7 +7,6 @@
 //
 
 #import "AFTwitterClient.h"
-#import "AFTwitterJSONRequestOperation.h"
 #import <Social/Social.h>
 
 @implementation AFTwitterClient
@@ -69,10 +68,8 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
         return nil;
     }
     
-    [self registerHTTPOperationClass:[AFTwitterJSONRequestOperation class]];
-    
-    // Accept HTTP Header; see http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.1
-	[self setDefaultHeader:@"Accept" value:@"application/json"];
+    self.requestSerializer = [[AFHTTPRequestSerializer alloc] init];
+    self.responseSerializer = [[AFJSONResponseSerializer alloc] init];
     
     /*[self setReachabilityStatusChangeBlock:^(AFNetworkReachabilityStatus status) {
         
@@ -91,7 +88,8 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     NSParameterAssert(self.account);
     
-    NSMutableURLRequest* afRequest = [self requestWithMethod:method path:path parameters:parameters];
+    NSString* URLString = [self.baseURL URLByAppendingPathComponent:path].description;
+    NSMutableURLRequest* afRequest = [self.requestSerializer requestWithMethod:method URLString:URLString parameters:parameters];
     
     SLRequestMethod requestMethod = SLRequestMethodGET;
     
@@ -132,7 +130,8 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
                                             multipartData:(NSArray*)multipartData
 {
     
-    NSMutableURLRequest* afRequest = [self multipartFormRequestWithMethod:method path:path parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSString* URLString = [self.baseURL URLByAppendingPathComponent:path].description;
+    NSMutableURLRequest* afRequest = [self.requestSerializer multipartFormRequestWithMethod:method URLString:URLString parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         
         for (NSDictionary* data in multipartData) {
             
@@ -199,6 +198,13 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
         NSError* sanitizedError = [self sanitizedError:error];
         failure(operation, sanitizedError);
     }];
+}
+
+#pragma mark - deprecated
+
+- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation*)operation {
+    
+    [self.operationQueue addOperation:operation];
 }
 
 

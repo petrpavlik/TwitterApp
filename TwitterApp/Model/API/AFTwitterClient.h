@@ -7,9 +7,9 @@
 //
 
 #import <Accounts/Accounts.h>
-#import <AFHTTPClient.h>
+#import <AFHTTPRequestOperationManager.h>
 
-@interface AFTwitterClient : AFHTTPClient
+@interface AFTwitterClient : AFHTTPRequestOperationManager
 
 @property(nonatomic, strong) ACAccount* account;
 
@@ -18,5 +18,8 @@
 - (NSMutableURLRequest *)signedMultipartFormRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters multipartData:(NSArray*)multipartData;
 
 - (NSMutableURLRequest *)signedRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters;
+
+- (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation*)operation __deprecated;
+- (NSMutableURLRequest *)signedRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters __deprecated;
 
 @end

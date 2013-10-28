@@ -56,7 +56,6 @@
 		4B662995177387FA00FA146A /* UserEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B7428DB1742E4E900AEB85C /* UserEntity.m */; };
 		4B662996177387FA00FA146A /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4B662997177387FA00FA146A /* AFTwitterClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9348A417457A3F00AAE017 /* AFTwitterClient.m */; };
-		4B662998177387FA00FA146A /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4B662999177387FA00FA146A /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4B66299A177387FA00FA146A /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
 		4B66299B177387FA00FA146A /* WebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BF9B6B5174A878D00DA3318 /* WebController.m */; };
@@ -164,8 +163,6 @@
 		4B89806D17FC53B400BC43C0 /* NSTimer+Block.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */; };
 		4B8D9F4E17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
 		4B8D9F4F17C3985000CEEF07 /* PushNotificationSettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */; };
-		4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
-		4B8D9F5417C3A84400CEEF07 /* AFOAuth1Client.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */; };
 		4B8D9F5717C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
 		4B8D9F5817C3B7CF00CEEF07 /* SwitchCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */; };
 		4B91B65617DB30DE0062FD30 /* ImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B91B65517DB30DE0062FD30 /* ImageScrollView.m */; };
@@ -179,7 +176,6 @@
 		4B93D80C17823069005BE43C /* MentionsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93D80A17823069005BE43C /* MentionsController.m */; };
 		4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B93FE391743E5CA0053FCD7 /* BaseEntity.m */; };
 		4B97941C17FF29900009C40A /* TweetRichTextProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */; };
-		4B97941F1801B1510009C40A /* ImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B97941E1801B1510009C40A /* ImageRequestOperation.m */; };
 		4B9B40AD1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4B9B40AE1791C40A00FC3400 /* SearchTweetsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */; };
 		4BA12FAB181C60A200FC8935 /* SettingsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BA12FAA181C60A200FC8935 /* SettingsController.m */; };
@@ -238,6 +234,7 @@
 		4BB78921179AD926008C1DCC /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB7891F179AD926008C1DCC /* LoginController.m */; };
 		4BB78924179AE041008C1DCC /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB78923179AE041008C1DCC /* TabBarController.m */; };
 		4BB78925179AE041008C1DCC /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BB78923179AE041008C1DCC /* TabBarController.m */; };
+		4BBA9D9A181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBA9D99181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.m */; };
 		4BBBF93517BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */; };
 		4BBDA6EE1749130B00E849FD /* NetImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BBDA6ED1749130B00E849FD /* NetImageView.m */; };
@@ -269,7 +266,6 @@
 		4BD506C917AAB0CC00D386F1 /* Img-Avatar-Placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */; };
 		4BD506CA17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */; };
 		4BD506CB17AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */; };
-		4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */; };
 		4BDB0F3A1748CE15004980EB /* TimelineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDB0F391748CE15004980EB /* TimelineController.m */; };
 		4BDFDB671754DEC500075F7D /* UserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB661754DEC400075F7D /* UserCell.m */; };
 		4BDFDB6A1754DF2800075F7D /* UserListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BDFDB691754DF2800075F7D /* UserListController.m */; };
@@ -437,8 +433,6 @@
 		4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSTimer+Block.m"; path = "Category/NSTimer+Block.m"; sourceTree = "<group>"; };
 		4B8D9F4C17C3985000CEEF07 /* PushNotificationSettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PushNotificationSettingsController.h; path = Controller/PushNotificationSettingsController.h; sourceTree = "<group>"; };
 		4B8D9F4D17C3985000CEEF07 /* PushNotificationSettingsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PushNotificationSettingsController.m; path = Controller/PushNotificationSettingsController.m; sourceTree = "<group>"; };
-		4B8D9F5117C3A84400CEEF07 /* AFOAuth1Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFOAuth1Client.h; sourceTree = "<group>"; };
-		4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFOAuth1Client.m; sourceTree = "<group>"; };
 		4B8D9F5517C3B7CF00CEEF07 /* SwitchCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwitchCell.h; path = View/Cell/SwitchCell.h; sourceTree = "<group>"; };
 		4B8D9F5617C3B7CF00CEEF07 /* SwitchCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SwitchCell.m; path = View/Cell/SwitchCell.m; sourceTree = "<group>"; };
 		4B91B65417DB30DE0062FD30 /* ImageScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageScrollView.h; path = View/ScrollView/ImageScrollView.h; sourceTree = "<group>"; };
@@ -455,8 +449,6 @@
 		4B93FE391743E5CA0053FCD7 /* BaseEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseEntity.m; path = Model/Entity/BaseEntity.m; sourceTree = "<group>"; };
 		4B97941A17FF29900009C40A /* TweetRichTextProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TweetRichTextProcessor.h; path = Util/TweetRichTextProcessor.h; sourceTree = "<group>"; };
 		4B97941B17FF29900009C40A /* TweetRichTextProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TweetRichTextProcessor.m; path = Util/TweetRichTextProcessor.m; sourceTree = "<group>"; };
-		4B97941D1801B1510009C40A /* ImageRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ImageRequestOperation.h; path = Model/API/ImageRequestOperation.h; sourceTree = "<group>"; };
-		4B97941E1801B1510009C40A /* ImageRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ImageRequestOperation.m; path = Model/API/ImageRequestOperation.m; sourceTree = "<group>"; };
 		4B9B40AB1791C40A00FC3400 /* SearchTweetsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SearchTweetsController.h; path = Controller/SearchTweetsController.h; sourceTree = "<group>"; };
 		4B9B40AC1791C40A00FC3400 /* SearchTweetsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTweetsController.m; path = Controller/SearchTweetsController.m; sourceTree = "<group>"; };
 		4BA12FA9181C60A200FC8935 /* SettingsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsController.h; path = Controller/SettingsController.h; sourceTree = "<group>"; };
@@ -510,6 +502,8 @@
 		4BB7891F179AD926008C1DCC /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LoginController.m; path = Controller/LoginController.m; sourceTree = "<group>"; };
 		4BB78922179AE041008C1DCC /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TabBarController.h; path = Controller/TabBarController.h; sourceTree = "<group>"; };
 		4BB78923179AE041008C1DCC /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TabBarController.m; path = Controller/TabBarController.m; sourceTree = "<group>"; };
+		4BBA9D98181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AFHTTPRequestOperation+Compatibility.h"; path = "Category/AFHTTPRequestOperation+Compatibility.h"; sourceTree = "<group>"; };
+		4BBA9D99181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "AFHTTPRequestOperation+Compatibility.m"; path = "Category/AFHTTPRequestOperation+Compatibility.m"; sourceTree = "<group>"; };
 		4BBBF93317BBE63900B7A169 /* ComposeTweetTextStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ComposeTweetTextStorage.h; path = View/TextStorage/ComposeTweetTextStorage.h; sourceTree = "<group>"; };
 		4BBBF93417BBE63900B7A169 /* ComposeTweetTextStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ComposeTweetTextStorage.m; path = View/TextStorage/ComposeTweetTextStorage.m; sourceTree = "<group>"; };
 		4BBDA6EC1749130B00E849FD /* NetImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetImageView.h; path = View/Image/NetImageView.h; sourceTree = "<group>"; };
@@ -543,8 +537,6 @@
 		4BD506BD17AA793D00D386F1 /* Btn-Web@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Btn-Web@2x.png"; path = "Image/Btn-Web@2x.png"; sourceTree = "<group>"; };
 		4BD506C617AAB0CC00D386F1 /* Img-Avatar-Placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Avatar-Placeholder.png"; path = "Image/Img-Avatar-Placeholder.png"; sourceTree = "<group>"; };
 		4BD506C717AAB0CC00D386F1 /* Img-Avatar-Placeholder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Img-Avatar-Placeholder@2x.png"; path = "Image/Img-Avatar-Placeholder@2x.png"; sourceTree = "<group>"; };
-		4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AFTwitterJSONRequestOperation.h; path = Model/API/AFTwitterJSONRequestOperation.h; sourceTree = "<group>"; };
-		4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AFTwitterJSONRequestOperation.m; path = Model/API/AFTwitterJSONRequestOperation.m; sourceTree = "<group>"; };
 		4BDB0F381748CE15004980EB /* TimelineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimelineController.h; path = Controller/TimelineController.h; sourceTree = "<group>"; };
 		4BDB0F391748CE15004980EB /* TimelineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TimelineController.m; path = Controller/TimelineController.m; sourceTree = "<group>"; };
 		4BDFDB651754DEC400075F7D /* UserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserCell.h; path = View/Cell/UserCell.h; sourceTree = "<group>"; };
@@ -691,10 +683,6 @@
 			children = (
 				4B9348A317457A3F00AAE017 /* AFTwitterClient.h */,
 				4B9348A417457A3F00AAE017 /* AFTwitterClient.m */,
-				4BDB0F341748BDA5004980EB /* AFTwitterJSONRequestOperation.h */,
-				4BDB0F351748BDA5004980EB /* AFTwitterJSONRequestOperation.m */,
-				4B97941D1801B1510009C40A /* ImageRequestOperation.h */,
-				4B97941E1801B1510009C40A /* ImageRequestOperation.m */,
 			);
 			name = API;
 			sourceTree = "<group>";
@@ -890,6 +878,8 @@
 				4B91B66017DCA7EC0062FD30 /* UIAlertView+TwitterApp.m */,
 				4B89806B17FC53B400BC43C0 /* NSTimer+Block.h */,
 				4B89806C17FC53B400BC43C0 /* NSTimer+Block.m */,
+				4BBA9D98181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.h */,
+				4BBA9D99181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -978,16 +968,6 @@
 			);
 			name = Settings;
 			sourceTree = "<group>";
-		};
-		4B8D9F5017C3A84400CEEF07 /* AFOAuth1Client */ = {
-			isa = PBXGroup;
-			children = (
-				4B8D9F5117C3A84400CEEF07 /* AFOAuth1Client.h */,
-				4B8D9F5217C3A84400CEEF07 /* AFOAuth1Client.m */,
-			);
-			name = AFOAuth1Client;
-			path = Vendor/AFOAuth1Client;
-			sourceTree = SOURCE_ROOT;
 		};
 		4B91B65317DB30400062FD30 /* ScrollView */ = {
 			isa = PBXGroup;
@@ -1195,7 +1175,6 @@
 			isa = PBXGroup;
 			children = (
 				4BC2C03417DF1D41004ABF54 /* Localytics */,
-				4B8D9F5017C3A84400CEEF07 /* AFOAuth1Client */,
 				4B0DA1D117A693E00021DBBD /* Base64 */,
 				4BF0DC0B176518B5002578FF /* MHFBImageViewController */,
 			);
@@ -1589,7 +1568,6 @@
 				4BBBF93617BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */,
 				4B662996177387FA00FA146A /* BaseEntity.m in Sources */,
 				4B662997177387FA00FA146A /* AFTwitterClient.m in Sources */,
-				4B662998177387FA00FA146A /* AFTwitterJSONRequestOperation.m in Sources */,
 				4B5CC7BD1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
 				4BFDA44E1775ABAC007EFBC4 /* RetweetersController.m in Sources */,
 				4B662999177387FA00FA146A /* TimelineController.m in Sources */,
@@ -1639,7 +1617,6 @@
 				4BA3CAF91782EB470029586E /* TweetsDataSource.m in Sources */,
 				4B6629AF177387FA00FA146A /* MHFacebookImageViewer.m in Sources */,
 				4BF2DCE9178F45B50007C343 /* TweetsController.m in Sources */,
-				4B8D9F5417C3A84400CEEF07 /* AFOAuth1Client.m in Sources */,
 				4B6629B0177387FA00FA146A /* ModernSkin.m in Sources */,
 				4B6629B1177387FA00FA146A /* TweetDetailCell.m in Sources */,
 			);
@@ -1650,7 +1627,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4B93D80B17823069005BE43C /* MentionsController.m in Sources */,
-				4B97941F1801B1510009C40A /* ImageRequestOperation.m in Sources */,
 				4B91B66117DCA7EC0062FD30 /* UIAlertView+TwitterApp.m in Sources */,
 				4B349FC51779C0FA007D035D /* LogService.m in Sources */,
 				4B7428971742D9CE00AEB85C /* main.m in Sources */,
@@ -1669,7 +1645,6 @@
 				4BBBF93517BBE63900B7A169 /* ComposeTweetTextStorage.m in Sources */,
 				4B93FE3A1743E5CA0053FCD7 /* BaseEntity.m in Sources */,
 				4B9348A517457A3F00AAE017 /* AFTwitterClient.m in Sources */,
-				4BDB0F361748BDA5004980EB /* AFTwitterJSONRequestOperation.m in Sources */,
 				4B5CC7BC1781DCBE00EFA5B1 /* MyProfileController.m in Sources */,
 				4B87F28C180C8655007FDFE5 /* InstapaperService.m in Sources */,
 				4BFDA44C1775A61B007EFBC4 /* RetweetersController.m in Sources */,
@@ -1691,6 +1666,7 @@
 				4BD25DA0180F1024004BD08F /* EmailFieldCell.m in Sources */,
 				4BE9BC2617EF5A8600A18EB0 /* WebControllerTransition.m in Sources */,
 				4BCBBF6D174E534F0004B1F4 /* LoadingCell.m in Sources */,
+				4BBA9D9A181D9F05006D6C3D /* AFHTTPRequestOperation+Compatibility.m in Sources */,
 				4B126A80174EC14B008FEAD6 /* UIView+AutoLayout.m in Sources */,
 				4BAEB3D41752280E0027A0D1 /* TweetController.m in Sources */,
 				4B6CCCAD17A968B300965E0C /* FavoritesController.m in Sources */,
@@ -1729,7 +1705,6 @@
 				4BA3CAF81782EB470029586E /* TweetsDataSource.m in Sources */,
 				4BF0DC11176518C9002578FF /* MHFacebookImageViewer.m in Sources */,
 				4BF2DCE8178F45B50007C343 /* TweetsController.m in Sources */,
-				4B8D9F5317C3A84400CEEF07 /* AFOAuth1Client.m in Sources */,
 				4B4B8F9E17677C3400E427DE /* ModernSkin.m in Sources */,
 				4B5162B117F9BF4B00AB8F1E /* UserService.m in Sources */,
 				4B573FA6176B695200166461 /* TweetDetailCell.m in Sources */,
@@ -1934,7 +1909,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -1980,7 +1955,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1989,7 +1964,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D3EA10E129D14083A848A9C2 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -2029,7 +2004,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				VALID_ARCHS = "armv7 armv7s";
+				VALID_ARCHS = "armv7 armv7s arm64";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

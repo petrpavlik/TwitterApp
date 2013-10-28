@@ -23,7 +23,6 @@
 #import "TwitterAppWindow.h"
 #import "UserEntity.h"
 #import "Base64.h"
-#import "AFOAuth1Client.h"
 #import <Crashlytics/Crashlytics.h>
 #import "FollowTweetilusService.h"
 #import "TwitterAccountsController.h"
@@ -247,15 +246,9 @@
     if ([[PocketAPI sharedAPI] handleOpenURL:url]) {
         
         return YES;
-    } else {
-        
-        NSNotification *notification = [NSNotification notificationWithName:kAFApplicationLaunchedWithURLNotification object:nil userInfo:[NSDictionary dictionaryWithObject:url forKey:kAFApplicationLaunchOptionsURLKey]];
-        [[NSNotificationCenter defaultCenter] postNotification:notification];
-        
-        return YES;
-        
-        //return NO;
     }
+    
+    return NO;
 }
 
 - (BOOL)application:(UIApplication *)application shouldSaveApplicationState:(NSCoder *)coder {

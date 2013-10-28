@@ -7,7 +7,7 @@
 //
 
 #import "PushNotificationSettingsController.h"
-#import "AFOAuth1Client.h"
+//#import "AFOAuth1Client.h"
 #import "SwitchCell.h"
 #import "UserEntity.h"
 #import "AppDelegate.h"
@@ -18,7 +18,7 @@
 @interface PushNotificationSettingsController () <UIAlertViewDelegate, SwitchCellDelegate>
 
 //@property(nonatomic, strong) MSClient* msClient;
-@property(nonatomic, strong) AFOAuth1Token* accessToken;
+//@property(nonatomic, strong) AFOAuth1Token* accessToken;
 //@property(nonatomic, strong) MSTable* dataTable;
 @property(nonatomic, strong) NSNumber* rowId;
 @property(nonatomic, strong) NSNumber* notificationsEnabled;
@@ -48,7 +48,7 @@
     footerButton.frame = CGRectMake(0, 0, 0, 44);
     self.tableView.tableFooterView = footerButton;
     
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    /*NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
     NSData* accessTokenData = [userDefaults objectForKey:TwitterAccessToken];
     
     if (!accessTokenData) {
@@ -61,7 +61,7 @@
         [self requestData];
     }
     
-    self.title = @"Notifications";
+    self.title = @"Notifications";*/
     
 }
 
@@ -150,7 +150,7 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     
-    if (buttonIndex == alertView.cancelButtonIndex) {
+    /*if (buttonIndex == alertView.cancelButtonIndex) {
         
         [self.navigationController popViewControllerAnimated:YES];
     }
@@ -182,7 +182,7 @@
             
             [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
         }];
-    }
+    }*/
 }
 
 #pragma mark -
@@ -300,7 +300,7 @@
 
 - (void)resetTwitterTokenSelected {
     
-    __weak typeof(self) weakSelf = self;
+    /*__weak typeof(self) weakSelf = self;
     
     AFOAuth1Client* twitterClient = [[AFOAuth1Client alloc] initWithBaseURL:[NSURL URLWithString:@"https://api.twitter.com/"] key:@"ip9LFL1QFBtMAeDxZhl1w" secret:@"mR06kKzyIUELyXmxBAQi5fzbcqwqPDtsqzK4vBHsE"];
     
@@ -326,7 +326,7 @@
         }
         
         [[[UIAlertView alloc] initWithTitle:@"Login Failed" message:error.localizedDescription delegate:self cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
-    }];
+    }];*/
 }
 
 @end

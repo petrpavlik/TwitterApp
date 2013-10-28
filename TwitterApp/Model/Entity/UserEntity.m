@@ -11,6 +11,7 @@
 #import "NSString+TwitterApp.h"
 #import "UserEntity.h"
 #import "TweetEntity.h"
+#import "AFHTTPRequestOperation+Compatibility.h"
 
 static UserEntity* currentUser;
 
