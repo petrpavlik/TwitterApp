@@ -10,8 +10,6 @@
 #import "TweetController.h"
 #import "AppDelegate.h"
 
-#import "TweetMarkerEntity.h"
-
 @implementation TimelineController
 
 - (void)viewDidLoad
@@ -41,13 +39,6 @@
     AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
     appDelegate.tweetsControllerForBackgroundFetching = self;
     
-#ifdef DEBUG
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Dev" style:UIBarButtonItemStyleBordered target:self action:@selector(devButtonSelected)];
-    
-    [TweetMarkerEntity requestTweetMarkersWithUsername:@"ptrpavlik" completionHandler:^(NSDictionary *tweetMarkers, NSError *error) {
-        
-    }];
-#endif
 }
 
 - (NSString*)tweetsPersistenceIdentifier {
@@ -68,25 +59,6 @@
 - (void)composeTweet {
     
     [TweetController presentInViewController:self];
-}
-
-#pragma mark -
-
-- (void)devButtonSelected {
-    
-    NSLog(@"start openning document %lf", CACurrentMediaTime());
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-       
-        NSArray *dirPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *docsDir = [dirPaths objectAtIndex:0];
-        NSString *dataFile = [docsDir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-%@", @"timeline", @"ptrpavlik"]];
-        
-        NSArray* timeline = [NSKeyedUnarchiver unarchiveObjectWithFile:dataFile];
-        
-        NSLog(@"finish loading document %lf", CACurrentMediaTime());
-        
-    });
 }
 
 @end

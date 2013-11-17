@@ -12,6 +12,8 @@
 #import "TweetsDataSource.h"
 #import "LoadingCell.h"
 #import "TweetDetailController.h"
+#import "TweetMarkerEntity.h"
+#import "UserService.h"
 
 typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
@@ -28,6 +30,10 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 @property(nonatomic, strong) BackgroundFetchCompletionBlock backgroundFetchCompletionBlock;
 @property(nonatomic, strong) NSString* idOfMostRecentReadTweet;
 @property(nonatomic) NSInteger numUnreadTweets;
+
+@property(nonatomic) BOOL shouldLoadStreamMarker;
+@property(nonatomic, strong) NSString* latestTweetMarkerTweetId;
+@property(nonatomic, weak) NSOperation* runningLoadTweetMarkerOperation;
 
 @end
 
@@ -61,6 +67,8 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     //[[NSNotificationCenter defaultCenter] removeObserver:self.didGainAccessObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.didPostTweetObserver];
     [[NSNotificationCenter defaultCenter] removeObserver:self.foregroundNotificationObserver];
+    
+    [self.runningLoadTweetMarkerOperation cancel];
 }
 
 - (void)viewDidLoad
@@ -98,10 +106,16 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     
     self.foregroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
         
+        if ([[weakSelf tweetsPersistenceIdentifier] isEqualToString:@"timeline"]) {
+            weakSelf.shouldLoadStreamMarker = YES;
+        }
+        
         if (weakSelf.loadNewTweetsWhenGoingForeground) {
             [weakSelf.dataSource loadNewTweets];
         }
     }];
+    
+    self.shouldLoadStreamMarker = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -166,6 +180,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
                     self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNewData);
                     self.backgroundFetchCompletionBlock = nil;
                 }
+                
+                if (self.shouldLoadStreamMarker) {
+                    
+                    self.shouldLoadStreamMarker = NO;
+                    [self loadTweetMarket];
+                }
             }
             else {
                 
@@ -189,6 +209,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
                 
                 self.backgroundFetchCompletionBlock(UIBackgroundFetchResultNoData);
                 self.backgroundFetchCompletionBlock = nil;
+            }
+            
+            if (self.shouldLoadStreamMarker) {
+                
+                self.shouldLoadStreamMarker = NO;
+                [self loadTweetMarket];
             }
             
             return;
@@ -229,6 +255,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
             }
             
             [self.tableView flashScrollIndicators];
+            
+            if (self.shouldLoadStreamMarker) {
+                
+                self.shouldLoadStreamMarker = NO;
+                [self loadTweetMarket];
+            }
         });
     }
 }
@@ -443,7 +475,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+/*- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section==0) {
         
@@ -460,7 +492,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         
         return 44;
     }
-}
+}*/
 
 #pragma mark - Table view delegate
 
@@ -504,6 +536,15 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         tweetDetailController.tweet = tweet;
          
         [self.navigationController pushViewController:tweetDetailController animated:YES];
+    }
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    
+    if (self.runningLoadTweetMarkerOperation) {
+        
+        [self.runningLoadTweetMarkerOperation cancel];
+        self.runningLoadTweetMarkerOperation = nil;
     }
 }
 
@@ -639,6 +680,87 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
     [super applicationDidEnterBackgroundNotification:notification];
     
     [self persistTimelinePosition];
+    [self updateTweetMarker];
+}
+
+- (void)updateTweetMarker {
+    
+    if ([self.tweetsPersistenceIdentifier isEqualToString:@"timeline"]) {
+        
+        NSArray* visibleRows = self.tableView.indexPathsForVisibleRows;
+        for (NSIndexPath* indexPath in visibleRows) {
+            
+            TweetEntity* tweet = self.tweets[indexPath.row];
+            if (![tweet isKindOfClass:[GapTweetEntity class]]) {
+                
+                if (!self.latestTweetMarkerTweetId || tweet.tweetId.longLongValue > self.latestTweetMarkerTweetId.longLongValue) {
+                    
+                    NSString* username = [UserService sharedInstance].username;
+                    [TweetMarkerEntity notifyTweetMarkerUpdateWithTweetId:tweet.tweetId username:username completionHandler:^(NSError *error) {
+                        
+                        if (error) {
+                            [[LogService sharedInstance] logError:error];
+                        }
+                        else {
+                            NSLog(@"tweet market updated");
+                        }
+                    }];
+                }
+                
+                break;
+            }
+        }
+    }
+}
+
+- (void)loadTweetMarket {
+    
+    __weak typeof(self)weakSelf = self;
+    
+    NSString* username = [UserService sharedInstance].username;
+    self.runningLoadTweetMarkerOperation = [TweetMarkerEntity requestTweetMarkerWithUsername:username completionHandler:^(TweetMarkerEntity *tweetMarker, NSError *error) {
+       
+        if (error) {
+            
+            [[LogService sharedInstance] logError:error];
+            return;
+        }
+        
+        if (!weakSelf.latestTweetMarkerTweetId || tweetMarker.tweetId.longLongValue > self.latestTweetMarkerTweetId.longLongValue) {
+            weakSelf.latestTweetMarkerTweetId = tweetMarker.tweetId;
+        }
+        
+        NSLog(@"%@", tweetMarker);
+        
+        NSArray* visibleRows = self.tableView.indexPathsForVisibleRows;
+        for (NSIndexPath* indexPath in visibleRows) {
+            
+            TweetEntity* tweet = self.tweets[indexPath.row];
+            if (![tweet isKindOfClass:[GapTweetEntity class]]) {
+                
+                if (tweet.tweetId.longLongValue > weakSelf.latestTweetMarkerTweetId.longLongValue) {
+                    return;
+                }
+            }
+        }
+        
+        NSInteger row = 0;
+        for (TweetEntity* tweet in weakSelf.tweets) {
+            
+            if ([tweet.tweetId isEqualToString:tweetMarker.tweetId]) {
+                
+                NSLog(@"market tweet found");
+                
+                NSLog(@"%@", tweet.text);
+                
+                [weakSelf.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                
+                break;
+            }
+            
+            row++;
+        }
+    }];
 }
 
 @end

@@ -14,6 +14,7 @@
 @property(nonatomic, strong) NSString* username;
 @property(nonatomic, strong) NSNumber* version;
 
-+ (NSOperation*)requestTweetMarkersWithUsername:(NSString*)username completionHandler:(void (^)(TweetMarkerEntity* tweetMarker, NSError* error))block;
++ (NSOperation*)requestTweetMarkerWithUsername:(NSString*)username completionHandler:(void (^)(TweetMarkerEntity* tweetMarker, NSError* error))block;
++ (NSOperation*)notifyTweetMarkerUpdateWithTweetId:(NSString*)tweetId username:(NSString*)username completionHandler:(void (^)(NSError* error))block;
 
 @end
