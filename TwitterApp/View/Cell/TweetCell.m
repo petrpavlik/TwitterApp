@@ -75,22 +75,22 @@
         
         //UIColor* favoritedBackgroundColor = [UIColor colorWithRed:1.000 green:0.988 blue:0.937 alpha:1];
         UIColor* favoritedBackgroundColor = [UIColor colorWithRed:1.000 green:0.973 blue:0.871 alpha:1];
-
-        _tweetTextLabel.backgroundColor = favoritedBackgroundColor;
-        _tweetAgeLabel.backgroundColor = favoritedBackgroundColor;
-        _nameLabel.backgroundColor = favoritedBackgroundColor;
-        _usernameLabel.backgroundColor = favoritedBackgroundColor;
-        
         self.backgroundColor = favoritedBackgroundColor;
     }
     else {
      
-        _tweetTextLabel.backgroundColor = [UIColor whiteColor];
-        _tweetAgeLabel.backgroundColor = [UIColor whiteColor];
-        _nameLabel.backgroundColor = [UIColor whiteColor];
-        _usernameLabel.backgroundColor = [UIColor whiteColor];
         self.backgroundColor = [UIColor whiteColor];
     }
+}
+
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    
+    [super setBackgroundColor:backgroundColor];
+    
+    _tweetTextLabel.backgroundColor = backgroundColor;
+    _tweetAgeLabel.backgroundColor = backgroundColor;
+    _nameLabel.backgroundColor = backgroundColor;
+    _usernameLabel.backgroundColor = backgroundColor;
 }
 
 #pragma mark -

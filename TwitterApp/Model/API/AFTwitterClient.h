@@ -22,4 +22,6 @@
 - (void)enqueueHTTPRequestOperation:(AFHTTPRequestOperation*)operation __deprecated;
 - (NSMutableURLRequest *)signedRequestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters __deprecated;
 
+- (NSMutableURLRequest *)oAuthEchoRequestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters;
+
 @end

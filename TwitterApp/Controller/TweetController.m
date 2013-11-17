@@ -22,6 +22,7 @@
 #import "UserService.h"
 #import "TweetRichTextProcessor.h"
 #import "UserService.h"
+#import "UIImage+TwitterApp.h"
 
 @interface TweetController () <UITextViewDelegate, UIViewControllerRestoration, TweetInputAccessoryViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, CLLocationManagerDelegate, UIActionSheetDelegate, TweetRichTextProcessorDelegate>
 
@@ -422,6 +423,10 @@
     
     UIImage* selectedImage = (UIImage*)[info objectForKey:UIImagePickerControllerOriginalImage];
     if (selectedImage) {
+        
+        if (selectedImage.size.width > 1024 || selectedImage.size.height > 2048) {
+            selectedImage = [selectedImage imageByScalingProportionallyToSize:CGSizeMake(1024, 2048)];
+        }
         
         self.attachedImage = selectedImage;
         [self.tweetInputAccessoryView displaySelectedImage:selectedImage];

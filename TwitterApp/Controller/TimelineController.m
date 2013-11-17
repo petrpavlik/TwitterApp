@@ -10,6 +10,8 @@
 #import "TweetController.h"
 #import "AppDelegate.h"
 
+#import "TweetMarkerEntity.h"
+
 @implementation TimelineController
 
 - (void)viewDidLoad
@@ -41,6 +43,10 @@
     
 #ifdef DEBUG
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Dev" style:UIBarButtonItemStyleBordered target:self action:@selector(devButtonSelected)];
+    
+    [TweetMarkerEntity requestTweetMarkersWithUsername:@"ptrpavlik" completionHandler:^(NSDictionary *tweetMarkers, NSError *error) {
+        
+    }];
 #endif
 }
 

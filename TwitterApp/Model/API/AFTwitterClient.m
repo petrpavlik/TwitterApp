@@ -178,6 +178,31 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     return mutableSignedRequest;
 }
 
+#pragma mark -
+
+- (NSMutableURLRequest *)oAuthEchoRequestWithMethod:(NSString *)method URLString:(NSString *)URLString parameters:(NSDictionary *)parameters {
+    
+    NSParameterAssert(self.account);
+    
+    NSURL *spURL = [NSURL URLWithString:@"https://api.twitter.com/1/account/verify_credentials.json"];
+    SLRequest* slRequest = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:spURL parameters:nil];
+    slRequest.account = self.account;
+    NSURLRequest *signedURLRequest = slRequest.preparedURLRequest;
+    
+    NSMutableURLRequest* afRequest = [self.requestSerializer requestWithMethod:method URLString:URLString parameters:parameters];
+    
+    NSString *serviceProvider = [[signedURLRequest URL] absoluteString];
+    [afRequest setValue:serviceProvider forHTTPHeaderField:@"X-Auth-Service-Provider"];
+    
+    NSString *authorization = [signedURLRequest valueForHTTPHeaderField:@"Authorization"];
+    [afRequest setValue:authorization forHTTPHeaderField:@"X-Verify-Credentials-Authorization"];
+    
+    return afRequest;
+    //return signedRequest;
+}
+
+#pragma mark -
+
 - (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest
                                                     success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                     failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure
@@ -185,18 +210,21 @@ static NSString * const kAFTwitterAPIBaseURLString = @"https://api.twitter.com/1
     
     return [super HTTPRequestOperationWithRequest:urlRequest success:success failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         
-        NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)operation.response;
-        if (httpResponse) {
-            
-            int responseStatusCode = [httpResponse statusCode];
-            if (responseStatusCode == 400 || responseStatusCode == 401) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+           
+            NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)operation.response;
+            if (httpResponse) {
                 
-                [[[UIAlertView alloc] initWithTitle:@"Unauthorized Access" message:@"Please make sure that your Twitter account has a password filled in. You can find out by opening the Settings app and navigating to section Twitter." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                NSInteger responseStatusCode = [httpResponse statusCode];
+                if (responseStatusCode == 400 || responseStatusCode == 401) {
+                    
+                    [[[UIAlertView alloc] initWithTitle:@"Unauthorized Access" message:@"Please make sure that your Twitter account has a password filled in. You can find out by opening the Settings app and navigating to section Twitter." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+                }
             }
-        }
-        
-        NSError* sanitizedError = [self sanitizedError:error];
-        failure(operation, sanitizedError);
+            
+            NSError* sanitizedError = [self sanitizedError:error];
+            failure(operation, sanitizedError);
+        });
     }];
 }
 
