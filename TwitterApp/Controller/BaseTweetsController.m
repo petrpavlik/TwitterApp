@@ -1140,15 +1140,17 @@
         else if (buttonIndex==2) {
             
             NSError* error = nil;
-            if (![[SSReadingList defaultReadingList] addReadingListItemWithURL:URL title:nil previewText:nil error:&error]) {
+            if ([[SSReadingList defaultReadingList] addReadingListItemWithURL:URL title:nil previewText:nil error:&error]) {
                 
-                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link added to Reading List" style:NotificationViewStyleError];
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Link added to Reading List" style:NotificationViewStyleInformation];
                 [[LogService sharedInstance] logEvent:@"Link added to Reading List" userInfo:Nil];
             }
             else {
                 
-                [[LogService sharedInstance] logError:error];
-                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not add the link to Reading List"];
+                if (error) {
+                    [[LogService sharedInstance] logError:error];
+                }
+                [NotificationView showInView:self.notificationViewPlaceholderView message:@"Could not add the link to Reading List" style:NotificationViewStyleError];
             }
         }
         else if (buttonIndex==3) {

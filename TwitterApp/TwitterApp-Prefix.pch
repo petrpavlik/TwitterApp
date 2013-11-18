@@ -30,6 +30,7 @@
 #define kUserDefaultsKeyUsername @"UserDefaultsKeyUsername"
 #define kUserDefaultsKeyIdOfMostRecentTweet @"UserDefaultsKeyIdOfMostRecentTweet"
 #define kUserDefaultsKeyTimelineRestorationIdentifier @"UserDefaultsKeyTimelineRestorationIdentifier"
+#define kUserDefaultsKeyTweetMarkerEnabled @"kUserDefaultsKeyTweetMarkerEnabled"
 
 #ifdef DEBUG
     #define NSLog(...) NSLog(__VA_ARGS__);

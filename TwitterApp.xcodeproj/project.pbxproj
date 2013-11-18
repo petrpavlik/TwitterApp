@@ -252,6 +252,7 @@
 		4BCBC92617969E7A00232B7E /* Button-NavigationBar-Reply.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */; };
 		4BCBC92717969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
 		4BCBC92817969E7A00232B7E /* Button-NavigationBar-Reply@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */; };
+		4BCE3A11183AC621009C1361 /* SettingsService.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BCE3A10183AC621009C1361 /* SettingsService.m */; };
 		4BD25D9D180F0F41004BD08F /* InstapaperController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25D9C180F0F41004BD08F /* InstapaperController.m */; };
 		4BD25DA0180F1024004BD08F /* EmailFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25D9F180F1024004BD08F /* EmailFieldCell.m */; };
 		4BD25DA3180F3E8A004BD08F /* PasswordFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BD25DA2180F3E8A004BD08F /* PasswordFieldCell.m */; };
@@ -528,6 +529,8 @@
 		4BCBC920179691C100232B7E /* PhotoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoController.m; path = Controller/PhotoController.m; sourceTree = "<group>"; };
 		4BCBC92317969E7A00232B7E /* Button-NavigationBar-Reply.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply.png"; path = "Image/Button-NavigationBar-Reply.png"; sourceTree = "<group>"; };
 		4BCBC92417969E7A00232B7E /* Button-NavigationBar-Reply@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Button-NavigationBar-Reply@2x.png"; path = "Image/Button-NavigationBar-Reply@2x.png"; sourceTree = "<group>"; };
+		4BCE3A0F183AC621009C1361 /* SettingsService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingsService.h; path = Service/SettingsService.h; sourceTree = "<group>"; };
+		4BCE3A10183AC621009C1361 /* SettingsService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingsService.m; path = Service/SettingsService.m; sourceTree = "<group>"; };
 		4BD25D9B180F0F41004BD08F /* InstapaperController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InstapaperController.h; path = Controller/InstapaperController.h; sourceTree = "<group>"; };
 		4BD25D9C180F0F41004BD08F /* InstapaperController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstapaperController.m; path = Controller/InstapaperController.m; sourceTree = "<group>"; };
 		4BD25D9E180F1024004BD08F /* EmailFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EmailFieldCell.h; path = View/Cell/EmailFieldCell.h; sourceTree = "<group>"; };
@@ -703,6 +706,8 @@
 				4B5162B017F9BF4B00AB8F1E /* UserService.m */,
 				4B87F28A180C8655007FDFE5 /* InstapaperService.h */,
 				4B87F28B180C8655007FDFE5 /* InstapaperService.m */,
+				4BCE3A0F183AC621009C1361 /* SettingsService.h */,
+				4BCE3A10183AC621009C1361 /* SettingsService.m */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -1693,6 +1698,7 @@
 				4B91B65617DB30DE0062FD30 /* ImageScrollView.m in Sources */,
 				4B97941C17FF29900009C40A /* TweetRichTextProcessor.m in Sources */,
 				4BC63C221759133200F7E0C3 /* NavigationController.m in Sources */,
+				4BCE3A11183AC621009C1361 /* SettingsService.m in Sources */,
 				4BB5BE24175A15FE00BE88DD /* TimelineDocument.m in Sources */,
 				4B39302417BA735A006ECB65 /* TableViewCell.m in Sources */,
 				4B1D0138175B6A5A00B04036 /* TweetDetailController.m in Sources */,

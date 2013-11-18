@@ -10,8 +10,10 @@
 #import <PocketAPI.h>
 #import "InstapaperService.h"
 #import "AppDelegate.h"
+#import "SwitchCell.h"
+#import "SettingsService.h"
 
-@interface SettingsController ()
+@interface SettingsController () <SwitchCellDelegate>
 
 @end
 
@@ -24,6 +26,7 @@
     self.title = @"Settings";
     
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[SwitchCell class] forCellReuseIdentifier:@"SwitchCell"];
 }
 
 #pragma mark - Table view data source
@@ -31,76 +34,111 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 2;
+    if (section == 0) {
+        return 2;
+    }
+    else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    AbstractSkin* skin = [appDelegate skin];
-    
-    if (indexPath.row == 0) {
+    if (indexPath.section == 0) {
         
-        cell.textLabel.text = @"Pocket";
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSString *CellIdentifier = @"Cell";
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
         
-        UIButton* accessoryButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+        AbstractSkin* skin = [appDelegate skin];
         
-        if ([PocketAPI sharedAPI].isLoggedIn) {
+        if (indexPath.row == 0) {
             
-            accessoryButton.tintColor = [UIColor redColor];
-            [accessoryButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+            cell.textLabel.text = @"Pocket";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UIButton* accessoryButton = [UIButton buttonWithType:UIButtonTypeSystem];
+            
+            if ([PocketAPI sharedAPI].isLoggedIn) {
+                
+                accessoryButton.tintColor = [UIColor redColor];
+                [accessoryButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+            }
+            else {
+                
+                accessoryButton.tintColor = skin.linkColor;
+                [accessoryButton setTitle:@"Sign In" forState:UIControlStateNormal];
+            }
+            
+            accessoryButton.frame = CGRectMake(0, 0, accessoryButton.intrinsicContentSize.width, 44);
+            [accessoryButton addTarget:self action:@selector(pocketSelected) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.accessoryView = accessoryButton;
         }
         else {
             
-            accessoryButton.tintColor = skin.linkColor;
-            [accessoryButton setTitle:@"Sign In" forState:UIControlStateNormal];
+            cell.textLabel.text = @"Instapaper";
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            UIButton* accessoryButton = [UIButton buttonWithType:UIButtonTypeSystem];
+            
+            if ([InstapaperService sharedService].isLoggedIn) {
+                
+                accessoryButton.tintColor = [UIColor redColor];
+                [accessoryButton setTitle:@"Sign Out" forState:UIControlStateNormal];
+            }
+            else {
+                
+                accessoryButton.tintColor = skin.linkColor;
+                [accessoryButton setTitle:@"Sign In" forState:UIControlStateNormal];
+            }
+            
+            accessoryButton.frame = CGRectMake(0, 0, accessoryButton.intrinsicContentSize.width, 44);
+            [accessoryButton addTarget:self action:@selector(instapaperSelected) forControlEvents:UIControlEventTouchUpInside];
+            
+            cell.accessoryView = accessoryButton;
         }
         
-        accessoryButton.frame = CGRectMake(0, 0, accessoryButton.intrinsicContentSize.width, 44);
-        [accessoryButton addTarget:self action:@selector(pocketSelected) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.accessoryView = accessoryButton;
+        return cell;
     }
     else {
         
-        cell.textLabel.text = @"Instapaper";
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        NSString *CellIdentifier = @"SwitchCell";
+        SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+        cell.delegate = self;
         
-        UIButton* accessoryButton = [UIButton buttonWithType:UIButtonTypeSystem];
+        cell.textLabel.text = @"Tweet Marker";
+        [cell.valueSwitch setOn:[SettingsService sharedService].tweetMarkerEnabled animated:NO];
         
-        if ([InstapaperService sharedService].isLoggedIn) {
-            
-            accessoryButton.tintColor = [UIColor redColor];
-            [accessoryButton setTitle:@"Sign Out" forState:UIControlStateNormal];
-        }
-        else {
-            
-            accessoryButton.tintColor = skin.linkColor;
-            [accessoryButton setTitle:@"Sign In" forState:UIControlStateNormal];
-        }
-        
-        accessoryButton.frame = CGRectMake(0, 0, accessoryButton.intrinsicContentSize.width, 44);
-        [accessoryButton addTarget:self action:@selector(instapaperSelected) forControlEvents:UIControlEventTouchUpInside];
-        
-        cell.accessoryView = accessoryButton;
+        return cell;
     }
     
-    return cell;
+    return nil;
 }
 
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    return @"Read Later";
+    if (section == 0) {
+        return @"Read Later";
+    }
+    else {
+        return @"Timeline Sync";
+    }
+}
+
+- (NSString*)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
+    
+    if (section == 1) {
+        return @"Enable Tweet Marker to sync the reading position of your timeline betweet multiple Twitter clients.";
+    }
+    
+    return nil;
 }
 
 #pragma mark -
@@ -161,6 +199,12 @@
             }
         }];
     }
+}
+
+- (void)switchCellDidToggleSwitch:(SwitchCell *)cell {
+    
+    [SettingsService sharedService].tweetMarkerEnabled = cell.valueSwitch.isOn;
+        
 }
 
 @end

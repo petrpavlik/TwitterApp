@@ -141,7 +141,12 @@
             NSInteger statusCode = operation.response.statusCode;
             NSDictionary* userInfo = nil;
             
-            if (statusCode == 403) {
+            if (statusCode == 200) {
+                
+                block(nil);
+                return;
+            }
+            else if (statusCode == 403) {
                 userInfo = @{NSLocalizedDescriptionKey: @"Invalid username or password."};
             }
             else if (statusCode == 500) {
