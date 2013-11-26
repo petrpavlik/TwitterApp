@@ -23,6 +23,10 @@ static UserEntity* currentUser;
         
         self.userId = value;
     }
+    if ([key isEqualToString:@"Protected"]) {
+        
+        self.protectedTweets = value;
+    }
     else {
         [super setValue:value forUndefinedKey:key];
     }

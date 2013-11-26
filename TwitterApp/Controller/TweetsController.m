@@ -14,6 +14,7 @@
 #import "TweetDetailController.h"
 #import "TweetMarkerEntity.h"
 #import "UserService.h"
+#import "SettingsService.h"
 
 typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
@@ -34,6 +35,7 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 @property(nonatomic) BOOL shouldLoadStreamMarker;
 @property(nonatomic, strong) NSString* latestTweetMarkerTweetId;
 @property(nonatomic, weak) NSOperation* runningLoadTweetMarkerOperation;
+@property(nonatomic) BOOL tweetMarkerDidLoadSinceLastSession;
 
 @end
 
@@ -685,7 +687,16 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
 - (void)updateTweetMarker {
     
+    if (![SettingsService sharedService].tweetMarkerEnabled) {
+        return;
+    }
+    
     if ([self.tweetsPersistenceIdentifier isEqualToString:@"timeline"]) {
+        
+        if (!self.tweetMarkerDidLoadSinceLastSession) {
+            return;
+        }
+        self.tweetMarkerDidLoadSinceLastSession = NO;
         
         NSArray* visibleRows = self.tableView.indexPathsForVisibleRows;
         for (NSIndexPath* indexPath in visibleRows) {
@@ -715,6 +726,10 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
 
 - (void)loadTweetMarket {
     
+    if (![SettingsService sharedService].tweetMarkerEnabled) {
+        return;
+    }
+    
     __weak typeof(self)weakSelf = self;
     
     NSString* username = [UserService sharedInstance].username;
@@ -723,6 +738,12 @@ typedef void (^BackgroundFetchCompletionBlock)(UIBackgroundFetchResult);
         if (error) {
             
             [[LogService sharedInstance] logError:error];
+            return;
+        }
+        
+        weakSelf.tweetMarkerDidLoadSinceLastSession = YES;
+        
+        if (!tweetMarker.tweetId) {
             return;
         }
         

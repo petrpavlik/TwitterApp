@@ -195,7 +195,7 @@
         return [NSString stringWithFormat:@"%ldy", (long)difference.year];
     }
     else if (difference.month) {
-        return [NSString stringWithFormat:@"%ldm", (long)difference.month];
+        return [NSString stringWithFormat:@"%ldmo", (long)difference.month];
     }
     else if (difference.day) {
         return [NSString stringWithFormat:@"%ldd", (long)difference.day];
@@ -866,6 +866,10 @@
             NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
             TweetEntity* tweet = [self tweetForIndexPath:indexPath];
             NSParameterAssert(tweet);
+            
+            if (tweet.retweetedStatus) {
+                tweet = tweet.retweetedStatus;
+            }
             
             TweetCell* tweetCell = (TweetCell*)cell;
             tweetCell.tweetAgeLabel.text = [self ageAsStringForDate:tweet.createdAt];

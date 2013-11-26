@@ -130,7 +130,13 @@
         return 1;
     }
     else {
-        return 3;
+        
+        if (self.user.protectedTweets.boolValue) {
+            return 1;
+        }
+        else {
+            return 3;
+        }
     }
 }
 
@@ -144,6 +150,10 @@
         
         // Configure the cell...
         UserEntity* user = self.user;
+        
+        if (user.protectedTweets.boolValue) {
+            NSLog(@"tweets protected");
+        }
         
         cell.nameLabel.text = user.name;
         cell.usernameLabel.text = [NSString stringWithFormat:@"@%@", user.screenName];
