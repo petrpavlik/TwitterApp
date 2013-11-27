@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "SwitchCell.h"
 #import "SettingsService.h"
+#import "ProfileController.h"
 
 @interface SettingsController () <SwitchCellDelegate>
 
@@ -34,7 +35,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 2;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -43,8 +44,11 @@
     if (section == 0) {
         return 2;
     }
-    else {
+    else if (section == 1) {
         return 1;
+    }
+    else {
+        return 2;
     }
 }
 
@@ -107,7 +111,7 @@
         
         return cell;
     }
-    else {
+    else if (indexPath.section == 1) {
         
         NSString *CellIdentifier = @"SwitchCell";
         SwitchCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
@@ -118,6 +122,29 @@
         
         return cell;
     }
+    else {
+        
+        if (indexPath.row == 0) {
+            
+            NSString *CellIdentifier = @"Cell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+            
+            cell.textLabel.text = @"@tweetilus";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+            return cell;
+        }
+        else {
+            
+            NSString *CellIdentifier = @"Cell";
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+
+            cell.textLabel.text = @"@ptrpavlik";
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            
+            return cell;
+        }
+    }
     
     return nil;
 }
@@ -127,8 +154,11 @@
     if (section == 0) {
         return @"Read Later";
     }
-    else {
+    else if (section == 1) {
         return @"Timeline Sync";
+    }
+    else {
+        return @"Follow us on Twitter";
     }
 }
 
@@ -139,6 +169,25 @@
     }
     
     return nil;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.section == 2) {
+        
+        if (indexPath.row == 0) {
+            
+            ProfileController* profileController = [[ProfileController alloc] init];
+            profileController.screenName = @"tweetilus";
+            [self.navigationController pushViewController:profileController animated:YES];
+        }
+        else {
+            
+            ProfileController* profileController = [[ProfileController alloc] init];
+            profileController.screenName = @"ptrpavlik";
+            [self.navigationController pushViewController:profileController animated:YES];
+        }
+    }
 }
 
 #pragma mark -
