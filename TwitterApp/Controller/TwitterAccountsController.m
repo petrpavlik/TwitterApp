@@ -23,6 +23,7 @@
 
 @property(nonatomic, strong) NSArray* accounts;
 @property(nonatomic) BOOL viewDidApplearAtLeastOnce;
+@property(nonatomic, strong) id applicationWillEnterForegroundNotificationObserver;
 
 @end
 
@@ -31,6 +32,7 @@
 - (void)dealloc {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
+    [[NSNotificationCenter defaultCenter] removeObserver:self.applicationWillEnterForegroundNotificationObserver];
 }
 
 - (void)viewDidLoad
@@ -70,11 +72,13 @@
     
     self.viewDidApplearAtLeastOnce = YES;
     
-    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
-    ACAccountStore *accountStore = appDelegate.accountStore;
-    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    NSArray *accounts = [accountStore accountsWithAccountType:accountType];
-    self.accounts = accounts;
+    [self refreshTwitterAccounts];
+    
+    __weak typeof(self) weakSelf = self;
+    self.applicationWillEnterForegroundNotificationObserver = [[NSNotificationCenter defaultCenter] addObserverForName:UIApplicationWillEnterForegroundNotification object:nil queue:nil usingBlock:^(NSNotification *note) {
+       
+        [weakSelf refreshTwitterAccounts];
+    }];
     
     //self.view.backgroundColor = [UIColor whiteColor];
 }
@@ -141,6 +145,19 @@
     
     [self presentViewController:rootTabBarController animated:YES completion:NULL];
 
+}
+
+#pragma mark -
+
+- (void)refreshTwitterAccounts {
+    
+    NSLog(@"twitter accounts refreshed");
+    
+    AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+    ACAccountStore *accountStore = appDelegate.accountStore;
+    ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    NSArray *accounts = [accountStore accountsWithAccountType:accountType];
+    self.accounts = accounts;
 }
 
 @end
